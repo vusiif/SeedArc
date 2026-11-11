@@ -1,0 +1,4 @@
+dir/
+dir/file
+DIR/FILE
+other/a.txt

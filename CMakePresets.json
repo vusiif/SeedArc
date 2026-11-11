@@ -1,0 +1,238 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "msvc-fuzz",
+      "displayName": "MSVC libFuzzer + ASan (fuzz targets only)",
+      "generator": "Visual Studio 18 2026",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "BUILD_TESTING": false,
+        "SEEDARC_BUILD_FUZZERS": true,
+        "CMAKE_CXX_FLAGS": "/EHsc /Zi",
+        "CMAKE_EXE_LINKER_FLAGS": "/DEBUG /INCREMENTAL:NO"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "architecture": "x64"
+    },
+    {
+      "name": "msvc-vs2026-debug",
+      "generator": "Visual Studio 18 2026",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "BUILD_TESTING": true
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "architecture": "x64"
+    },
+    {
+      "name": "msvc-vs2026-release",
+      "generator": "Visual Studio 18 2026",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "BUILD_TESTING": true
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "architecture": "x64"
+    },
+    {
+      "name": "gcc-ucrt64-debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "BUILD_TESTING": true,
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "$env{SEEDARC_UCRT64_ROOT}/bin/g++.exe",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "environment": {
+        "PATH": "$env{SEEDARC_UCRT64_ROOT}/bin;$penv{PATH}"
+      }
+    },
+    {
+      "name": "gcc-ucrt64-release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "BUILD_TESTING": true,
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "$env{SEEDARC_UCRT64_ROOT}/bin/g++.exe",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "environment": {
+        "PATH": "$env{SEEDARC_UCRT64_ROOT}/bin;$penv{PATH}"
+      }
+    },
+    {
+      "name": "clang-ucrt64-debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "BUILD_TESTING": true,
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "$env{SEEDARC_UCRT64_ROOT}/bin/clang++.exe",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "environment": {
+        "PATH": "$env{SEEDARC_UCRT64_ROOT}/bin;$penv{PATH}"
+      }
+    },
+    {
+      "name": "clang-ucrt64-release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "BUILD_TESTING": true,
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "$env{SEEDARC_UCRT64_ROOT}/bin/clang++.exe",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "environment": {
+        "PATH": "$env{SEEDARC_UCRT64_ROOT}/bin;$penv{PATH}"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "msvc-fuzz",
+      "configurePreset": "msvc-fuzz",
+      "configuration": "Release",
+      "targets": ["seedarc_fuzz_header", "seedarc_fuzz_path"]
+    },
+    {
+      "name": "msvc-vs2026-debug",
+      "configurePreset": "msvc-vs2026-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "msvc-vs2026-release",
+      "configurePreset": "msvc-vs2026-release",
+      "configuration": "Release"
+    },
+    {
+      "name": "gcc-ucrt64-debug",
+      "configurePreset": "gcc-ucrt64-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "gcc-ucrt64-release",
+      "configurePreset": "gcc-ucrt64-release",
+      "configuration": "Release"
+    },
+    {
+      "name": "clang-ucrt64-debug",
+      "configurePreset": "clang-ucrt64-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "clang-ucrt64-release",
+      "configurePreset": "clang-ucrt64-release",
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "msvc-vs2026-debug",
+      "configurePreset": "msvc-vs2026-debug",
+      "configuration": "Debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "msvc-vs2026-release",
+      "configurePreset": "msvc-vs2026-release",
+      "configuration": "Release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "gcc-ucrt64-debug",
+      "configurePreset": "gcc-ucrt64-debug",
+      "configuration": "Debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "gcc-ucrt64-release",
+      "configurePreset": "gcc-ucrt64-release",
+      "configuration": "Release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "clang-ucrt64-debug",
+      "configurePreset": "clang-ucrt64-debug",
+      "configuration": "Debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "clang-ucrt64-release",
+      "configurePreset": "clang-ucrt64-release",
+      "configuration": "Release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    }
+  ]
+}

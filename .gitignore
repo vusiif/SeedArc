@@ -1,0 +1,15 @@
+# Build outputs and machine-local configuration
+/build/
+/cmake-build-*/
+/.idea/
+/.vs/
+CMakeUserPresets.json
+*.obj
+*.o
+*.pdb
+*.exe
+*.dll
+*.lib
+*.a
+*.tmp
+*.download.json

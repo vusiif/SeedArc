@@ -1,0 +1,14 @@
+{
+  "template": true,
+  "dataset_id": null,
+  "version": null,
+  "source": null,
+  "retrieved_at": null,
+  "license": null,
+  "redistribution_terms": null,
+  "selection": null,
+  "preprocessing_command": null,
+  "split_policy": null,
+  "files": [],
+  "file_entry_fields": ["relative_path", "size_bytes", "sha256", "split"]
+}

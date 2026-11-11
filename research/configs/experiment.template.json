@@ -1,0 +1,22 @@
+{
+  "template": true,
+  "run_id": null,
+  "dataset_manifest": null,
+  "dataset_manifest_sha256": null,
+  "code_revision_or_snapshot": null,
+  "build_type": "Release",
+  "commands": [],
+  "seed": null,
+  "archive_format_version": null,
+  "strategy_version": null,
+  "codec_versions_and_parameters": {},
+  "chunk_size_bytes": null,
+  "dictionary": null,
+  "threads": null,
+  "time_budget_seconds": null,
+  "candidate_budget": null,
+  "memory_budget_bytes": null,
+  "repetitions": null,
+  "warmup_and_cache_policy": null,
+  "run_order": null
+}
