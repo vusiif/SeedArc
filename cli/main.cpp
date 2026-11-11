@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     if (command == "compress" || command == "extract" || command == "verify" ||
         command == "search" || command == "benchmark") {
         return report_error({seedarc::ErrorCode::not_implemented,
-                             "command is not implemented in M0: " + std::string{command}});
+                             "command is not implemented yet: " + std::string{command}});
     }
     if (command != "--help" && command != "-h" && command != "help" && command != "--version") {
         return report_error({seedarc::ErrorCode::invalid_argument,

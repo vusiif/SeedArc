@@ -6,7 +6,7 @@ Seed-Driven Adaptive Compression：使用 C++23 开发的实验性文件与目�
 
 ## 状态与文档
 
-当前已完成 M0 工程骨架：C++23 核心库、CLI、CMake presets 与 CTest。CLI 目前仅支持帮助与版本；压缩、解压、校验及搜索尚未实现，归档格式未冻结。
+**当前进度以 [STATUS.md](STATUS.md) 为准**，本节只做简述。目前已有工程骨架、实验性归档头部 / 路径校验和 Windows 安全写入原语；CLI 仅支持帮助与版本，压缩、解压、校验及搜索尚未实现，归档格式为实验性且未冻结。
 
 在项目根目录使用 MSVC / VS 2026 构建：
 
@@ -17,7 +17,7 @@ ctest --preset msvc-vs2026-debug
 ./build/msvc-vs2026-debug/cli/Debug/seedarc.exe --help
 ```
 
-Release 将上述 preset 名替换为 `msvc-vs2026-release`，可执行文件位于对应目录的 `cli/Release/`。GCC / Clang 用法及检查命令见[开发环境](docs/development.md)，本次验证范围见 [M0 验证记录](docs/m0-validation.md)。
+Release 将上述 preset 名替换为 `msvc-vs2026-release`，可执行文件位于对应目录的 `cli/Release/`。GCC / Clang 用法及检查命令见[开发环境](docs/development.md)，各里程碑验证记录由 STATUS 链接。
 
 - [开发计划](docs/development-plan.md)
 - [当前进度与协作交接](STATUS.md)

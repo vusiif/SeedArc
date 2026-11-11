@@ -14,7 +14,9 @@ enum class ErrorCode {
     unsafe_path,
     io_error,
     output_conflict,
-    integrity_error
+    integrity_error,
+    // The caller requested cancellation (std::stop_token); not an I/O or data failure.
+    cancelled
 };
 
 struct Error {

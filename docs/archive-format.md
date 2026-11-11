@@ -2,7 +2,7 @@
 
 > **注意：本文件是待定设计要求，不是已经冻结的 `.spk` 字节规范。** 未决定魔数、扩展名、字段布局、编码长度、具体校验算法或资源限额。不能据此编造“现有格式兼容性”。
 
-M1 已新增[实验候选 ADR](decisions/0001-experimental-container-and-output.md)及头部 / 范围验证原型，尚未验收安全写入或冻结格式；本文仍维护总体要求。
+M1 已实现[实验 ADR-0001](decisions/0001-experimental-container-and-output.md)的头部 / 块范围校验和 Windows 安全写入原语并通过验收；格式仍为 experimental、未冻结。本文维护总体要求，当前进度见 [STATUS.md](../STATUS.md)。
 
 ## 1. 目标与原则
 

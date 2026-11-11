@@ -216,6 +216,69 @@ void test_header_limits_and_arithmetic() {
                 "encoder also rejects unimplemented seed strategies");
 }
 
+// Boundary values for each default limit: exactly at the limit is accepted (and round-trips),
+// one past it is a resource_limit error. Also checks that all maxima hold at the same time.
+void test_default_limit_boundaries() {
+    const ArchiveLimits limits{};
+    check(limits_are_coherent(limits), "default limits are coherent");
+    check(!limits_are_coherent(unbounded_test_limits()), "unbounded test limits are incoherent");
+    auto too_many_blocks = limits;
+    too_many_blocks.max_blocks =
+        (limits.max_index_bytes - entry_record_min_bytes) / block_record_bytes + 1;
+    too_many_blocks.max_entries = 1;
+    check(!limits_are_coherent(too_many_blocks), "unreachable block limit detected");
+
+    const auto at_limits = [&](std::uint64_t entries, std::uint64_t blocks) {
+        ArchiveHeader header;
+        header.entry_count = entries;
+        header.block_count = blocks;
+        header.index_bytes = entries * entry_record_min_bytes + blocks * block_record_bytes;
+        header.data_bytes = blocks; // one byte per block keeps data / output tiny
+        header.total_output = blocks;
+        return header;
+    };
+    const auto accepts = [&](const ArchiveHeader &header, const char *description) {
+        const auto encoded = encode_header(header, limits);
+        const auto decoded =
+            encoded
+                ? decode_header(*encoded, limits)
+                : std::expected<ArchiveHeader, seedarc::Error>{std::unexpected(encoded.error())};
+        check(decoded && *decoded == header, description);
+    };
+    accepts(at_limits(limits.max_entries, 1), "entry count exactly at limit");
+    accepts(at_limits(1, limits.max_blocks), "block count exactly at limit");
+    accepts(at_limits(limits.max_entries, limits.max_blocks), "entry and block maxima together");
+    check_error(encode_header(at_limits(limits.max_entries + 1, 1), limits),
+                ErrorCode::resource_limit, "entry count one past limit");
+    check_error(encode_header(at_limits(1, limits.max_blocks + 1), limits),
+                ErrorCode::resource_limit, "block count one past limit");
+
+    auto header = at_limits(1, 1);
+    header.index_bytes = limits.max_index_bytes;
+    accepts(header, "index bytes exactly at limit");
+    header.index_bytes = limits.max_index_bytes + 1;
+    check_error(encode_header(header, limits), ErrorCode::resource_limit,
+                "index bytes one past limit");
+
+    header = at_limits(1, 1);
+    header.data_bytes = limits.max_data_bytes;
+    header.total_output = limits.max_total_output;
+    header.chunk_size_bytes = limits.max_chunk_bytes;
+    accepts(header, "data, output and chunk size exactly at limit");
+    for (int field = 0; field < 3; ++field) {
+        auto over = header;
+        if (field == 0) {
+            over.data_bytes += 1;
+        } else if (field == 1) {
+            over.total_output += 1;
+        } else {
+            over.chunk_size_bytes += 1;
+        }
+        check_error(encode_header(over, limits), ErrorCode::resource_limit,
+                    "data, output or chunk size one past limit");
+    }
+}
+
 void test_block_layout() {
     const auto header = sample_header();
     const std::array<BlockDescriptor, 2> blocks{{{0, 4, 4, 0, 0, 0}, {4, 2, 2, 0, 0, 0}}};
@@ -283,6 +346,7 @@ int main() {
     test_crc_and_wire_vector();
     test_header_damage_and_features();
     test_header_limits_and_arithmetic();
+    test_default_limit_boundaries();
     test_block_layout();
     return failures == 0 ? 0 : 1;
 }

@@ -175,9 +175,24 @@ void fault_injection_tests(const SafeOutputDirectory &directory, const fs::path 
                 stop.request_stop();
             }
         };
-        expect_clean_failure("cancel-mid-write", faults, seedarc::ErrorCode::io_error,
+        expect_clean_failure("cancel-mid-write", faults, seedarc::ErrorCode::cancelled,
                              stop.get_token(), "cancellation after partial write");
         check(observed >= 65'536 && observed < data.size(), "cancellation happened mid-write");
+    }
+    {
+        // Stop requested after the last byte: write, flush and read-back succeed, commit must not.
+        std::stop_source stop;
+        WriteFaults faults;
+        faults.after_write = [&](std::uint64_t written) {
+            if (written == data.size()) {
+                stop.request_stop();
+            }
+        };
+        std::string message;
+        expect_clean_failure("cancel-before-commit", faults, seedarc::ErrorCode::cancelled,
+                             stop.get_token(), "cancellation before commit", &message);
+        check(message.find("before commit") != std::string::npos,
+              "cancellation reached the pre-commit check");
     }
     {
         WriteFaults faults;
@@ -325,8 +340,12 @@ int main(int argc, char *argv[]) {
               "checksum failure cleans temporary");
         std::stop_source stop;
         stop.request_stop();
-        check(!directory->write_new_file("cancelled", bytes, crc, stop.get_token()),
-              "cancel before write");
+        {
+            const auto cancelled =
+                directory->write_new_file("cancelled", bytes, crc, stop.get_token());
+            check(!cancelled && cancelled.error().code == seedarc::ErrorCode::cancelled,
+                  "cancel before write reports cancelled");
+        }
         check(!directory->discard_empty(), "existing directory cannot be deleted by primitive");
         check(!directory->create_child("existing"), "directory create cannot replace file");
         check(!directory->create_child("junction"), "directory create cannot follow junction");

@@ -436,7 +436,7 @@ std::expected<void, Error> SafeOutputDirectory::write_new_file(std::string_view 
             Error{ErrorCode::resource_limit, "M1 write prototype is limited to 4 MiB"});
     }
     if (stop.stop_requested()) {
-        return std::unexpected(Error{ErrorCode::io_error, "write cancelled before creation"});
+        return std::unexpected(Error{ErrorCode::cancelled, "write cancelled before creation"});
     }
     const auto *faults = internal::active_write_faults();
     auto temp_name = temporary_name();
@@ -463,7 +463,7 @@ std::expected<void, Error> SafeOutputDirectory::write_new_file(std::string_view 
     std::size_t offset = 0;
     while (offset < contents.size()) {
         if (stop.stop_requested()) {
-            return fail({ErrorCode::io_error, "write cancelled"});
+            return fail({ErrorCode::cancelled, "write cancelled"});
         }
         const auto requested =
             static_cast<DWORD>((std::min)(contents.size() - offset, std::size_t{65536}));
@@ -521,7 +521,7 @@ std::expected<void, Error> SafeOutputDirectory::write_new_file(std::string_view 
         offset += read;
     }
     if (stop.stop_requested()) {
-        return fail({ErrorCode::io_error, "write cancelled before commit"});
+        return fail({ErrorCode::cancelled, "write cancelled before commit"});
     }
     if (faults != nullptr && faults->fail_commit) {
         return fail(win_error("commit without replacement", ERROR_DISK_FULL));
