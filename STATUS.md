@@ -1,11 +1,12 @@
 # SeedArc 当前状态与协作交接
 
-更新日期：2026-11-11。此文件是当前进度入口；[开发计划](docs/development-plan.md) 保存长期路线，[research](research/README.md) 保存研究证据。
+更新日期：2026-11-12。此文件是当前进度入口；[开发计划](docs/development-plan.md) 保存长期路线，[research](research/README.md) 保存研究证据。
 
 ## 当前基线
 
 - M0 工程骨架已完成：C++23 核心库、CLI、CMake presets 与 CTest。
 - M2 **P1 / P2 修复后独立复验通过，阶段完成**（代码 `4c547b2`）：主线程重建并执行 MSVC Release 25/25、ASan Release 25/25、CLion Debug 定向验收 exitCode=0；四个修复相关文件 IDE 诊断完整返回无 ERROR。原实现者七套配置证据保留。发布树保留已确认的私有 DACL，受信同 SID / SYSTEM / 管理员在最终复核后修改不在保证内；格式仍实验性、未冻结。见 [验收记录](docs/m2-acceptance.md)“第二轮独立复验”。
+- M3 **独立验收通过，阶段完成**（DEV-004 / ACC-003，2026-11-12）：按块 Zstandard / LZMA2 编码与 Store 回退，依赖由 vcpkg manifest 钉住版本与 baseline；本轮独立 Release / ASan 各 30/30、CLion 13/14 文件完整返回无 ERROR（另 1 文件由用户人工补查仅拼写提示）；随后修复默认 Debug profile，IDE CLI 与 codec 测试均成功；原实现者七套配置（含 ASan）30/30，Fuzz 短跑无崩溃；CLion 诊断（clang-ucrt64-debug，errorsOnly=false）覆盖 13 个改动文件，无 ERROR，修复 2 条有效 WARN 后三套配置复测 30/30。见 [M3 记录](docs/m3-validation.md)。
 - M1 已完成并由用户验收：实验头部 / 块范围 / 路径校验和安全 I/O 原语，含卷身份、累计深度 / 路径预算、共享模式调整与故障注入测试；头部 / 路径 libFuzzer 短跑无崩溃。六套配置与 MSVC ASan 均 18/18、无警告；CLion 诊断已完成（修复 1 个 ERROR）。未接 CLI，见 [接续记录](docs/m1-validation.md)与[候选 ADR](docs/decisions/0001-experimental-container-and-output.md)。
 - 已有项目规范、开发路线、GPL-3.0-or-later 声明及正文，Git 远端 origin 为 https://github.com/vusiif/SeedArc（main 已推送首次提交 `fbd3fb8`）。
 - 研究目录和模板已建立；尚未运行压缩实验，没有基准数据或独创性验证结论。
@@ -18,7 +19,7 @@
 | M0 | C++23 / CMake / CLI / CTest 骨架 | 完成 | 三套工具链 Debug / Release 各 13/13，另有 MSVC ASan 13/13；见验证记录 |
 | M1 | 实验格式与安全 I/O | 完成（用户 2026-11-11 验收） | 六套配置 + ASan 18/18，故障注入与 Fuzz 短跑通过，CLion 诊断无剩余 ERROR；已知限制：真实 SUBST 未测、Fuzz 仅短跑；见 M1 记录 |
 | M2 | Store 归档往返 | 完成（2026-11-11 独立复验通过） | 代码 4c547b2；独立 Release / ASan 各 25/25，IDE Debug 定向回归通过；保留已确认 DACL 与信任边界，见 [验收记录](docs/m2-acceptance.md) |
-| M3 | Zstd / LZMA2 | 待开始 | 每算法往返、边界测试与依赖记录 |
+| M3 | Zstd / LZMA2 | 完成（2026-11-12 独立验收） | 本轮 Release / ASan 各 30/30、IDE 13/14 完整诊断无 ERROR，限制见 M3 记录；原实现者 七套配置 + ASan 30/30，archive Fuzz 180 s 无崩溃；CLion 诊断无 ERROR、2 条 WARN 已修；见 [M3 记录](docs/m3-validation.md)、[ADR-0003](docs/decisions/0003-m3-zstd-lzma2-codecs.md) |
 | M4 | 种子确定性与 MVP | 待开始 | 固定向量、归档复现、动态检查与基线 |
 | UI-1 | M4 后的轻量 Qt GUI | 待开始 | 基础操作、往返与错误显示、界面响应，核心无 Qt 依赖 |
 | M5 | 公平基准与预算搜索 | 待开始 | 可复现实验、取消与最优结果保留 |
@@ -38,6 +39,9 @@
 | DEV-001 | M0 工程骨架 | 主 Agent | CMake 配置、core、cli、tests、构建说明与 STATUS | 完成 | 六套配置各 13/13，ASan 13/13、格式及静态检查通过；见 [M0 记录](docs/m0-validation.md) |
 | REV-001 | 外部审查阶段 1 修复 | 主 Agent | README、开发计划、验证记录、ADR、CLI 提示、error.hpp、archive.hpp、safe_output、相关测试、ADR-0002 | 待验收 | 审查原文 [docs/review_results/](docs/review_results/SeedArc_项目代码审查.md) 未改动。采纳：状态统一到 STATUS；CLI 提示去里程碑化；新增 `ErrorCode::cancelled`；`max_blocks` 1000000→262144 并加 `limits_are_coherent` 与边界测试；M2 约束写入 [ADR-0002](docs/decisions/0002-m2-store-archive-constraints.md)。延后：流式写出 / 事务 / 完整索引（M2）、CI（需用户决定，Linux 需先定 POSIX 路径规则）、CRC32C 加速（先测量）。六套 + ASan 18/18、format / tidy 通过；CLion（前台、逐个打开）复查 6 个改动文件无 ERROR，仅风格提示；safe_output.cpp 两条 `Clang-Tidy: Potential memory leak`（第 248 行 `new (storage.data()) FILE_RENAME_INFO{}` 及其在析构处的报告点）判为误报：placement new 不分配堆内存，对象可平凡析构，存储归 `std::vector` 所有；未压制检查 |
 | DEV-003 | M2 Store 归档端到端 | 原实现 / 修复会话；本轮主 Agent 独立验收 | core、cli、tests、fuzz、ADR-0002、M2 记录、README、STATUS | 完成 | P1 / P2 独立复验通过：Release / ASan 各 25/25，IDE Debug 定向回归成功，4 文件完整诊断无 ERROR；本轮未改实现、未提交推送；[验收记录](docs/m2-acceptance.md) |
+| IDE-002 | CLion 默认 Debug 依赖配置修复 | 主 Agent | 本地 CLion Debug profile、开发说明、M3 记录、STATUS | 完成 | MCP 重新加载成功；确认 MSVC / C++23 模式与 vcpkg 依赖；IDE CLI 版本、codec 测试均 exitCode=0，CMake 文件完整诊断无问题，见 M3 记录末节 |
+| ACC-003 | M3 独立验收 | 本轮主 Agent；只读子审查 m3_review | STATUS、M3 验收记录；不改原实现 | 完成 | Release / ASan 各 30/30；format / diff 检查通过，IDE 13/14 文件完整无 ERROR；1 文件人工补查仅拼写提示；IDE 运行已在 IDE-002 补齐，详见 [M3 记录](docs/m3-validation.md#独立验收2026-11-12) |
+| DEV-004 | M3 Zstd / LZMA2 块编码 | 主 Agent | vcpkg manifest、CMakePresets、core/codec、archive / store_archive / safe_output、CLI、tests、fuzz 语料、ADR-0003、M3 记录、README、开发说明、STATUS | 完成（独立验收通过） | zstd 1.5.7 / liblzma 5.8.4 经 vcpkg 钉住；七套配置 + ASan 30/30，format / tidy 通过，archive Fuzz 180 s 无崩溃；CLion 诊断 13 个文件无 ERROR，修 2 条 WARN 后 MSVC Release / Clang Debug / GCC Release 复测 30/30；[M3 记录](docs/m3-validation.md) |
 | DEV-002 | M1 实验格式与安全 I/O 设计 | 主 Agent；两个已结束子任务 | 候选 ADR、archive / filesystem 模块、tests、验证记录 | 完成 | 用户 2026-11-11 验收。error 5（沙盒 ACL）定位、提交重命名修复；卷身份 / 深度预算 / 共享模式 / 故障注入 / Fuzz 完成；六套 + ASan 18/18，format / tidy 通过；CLion 诊断完成并修 1 个 ERROR；真实 SUBST 未测；[M1 交接](docs/m1-validation.md) |
 
 ## 验证与证据
@@ -54,11 +58,15 @@
 
 ## 阻塞、限制与下一步
 
+- CLion 旧手工 Debug profile 缺 vcpkg 工具链问题已修复（IDE-002）：当前使用 `cmake-build-debug-vcpkg`，MCP 重新加载、IDE CLI 和 codec 测试均成功；旧目录保留。用户人工补查最后一个旧测试文件仅拼写提示，忽略。历史 IDE 运行失败已由本次成功验证补齐，详见 M3 记录末节。
+
+- M3 2026-11-12 独立验收通过：独立验收阶段只改文档，随后修复 CLion 本地配置；Release / ASan 各 30/30，IDE 13 文件完整诊断、1 文件人工补查仅拼写提示，IDE CLI / codec 运行已补齐。M3 实现及记录按用户授权提交交付，限制见 M3 记录。用户想法两份哈希未变；下一步 M4。
+
 - M0 已核对实际工具链并完成验证；GNU presets 要求当前终端设置 SEEDARC_UCRT64_ROOT，ASan 运行时路径按实际 VC Tools 安装位置设置，详见构建说明。未验证 Windows 之外平台。
 - 之前 Gopeed MCP 不可用；许可证正文已从本机标准副本取得，此问题不阻塞工程骨架。
 - Git 默认 Schannel 访问曾失败，单次 OpenSSL 查询成功；沙盒读取用户全局 ignore 文件受限，项目内规则已检查。未改系统或全局 Git 配置。
 - M1 已由用户验收（已知限制：真实 SUBST 盘符未测、Fuzz 仅短跑），首次提交 `fbd3fb8` 已推送到 origin/main。外部审查阶段 1 修复（REV-001）已提交为 `4c25a27`（本地 main 与 origin/main 的跟踪引用一致，未联网复核），任务仍待用户验收。
-- M2（DEV-003）P1 / P2 已在代码 `4c547b2` 修复并独立复验通过；本轮仅更新验收 / 状态文档，未提交或推送。私有 DACL 行为已确认；ASan 需 VC Tools `bin\Hostx64\x64` 在进程 PATH。用户想法两份 SHA256 未变，测试无残留，无后台任务；下一步可开始 M3，本轮不启动。
+- M2（DEV-003）P1 / P2 已在代码 `4c547b2` 修复并独立复验通过；本轮仅更新验收 / 状态文档，未提交或推送。私有 DACL 行为已确认；ASan 需 VC Tools `bin\Hostx64\x64` 在进程 PATH。用户想法两份 SHA256 未变，测试无残留，无后台任务；下一步为 M4；M3 独立验收见 ACC-003，本轮不启动新阶段。
 - **M2 独立验收历史**：首轮 Release 24/24，但新增回归在 Release / CLion Debug 复现两项缺陷而未通过；本轮修复后已通过上述独立复验。历史失败、修复、最新证据分别保留在 [验收记录](docs/m2-acceptance.md)，不删除负面证据。需要 IDE 前台时先提醒用户配合。
 - Git 仓库属主为沙盒账户，当前用户执行 git 报 dubious ownership；本轮仅以单次 `git -c safe.directory=…` 读取状态，未修改全局 Git 配置（是否添加 safe.directory 由用户决定）。
 - 后续开发使用 CLion MCP 获取相关文件 warning / error：CLion 在前台，逐个 `open_file_in_editor` 后查询。REV-001 改动的 6 个 C++ 文件已复核（见任务表）。

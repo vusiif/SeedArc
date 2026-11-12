@@ -6,7 +6,7 @@ Seed-Driven Adaptive Compression：使用 C++23 开发的实验性文件与目�
 
 ## 状态与文档
 
-**当前进度以 [STATUS.md](STATUS.md) 为准**，本节只做简述。目前已有工程骨架、实验性归档容器和 Windows 安全输入 / 输出；CLI 提供 `compress`、`verify`、`extract`，数据以 **Store（不压缩）** 方式保存，可逐字节往返。Zstd / LZMA2、种子与搜索尚未实现，归档格式为实验性且未冻结（不要用它保存唯一的数据副本）。
+**当前进度以 [STATUS.md](STATUS.md) 为准**，本节只做简述。目前已有工程骨架、实验性归档容器和 Windows 安全输入 / 输出；CLI 提供 `compress`、`verify`、`extract`，每个分块可用 Store（不压缩）、Zstandard 或 LZMA2 编码（`--codec`、`--level`，压不小的块自动按 Store 保存），可逐字节往返。种子与搜索尚未实现，归档格式为实验性且未冻结（不要用它保存唯一的数据副本）。
 
 在项目根目录使用 MSVC / VS 2026 构建：
 

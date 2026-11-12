@@ -445,7 +445,9 @@ struct SafeOutputFile::Impl {
     ObjectId id;
     Crc32c crc;
     std::uint64_t written = 0;
-    bool finished = false; // committed or failed; no further writes
+    bool finished = false;         // committed or failed; no further writes
+    std::vector<std::byte> prefix; // reserved leading bytes, excluded from crc
+    bool prefix_written = true;    // false between reserve_prefix() and write_prefix()
 
     Impl(std::shared_ptr<SafeOutputDirectory::Impl> parent, Handle handle, std::wstring temporary,
          std::wstring name, const ObjectId &identity)
@@ -468,6 +470,55 @@ struct SafeOutputFile::Impl {
             }
         }
         return std::unexpected(std::move(error));
+    }
+
+    // Writes at the current position (short writes are retried). `append` extends the file:
+    // the bytes are counted in `written` and, unless they are the reserved prefix, in the running
+    // CRC32C. A prefix rewrite (append == false) only replaces existing bytes.
+    std::expected<void, Error> write_all(std::span<const std::byte> bytes, bool append,
+                                         bool checksum) {
+        const auto *faults = internal::active_write_faults();
+        std::size_t offset = 0;
+        while (offset < bytes.size()) {
+            const auto requested =
+                static_cast<DWORD>((std::min)(bytes.size() - offset, std::size_t{65536}));
+            auto count = requested;
+            if (faults != nullptr && faults->max_bytes_per_write != 0) {
+                count =
+                    static_cast<DWORD>((std::min)(std::size_t{count}, faults->max_bytes_per_write));
+            }
+            DWORD done = 0;
+            BOOL ok = FALSE;
+            if (faults != nullptr && written >= faults->fail_write_at) {
+                SetLastError(ERROR_DISK_FULL);
+            } else {
+                ok = WriteFile(file.get(), bytes.data() + offset, count, &done, nullptr);
+            }
+            // A short write (done < requested) is legal; loop until everything is written.
+            if (!ok || done == 0 || done > requested) {
+                return fail(win_error("write temporary file"));
+            }
+            offset += done;
+            if (checksum) {
+                crc.update(bytes.subspan(offset - done, done));
+            }
+            if (append) {
+                written += done;
+                if (faults != nullptr && faults->after_write) {
+                    faults->after_write(written);
+                }
+            }
+        }
+        return {};
+    }
+
+    std::expected<void, Error> seek(LONGLONG position, DWORD method) {
+        LARGE_INTEGER distance{};
+        distance.QuadPart = position;
+        if (!SetFilePointerEx(file.get(), distance, nullptr, method)) {
+            return fail(win_error("position temporary file"));
+        }
+        return {};
     }
 };
 #else
@@ -1011,33 +1062,49 @@ std::expected<void, Error> SafeOutputFile::append(std::span<const std::byte> byt
     if (!impl_ || impl_->finished) {
         return std::unexpected(closed_session());
     }
-    const auto *faults = internal::active_write_faults();
-    std::size_t offset = 0;
-    while (offset < bytes.size()) {
-        const auto requested =
-            static_cast<DWORD>((std::min)(bytes.size() - offset, std::size_t{65536}));
-        auto count = requested;
-        if (faults != nullptr && faults->max_bytes_per_write != 0) {
-            count = static_cast<DWORD>((std::min)(std::size_t{count}, faults->max_bytes_per_write));
-        }
-        DWORD written = 0;
-        BOOL ok = FALSE;
-        if (faults != nullptr && impl_->written >= faults->fail_write_at) {
-            SetLastError(ERROR_DISK_FULL);
-        } else {
-            ok = WriteFile(impl_->file.get(), bytes.data() + offset, count, &written, nullptr);
-        }
-        // A short write (written < requested) is legal; loop until everything is written.
-        if (!ok || written == 0 || written > requested) {
-            return impl_->fail(win_error("write temporary file"));
-        }
-        impl_->crc.update(bytes.subspan(offset, written));
-        offset += written;
-        impl_->written += written;
-        if (faults != nullptr && faults->after_write) {
-            faults->after_write(impl_->written);
-        }
+    return impl_->write_all(bytes, true, true);
+#else
+    (void)bytes;
+    return std::unexpected(unsupported());
+#endif
+}
+
+std::expected<void, Error> SafeOutputFile::reserve_prefix(std::size_t size) {
+#ifdef _WIN32
+    if (!impl_ || impl_->finished) {
+        return std::unexpected(closed_session());
     }
+    if (impl_->written != 0 || !impl_->prefix.empty() || size == 0 || size > 4096) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid prefix reservation"});
+    }
+    impl_->prefix.assign(size, std::byte{0});
+    impl_->prefix_written = false;
+    return impl_->write_all(impl_->prefix, true, false);
+#else
+    (void)size;
+    return std::unexpected(unsupported());
+#endif
+}
+
+std::expected<void, Error> SafeOutputFile::write_prefix(std::span<const std::byte> bytes) {
+#ifdef _WIN32
+    if (!impl_ || impl_->finished) {
+        return std::unexpected(closed_session());
+    }
+    if (impl_->prefix.empty() || bytes.size() != impl_->prefix.size()) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "prefix size mismatch"});
+    }
+    if (auto moved = impl_->seek(0, FILE_BEGIN); !moved) {
+        return moved;
+    }
+    if (auto rewritten = impl_->write_all(bytes, false, false); !rewritten) {
+        return rewritten;
+    }
+    if (auto moved = impl_->seek(0, FILE_END); !moved) {
+        return moved;
+    }
+    impl_->prefix.assign(bytes.begin(), bytes.end());
+    impl_->prefix_written = true;
     return {};
 #else
     (void)bytes;
@@ -1056,6 +1123,9 @@ std::expected<void, Error> SafeOutputFile::commit(std::uint64_t expected_size,
     if (impl_->written != expected_size) {
         return impl_->fail({ErrorCode::integrity_error, "output size differs from expected size"});
     }
+    if (!impl_->prefix_written) {
+        return impl_->fail({ErrorCode::invalid_argument, "reserved prefix was never written"});
+    }
     if (faults != nullptr && faults->fail_flush) {
         return impl_->fail(win_error("flush temporary file", ERROR_WRITE_FAULT));
     }
@@ -1069,8 +1139,11 @@ std::expected<void, Error> SafeOutputFile::commit(std::uint64_t expected_size,
         !SetFilePointerEx(file, zero, nullptr, FILE_BEGIN)) {
         return impl_->fail(win_error("verify temporary file size/position"));
     }
-    // Re-read what reached the file system and compare it with the CRC32C of what was appended.
+    // Re-read what reached the file system: the reserved prefix byte for byte, everything after
+    // it against the CRC32C of what was appended.
     Crc32c read_back;
+    bool prefix_matches = true;
+    std::uint64_t position = 0;
     std::vector<std::byte> buffer(
         static_cast<std::size_t>((std::min)(impl_->written, std::uint64_t{65536})));
     for (auto remaining = impl_->written; remaining != 0;) {
@@ -1082,10 +1155,21 @@ std::expected<void, Error> SafeOutputFile::commit(std::uint64_t expected_size,
         if (faults != nullptr && faults->corrupt_read_back) {
             buffer[0] ^= std::byte{1};
         }
-        read_back.update(std::span{buffer}.first(read));
+        auto chunk = std::span{buffer}.first(read);
+        if (position < impl_->prefix.size()) {
+            const auto in_prefix = static_cast<std::size_t>(
+                (std::min)(std::uint64_t{read}, impl_->prefix.size() - position));
+            prefix_matches = prefix_matches &&
+                             std::ranges::equal(chunk.first(in_prefix),
+                                                std::span{impl_->prefix}.subspan(
+                                                    static_cast<std::size_t>(position), in_prefix));
+            chunk = chunk.subspan(in_prefix);
+        }
+        read_back.update(chunk);
+        position += read;
         remaining -= read;
     }
-    if (read_back.value() != impl_->crc.value()) {
+    if (!prefix_matches || read_back.value() != impl_->crc.value()) {
         return impl_->fail({ErrorCode::integrity_error, "temporary file byte verification failed"});
     }
     if (stop.stop_requested()) {

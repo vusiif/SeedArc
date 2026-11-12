@@ -42,6 +42,11 @@ void check_accepted(const ArchiveHeader &header, const ArchiveIndex &index,
         total += entry.size;
     }
     require(next_block == header.block_count && total == header.total_output);
+    // Codec rule (ADR-0003): Store blocks are their raw bytes, compressed ones strictly smaller.
+    for (const auto &block : index.blocks) {
+        require(block.codec_id == 0 ? block.stored_size == block.raw_size
+                                    : block.stored_size < block.raw_size);
+    }
 }
 
 // Interprets the input as [16 parameter bytes][index records] and repairs the index checksum, so

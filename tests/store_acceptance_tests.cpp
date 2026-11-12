@@ -151,9 +151,9 @@ int main(int argc, char *argv[]) {
         const auto archive = work / "tree.sarc";
         const auto empty_archive = work / "empty.sarc";
         const auto empty_file_archive = work / "empty-file.sarc";
-        if (!compress_store(work / "input", archive, options) ||
-            !compress_store(work / "empty", empty_archive) ||
-            !compress_store(work / "empty-file", empty_file_archive)) {
+        if (!compress_archive(work / "input", archive, options) ||
+            !compress_archive(work / "empty", empty_archive) ||
+            !compress_archive(work / "empty-file", empty_file_archive)) {
             std::cerr << "SETUP FAILED: cannot create acceptance archives at " << work << '\n';
             return 2;
         }

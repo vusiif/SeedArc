@@ -2,7 +2,7 @@
 
 > **注意：本文件是待定设计要求，不是已经冻结的 `.spk` 字节规范。** 未决定魔数、扩展名、字段布局、编码长度、具体校验算法或资源限额。不能据此编造“现有格式兼容性”。
 
-M1 已实现[实验 ADR-0001](decisions/0001-experimental-container-and-output.md)的头部 / 块范围校验和 Windows 安全写入原语并通过验收；M2 按 [ADR-0002 第 8 节](decisions/0002-m2-store-archive-constraints.md)实现了索引线格式、尾部索引布局和 Store 归档读写。格式仍为 experimental、未冻结。本文维护总体要求，当前进度见 [STATUS.md](../STATUS.md)。
+M1 已实现[实验 ADR-0001](decisions/0001-experimental-container-and-output.md)的头部 / 块范围校验和 Windows 安全写入原语并通过验收；M2 按 [ADR-0002 第 8 节](decisions/0002-m2-store-archive-constraints.md)实现了索引线格式、尾部索引布局和 Store 归档读写；M3 按 [ADR-0003](decisions/0003-m3-zstd-lzma2-codecs.md) 增加了按块的 Zstandard / LZMA2 编码与 Store 回退。格式仍为 experimental、未冻结。本文维护总体要求，当前进度见 [STATUS.md](../STATUS.md)。
 
 ## 1. 目标与原则
 

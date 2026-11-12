@@ -237,9 +237,41 @@ void test_damage() {
         },
         ErrorCode::malformed_archive, "fixed chunking", "short non-final block rejected");
     reject([](Sample &s) { s.index.blocks[0].stored_size = 3; }, ErrorCode::malformed_archive,
-           "Store block lengths", "stored and raw length mismatch rejected");
+           "invalid block lengths", "stored and raw length mismatch rejected");
     reject([](Sample &s) { s.index.blocks[0].codec_id = 1; }, ErrorCode::unsupported_feature,
            "codec", "unknown codec rejected");
+    // Codec / configuration pairs (ADR-0003): the last block (c.txt, 4 raw bytes) is changed so
+    // that no later offsets move.
+    const auto codec_block = [](std::uint32_t codec, std::uint32_t config, std::uint64_t stored) {
+        return [=](Sample &s) {
+            auto &block = s.index.blocks[2];
+            block.codec_id = codec;
+            block.codec_config_id = config;
+            block.stored_size = stored;
+        };
+    };
+    reject(codec_block(0, 1, 4), ErrorCode::unsupported_feature, "codec",
+           "Store with a configuration rejected");
+    reject(codec_block(1, 0, 3), ErrorCode::unsupported_feature, "codec", "zstd level 0 rejected");
+    reject(codec_block(1, 20, 3), ErrorCode::unsupported_feature, "codec",
+           "zstd level 20 rejected");
+    reject(codec_block(2, 10, 3), ErrorCode::unsupported_feature, "codec",
+           "LZMA2 preset 10 rejected");
+    reject(codec_block(3, 0, 3), ErrorCode::unsupported_feature, "codec", "codec 3 rejected");
+    reject(codec_block(1, 3, 4), ErrorCode::malformed_archive, "invalid block lengths",
+           "zstd block not smaller than raw rejected");
+    reject(codec_block(2, 6, 5), ErrorCode::malformed_archive, "invalid block lengths",
+           "LZMA2 block larger than raw rejected");
+    for (const auto &[codec, config] : std::array<std::pair<std::uint32_t, std::uint32_t>, 4>{
+             {{1, 1}, {1, 19}, {2, 0}, {2, 9}}}) {
+        auto accepted = sample();
+        codec_block(codec, config, 3)(accepted);
+        const auto sealed = seal(accepted);
+        const auto parsed = parse_index(accepted.header, sealed);
+        check(parsed.has_value() && parsed->blocks[2] == accepted.index.blocks[2],
+              "smaller compressed block with codec " + std::to_string(codec) + " config " +
+                  std::to_string(config) + " accepted");
+    }
     reject([](Sample &s) { s.index.entries[0].size = 1; }, ErrorCode::malformed_archive,
            "directory declares data", "directory with data rejected");
     {

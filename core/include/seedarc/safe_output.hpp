@@ -106,6 +106,12 @@ class SafeOutputFile {
     [[nodiscard]] std::uint32_t checksum() const noexcept; // CRC32C of the bytes appended so far
 
     [[nodiscard]] std::expected<void, Error> append(std::span<const std::byte> bytes);
+
+    // For formats whose header depends on what follows. reserve_prefix() must come before any
+    // append() and writes `size` (at most 4096) zero bytes; write_prefix() later replaces exactly
+    // those bytes. The prefix is excluded from checksum() and compared byte for byte at commit.
+    [[nodiscard]] std::expected<void, Error> reserve_prefix(std::size_t size);
+    [[nodiscard]] std::expected<void, Error> write_prefix(std::span<const std::byte> bytes);
     [[nodiscard]] std::expected<void, Error> commit(std::uint64_t expected_size,
                                                     std::stop_token stop = {});
 

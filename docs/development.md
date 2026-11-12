@@ -27,7 +27,19 @@ ctest --preset gcc-ucrt64-debug
 
 通用 CMake 最低版本为 3.28；使用 VS 2026 preset 还需 CMake 支持该生成器，本机实测 4.4.3。没有适用 preset 的平台可用 `cmake -S . -B build/<name>` 并明确工具链，本次未验证 Windows 之外平台。
 
-项目 `.clang-format` 固定源码格式，`.clang-tidy` 启用 Clang 静态分析器检查；不继承用户目录配置。当前未使用 `<print>`，不需要额外链接 stdc++exp。vcpkg manifest 在实际引入压缩依赖时建立。
+项目 `.clang-format` 固定源码格式，`.clang-tidy` 启用 Clang 静态分析器检查；不继承用户目录配置。当前未使用 `<print>`，不需要额外链接 stdc++exp。vcpkg manifest 已随 M3 建立（`vcpkg.json` / `vcpkg-configuration.json`，见 [ADR-0003](decisions/0003-m3-zstd-lzma2-codecs.md)）。
+
+### CLion 手工 CMake 配置与依赖
+
+导入 presets 与手工创建的 `Debug` profile 是独立配置。若重新加载命令只有 Qt 的 `CMAKE_PREFIX_PATH`、没有 vcpkg 工具链，`find_package(liblzma CONFIG REQUIRED)` 会失败；增加 Qt 路径不能替代压缩库依赖配置。
+
+手工 MSVC profile 的 CMake options 应包含（将 `<VCPKG_ROOT>` 替换为本机路径；带空格的整个 `-D` 参数须加双引号）：
+
+```text
+"-DCMAKE_TOOLCHAIN_FILE=<VCPKG_ROOT>/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows-static-md
+```
+
+保留已有的其他必要 options。旧构建目录首次切换工具链时使用新目录，或由使用者明确重置该配置缓存；不要把 MSVC 与 MinGW 的缓存或依赖混用。机器路径保存在 CLion 本地 profile，不写入共享 presets。重新加载后核对 CMake 成功、实际编译器与依赖路径，并运行 `seedarc_cli --version`。
 
 ### CLion MCP 检查
 
@@ -56,7 +68,7 @@ IDE 索引、CMake 或工具链异常可能使诊断不完整，应先区分环�
 | Clang | MSYS2 UCRT64 `clang++` 22.1.8，GNU target，libstdc++ | 与 GNU ABI 一致；**不要视作 MSVC / clang-cl** |
 | CMake / Ninja / CTest | CMake / CTest / CPack 4.4.3；Ninja 1.13.2 | CMake 生成器含 Visual Studio 18 2026 / Ninja / Ninja Multi-Config |
 | GNU Make | MSYS 4.4.1 | 不在 MSVC / Ninja 构建环境中无意调用 MSYS 版 |
-| vcpkg | 2026.10.29 已安装，未初始化依赖、未设 `VCPKG_ROOT` | 使用前查实际安装路径、manifest、baseline / triplet / toolchain |
+| vcpkg | VS Build Tools 自带 `C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg`，`vcpkg version` 为 2026-03-04（2026-11-11 实查；旧快照记为 2026.10.29）；未设全局 `VCPKG_ROOT` | presets 需在终端设置 `VCPKG_ROOT`；baseline / triplet 见 ADR-0003 |
 | IDE | CLion 2026.3.0.1、VS Code、Zed | CLion 带 CMake / Ninja / GDB / LLDB / Clang 工具链 |
 | Qt | Qt 6.12.0 的 `msvc2022_64`、`mingw_64`；Qt Creator，另有 `C:\Qt\Tools\mingw1310_64` | Qt 是 GUI 后期依赖；不同套件必须做 ABI 和链接验证 |
 | 调试 / 分析 | GDB 18.1（UCRT64），clangd / clang-tidy / clang-format 22.1.8，lld 22.1.8 | 独立 LLDB 未装，CLion 内置不等于全局可用 |
@@ -135,6 +147,7 @@ ctest --test-dir build/clang-debug --output-on-failure
 
 - **默认偏向 manifest mode**：工程中使用 `vcpkg.json` 和明确的 baseline / registry 策略；不要把“本机已经安装过包”当成依赖规范。
 - 在实际引入 Zstd / LZMA2 等库时核对 **vcpkg port 名称、CMake target、静态 / 动态链接、triplet、许可证及 Windows / MinGW 支持**；不能假设 MSVC 的二进制可供 GNU ABI 链接。
+- **当前配置（M3）**：所有 presets 继承隐藏的 `vcpkg-msvc`（`x64-windows-static-md`）或 `vcpkg-mingw`（`x64-mingw-static`），通过 `$env{VCPKG_ROOT}` 使用 vcpkg 工具链；配置前在终端设置 `$env:VCPKG_ROOT`（GNU presets 另需 `SEEDARC_UCRT64_ROOT`）。首次配置会下载并构建 zstd / liblzma，需要网络；已有构建目录改用工具链时须 `cmake --preset <name> --fresh`。MSVC ASan 测试运行时需把 VC Tools 的 `bin\Hostx64\x64` 加入 PATH，否则进程报 0xc0000135。
 - 工程 `CMakePresets.json` 应描述跨机器可用的目标，不要硬编码 `C:\Users\...`；机器专用 `VCPKG_ROOT`、MSYS2 安装位置等放到不入库的 `CMakeUserPresets.json` 或经核实的本地环境变量。
 - 若缺所需库 / SDK，先提交安装 / 集成方案。包的系统级安装或系统环境修改需授权；仓库内非破坏性配置按 `AGENTS.md` 权限模型执行。
 - 不要为了“能编译”而从未知来源复制 DLL、静态库或预编译包。第三方补丁需记录来源、许可证与兼容测试。

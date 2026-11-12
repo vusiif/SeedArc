@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "seedarc/store_archive.hpp"
 
+#include "codec/codec.hpp"
 #include "filesystem/input_tree.hpp"
 #include "seedarc/archive_index.hpp"
 #include "seedarc/checked_arithmetic.hpp"
@@ -174,7 +175,11 @@ std::expected<ArchiveSummary, Error> run_pipeline(Source &source, const ArchiveL
     if (auto begun = sink.begin(*index); !begun) {
         return std::unexpected(begun.error());
     }
-    std::vector<std::byte> buffer; // reused; never larger than one chunk (<= max_chunk_bytes)
+    // Both reused; never larger than one chunk (<= max_chunk_bytes): Store blocks are exactly the
+    // raw size and compressed blocks strictly smaller (validated by parse_index).
+    std::vector<std::byte> buffer;
+    std::vector<std::byte> decoded;
+    codec::Decoder decoder;
     for (const auto &entry : index->entries) {
         if (stop.stop_requested()) {
             return std::unexpected(cancelled());
@@ -200,12 +205,22 @@ std::expected<ArchiveSummary, Error> run_pipeline(Source &source, const ArchiveL
                 return std::unexpected(read.error());
             }
             // Store: the stored bytes are the raw bytes (parse_index checked the lengths).
-            if (crc32c(buffer) != block.raw_checksum) {
+            std::span<const std::byte> raw = buffer;
+            if (block.codec_id != codec::store_id) {
+                decoded.resize(static_cast<std::size_t>(block.raw_size));
+                if (auto unpacked = decoder.decode(block.codec_id, buffer, decoded); !unpacked) {
+                    auto error = unpacked.error();
+                    error.message = "block " + std::to_string(number) + ": " + error.message;
+                    return std::unexpected(std::move(error));
+                }
+                raw = decoded;
+            }
+            if (crc32c(raw) != block.raw_checksum) {
                 return std::unexpected(
                     Error{ErrorCode::integrity_error,
                           "block " + std::to_string(number) + " CRC32C mismatch"});
             }
-            if (auto written = sink.data(buffer); !written) {
+            if (auto written = sink.data(raw); !written) {
                 return std::unexpected(written.error());
             }
         }
@@ -503,16 +518,32 @@ std::expected<ArchiveSummary, Error> extract_archive(const fs::path &archive,
     return result;
 }
 
-std::expected<ArchiveSummary, Error> compress_store(const fs::path &input,
-                                                    const fs::path &output_archive,
-                                                    const CompressOptions &options,
-                                                    std::stop_token stop) {
+std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+                                                      const fs::path &output_archive,
+                                                      const CompressOptions &options,
+                                                      std::stop_token stop) {
     const auto &limits = options.limits;
     if (options.chunk_size_bytes == 0) {
         return std::unexpected(Error{ErrorCode::invalid_argument, "chunk size must not be zero"});
     }
     if (options.chunk_size_bytes > limits.max_chunk_bytes) {
         return std::unexpected(Error{ErrorCode::resource_limit, "chunk size exceeds the limit"});
+    }
+    const auto codec_id = static_cast<std::uint32_t>(options.codec);
+    std::uint32_t config = 0;
+    std::optional<codec::Encoder> encoder;
+    if (options.codec == Codec::store) {
+        if (options.level) {
+            return std::unexpected(
+                Error{ErrorCode::invalid_argument, "Store does not take a compression level"});
+        }
+    } else {
+        config = options.level.value_or(options.codec == Codec::zstd ? 3U : 6U);
+        auto created = codec::Encoder::create(codec_id, config);
+        if (!created) {
+            return std::unexpected(created.error());
+        }
+        encoder.emplace(std::move(*created));
     }
     const auto target = split_target(output_archive);
     if (!target) {
@@ -537,8 +568,9 @@ std::expected<ArchiveSummary, Error> compress_store(const fs::path &input,
         return std::unexpected(entries.error());
     }
 
-    // Sizes are known from enumeration, so the header and the index layout are fixed before any
-    // content is read; a file that turns out to differ fails the run instead of changing them.
+    // Sizes are known from enumeration, so the index layout is fixed before any content is read;
+    // a file that turns out to differ fails the run instead of changing it. Only data_bytes
+    // depends on the content, so the header is reserved now and written last.
     ArchiveIndex index;
     index.entries.reserve(entries->size());
     std::uint64_t block_count = 0;
@@ -564,19 +596,23 @@ std::expected<ArchiveSummary, Error> compress_store(const fs::path &input,
     header.index_bytes = *index_size;
     header.entry_count = index.entries.size();
     header.block_count = block_count;
-    header.data_bytes = total;
+    header.data_bytes = total; // upper bound: every block is at most its raw size
     header.total_output = total;
     header.chunk_size_bytes = options.chunk_size_bytes;
-    const auto header_bytes = encode_header(header, limits);
-    if (!header_bytes) {
-        return std::unexpected(header_bytes.error());
+    // Checks every limit up front with the largest possible data size.
+    if (const auto provisional = encode_header(header, limits); !provisional) {
+        return std::unexpected(provisional.error());
     }
-    if (auto written = output->append(*header_bytes); !written) {
-        return std::unexpected(written.error());
+    if (auto reserved = output->reserve_prefix(archive_header_bytes); !reserved) {
+        return std::unexpected(reserved.error());
     }
 
-    std::vector<std::byte> buffer(static_cast<std::size_t>(
-        (std::min)(std::uint64_t{options.chunk_size_bytes}, total))); // one chunk at most
+    const auto chunk_capacity =
+        static_cast<std::size_t>((std::min)(std::uint64_t{options.chunk_size_bytes}, total));
+    std::vector<std::byte> buffer(chunk_capacity); // one chunk at most
+    std::vector<std::byte> packed(encoder ? chunk_capacity : 0);
+    std::vector<std::byte> check(encoder ? chunk_capacity : 0);
+    codec::Decoder decoder;
     std::uint64_t offset = 0;
     std::size_t block = 0;
     for (std::size_t i = 0; i < entries->size(); ++i) {
@@ -607,11 +643,35 @@ std::expected<ArchiveSummary, Error> compress_store(const fs::path &input,
                     Error{ErrorCode::io_error,
                           "input changed while it was being compressed: " + entry.path});
             }
-            index.blocks[block++] = {offset, want, want, 0, 0, crc32c(chunk)};
-            if (auto written = output->append(chunk); !written) {
+            const auto checksum = crc32c(chunk);
+            std::span<const std::byte> stored = chunk;
+            BlockDescriptor descriptor{offset, want, want, codec::store_id, 0, checksum};
+            if (encoder) {
+                const auto size = encoder->encode(chunk, std::span{packed}.first(want - 1));
+                if (!size) {
+                    return std::unexpected(size.error());
+                }
+                if (*size != 0) {
+                    // Never write a block that this library's own decoder does not restore.
+                    const auto decoded = std::span{check}.first(want);
+                    const auto candidate = std::span{packed}.first(*size);
+                    if (auto restored = decoder.decode(codec_id, candidate, decoded);
+                        !restored || !std::ranges::equal(decoded, chunk)) {
+                        return std::unexpected(
+                            Error{ErrorCode::integrity_error,
+                                  "internal error: compressed block does not round trip: " +
+                                      (restored ? std::string{"content differs"}
+                                                : restored.error().message)});
+                    }
+                    stored = candidate;
+                    descriptor = {offset, *size, want, codec_id, config, checksum};
+                }
+            }
+            index.blocks[block++] = descriptor;
+            if (auto written = output->append(stored); !written) {
                 return std::unexpected(written.error());
             }
-            offset += want;
+            offset += stored.size();
             remaining -= want;
         }
         if (auto unchanged = file->confirm_unchanged(); !unchanged) {
@@ -619,10 +679,15 @@ std::expected<ArchiveSummary, Error> compress_store(const fs::path &input,
         }
     }
 
+    header.data_bytes = offset;
+    const auto header_bytes = encode_header(header, limits);
+    if (!header_bytes) {
+        return std::unexpected(header_bytes.error());
+    }
     const auto index_bytes = encode_index(index);
     // Never commit an archive that this library's own reader would reject.
     if (index_bytes.size() != header.index_bytes || block != index.blocks.size() ||
-        offset != total) {
+        offset > total) {
         return std::unexpected(Error{ErrorCode::io_error, "internal error: archive layout"});
     }
     if (const auto reparsed = parse_index(header, index_bytes, limits); !reparsed) {
@@ -633,10 +698,15 @@ std::expected<ArchiveSummary, Error> compress_store(const fs::path &input,
     if (auto written = output->append(index_bytes); !written) {
         return std::unexpected(written.error());
     }
-    const auto archive_bytes = archive_header_bytes + total + header.index_bytes;
+    if (auto written = output->write_prefix(*header_bytes); !written) {
+        return std::unexpected(written.error());
+    }
+    const auto archive_bytes = archive_header_bytes + offset + header.index_bytes;
     if (auto committed = output->commit(archive_bytes, stop); !committed) {
         return std::unexpected(committed.error());
     }
     return ArchiveSummary{header.entry_count, block_count, total, archive_bytes};
 }
+
+std::string codec_library_versions() { return codec::library_versions(); }
 } // namespace seedarc::experimental

@@ -4,6 +4,7 @@
 #include "seedarc/version.hpp"
 
 #include <algorithm>
+#include <cstdint>
 #include <filesystem>
 #include <iostream>
 #include <optional>
@@ -29,13 +30,15 @@ using seedarc::ErrorCode;
 constexpr std::string_view help =
     "SeedArc - experimental compression project\n"
     "Usage:\n"
-    "  seedarc compress <file-or-directory> -o <archive>\n"
+    "  seedarc compress <file-or-directory> -o <archive> [--codec store|zstd|lzma2] [--level N]\n"
     "  seedarc verify <archive>\n"
     "  seedarc extract <archive> -o <new-directory>\n"
     "  seedarc --help | --version\n"
     "\n"
-    "The archive format is experimental and may change; archives currently store data\n"
-    "uncompressed (Store). Outputs are never overwritten: the archive and the extraction\n"
+    "The archive format is experimental and may change. --codec selects how each chunk is\n"
+    "compressed (default store: uncompressed); --level is the Zstandard level 1-19 (default 3)\n"
+    "or the LZMA2 preset 0-9 (default 6). A chunk that would not shrink is stored as is.\n"
+    "Outputs are never overwritten: the archive and the extraction\n"
     "directory must not exist yet, and their parent directory must be on a local NTFS volume.\n"
     "Symbolic links and junctions in the input are rejected. Work happens in a temporary\n"
     "named .seedarc-<hex>.tmp next to the output; one may remain only if the process is\n"
@@ -109,7 +112,23 @@ BOOL WINAPI on_console_event(DWORD) {
 struct Operands {
     std::vector<fs::path> positional;
     std::optional<fs::path> output;
+    std::optional<seedarc::experimental::Codec> codec;
+    std::optional<std::uint32_t> level;
 };
+
+std::optional<std::uint32_t> parse_level(const Argument &text) {
+    if (text.empty() || text.size() > 2) {
+        return std::nullopt;
+    }
+    std::uint32_t value = 0;
+    for (const auto c : text) {
+        if (c < '0' || c > '9') {
+            return std::nullopt;
+        }
+        value = value * 10 + static_cast<std::uint32_t>(c - '0');
+    }
+    return value;
+}
 
 std::optional<Operands> parse_operands(const std::vector<Argument> &arguments, std::string &error) {
     Operands operands;
@@ -120,6 +139,30 @@ std::optional<Operands> parse_operands(const std::vector<Argument> &arguments, s
                 return std::nullopt;
             }
             operands.output = fs::path{arguments[++i]};
+        } else if (is(arguments[i], "--codec")) {
+            using seedarc::experimental::Codec;
+            const bool value = !operands.codec && i + 1 < arguments.size();
+            const auto &name = value ? arguments[++i] : arguments[i];
+            if (value && is(name, "store")) {
+                operands.codec = Codec::store;
+            } else if (value && is(name, "zstd")) {
+                operands.codec = Codec::zstd;
+            } else if (value && is(name, "lzma2")) {
+                operands.codec = Codec::lzma2;
+            } else {
+                error = "--codec requires exactly one of store, zstd, lzma2";
+                return std::nullopt;
+            }
+        } else if (is(arguments[i], "--level")) {
+            if (operands.level || i + 1 >= arguments.size()) {
+                error = "--level requires exactly one number";
+                return std::nullopt;
+            }
+            operands.level = parse_level(arguments[++i]);
+            if (!operands.level) {
+                error = "--level requires exactly one number";
+                return std::nullopt;
+            }
         } else if (!arguments[i].empty() && arguments[i].front() == '-') {
             error = "unknown option: " + printable(arguments[i]);
             return std::nullopt;
@@ -153,7 +196,8 @@ int run(const std::vector<Argument> &arguments) {
             return usage_error("unexpected extra arguments");
         }
         if (is(command, "--version")) {
-            std::cout << "SeedArc " << seedarc::version() << '\n';
+            std::cout << "SeedArc " << seedarc::version() << '\n'
+                      << "codecs: store, " << codec_library_versions() << '\n';
         } else {
             std::cout << help;
         }
@@ -176,12 +220,18 @@ int run(const std::vector<Argument> &arguments) {
         return usage_error(compress || extract ? printable(command) + " requires -o <path>"
                                                : "verify does not take -o");
     }
+    if (!compress && (operands->codec || operands->level)) {
+        return usage_error("--codec and --level apply only to compress");
+    }
+    CompressOptions options;
+    options.codec = operands->codec.value_or(Codec::store);
+    options.level = operands->level;
 #ifdef _WIN32
     SetConsoleCtrlHandler(on_console_event, TRUE);
 #endif
     const auto stop = cancellation().get_token();
     const auto &input = operands->positional.front();
-    const auto result = compress  ? compress_store(input, *operands->output, {}, stop)
+    const auto result = compress  ? compress_archive(input, *operands->output, options, stop)
                         : extract ? extract_archive(input, *operands->output, {}, stop)
                                   : verify_archive(input, {}, stop);
     if (!result) {

@@ -144,7 +144,7 @@ fs::path round_trip(const fs::path &work, const std::string &label, const fs::pa
                     const CompressOptions &options = {}) {
     const auto archive = work / (label + ".sarc");
     const auto output = work / (label + "-out");
-    const auto compressed = compress_store(input, archive, options);
+    const auto compressed = compress_archive(input, archive, options);
     if (!succeeded(compressed, label + ": compress")) {
         return archive;
     }
@@ -213,14 +213,14 @@ void round_trip_tests(const fs::path &work) {
         const auto first = round_trip(work, "tree", tree);
         // Same input, same options: byte-identical archive.
         const auto second = work / "tree-again.sarc";
-        check(compress_store(tree, second).has_value() && read_all(first) == read_all(second),
+        check(compress_archive(tree, second).has_value() && read_all(first) == read_all(second),
               "repeated compression is byte-identical");
     }
     {
         // The archive is written inside the tree it archives and must not contain itself.
         const auto before = snapshot(tree);
         const auto inside = tree / "a" / "self.sarc";
-        if (succeeded(compress_store(tree, inside), "compress into the input tree")) {
+        if (succeeded(compress_archive(tree, inside), "compress into the input tree")) {
             const auto output = work / "self-out";
             check(extract_archive(inside, output).has_value() && snapshot(output) == before,
                   "output archive is not enumerated as input");
@@ -304,7 +304,7 @@ void hostile_archive_tests(const fs::path &work) {
     const auto archive = work / "hostile-base.sarc";
     CompressOptions options;
     options.chunk_size_bytes = 1024;
-    const auto summary = compress_store(input, archive, options);
+    const auto summary = compress_archive(input, archive, options);
     if (!succeeded(summary, "hostile base archive")) {
         return;
     }
@@ -409,7 +409,7 @@ void limit_and_conflict_tests(const fs::path &work) {
     CompressOptions base;
     base.chunk_size_bytes = 1024;
     const auto reference = work / "limits-reference.sarc";
-    const auto summary = compress_store(input, reference, base);
+    const auto summary = compress_archive(input, reference, base);
     if (!succeeded(summary, "limits reference archive")) {
         return;
     }
@@ -420,11 +420,12 @@ void limit_and_conflict_tests(const fs::path &work) {
         auto options = base;
         set(options.limits, 0);
         const auto at = work / ("limit-at-" + std::to_string(serial++) + ".sarc");
-        check(compress_store(input, at, options).has_value() && read_all(at) == read_all(reference),
+        check(compress_archive(input, at, options).has_value() &&
+                  read_all(at) == read_all(reference),
               label + " exactly at the writer limit");
         set(options.limits, 1);
         const auto over = work / "limit-over.sarc";
-        check_code(compress_store(input, over, options), ErrorCode::resource_limit,
+        check_code(compress_archive(input, over, options), ErrorCode::resource_limit,
                    label + " over the writer limit");
         check(!fs::exists(over) && no_leftovers(work), label + ": nothing written over limit");
     };
@@ -442,13 +443,13 @@ void limit_and_conflict_tests(const fs::path &work) {
     {
         auto options = base;
         options.chunk_size_bytes = 0;
-        check_code(compress_store(input, work / "zero-chunk.sarc", options),
+        check_code(compress_archive(input, work / "zero-chunk.sarc", options),
                    ErrorCode::invalid_argument, "zero chunk size rejected");
     }
 
     // Outputs are never replaced.
     const auto reference_bytes = read_all(reference);
-    check_code(compress_store(input, reference, base), ErrorCode::output_conflict,
+    check_code(compress_archive(input, reference, base), ErrorCode::output_conflict,
                "existing archive is not overwritten");
     check(read_all(reference) == reference_bytes, "existing archive unchanged");
     const auto existing = work / "existing-target";
@@ -461,12 +462,13 @@ void limit_and_conflict_tests(const fs::path &work) {
     check_code(extract_archive(reference, reference), ErrorCode::output_conflict,
                "existing file is not an extraction target");
     check(read_all(reference) == reference_bytes, "archive unchanged by conflicting extract");
-    check(!compress_store(input, work / "no-such-parent" / "x.sarc", base),
+    check(!compress_archive(input, work / "no-such-parent" / "x.sarc", base),
           "missing output parent rejected");
     check(!extract_archive(reference, work / "no-such-parent" / "out"),
           "missing extraction parent rejected");
     check(!fs::exists(work / "no-such-parent"), "missing parent is not created");
-    check(!compress_store(work / "no-such-input", work / "x.sarc", base), "missing input rejected");
+    check(!compress_archive(work / "no-such-input", work / "x.sarc", base),
+          "missing input rejected");
     check(!verify_archive(work / "no-such-archive"), "missing archive rejected");
     check(!fs::exists(work / "x.sarc") && no_leftovers(work), "failed runs leave nothing");
 }
@@ -483,9 +485,9 @@ void rejected_input_tests(const fs::path &work) {
     check(junction, "create junction fixture");
     const auto archive = work / "links.sarc";
     if (junction) {
-        check_code(compress_store(input, archive), ErrorCode::unsupported_feature,
+        check_code(compress_archive(input, archive), ErrorCode::unsupported_feature,
                    "junction inside the input is rejected, not followed");
-        check_code(compress_store(input / "link", archive), ErrorCode::unsupported_feature,
+        check_code(compress_archive(input / "link", archive), ErrorCode::unsupported_feature,
                    "junction as the input root is rejected");
         check(!fs::exists(archive) && no_leftovers(work), "rejected input leaves no archive");
     }
@@ -496,7 +498,7 @@ void rejected_input_tests(const fs::path &work) {
     const auto odd = work / "odd-input";
     fs::create_directory(odd);
     write_file(odd / "bad~name", text("tilde"));
-    check_code(compress_store(odd, archive), ErrorCode::unsafe_path,
+    check_code(compress_archive(odd, archive), ErrorCode::unsafe_path,
                "unrepresentable input name rejected");
     check(!fs::exists(archive) && no_leftovers(work), "unrepresentable input leaves no archive");
 
@@ -508,13 +510,13 @@ void rejected_input_tests(const fs::path &work) {
         CreateFileW((busy / "log").c_str(), GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE,
                     nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
     check(writer != INVALID_HANDLE_VALUE, "open concurrent writer");
-    check_code(compress_store(busy, archive), ErrorCode::io_error,
+    check_code(compress_archive(busy, archive), ErrorCode::io_error,
                "input held open for writing is rejected");
     check(!fs::exists(archive) && no_leftovers(work), "busy input leaves no archive");
     if (writer != INVALID_HANDLE_VALUE) {
         CloseHandle(writer);
     }
-    check(compress_store(busy, archive).has_value(), "input readable once the writer closed");
+    check(compress_archive(busy, archive).has_value(), "input readable once the writer closed");
 }
 
 fs::path find_staging_directory(const fs::path &work) {
@@ -538,7 +540,7 @@ void fault_injection_tests(const fs::path &work) {
     CompressOptions options;
     options.chunk_size_bytes = 1024;
     const auto archive = work / "faults.sarc";
-    if (!succeeded(compress_store(input, archive, options), "fault test archive")) {
+    if (!succeeded(compress_archive(input, archive, options), "fault test archive")) {
         return;
     }
     const auto target = work / "faults-out";
@@ -629,7 +631,7 @@ void fault_injection_tests(const fs::path &work) {
     const auto compress_fails = [&](const std::string &label, const WriteFaults &faults,
                                     ErrorCode code, std::stop_token stop = {}) {
         const ScopedWriteFaults scope{faults};
-        check_code(compress_store(input, output, options, std::move(stop)), code, label);
+        check_code(compress_archive(input, output, options, std::move(stop)), code, label);
         check(!fs::exists(output), label + ": no archive");
         check(no_leftovers(work), label + ": temporary removed");
     };
@@ -669,7 +671,7 @@ void fault_injection_tests(const fs::path &work) {
             }
         };
         const ScopedWriteFaults scope{faults};
-        const auto result = compress_store(input, output, options);
+        const auto result = compress_archive(input, output, options);
         check_code(result, ErrorCode::io_error, "compress: input changed after enumeration");
         check(!result && result.error().message.find("changed") != std::string::npos,
               "input change is named in the error");

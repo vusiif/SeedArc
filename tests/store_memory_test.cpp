@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Bounded-memory check: round-trips one file much larger than any buffer the library may hold
-// and reports the peak working set of this process. Usage: <sandbox directory> <size in MiB>.
+// and reports the peak working set of this process.
+// Usage: <sandbox directory> <size in MiB> [store|zstd|lzma2] [allowed growth in MiB].
 #include "seedarc/store_archive.hpp"
 
 #include <chrono>
@@ -26,17 +27,20 @@ namespace {
 constexpr std::size_t piece = 64 * 1024;
 
 // Deterministic content generated piece by piece, so the test never holds the file in memory.
+// With `low_entropy`, only 16 symbols occur, so a compressing codec really compresses.
 class Generator {
   public:
+    explicit Generator(bool low_entropy) : shift_(low_entropy ? 60 : 56) {}
     void fill(std::vector<char> &buffer) {
         for (auto &value : buffer) {
             state_ = state_ * 6364136223846793005ULL + 1442695040888963407ULL;
-            value = static_cast<char>(state_ >> 56);
+            value = static_cast<char>(state_ >> shift_);
         }
     }
 
   private:
     std::uint64_t state_ = 0x5eedac;
+    int shift_;
 };
 
 std::uint64_t peak_working_set() {
@@ -52,9 +56,21 @@ double mib(std::uint64_t bytes) { return static_cast<double>(bytes) / (1024.0 * 
 } // namespace
 
 int main(int argc, char *argv[]) {
-    if (argc != 3) {
+    if (argc < 3 || argc > 5) {
         return 1;
     }
+    CompressOptions options;
+    const std::string codec = argc >= 4 ? argv[3] : "store";
+    if (codec == "zstd") {
+        options.codec = Codec::zstd;
+    } else if (codec == "lzma2") {
+        options.codec = Codec::lzma2;
+    } else if (codec != "store") {
+        return 1;
+    }
+    const bool low_entropy = options.codec != Codec::store;
+    const std::uint64_t allowed_growth =
+        (argc == 5 ? std::strtoull(argv[4], nullptr, 10) : 16ULL) * 1024 * 1024;
     const auto size = std::strtoull(argv[2], nullptr, 10) * 1024 * 1024;
     const auto base = fs::absolute(argv[1]).lexically_normal();
     fs::create_directories(base);
@@ -73,7 +89,7 @@ int main(int argc, char *argv[]) {
     };
     {
         std::ofstream stream(input, std::ios::binary);
-        Generator generator;
+        Generator generator{low_entropy};
         std::vector<char> buffer(piece);
         for (std::uint64_t written = 0; written < size; written += piece) {
             generator.fill(buffer);
@@ -94,14 +110,14 @@ int main(int argc, char *argv[]) {
         }
         std::cout << name << ": " << elapsed << " s (" << mib(size) / elapsed << " MiB/s)\n";
     };
-    timed("compress", [&] { return compress_store(input, archive); });
+    timed("compress", [&] { return compress_archive(input, archive, options); });
     timed("verify", [&] { return verify_archive(archive); });
     timed("extract", [&] { return extract_archive(archive, output); });
     const auto peak = peak_working_set();
     {
         // Compare the restored file with regenerated content, again piece by piece.
         std::ifstream stream(output / "large.bin", std::ios::binary);
-        Generator generator;
+        Generator generator{low_entropy};
         std::vector<char> expected(piece);
         std::vector<char> actual(piece);
         bool same = static_cast<bool>(stream);
@@ -115,16 +131,18 @@ int main(int argc, char *argv[]) {
             fail("restored file differs from the input");
         }
     }
+    std::cout << "codec " << codec << "; archive " << mib(fs::file_size(archive)) << " MiB\n";
     std::cout << "input " << mib(size) << " MiB; peak working set before " << mib(baseline)
               << " MiB, after " << mib(peak) << " MiB\n";
 #if defined(__SANITIZE_ADDRESS__)
+    (void)allowed_growth;
     std::cout << "AddressSanitizer build: working set bound not asserted\n";
 #else
-    // One 1 MiB chunk buffer plus small I/O buffers are expected; the bound is far below the
-    // input size, so loading the file (or the archive) into memory would be caught.
-    constexpr std::uint64_t allowed_growth = 16ULL * 1024 * 1024;
-    if (peak == 0 || size < 4 * allowed_growth || peak - baseline > allowed_growth) {
-        fail("peak working set grew by more than 16 MiB (or the input is too small to tell)");
+    // Chunk buffers, codec contexts and small I/O buffers are expected; the bound stays below
+    // half the input size, so loading the file (or the archive) into memory would be caught.
+    if (peak == 0 || size < 2 * allowed_growth || peak - baseline > allowed_growth) {
+        fail("peak working set grew by more than " + std::to_string(mib(allowed_growth)) +
+             " MiB (or the input is too small to tell)");
     }
 #endif
     std::error_code ec;

@@ -7,6 +7,23 @@
   },
   "configurePresets": [
     {
+      "name": "vcpkg-msvc",
+      "hidden": true,
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static-md"
+      }
+    },
+    {
+      "name": "vcpkg-mingw",
+      "hidden": true,
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-mingw-static",
+        "VCPKG_HOST_TRIPLET": "x64-mingw-static"
+      }
+    },
+    {
       "name": "msvc-fuzz",
       "displayName": "MSVC libFuzzer + ASan (fuzz targets only)",
       "generator": "Visual Studio 18 2026",
@@ -22,7 +39,8 @@
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
       },
-      "architecture": "x64"
+      "architecture": "x64",
+      "inherits": "vcpkg-msvc"
     },
     {
       "name": "msvc-vs2026-debug",
@@ -36,7 +54,8 @@
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
       },
-      "architecture": "x64"
+      "architecture": "x64",
+      "inherits": "vcpkg-msvc"
     },
     {
       "name": "msvc-vs2026-release",
@@ -50,7 +69,8 @@
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
       },
-      "architecture": "x64"
+      "architecture": "x64",
+      "inherits": "vcpkg-msvc"
     },
     {
       "name": "gcc-ucrt64-debug",
@@ -69,7 +89,8 @@
       },
       "environment": {
         "PATH": "$env{SEEDARC_UCRT64_ROOT}/bin;$penv{PATH}"
-      }
+      },
+      "inherits": "vcpkg-mingw"
     },
     {
       "name": "gcc-ucrt64-release",
@@ -88,7 +109,8 @@
       },
       "environment": {
         "PATH": "$env{SEEDARC_UCRT64_ROOT}/bin;$penv{PATH}"
-      }
+      },
+      "inherits": "vcpkg-mingw"
     },
     {
       "name": "clang-ucrt64-debug",
@@ -107,7 +129,8 @@
       },
       "environment": {
         "PATH": "$env{SEEDARC_UCRT64_ROOT}/bin;$penv{PATH}"
-      }
+      },
+      "inherits": "vcpkg-mingw"
     },
     {
       "name": "clang-ucrt64-release",
@@ -126,7 +149,8 @@
       },
       "environment": {
         "PATH": "$env{SEEDARC_UCRT64_ROOT}/bin;$penv{PATH}"
-      }
+      },
+      "inherits": "vcpkg-mingw"
     }
   ],
   "buildPresets": [
@@ -134,7 +158,11 @@
       "name": "msvc-fuzz",
       "configurePreset": "msvc-fuzz",
       "configuration": "Release",
-      "targets": ["seedarc_fuzz_header", "seedarc_fuzz_path", "seedarc_fuzz_archive"]
+      "targets": [
+        "seedarc_fuzz_header",
+        "seedarc_fuzz_path",
+        "seedarc_fuzz_archive"
+      ]
     },
     {
       "name": "msvc-vs2026-debug",

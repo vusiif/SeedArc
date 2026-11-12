@@ -37,18 +37,30 @@ if(WIN32)
     add_test(NAME archive.store_acceptance COMMAND seedarc_store_acceptance_tests "${PROJECT_SOURCE_DIR}/.sandbox-test")
     set_tests_properties(archive.store_acceptance PROPERTIES TIMEOUT 30)
 
-    # One 64 MiB file through compress / verify / extract with a bound on the peak working set.
+    # M3: the codec boundary (internal header) and Zstandard / LZMA2 archives end to end.
+    add_executable(seedarc_codec_tests codec_tests.cpp)
+    target_link_libraries(seedarc_codec_tests PRIVATE SeedArc::core)
+    target_include_directories(seedarc_codec_tests PRIVATE "${PROJECT_SOURCE_DIR}/core")
+    seedarc_target_defaults(seedarc_codec_tests)
+    add_test(NAME codec.round_trip COMMAND seedarc_codec_tests "${PROJECT_SOURCE_DIR}/.sandbox-test")
+    set_tests_properties(codec.round_trip PROPERTIES TIMEOUT 300)
+
+    # One large file through compress / verify / extract with a bound on the peak working set.
     add_executable(seedarc_store_memory_test store_memory_test.cpp)
     target_link_libraries(seedarc_store_memory_test PRIVATE SeedArc::core psapi)
     seedarc_target_defaults(seedarc_store_memory_test)
     add_test(NAME archive.store_bounded_memory COMMAND seedarc_store_memory_test "${PROJECT_SOURCE_DIR}/.sandbox-test" 64)
     set_tests_properties(archive.store_bounded_memory PROPERTIES TIMEOUT 600)
+    add_test(NAME codec.zstd_bounded_memory COMMAND seedarc_store_memory_test "${PROJECT_SOURCE_DIR}/.sandbox-test" 64 zstd 16)
+    set_tests_properties(codec.zstd_bounded_memory PROPERTIES TIMEOUT 600)
+    add_test(NAME codec.lzma2_bounded_memory COMMAND seedarc_store_memory_test "${PROJECT_SOURCE_DIR}/.sandbox-test" 64 lzma2 32)
+    set_tests_properties(codec.lzma2_bounded_memory PROPERTIES TIMEOUT 600)
 endif()
 
 set(cli_cases help short_help help_command version missing unknown extra search benchmark
-    compress_usage extract_usage verify_usage verify_missing)
+    compress_usage extract_usage verify_usage verify_missing codec_usage)
 if(WIN32)
-    list(APPEND cli_cases round_trip)
+    list(APPEND cli_cases round_trip codec_round_trip)
 endif()
 foreach(case IN LISTS cli_cases)
     add_test(NAME cli.${case}

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "seedarc/archive.hpp"
+#include "codec/codec.hpp"
 #include "seedarc/checked_arithmetic.hpp"
 
 #include <algorithm>
@@ -183,11 +184,15 @@ std::expected<void, Error> validate_block_layout(const ArchiveHeader &header,
         const auto fail = [i](ErrorCode code, const char *message) -> std::expected<void, Error> {
             return std::unexpected(Error{code, "block " + std::to_string(i) + ": " + message});
         };
-        if (block.codec_id != 0 || block.codec_config_id != 0) {
+        if (!codec::valid_block_codec(block.codec_id, block.codec_config_id)) {
             return fail(ErrorCode::unsupported_feature, "unsupported codec or codec configuration");
         }
-        if (block.raw_size == 0 || block.stored_size == 0 || block.stored_size != block.raw_size) {
-            return fail(ErrorCode::malformed_archive, "invalid Store block lengths");
+        // Store blocks hold exactly the raw bytes. A compressed block is only written when it is
+        // strictly smaller (otherwise the writer stores it), which also bounds its buffer.
+        if (block.raw_size == 0 || block.stored_size == 0 ||
+            (block.codec_id == codec::store_id ? block.stored_size != block.raw_size
+                                               : block.stored_size >= block.raw_size)) {
+            return fail(ErrorCode::malformed_archive, "invalid block lengths for its codec");
         }
         if (block.raw_size > header.chunk_size_bytes || block.raw_size > limits.max_chunk_bytes) {
             return fail(ErrorCode::resource_limit, "block exceeds chunk limit");
