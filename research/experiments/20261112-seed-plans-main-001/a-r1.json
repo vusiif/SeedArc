@@ -1,0 +1,159 @@
+{
+  "schema": "seedarc.seed-plan.r1",
+  "plan_only": true,
+  "candidate_id": 1,
+  "revision": 1,
+  "seed": {
+    "value_hex": "0"
+  },
+  "compare_seed": {
+    "value_hex": "1"
+  },
+  "blocks": [
+    {
+      "block_id": 0,
+      "proposed": {
+        "codec": "lzma2",
+        "level": 2
+      },
+      "compared": {
+        "codec": "store",
+        "level": 0
+      },
+      "changed": true
+    },
+    {
+      "block_id": 1,
+      "proposed": {
+        "codec": "zstd",
+        "level": 2
+      },
+      "compared": {
+        "codec": "zstd",
+        "level": 2
+      },
+      "changed": false
+    },
+    {
+      "block_id": 2,
+      "proposed": {
+        "codec": "store",
+        "level": 0
+      },
+      "compared": {
+        "codec": "zstd",
+        "level": 14
+      },
+      "changed": true
+    },
+    {
+      "block_id": 3,
+      "proposed": {
+        "codec": "zstd",
+        "level": 9
+      },
+      "compared": {
+        "codec": "store",
+        "level": 0
+      },
+      "changed": true
+    },
+    {
+      "block_id": 4,
+      "proposed": {
+        "codec": "lzma2",
+        "level": 7
+      },
+      "compared": {
+        "codec": "store",
+        "level": 0
+      },
+      "changed": true
+    },
+    {
+      "block_id": 5,
+      "proposed": {
+        "codec": "zstd",
+        "level": 13
+      },
+      "compared": {
+        "codec": "store",
+        "level": 0
+      },
+      "changed": true
+    },
+    {
+      "block_id": 6,
+      "proposed": {
+        "codec": "zstd",
+        "level": 1
+      },
+      "compared": {
+        "codec": "zstd",
+        "level": 19
+      },
+      "changed": true
+    },
+    {
+      "block_id": 7,
+      "proposed": {
+        "codec": "store",
+        "level": 0
+      },
+      "compared": {
+        "codec": "lzma2",
+        "level": 4
+      },
+      "changed": true
+    },
+    {
+      "block_id": 8,
+      "proposed": {
+        "codec": "zstd",
+        "level": 4
+      },
+      "compared": {
+        "codec": "zstd",
+        "level": 14
+      },
+      "changed": true
+    },
+    {
+      "block_id": 9,
+      "proposed": {
+        "codec": "lzma2",
+        "level": 4
+      },
+      "compared": {
+        "codec": "lzma2",
+        "level": 3
+      },
+      "changed": true
+    },
+    {
+      "block_id": 10,
+      "proposed": {
+        "codec": "store",
+        "level": 0
+      },
+      "compared": {
+        "codec": "store",
+        "level": 0
+      },
+      "changed": false
+    },
+    {
+      "block_id": 11,
+      "proposed": {
+        "codec": "lzma2",
+        "level": 1
+      },
+      "compared": {
+        "codec": "zstd",
+        "level": 19
+      },
+      "changed": true
+    }
+  ],
+  "changed_blocks": 10
+}

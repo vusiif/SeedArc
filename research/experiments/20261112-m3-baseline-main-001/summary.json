@@ -1,0 +1,110 @@
+[
+  {
+    "dataset": "text",
+    "codec": "store",
+    "archive_bytes": [
+      262332
+    ],
+    "archive_sha256": [
+      "9c8a02a7cedcd4b12e57fbeb30262cbb6c851dba96151c7bf76936d5a1aee324"
+    ],
+    "median_compress_seconds": 0.028116599999520986,
+    "all_byte_exact": true
+  },
+  {
+    "dataset": "text",
+    "codec": "zstd",
+    "archive_bytes": [
+      282
+    ],
+    "archive_sha256": [
+      "aba58d2c048bc10b59c88c771ab537167d9528c58f4ca93d7daa68ffd5d84ef0"
+    ],
+    "median_compress_seconds": 0.022523099999489204,
+    "all_byte_exact": true
+  },
+  {
+    "dataset": "text",
+    "codec": "lzma2",
+    "archive_bytes": [
+      368
+    ],
+    "archive_sha256": [
+      "7e4a71023c944e3397136796463fc8434658e97d3e9c8ebdba3be4004c8a7b2b"
+    ],
+    "median_compress_seconds": 0.02529599999979837,
+    "all_byte_exact": true
+  },
+  {
+    "dataset": "noise",
+    "codec": "store",
+    "archive_bytes": [
+      262333
+    ],
+    "archive_sha256": [
+      "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f"
+    ],
+    "median_compress_seconds": 0.025750399999196816,
+    "all_byte_exact": true
+  },
+  {
+    "dataset": "noise",
+    "codec": "zstd",
+    "archive_bytes": [
+      262333
+    ],
+    "archive_sha256": [
+      "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f"
+    ],
+    "median_compress_seconds": 0.02762059999986377,
+    "all_byte_exact": true
+  },
+  {
+    "dataset": "noise",
+    "codec": "lzma2",
+    "archive_bytes": [
+      262333
+    ],
+    "archive_sha256": [
+      "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f"
+    ],
+    "median_compress_seconds": 0.052721300000484916,
+    "all_byte_exact": true
+  },
+  {
+    "dataset": "mixed",
+    "codec": "store",
+    "archive_bytes": [
+      524641
+    ],
+    "archive_sha256": [
+      "a6dcde93087ba85e626fd22c749e1d83505948b65d741533d094c7652bdfab90"
+    ],
+    "median_compress_seconds": 0.03373430000010558,
+    "all_byte_exact": true
+  },
+  {
+    "dataset": "mixed",
+    "codec": "zstd",
+    "archive_bytes": [
+      262591
+    ],
+    "archive_sha256": [
+      "e8216269af6189ba43eeb6b43c7ae17f434043d20f27ca8b5ab61e8974e79510"
+    ],
+    "median_compress_seconds": 0.028994900000725465,
+    "all_byte_exact": true
+  },
+  {
+    "dataset": "mixed",
+    "codec": "lzma2",
+    "archive_bytes": [
+      262677
+    ],
+    "archive_sha256": [
+      "aa1a446a06dc124eaf0d14e1a79cc106e8ae237396f623d0a69a59d6ed1c842a"
+    ],
+    "median_compress_seconds": 0.0595538999996279,
+    "all_byte_exact": true
+  }
+]

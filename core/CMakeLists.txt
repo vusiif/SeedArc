@@ -17,3 +17,12 @@ endif()
 find_package(zstd CONFIG REQUIRED)
 find_package(liblzma CONFIG REQUIRED)
 target_link_libraries(libseedarc PRIVATE zstd::libzstd liblzma::liblzma)
+
+# Seed candidates stay outside the production archive library until experimental selection.
+if((BUILD_TESTING AND NOT SEEDARC_BUILD_FUZZERS) OR SEEDARC_BUILD_RESEARCH_TOOLS)
+    add_library(seedarc_seed_study STATIC seed/strategy.cpp)
+    target_include_directories(seedarc_seed_study PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    target_include_directories(seedarc_seed_study PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
+    seedarc_target_defaults(seedarc_seed_study)
+endif()

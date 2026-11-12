@@ -1,0 +1,17 @@
+{
+  "CMakeLists.txt": "0d415580549360392c40eff2c874829889f0cb4fef86b6fa66bf70f1d964ec8d",
+  "core/CMakeLists.txt": "7d184206b5971b498d28646472e59c8f557ee86fe2892f35669ca05ff07a5771",
+  "tests/CMakeLists.txt": "915b34ad8009fc95e0d54d735cfa1d0a249678664d34028442ffcafabcaa8749",
+  "core/seed/strategy.cpp": "41c448deca19c97ca8dca73a91097b3ed187b23715d93ed36fabc5e15325bfd3",
+  "core/seed/strategy.hpp": "8c70b1b41c952451cf044b083fd751a3688a33e184173221eeeb3da1563fc1e2",
+  "research/tools/CMakeLists.txt": "6d37732b88a8e53ac6167961a2c686f3c98199d013fff5d74eda67f1554af870",
+  "research/tools/seed_plan.cpp": "8143cf9ba03f69b0584d9dbb708fd05ebcd80f9641df44eba4d5df474552809e",
+  "tests/seed_strategy_tests.cpp": "01775a0f7f65cc28d56b50ea6f6e2f749f600a35b00b86009eade986976dd8ea",
+  "tests/m3_compatibility_tests.cpp": "3365ae6f2a73aef5db0076142eaff66c77aa7697788a4a6ace3391cf247bca95",
+  "research/ideas/seed-candidates-r1.md": "125be6263d0de7b7677b9174bd9a083a387a7b693de0cf7c21b3744339f41337",
+  "third_party\\splitmix64\\LICENSE": "9d73c6155990baa6ea4647d15f382141271e6c665303dc550045bc8dd84fd388",
+  "third_party\\splitmix64\\splitmix64.hpp": "0089c3db376171dd5f80979d8130c49e36815accd2da1db24ea66741c94fefa7",
+  "third_party\\splitmix64\\stateless-cxx.patch": "211d0a34256fd4af0cb1f67c70a206085ea416eaf7872c05fdd6e4a4f6457f48",
+  "third_party\\splitmix64\\upstream-fragment.c.txt": "1a853eb5c7be9c52861e79de3667295effbb9cc7ea33b89d6b4da72756e9eb26",
+  "third_party\\splitmix64\\UPSTREAM.md": "fc6f35bed9cf0e6dd4ea88721647e13582b5bcba1d1a9dabae83d4a8c93cce89"
+}

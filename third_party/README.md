@@ -1,6 +1,6 @@
 # 第三方源码
 
-需随 SeedArc 仓库保存的外部源码统一放在 `third_party/<upstream-name>/`。目前仅建立目录与约定，尚未引入实际组件。
+需随 SeedArc 仓库保存的外部源码统一放在 `third_party/<upstream-name>/`。当前保存 [SplitMix64 单步混合片段](splitmix64/UPSTREAM.md)，仅用于种子研究目标与测试；vcpkg 压缩库不重复复制。
 
 ## 保存范围
 

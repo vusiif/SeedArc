@@ -1,0 +1,1091 @@
+[
+  {
+    "repeat": 0,
+    "dataset": "text",
+    "codec": "store",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\text",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-store.sarc",
+        "--codec",
+        "store"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-store.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-store.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-store-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.028116599999520986,
+    "verify_seconds": 0.02166369999940798,
+    "extract_seconds": 0.030842399999528425,
+    "archive_bytes": 262332,
+    "archive_sha256": "9c8a02a7cedcd4b12e57fbeb30262cbb6c851dba96151c7bf76936d5a1aee324",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 0,
+    "dataset": "text",
+    "codec": "zstd",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\text",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-zstd.sarc",
+        "--codec",
+        "zstd",
+        "--level",
+        "3"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-zstd.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-zstd.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-zstd-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.023845499999879394,
+    "verify_seconds": 0.02085220000026311,
+    "extract_seconds": 0.029669599999579077,
+    "archive_bytes": 282,
+    "archive_sha256": "aba58d2c048bc10b59c88c771ab537167d9528c58f4ca93d7daa68ffd5d84ef0",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 0,
+    "dataset": "text",
+    "codec": "lzma2",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\text",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-lzma2.sarc",
+        "--codec",
+        "lzma2",
+        "--level",
+        "6"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-lzma2.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-lzma2.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-text-lzma2-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.02529599999979837,
+    "verify_seconds": 0.021421600000394392,
+    "extract_seconds": 0.0288909999999305,
+    "archive_bytes": 368,
+    "archive_sha256": "7e4a71023c944e3397136796463fc8434658e97d3e9c8ebdba3be4004c8a7b2b",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 0,
+    "dataset": "noise",
+    "codec": "store",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\noise",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-store.sarc",
+        "--codec",
+        "store"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-store.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-store.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-store-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.030634500000815024,
+    "verify_seconds": 0.02059060000010504,
+    "extract_seconds": 0.029885599999943224,
+    "archive_bytes": 262333,
+    "archive_sha256": "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 0,
+    "dataset": "noise",
+    "codec": "zstd",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\noise",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-zstd.sarc",
+        "--codec",
+        "zstd",
+        "--level",
+        "3"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-zstd.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-zstd.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-zstd-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.027309600000080536,
+    "verify_seconds": 0.021858399999473477,
+    "extract_seconds": 0.028334300000096846,
+    "archive_bytes": 262333,
+    "archive_sha256": "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 0,
+    "dataset": "noise",
+    "codec": "lzma2",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\noise",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-lzma2.sarc",
+        "--codec",
+        "lzma2",
+        "--level",
+        "6"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-lzma2.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-lzma2.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-noise-lzma2-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.051002999999582244,
+    "verify_seconds": 0.020136400000410504,
+    "extract_seconds": 0.030736400000023423,
+    "archive_bytes": 262333,
+    "archive_sha256": "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 0,
+    "dataset": "mixed",
+    "codec": "store",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\mixed",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-store.sarc",
+        "--codec",
+        "store"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-store.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-store.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-store-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.0389340000001539,
+    "verify_seconds": 0.022838099999717087,
+    "extract_seconds": 0.0413855999995576,
+    "archive_bytes": 524641,
+    "archive_sha256": "a6dcde93087ba85e626fd22c749e1d83505948b65d741533d094c7652bdfab90",
+    "input_bytes": 524288,
+    "byte_exact": true
+  },
+  {
+    "repeat": 0,
+    "dataset": "mixed",
+    "codec": "zstd",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\mixed",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-zstd.sarc",
+        "--codec",
+        "zstd",
+        "--level",
+        "3"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-zstd.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-zstd.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-zstd-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.028994900000725465,
+    "verify_seconds": 0.022251800000049116,
+    "extract_seconds": 0.04069809999964491,
+    "archive_bytes": 262591,
+    "archive_sha256": "e8216269af6189ba43eeb6b43c7ae17f434043d20f27ca8b5ab61e8974e79510",
+    "input_bytes": 524288,
+    "byte_exact": true
+  },
+  {
+    "repeat": 0,
+    "dataset": "mixed",
+    "codec": "lzma2",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\mixed",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-lzma2.sarc",
+        "--codec",
+        "lzma2",
+        "--level",
+        "6"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-lzma2.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-lzma2.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\0-mixed-lzma2-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.0595538999996279,
+    "verify_seconds": 0.021421399999780988,
+    "extract_seconds": 0.03921659999923577,
+    "archive_bytes": 262677,
+    "archive_sha256": "aa1a446a06dc124eaf0d14e1a79cc106e8ae237396f623d0a69a59d6ed1c842a",
+    "input_bytes": 524288,
+    "byte_exact": true
+  },
+  {
+    "repeat": 1,
+    "dataset": "text",
+    "codec": "zstd",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\text",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-zstd.sarc",
+        "--codec",
+        "zstd",
+        "--level",
+        "3"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-zstd.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-zstd.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-zstd-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.022523099999489204,
+    "verify_seconds": 0.020986500000617525,
+    "extract_seconds": 0.030621599999903992,
+    "archive_bytes": 282,
+    "archive_sha256": "aba58d2c048bc10b59c88c771ab537167d9528c58f4ca93d7daa68ffd5d84ef0",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 1,
+    "dataset": "text",
+    "codec": "lzma2",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\text",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-lzma2.sarc",
+        "--codec",
+        "lzma2",
+        "--level",
+        "6"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-lzma2.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-lzma2.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-lzma2-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.02702350000072329,
+    "verify_seconds": 0.02396779999980936,
+    "extract_seconds": 0.03202599999985978,
+    "archive_bytes": 368,
+    "archive_sha256": "7e4a71023c944e3397136796463fc8434658e97d3e9c8ebdba3be4004c8a7b2b",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 1,
+    "dataset": "text",
+    "codec": "store",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\text",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-store.sarc",
+        "--codec",
+        "store"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-store.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-store.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-text-store-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.029588099999273254,
+    "verify_seconds": 0.01937850000012986,
+    "extract_seconds": 0.029465000000527652,
+    "archive_bytes": 262332,
+    "archive_sha256": "9c8a02a7cedcd4b12e57fbeb30262cbb6c851dba96151c7bf76936d5a1aee324",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 1,
+    "dataset": "noise",
+    "codec": "zstd",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\noise",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-zstd.sarc",
+        "--codec",
+        "zstd",
+        "--level",
+        "3"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-zstd.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-zstd.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-zstd-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.028116899999986344,
+    "verify_seconds": 0.019306599999254104,
+    "extract_seconds": 0.03514699999959703,
+    "archive_bytes": 262333,
+    "archive_sha256": "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 1,
+    "dataset": "noise",
+    "codec": "lzma2",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\noise",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-lzma2.sarc",
+        "--codec",
+        "lzma2",
+        "--level",
+        "6"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-lzma2.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-lzma2.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-lzma2-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.052721300000484916,
+    "verify_seconds": 0.022116900000582973,
+    "extract_seconds": 0.02788970000074187,
+    "archive_bytes": 262333,
+    "archive_sha256": "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 1,
+    "dataset": "noise",
+    "codec": "store",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\noise",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-store.sarc",
+        "--codec",
+        "store"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-store.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-store.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-noise-store-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.025750399999196816,
+    "verify_seconds": 0.018631699999787088,
+    "extract_seconds": 0.0287108000002263,
+    "archive_bytes": 262333,
+    "archive_sha256": "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 1,
+    "dataset": "mixed",
+    "codec": "zstd",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\mixed",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-zstd.sarc",
+        "--codec",
+        "zstd",
+        "--level",
+        "3"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-zstd.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-zstd.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-zstd-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.028976999999940745,
+    "verify_seconds": 0.022520299999996496,
+    "extract_seconds": 0.040226399999482965,
+    "archive_bytes": 262591,
+    "archive_sha256": "e8216269af6189ba43eeb6b43c7ae17f434043d20f27ca8b5ab61e8974e79510",
+    "input_bytes": 524288,
+    "byte_exact": true
+  },
+  {
+    "repeat": 1,
+    "dataset": "mixed",
+    "codec": "lzma2",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\mixed",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-lzma2.sarc",
+        "--codec",
+        "lzma2",
+        "--level",
+        "6"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-lzma2.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-lzma2.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-lzma2-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.05884169999990263,
+    "verify_seconds": 0.022351700000399433,
+    "extract_seconds": 0.04116789999989123,
+    "archive_bytes": 262677,
+    "archive_sha256": "aa1a446a06dc124eaf0d14e1a79cc106e8ae237396f623d0a69a59d6ed1c842a",
+    "input_bytes": 524288,
+    "byte_exact": true
+  },
+  {
+    "repeat": 1,
+    "dataset": "mixed",
+    "codec": "store",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\mixed",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-store.sarc",
+        "--codec",
+        "store"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-store.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-store.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\1-mixed-store-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.03341709999949671,
+    "verify_seconds": 0.023212000000057742,
+    "extract_seconds": 0.04025519999959215,
+    "archive_bytes": 524641,
+    "archive_sha256": "a6dcde93087ba85e626fd22c749e1d83505948b65d741533d094c7652bdfab90",
+    "input_bytes": 524288,
+    "byte_exact": true
+  },
+  {
+    "repeat": 2,
+    "dataset": "text",
+    "codec": "lzma2",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\text",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-lzma2.sarc",
+        "--codec",
+        "lzma2",
+        "--level",
+        "6"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-lzma2.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-lzma2.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-lzma2-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.025218100000529375,
+    "verify_seconds": 0.020414800000253308,
+    "extract_seconds": 0.028914800000165997,
+    "archive_bytes": 368,
+    "archive_sha256": "7e4a71023c944e3397136796463fc8434658e97d3e9c8ebdba3be4004c8a7b2b",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 2,
+    "dataset": "text",
+    "codec": "store",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\text",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-store.sarc",
+        "--codec",
+        "store"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-store.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-store.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-store-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.027337399999851186,
+    "verify_seconds": 0.020542100000056962,
+    "extract_seconds": 0.029472899999746005,
+    "archive_bytes": 262332,
+    "archive_sha256": "9c8a02a7cedcd4b12e57fbeb30262cbb6c851dba96151c7bf76936d5a1aee324",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 2,
+    "dataset": "text",
+    "codec": "zstd",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\text",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-zstd.sarc",
+        "--codec",
+        "zstd",
+        "--level",
+        "3"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-zstd.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-zstd.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-text-zstd-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.019998699999632663,
+    "verify_seconds": 0.019512400000166963,
+    "extract_seconds": 0.027732100000321225,
+    "archive_bytes": 282,
+    "archive_sha256": "aba58d2c048bc10b59c88c771ab537167d9528c58f4ca93d7daa68ffd5d84ef0",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 2,
+    "dataset": "noise",
+    "codec": "lzma2",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\noise",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-lzma2.sarc",
+        "--codec",
+        "lzma2",
+        "--level",
+        "6"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-lzma2.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-lzma2.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-lzma2-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.059515400000236696,
+    "verify_seconds": 0.01950739999938378,
+    "extract_seconds": 0.028053799999725015,
+    "archive_bytes": 262333,
+    "archive_sha256": "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 2,
+    "dataset": "noise",
+    "codec": "store",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\noise",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-store.sarc",
+        "--codec",
+        "store"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-store.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-store.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-store-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.02570940000077826,
+    "verify_seconds": 0.01927709999927174,
+    "extract_seconds": 0.02854540000043926,
+    "archive_bytes": 262333,
+    "archive_sha256": "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 2,
+    "dataset": "noise",
+    "codec": "zstd",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\noise",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-zstd.sarc",
+        "--codec",
+        "zstd",
+        "--level",
+        "3"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-zstd.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-zstd.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-noise-zstd-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.02762059999986377,
+    "verify_seconds": 0.019318700000440003,
+    "extract_seconds": 0.030159599999933562,
+    "archive_bytes": 262333,
+    "archive_sha256": "8fe0d3f898deaa0265df0843ab6b1ef79b21cf6cd8530d4cf777e65ab307227f",
+    "input_bytes": 262144,
+    "byte_exact": true
+  },
+  {
+    "repeat": 2,
+    "dataset": "mixed",
+    "codec": "lzma2",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\mixed",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-lzma2.sarc",
+        "--codec",
+        "lzma2",
+        "--level",
+        "6"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-lzma2.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-lzma2.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-lzma2-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.07789349999984552,
+    "verify_seconds": 0.022312300000521645,
+    "extract_seconds": 0.04234580000047572,
+    "archive_bytes": 262677,
+    "archive_sha256": "aa1a446a06dc124eaf0d14e1a79cc106e8ae237396f623d0a69a59d6ed1c842a",
+    "input_bytes": 524288,
+    "byte_exact": true
+  },
+  {
+    "repeat": 2,
+    "dataset": "mixed",
+    "codec": "store",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\mixed",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-store.sarc",
+        "--codec",
+        "store"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-store.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-store.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-store-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.03373430000010558,
+    "verify_seconds": 0.02206659999956173,
+    "extract_seconds": 0.040447400000630296,
+    "archive_bytes": 524641,
+    "archive_sha256": "a6dcde93087ba85e626fd22c749e1d83505948b65d741533d094c7652bdfab90",
+    "input_bytes": 524288,
+    "byte_exact": true
+  },
+  {
+    "repeat": 2,
+    "dataset": "mixed",
+    "codec": "zstd",
+    "commands": [
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "compress",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\inputs\\mixed",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-zstd.sarc",
+        "--codec",
+        "zstd",
+        "--level",
+        "3"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "verify",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-zstd.sarc"
+      ],
+      [
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+        "extract",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-zstd.sarc",
+        "-o",
+        "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\2-mixed-zstd-out"
+      ]
+    ],
+    "status": "passed",
+    "peak_memory_bytes": null,
+    "candidate_count": 1,
+    "search_seconds": null,
+    "compress_seconds": 0.029133500000170898,
+    "verify_seconds": 0.024333200000000943,
+    "extract_seconds": 0.04053559999920253,
+    "archive_bytes": 262591,
+    "archive_sha256": "e8216269af6189ba43eeb6b43c7ae17f434043d20f27ca8b5ab61e8974e79510",
+    "input_bytes": 524288,
+    "byte_exact": true
+  }
+]

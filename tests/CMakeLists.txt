@@ -5,6 +5,19 @@ seedarc_target_defaults(seedarc_core_tests)
 add_test(NAME core.boundaries COMMAND seedarc_core_tests)
 set_tests_properties(core.boundaries PROPERTIES TIMEOUT 10)
 
+add_executable(seedarc_seed_strategy_tests seed_strategy_tests.cpp)
+target_link_libraries(seedarc_seed_strategy_tests PRIVATE seedarc_seed_study)
+seedarc_target_defaults(seedarc_seed_strategy_tests)
+add_test(NAME seed.candidate_plans COMMAND seedarc_seed_strategy_tests)
+set_tests_properties(seed.candidate_plans PROPERTIES TIMEOUT 10)
+
+add_executable(seedarc_m3_compatibility_tests m3_compatibility_tests.cpp)
+target_link_libraries(seedarc_m3_compatibility_tests PRIVATE SeedArc::core)
+seedarc_target_defaults(seedarc_m3_compatibility_tests)
+add_test(NAME archive.m3_compatibility COMMAND seedarc_m3_compatibility_tests
+    "${PROJECT_SOURCE_DIR}/tests/fixtures/m3")
+set_tests_properties(archive.m3_compatibility PROPERTIES TIMEOUT 10)
+
 foreach(suite IN ITEMS archive path index)
     add_executable(seedarc_${suite}_tests ${suite}_tests.cpp)
     target_link_libraries(seedarc_${suite}_tests PRIVATE SeedArc::core)

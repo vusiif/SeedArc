@@ -1,0 +1,2 @@
+# Preserve raw experiment evidence and source snapshots byte for byte.
+/research/experiments/** -text

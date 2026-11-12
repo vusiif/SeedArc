@@ -15,9 +15,13 @@ function(seedarc_target_defaults target)
 endfunction()
 
 option(SEEDARC_BUILD_FUZZERS "Build libFuzzer targets (MSVC only; use the msvc-fuzz preset)" OFF)
+option(SEEDARC_BUILD_RESEARCH_TOOLS "Build experimental research tools (no archive integration)" OFF)
 
 add_subdirectory(core)
 add_subdirectory(cli)
+if(SEEDARC_BUILD_RESEARCH_TOOLS)
+    add_subdirectory(research/tools)
+endif()
 if(BUILD_TESTING AND NOT SEEDARC_BUILD_FUZZERS)
     add_subdirectory(tests)
 endif()

@@ -1,0 +1,49 @@
+{
+  "run_id": "20261112-m3-baseline-main-001",
+  "repetitions": 3,
+  "build_type": "Release (caller-supplied; see build provenance in record.md)",
+  "codecs": [
+    "store",
+    "zstd",
+    "lzma2"
+  ],
+  "levels": {
+    "zstd": 3,
+    "lzma2": 6
+  },
+  "chunk_bytes": 1048576,
+  "threads": 1,
+  "timeout_per_command_seconds": 120,
+  "seed": null,
+  "strategy_version": 0,
+  "archive_revision": 1,
+  "peak_memory_bytes": null,
+  "memory_note": "not measured",
+  "timing": "whole subprocess wall time; includes startup and integrity self-checks",
+  "cache_policy": "no warmup; OS caches uncontrolled; rotate codec order each repetition",
+  "scope": "synthetic exploration only; no independent evaluation or media corpus",
+  "cli_sha256": "3a3b0fcc414d25288b8763d76233931fca5d8f709407b485d9a254ff1f4b102c",
+  "script_sha256": "8edd23d2a92544f6c1e158b3492c9768383c32aa690bfc51972993fb0e01521d",
+  "started_at": "2026-11-12T04:11:04.827850-08:00",
+  "invocation": [
+    "C:\\Users\\IceLolly\\AppData\\Local\\Programs\\Python\\Python315\\python.exe",
+    "research/scripts/m3_baseline.py",
+    "--cli",
+    "build/msvc-vs2026-release/cli/Release/seedarc.exe",
+    "--run-id",
+    "20261112-m3-baseline-main-001",
+    "--repetitions",
+    "3"
+  ],
+  "working_directory": "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc",
+  "python": "3.15.0 (tags/v3.15.0:d220409, Oct  9 2026, 11:55:56) [MSC v.1951 64 bit (AMD64)]",
+  "os": "Windows-10-10.0.19045-SP0",
+  "cpu": "AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD",
+  "logical_cpus": 16,
+  "cli_version": "SeedArc 0.1.0\r\ncodecs: store, zstd 1.5.7, liblzma 5.8.4",
+  "git_commit": "77764b9e4ed74f5d5a0460d81306fff37b112951",
+  "git_status": " M AGENTS.md\n M CMakeLists.txt\n M STATUS.md\n M core/CMakeLists.txt\n M docs/architecture.md\n M docs/development-plan.md\n M docs/reproducibility.md\n M research/ideas/README.md\n M tests/CMakeLists.txt\n?? core/seed/\n?? \"docs/review_results/SeedArc_\\351\\241\\271\\347\\233\\256\\350\\257\\204\\344\\274\\260\\344\\270\\216\\345\\274\\200\\345\\217\\221\\345\\273\\272\\350\\256\\256.md\"\n?? research/experiments/20261112-m3-baseline-main-001/\n?? research/ideas/seed-design-study.md\n?? research/scripts/__pycache__/\n?? research/scripts/m3_baseline.py\n?? research/tools/\n",
+  "dataset_manifest_sha256": "c85db2db292bdb63e1d50b3f91cce986227760599ba3a7d81ee4c06b8c7e1a4f",
+  "status": "completed",
+  "finished_at": "2026-11-12T04:11:07.649946-08:00"
+}

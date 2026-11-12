@@ -1,0 +1,19 @@
+{
+  "schema": "seedarc.baseline-plan.r1",
+  "script": "research/scripts/m3_baseline.py",
+  "dataset_id": "synthetic-m3-r1",
+  "repetitions": 3,
+  "codecs": [
+    "store",
+    "zstd",
+    "lzma2"
+  ],
+  "levels": {
+    "zstd": 3,
+    "lzma2": 6
+  },
+  "chunk_bytes": 1048576,
+  "threads": 1,
+  "memory_measurement": null,
+  "note": "Study reference only. Script records actual effective configuration per run; this file is not parsed as an input."
+}

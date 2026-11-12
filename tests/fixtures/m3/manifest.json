@@ -1,0 +1,14 @@
+{
+  "lzma2-text.sarc": {
+    "bytes": 368,
+    "sha256": "7e4a71023c944e3397136796463fc8434658e97d3e9c8ebdba3be4004c8a7b2b"
+  },
+  "store-empty.sarc": {
+    "bytes": 96,
+    "sha256": "67928036cfb9e835ba3cc2250b214f81f5bda05d57b4e2a5fddfec35a24a83ac"
+  },
+  "zstd-text.sarc": {
+    "bytes": 282,
+    "sha256": "aba58d2c048bc10b59c88c771ab537167d9528c58f4ca93d7daa68ffd5d84ef0"
+  }
+}
