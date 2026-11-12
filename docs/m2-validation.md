@@ -1,6 +1,6 @@
 # M2 验证与交接：Store 归档往返
 
-日期：2026-11-11。状态：**未通过独立验收，需修复两项定向复现缺陷**（见 [M2 验收记录](m2-acceptance.md)，当前状态以 [STATUS.md](../STATUS.md) 为准）。下文保留实现者原验证证据，不代表已覆盖新发现边界。设计约束与字节布局见 [ADR-0002](decisions/0002-m2-store-archive-constraints.md)（第 8 节为实现修订），基础容器见 [ADR-0001](decisions/0001-experimental-container-and-output.md)。格式仍为 experimental、未冻结。
+日期：2026-11-11。状态：**P1 / P2 修复后独立复验通过，M2 完成**（见 [M2 验收记录](m2-acceptance.md)“第二轮独立复验”，当前状态以 [STATUS.md](../STATUS.md) 为准）。下文保留实现者原验证证据；最新复验代码为 `4c547b2`，Release 与 ASan 均 25/25，CLion Debug 定向回归通过。设计约束与字节布局见 [ADR-0002](decisions/0002-m2-store-archive-constraints.md)（第 8 节为实现修订），基础容器见 [ADR-0001](decisions/0001-experimental-container-and-output.md)。格式仍为 experimental、未冻结。
 
 ## 交付内容
 

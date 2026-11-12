@@ -1,6 +1,6 @@
 # M2 独立验收
 
-日期：2026-11-11。结论：**未通过，需修复后复验**。本轮验收只新增定向回归测试，不修改 M2 实现，不提交 / 推送。
+日期：2026-11-11。最新结论：**修复后独立复验通过，M2 完成**。复验代码版本 `4c547b2`，范围与限制见文末“第二轮独立复验”；本轮只更新验收文档，不修改实现、不提交 / 推送。以下保留首轮未通过及修复过程，避免把历史失败抹去。
 
 ## 范围与证据
 
@@ -12,7 +12,7 @@
 - 新增 `tests/store_acceptance_tests.cpp` 与 CTest `archive.store_acceptance`。Release 构建通过，定向测试失败；日志 `build/m2-acceptance-regression.log`。首次启动被聊天中断，确认无进程 / 日志后才继续，没有重复启动未知任务。
 - 通过 CLion MCP 发现并运行现有 `seedarc_store_acceptance_tests` Debug 配置，临时参数为本项目 `.sandbox-test`，同样退出 1，得到相同复现结果；没有持久修改 IDE 配置。
 
-## 必须修复
+## 首轮发现（历史，已修复并复验）
 
 ### P1：暂存树被修改后仍成功发布
 
@@ -52,7 +52,7 @@ pre_cancelled_empty_extract_success=1 cancelled_target_exists=1
 
 新增回归测试在普通全套 CTest 中启用，修复前预期会失败。原有七套配置 / ASan / Fuzz 是实现者先前证据；本轮独立验收只复跑上述 Release 及 IDE Debug 定向测试，未重复全部矩阵。下一步修复这两项并复跑回归，再申请 M2 验收；不进入 M3。验收中沙盒失败的两棵自建临时测试树已清理，定向测试自行清理其数据；原有用户改动未清理、未覆盖。
 
-## 修复记录（2026-11-11，待用户复验）
+## 修复记录（2026-11-11，原修复执行者证据）
 
 策略与信任边界见 [ADR-0002 §8.4](decisions/0002-m2-store-archive-constraints.md#84-暂存树发布完整性与取消验收修复2026-11-11)。
 
@@ -72,3 +72,32 @@ pre_cancelled_empty_extract_success=1 cancelled_target_exists=1
 - 未重跑 Fuzz（索引解析未改动）；未测量额外一遍读取的耗时（Store 无基准）。
 - 受信主体在复核之后、改名之前的修改仍不在保证内；发布树不继承父目录 ACL（行为变化，用户 2026-11-11 已确认接受）。
 - 受限令牌 / 沙盒账户下私有 DACL 的表现未测。
+
+## 第二轮独立复验（2026-11-11）
+
+结论：**通过当前 M2 阶段验收**，不表示实验格式冻结或完成正式发布安全审计。
+
+验证对象为已提交代码 `4c547b2`；开始时 Git 工作区干净。用户想法两份文件的 SHA256 与 STATUS 快照一致。主线程实际执行以下验证；子任务 `/root/m2_review` 只读复核修复与回归断言，未运行测试、未修改文件。未以执行者旧报告代替独立运行。
+
+| 检查 | 独立结果 | 本地证据 |
+| --- | --- | --- |
+| MSVC Release 构建与全套 CTest | 25/25，通过（15.95 秒） | build/m2-reacceptance-build.log、build/m2-reacceptance-ctest.log |
+| MSVC ASan Release 重建与全套 CTest | 25/25，通过（18.98 秒），无 ASan 报告 | build/m2-reacceptance-asan-build.log、build/m2-reacceptance-asan-ctest.log |
+| CLion Debug 定向验收配置 | exitCode=0，all acceptance checks passed | build/m2-reacceptance-ide-run.json |
+| CLion MCP 修复相关四文件 | errorsOnly=false，完整返回，无 ERROR | build/m2-reacceptance-ide.json |
+| 四个修复文件的 clang-format | 通过 | 主线程实际命令结果 |
+
+Release 使用 `cmake --build --preset msvc-vs2026-release --parallel`、`ctest --preset msvc-vs2026-release --output-on-failure`。ASan 使用现有独立 build/msvc-asan 配置重建及 `ctest --test-dir build/msvc-asan -C Release --output-on-failure`，当前进程 PATH 前置已安装 VC Tools 的 ASan 运行时目录。鉴于已确认的沙盒祖先 ACL 限制，文件系统测试在正常用户权限下执行；未修改系统 / 用户 ACL、全局 Git 配置或关闭安全检查。
+
+P1 回归仍实际注入已提交文件内容篡改、外来条目、命名流及原组合场景，均返回 integrity_error、最终目标不出现。外来文件被保留且报告 cleanup incomplete，符合“不删除非本次对象”的边界；测试自行清理自己注入的数据。正常输出逐字节一致，根及子文件 / 目录的私有 DACL 检查通过。P2 回归确认空归档、仅空文件归档的预取消 extract / verify 均返回 cancelled，无目标或临时残留。原有往返、安全负测、故障注入、有界内存及 Fuzz 语料重放一并通过。
+
+CLion 由用户置前台后，逐个打开 store_archive.cpp、safe_output.cpp、safe_output.hpp、store_acceptance_tests.cpp 查询；safe_output.cpp 首次超时，单次延长等待后完整返回。没有 ERROR；保留已核对的 cstring / 作用域 / stop_token 提示和 NT 结构 / placement new 分析器提示，不靠禁用检查清零。通过实际发现的 seedarc_store_acceptance_tests 配置运行 Debug 定向回归，临时参数只用于本次启动，未修改 IDE 持久配置。
+
+### 保留的限制与下一步
+
+- 按已确认方案，发布目录保留私有 DACL，不继承目标父目录权限；共享目录中的其他普通用户可能无法读取。
+- 当前用户 SID、SYSTEM、Administrators 属于受信主体；其在最终复核后的修改及既有可写映射不在保证范围内。不宣称抵御同 SID 恶意进程；CRC32C 也不是认证校验。
+- 本轮未重复 GCC / Clang 全矩阵、未重新进行 Fuzz 生成运行或性能基准。旧矩阵 / Fuzz 是修复执行者证据，本轮只独立运行表中范围；语料重放不冒充新 Fuzz。
+- 仍不支持已有目录解压、网络 / 非 NTFS 输出或正式格式兼容承诺。真实满盘、SUBST 等限制沿用原记录。
+
+测试后 .sandbox-test 无残留任务数据，无后台测试 / 子任务。下一步可开始 M3（Zstd / LZMA2），本次不启动该阶段。
