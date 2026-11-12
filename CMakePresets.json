@@ -134,7 +134,7 @@
       "name": "msvc-fuzz",
       "configurePreset": "msvc-fuzz",
       "configuration": "Release",
-      "targets": ["seedarc_fuzz_header", "seedarc_fuzz_path"]
+      "targets": ["seedarc_fuzz_header", "seedarc_fuzz_path", "seedarc_fuzz_archive"]
     },
     {
       "name": "msvc-vs2026-debug",

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Each target is built twice: as a corpus replay test (ordinary builds, BUILD_TESTING) and, with
 # SEEDARC_BUILD_FUZZERS, as a libFuzzer executable (MSVC /fsanitize=fuzzer; see docs/testing.md).
-set(SEEDARC_FUZZ_TARGETS header path)
+set(SEEDARC_FUZZ_TARGETS header path archive)
 
 if(BUILD_TESTING AND NOT SEEDARC_BUILD_FUZZERS)
     foreach(target IN LISTS SEEDARC_FUZZ_TARGETS)

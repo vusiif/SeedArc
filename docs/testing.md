@@ -53,7 +53,7 @@ MVP 的“阶段较早”仅意味着可以减少支持范围；不能“先让�
 - 首选已安装 clang-tidy、编译器警告和实际可运行的 Sanitizer 组合；**不要假设 Windows 下 MSVC、MSYS2 Clang 与 GCC 的动态检测完全相同**。
 - 归档解析、长度计算、第三方 ABI 边界相关改动，需要更严格的动态检查与恶意输入测试；安全相关 Fuzz 无法运行时需报告原因、建议工具 / 版本及可继续完成的独立工作。
 - Fuzz 入口优先：`parse_archive_header`、`parse_index`、`decode_block` / 受限解压。设置可复现语料、资源上限、超时与 crash reproducer；不要在没有验证支持时直接声称 Windows fuzz runner 可用。
-- 已验证的 Windows runner：MSVC `/fsanitize=fuzzer`（`msvc-fuzz` preset，仅构建 `fuzz/` 目标）；目标、种子语料与运行命令见 `fuzz/` 和 [M1 记录](m1-validation.md)。普通构建的 `fuzz.replay.*` CTest 只重放种子语料，不等于 Fuzz。MSYS2 Clang / GCC 的 fuzzer 运行时未验证。
+- 已验证的 Windows runner：MSVC `/fsanitize=fuzzer`（`msvc-fuzz` preset，仅构建 `fuzz/` 目标）；目标（header、path，以及覆盖索引解析与块解码的 archive）、种子语料与运行命令见 `fuzz/`、[M1 记录](m1-validation.md)和 [M2 记录](m2-validation.md)。`fuzz/make_corpus.py` 可重新生成 archive 目标的种子。普通构建的 `fuzz.replay.*` CTest 只重放种子语料，不等于 Fuzz。MSYS2 Clang / GCC 的 fuzzer 运行时未验证。
 - Fuzz、Sanitizer、静态分析各自作用不同；固定的负面测试不能冒充 Fuzz，通过编译不能冒充动态检测。
 - 只安装测试工具不等于完成测试；必须记录实际运行命令、工具版本、持续时间 / 用例和结果。
 

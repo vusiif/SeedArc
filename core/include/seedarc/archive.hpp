@@ -67,9 +67,25 @@ struct BlockDescriptor {
     std::uint32_t codec_id = 0;
     std::uint32_t codec_config_id = 0;
     std::uint32_t raw_checksum = 0;
+
+    bool operator==(const BlockDescriptor &) const = default;
+};
+
+// Incremental CRC32C (ADR-0001 parameters) for data that is produced or read in pieces.
+class Crc32c {
+  public:
+    void update(std::span<const std::byte> bytes) noexcept;
+    [[nodiscard]] std::uint32_t value() const noexcept { return ~state_; }
+
+  private:
+    std::uint32_t state_ = 0xffffffffU;
 };
 
 [[nodiscard]] std::uint32_t crc32c(std::span<const std::byte> bytes) noexcept;
+
+// Field and limit checks shared by encode_header / decode_header and by index parsing.
+[[nodiscard]] std::expected<void, Error> validate_header(const ArchiveHeader &header,
+                                                         const ArchiveLimits &limits = {});
 
 [[nodiscard]] std::expected<std::array<std::byte, archive_header_bytes>, Error>
 encode_header(const ArchiveHeader &header, const ArchiveLimits &limits = {});

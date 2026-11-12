@@ -25,6 +25,25 @@ void write_le(std::span<std::byte> bytes, std::size_t offset, T value) noexcept 
     }
 }
 
+} // namespace
+
+void Crc32c::update(std::span<const std::byte> bytes) noexcept {
+    auto crc = state_;
+    for (const auto value : bytes) {
+        crc ^= std::to_integer<std::uint32_t>(value);
+        for (unsigned bit = 0; bit < 8; ++bit) {
+            crc = (crc >> 1) ^ ((crc & 1U) != 0 ? 0x82f63b78U : 0U);
+        }
+    }
+    state_ = crc;
+}
+
+std::uint32_t crc32c(std::span<const std::byte> bytes) noexcept {
+    Crc32c crc;
+    crc.update(bytes);
+    return crc.value();
+}
+
 std::expected<void, Error> validate_header(const ArchiveHeader &header,
                                            const ArchiveLimits &limits) {
     if (header.revision != 1 || header.flags != 0 || header.strategy_version != 0 ||
@@ -85,19 +104,6 @@ std::expected<void, Error> validate_header(const ArchiveHeader &header,
     }
     return {};
 }
-} // namespace
-
-std::uint32_t crc32c(std::span<const std::byte> bytes) noexcept {
-    std::uint32_t crc = 0xffffffffU;
-    for (const auto value : bytes) {
-        crc ^= std::to_integer<std::uint32_t>(value);
-        for (unsigned bit = 0; bit < 8; ++bit) {
-            crc = (crc >> 1) ^ ((crc & 1U) != 0 ? 0x82f63b78U : 0U);
-        }
-    }
-    return ~crc;
-}
-
 std::expected<std::array<std::byte, archive_header_bytes>, Error>
 encode_header(const ArchiveHeader &header, const ArchiveLimits &limits) {
     if (auto validation = validate_header(header, limits); !validation) {

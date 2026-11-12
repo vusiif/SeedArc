@@ -6,7 +6,7 @@ Seed-Driven Adaptive Compression：使用 C++23 开发的实验性文件与目�
 
 ## 状态与文档
 
-**当前进度以 [STATUS.md](STATUS.md) 为准**，本节只做简述。目前已有工程骨架、实验性归档头部 / 路径校验和 Windows 安全写入原语；CLI 仅支持帮助与版本，压缩、解压、校验及搜索尚未实现，归档格式为实验性且未冻结。
+**当前进度以 [STATUS.md](STATUS.md) 为准**，本节只做简述。目前已有工程骨架、实验性归档容器和 Windows 安全输入 / 输出；CLI 提供 `compress`、`verify`、`extract`，数据以 **Store（不压缩）** 方式保存，可逐字节往返。Zstd / LZMA2、种子与搜索尚未实现，归档格式为实验性且未冻结（不要用它保存唯一的数据副本）。
 
 在项目根目录使用 MSVC / VS 2026 构建：
 
@@ -16,6 +16,14 @@ cmake --build --preset msvc-vs2026-debug --parallel
 ctest --preset msvc-vs2026-debug
 ./build/msvc-vs2026-debug/cli/Debug/seedarc.exe --help
 ```
+
+```powershell
+seedarc compress <文件或目录> -o <归档>
+seedarc verify <归档>
+seedarc extract <归档> -o <新目录>
+```
+
+输出从不覆盖：归档和解压目录必须尚不存在，其父目录需位于本地 NTFS 卷。输入中的符号链接 / junction 会被拒绝。失败或取消不会留下半成品；仅当进程被强杀时，输出旁可能残留名为 `.seedarc-<hex>.tmp` 的临时文件或目录，可直接删除。退出码与限制见 `seedarc --help` 和 [ADR-0002](docs/decisions/0002-m2-store-archive-constraints.md)。
 
 Release 将上述 preset 名替换为 `msvc-vs2026-release`，可执行文件位于对应目录的 `cli/Release/`。GCC / Clang 用法及检查命令见[开发环境](docs/development.md)，各里程碑验证记录由 STATUS 链接。
 
