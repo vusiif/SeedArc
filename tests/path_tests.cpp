@@ -14,9 +14,18 @@ int main() {
             ++failures;
         }
     };
-    for (const auto name : {"file.txt", ".config", "folder/sub/file",
-                            "\xe4\xb8\xad\xe6\x96\x87.txt", "caf\xc3\xa9"}) {
+    for (const auto name : {"file.txt", ".config", "folder/sub/file"}) {
+        check(validate_archive_path(name).has_value(), "valid ASCII relative path");
+    }
+    for (const auto name : {"\xe4\xb8\xad\xe6\x96\x87.txt", "caf\xc3\xa9"}) {
+#ifdef _WIN32
         check(validate_archive_path(name).has_value(), "valid NFC relative path");
+#else
+        // Only the ASCII subset of the path profile exists off Windows (Linux L1).
+        const auto result = validate_archive_path(name);
+        check(!result && result.error().code == seedarc::ErrorCode::unsupported_feature,
+              "non-ASCII path explicitly unsupported off Windows");
+#endif
     }
     for (const auto name : {"",
                             ".",
@@ -49,6 +58,15 @@ int main() {
                             "\xf4\x90\x80\x80",
                             "cafe\xcc\x81"}) {
         check(!validate_archive_path(name), "reject malicious, malformed or ambiguous path");
+    }
+    // Malformed UTF-8 is an unsafe path on every platform (overlong, surrogate, > U+10FFFF,
+    // truncated, stray continuation, invalid lead bytes).
+    for (const auto name : {"\xc0\xaf", "\xc1\xbf", "\xe0\x80\xaf", "\xed\xa0\x80", "\xf0\x80\x80\xaf",
+                            "\xf4\x90\x80\x80", "\xf5\x80\x80\x80", "\xe4\xb8", "a\x80", "\xff",
+                            "ok/\xc3"}) {
+        const auto result = validate_archive_path(name);
+        check(!result && result.error().code == seedarc::ErrorCode::unsafe_path,
+              "malformed UTF-8 rejected as unsafe path");
     }
     check(!validate_archive_path(std::string_view{"a\0b", 3}), "reject embedded NUL");
     check(!validate_archive_path(std::string(256, 'x')), "component size limit");

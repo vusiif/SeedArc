@@ -151,6 +151,78 @@
         "PATH": "$env{SEEDARC_UCRT64_ROOT}/bin;$penv{PATH}"
       },
       "inherits": "vcpkg-mingw"
+    },
+    {
+      "name": "vcpkg-linux",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-linux",
+        "VCPKG_HOST_TRIPLET": "x64-linux",
+        "BUILD_TESTING": true,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "gcc-linux-debug",
+      "inherits": "vcpkg-linux",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "gcc-linux-release",
+      "inherits": "vcpkg-linux",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "clang-linux-debug",
+      "inherits": "vcpkg-linux",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "clang-linux-release",
+      "inherits": "vcpkg-linux",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "clang-linux-asan-ubsan",
+      "displayName": "Clang ASan + UBSan (all runnable tests)",
+      "inherits": "vcpkg-linux",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-sanitize-recover=undefined -fno-omit-frame-pointer",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined -fno-sanitize-recover=undefined"
+      }
+    },
+    {
+      "name": "clang-linux-fuzz",
+      "displayName": "Clang libFuzzer + ASan + UBSan (fuzz targets only)",
+      "inherits": "vcpkg-linux",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "BUILD_TESTING": false,
+        "SEEDARC_BUILD_FUZZERS": true
+      }
     }
   ],
   "buildPresets": [
@@ -193,6 +265,35 @@
       "name": "clang-ucrt64-release",
       "configurePreset": "clang-ucrt64-release",
       "configuration": "Release"
+    },
+    {
+      "name": "gcc-linux-debug",
+      "configurePreset": "gcc-linux-debug"
+    },
+    {
+      "name": "gcc-linux-release",
+      "configurePreset": "gcc-linux-release"
+    },
+    {
+      "name": "clang-linux-debug",
+      "configurePreset": "clang-linux-debug"
+    },
+    {
+      "name": "clang-linux-release",
+      "configurePreset": "clang-linux-release"
+    },
+    {
+      "name": "clang-linux-asan-ubsan",
+      "configurePreset": "clang-linux-asan-ubsan"
+    },
+    {
+      "name": "clang-linux-fuzz",
+      "configurePreset": "clang-linux-fuzz",
+      "targets": [
+        "seedarc_fuzz_header",
+        "seedarc_fuzz_path",
+        "seedarc_fuzz_archive"
+      ]
     }
   ],
   "testPresets": [
@@ -260,6 +361,45 @@
       },
       "execution": {
         "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "linux-tests",
+      "hidden": true,
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "gcc-linux-debug",
+      "inherits": "linux-tests",
+      "configurePreset": "gcc-linux-debug"
+    },
+    {
+      "name": "gcc-linux-release",
+      "inherits": "linux-tests",
+      "configurePreset": "gcc-linux-release"
+    },
+    {
+      "name": "clang-linux-debug",
+      "inherits": "linux-tests",
+      "configurePreset": "clang-linux-debug"
+    },
+    {
+      "name": "clang-linux-release",
+      "inherits": "linux-tests",
+      "configurePreset": "clang-linux-release"
+    },
+    {
+      "name": "clang-linux-asan-ubsan",
+      "inherits": "linux-tests",
+      "configurePreset": "clang-linux-asan-ubsan",
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:abort_on_error=1:strict_string_checks=1:detect_stack_use_after_return=1",
+        "UBSAN_OPTIONS": "print_stacktrace=1:halt_on_error=1"
       }
     }
   ]

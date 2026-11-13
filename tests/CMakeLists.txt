@@ -92,12 +92,45 @@ if(WIN32)
     set_tests_properties(codec.zstd_bounded_memory PROPERTIES TIMEOUT 600)
     add_test(NAME codec.lzma2_bounded_memory COMMAND seedarc_store_memory_test "${PROJECT_SOURCE_DIR}/.sandbox-test" 64 lzma2 32)
     set_tests_properties(codec.lzma2_bounded_memory PROPERTIES TIMEOUT 600)
+else()
+    # Linux L1: the in-memory codec boundary tests run everywhere; the archive half of
+    # codec_tests.cpp needs input enumeration and safe output (Windows only until L2 / L3).
+    add_executable(seedarc_codec_tests codec_tests.cpp)
+    target_link_libraries(seedarc_codec_tests PRIVATE SeedArc::core)
+    target_include_directories(seedarc_codec_tests PRIVATE "${PROJECT_SOURCE_DIR}/core")
+    seedarc_target_defaults(seedarc_codec_tests)
+    add_test(NAME codec.boundary COMMAND seedarc_codec_tests --boundary-only)
+    set_tests_properties(codec.boundary PROPERTIES TIMEOUT 60)
+
+    # Tests that need Windows input enumeration (L2) or safe output (L3). They are registered
+    # as DISABLED so that CTest lists them as "Not Run" instead of silently omitting them.
+    set(seedarc_skipped_tests
+        "seed.archive_integration|compresses real directory trees (input enumeration, L2)"
+        "seed.adaptive_file|reads real input files (input enumeration, L2)"
+        "filesystem.safe_output|NT safe output and fault injection (safe output, L3)"
+        "archive.store_round_trip|compress + extract on disk (L2 + L3)"
+        "archive.store_acceptance|compress + extract on disk (L2 + L3)"
+        "codec.round_trip|archive half of codec_tests: compress + extract on disk (L2 + L3)"
+        "archive.store_bounded_memory|compress + extract on disk, Windows psapi (L2 + L3)"
+        "codec.zstd_bounded_memory|compress + extract on disk, Windows psapi (L2 + L3)"
+        "codec.lzma2_bounded_memory|compress + extract on disk, Windows psapi (L2 + L3)"
+        "cli.round_trip|CLI compress + extract on disk (L2 + L3)"
+        "cli.codec_round_trip|CLI compress + extract on disk (L2 + L3)")
+    foreach(entry IN LISTS seedarc_skipped_tests)
+        string(REPLACE "|" ";" fields "${entry}")
+        list(GET fields 0 name)
+        list(GET fields 1 reason)
+        add_test(NAME ${name} COMMAND "${CMAKE_COMMAND}" -E echo "skipped: ${reason}")
+        set_tests_properties(${name} PROPERTIES DISABLED TRUE LABELS "windows-only")
+    endforeach()
 endif()
 
 set(cli_cases help short_help help_command version missing unknown extra search benchmark
     compress_usage extract_usage verify_usage verify_missing codec_usage)
 if(WIN32)
     list(APPEND cli_cases round_trip codec_round_trip)
+else()
+    list(APPEND cli_cases posix_unsupported)
 endif()
 foreach(case IN LISTS cli_cases)
     add_test(NAME cli.${case}
@@ -106,6 +139,7 @@ foreach(case IN LISTS cli_cases)
             "-DSEEDARC_VERSION=${PROJECT_VERSION}"
             "-DCASE=${case}"
             "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/cli-work-$<CONFIG>"
+            "-DSEEDARC_FIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/fixtures/m3"
             -P "${CMAKE_CURRENT_SOURCE_DIR}/check_cli.cmake")
     set_tests_properties(cli.${case} PROPERTIES TIMEOUT 60)
 endforeach()
