@@ -1,0 +1,203 @@
+diff --git a/core/CMakeLists.txt b/core/CMakeLists.txt
+index c75e125..613c34b 100644
+--- a/core/CMakeLists.txt
++++ b/core/CMakeLists.txt
+@@ -20,7 +20,9 @@ target_link_libraries(libseedarc PRIVATE zstd::libzstd liblzma::liblzma)
+ 
+ # Seed candidates stay outside the production archive library until experimental selection.
+ if((BUILD_TESTING AND NOT SEEDARC_BUILD_FUZZERS) OR SEEDARC_BUILD_RESEARCH_TOOLS)
+-    add_library(seedarc_seed_study STATIC seed/strategy.cpp)
++    add_library(seedarc_seed_study STATIC seed/strategy.cpp seed/file_overrides.cpp
++        seed/path_overrides.cpp seed/archive_study.cpp)
++    target_link_libraries(seedarc_seed_study PRIVATE SeedArc::core)
+     target_include_directories(seedarc_seed_study PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
+         "${CMAKE_CURRENT_SOURCE_DIR}/include")
+     target_include_directories(seedarc_seed_study PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
+diff --git a/core/store_archive.cpp b/core/store_archive.cpp
+index ae79447..5b4736c 100644
+--- a/core/store_archive.cpp
++++ b/core/store_archive.cpp
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-3.0-or-later
+ #include "seedarc/store_archive.hpp"
+ 
++#include "archive_plan.hpp"
+ #include "codec/codec.hpp"
+ #include "filesystem/input_tree.hpp"
+ #include "seedarc/archive_index.hpp"
+@@ -518,10 +519,16 @@ std::expected<ArchiveSummary, Error> extract_archive(const fs::path &archive,
+     return result;
+ }
+ 
+-std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+-                                                      const fs::path &output_archive,
+-                                                      const CompressOptions &options,
+-                                                      std::stop_token stop) {
++namespace {
++std::expected<ArchiveSummary, Error> compress_archive_impl(const fs::path &input,
++                                                           const fs::path &output_archive,
++                                                           const CompressOptions &options,
++                                                           const internal::PlanBuilder *builder,
++                                                           const std::stop_token &stop) {
++    if (builder && (!*builder || options.codec != Codec::store || options.level)) {
++        return std::unexpected(Error{ErrorCode::invalid_argument,
++                                     "planned encoding requires a builder and no fixed codec"});
++    }
+     const auto &limits = options.limits;
+     if (options.chunk_size_bytes == 0) {
+         return std::unexpected(Error{ErrorCode::invalid_argument, "chunk size must not be zero"});
+@@ -529,7 +536,7 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+     if (options.chunk_size_bytes > limits.max_chunk_bytes) {
+         return std::unexpected(Error{ErrorCode::resource_limit, "chunk size exceeds the limit"});
+     }
+-    const auto codec_id = static_cast<std::uint32_t>(options.codec);
++    auto codec_id = static_cast<std::uint32_t>(options.codec);
+     std::uint32_t config = 0;
+     std::optional<codec::Encoder> encoder;
+     if (options.codec == Codec::store) {
+@@ -603,6 +610,31 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+     if (const auto provisional = encode_header(header, limits); !provisional) {
+         return std::unexpected(provisional.error());
+     }
++    std::vector<internal::BlockEncoding> plans;
++    bool needs_encoding = encoder.has_value();
++    if (builder) {
++        if (stop.stop_requested()) {
++            return std::unexpected(cancelled());
++        }
++        auto generated = (*builder)(index.entries, block_count);
++        if (!generated) {
++            return std::unexpected(generated.error());
++        }
++        if (generated->size() != block_count) {
++            return std::unexpected(Error{ErrorCode::invalid_argument, "block plan count mismatch"});
++        }
++        for (const auto &plan : *generated) {
++            if (!codec::valid_block_codec(static_cast<std::uint32_t>(plan.codec), plan.config)) {
++                return std::unexpected(
++                    Error{ErrorCode::invalid_argument, "invalid block encoding plan"});
++            }
++            needs_encoding = needs_encoding || plan.codec != Codec::store;
++        }
++        plans = std::move(*generated);
++        if (stop.stop_requested()) {
++            return std::unexpected(cancelled());
++        }
++    }
+     if (auto reserved = output->reserve_prefix(archive_header_bytes); !reserved) {
+         return std::unexpected(reserved.error());
+     }
+@@ -610,8 +642,8 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+     const auto chunk_capacity =
+         static_cast<std::size_t>((std::min)(std::uint64_t{options.chunk_size_bytes}, total));
+     std::vector<std::byte> buffer(chunk_capacity); // one chunk at most
+-    std::vector<std::byte> packed(encoder ? chunk_capacity : 0);
+-    std::vector<std::byte> check(encoder ? chunk_capacity : 0);
++    std::vector<std::byte> packed(needs_encoding ? chunk_capacity : 0);
++    std::vector<std::byte> check(needs_encoding ? chunk_capacity : 0);
+     codec::Decoder decoder;
+     std::uint64_t offset = 0;
+     std::size_t block = 0;
+@@ -646,6 +678,22 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+             const auto checksum = crc32c(chunk);
+             std::span<const std::byte> stored = chunk;
+             BlockDescriptor descriptor{offset, want, want, codec::store_id, 0, checksum};
++            if (builder) {
++                const auto &plan = plans[block];
++                const auto next_codec = static_cast<std::uint32_t>(plan.codec);
++                if (next_codec != codec_id || plan.config != config) {
++                    encoder.reset(); // At most one live encoder, including codec switches.
++                    if (plan.codec != Codec::store) {
++                        auto created = codec::Encoder::create(next_codec, plan.config);
++                        if (!created) {
++                            return std::unexpected(created.error());
++                        }
++                        encoder.emplace(std::move(*created));
++                    }
++                    codec_id = next_codec;
++                    config = plan.config;
++                }
++            }
+             if (encoder) {
+                 const auto size = encoder->encode(chunk, std::span{packed}.first(want - 1));
+                 if (!size) {
+@@ -707,6 +755,21 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+     }
+     return ArchiveSummary{header.entry_count, block_count, total, archive_bytes};
+ }
++} // namespace
++
++std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
++                                                      const fs::path &output_archive,
++                                                      const CompressOptions &options,
++                                                      std::stop_token stop) {
++    return compress_archive_impl(input, output_archive, options, nullptr, stop);
++}
++
++std::expected<ArchiveSummary, Error>
++internal::compress_archive_planned(const fs::path &input, const fs::path &output_archive,
++                                   const CompressOptions &options, const PlanBuilder &builder,
++                                   const std::stop_token &stop) {
++    return compress_archive_impl(input, output_archive, options, &builder, stop);
++}
+ 
+ std::string codec_library_versions() { return codec::library_versions(); }
+ } // namespace seedarc::experimental
+diff --git a/research/tools/CMakeLists.txt b/research/tools/CMakeLists.txt
+index 8bfc1b0..e4b2831 100644
+--- a/research/tools/CMakeLists.txt
++++ b/research/tools/CMakeLists.txt
+@@ -2,3 +2,17 @@
+ add_executable(seedarc_seed_plan seed_plan.cpp)
+ target_link_libraries(seedarc_seed_plan PRIVATE seedarc_seed_study)
+ seedarc_target_defaults(seedarc_seed_plan)
++
++add_executable(seedarc_seed_scope_plan seed_scope_plan.cpp)
++target_link_libraries(seedarc_seed_scope_plan PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_scope_plan)
++
++add_executable(seedarc_seed_scope_contract seed_scope_contract.cpp)
++target_link_libraries(seedarc_seed_scope_contract PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_scope_contract)
++
++if(WIN32)
++    add_executable(seedarc_seed_archive seed_archive.cpp)
++    target_link_libraries(seedarc_seed_archive PRIVATE seedarc_seed_study psapi shell32)
++    seedarc_target_defaults(seedarc_seed_archive)
++endif()
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 6576214..c4e2782 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -11,6 +11,18 @@ seedarc_target_defaults(seedarc_seed_strategy_tests)
+ add_test(NAME seed.candidate_plans COMMAND seedarc_seed_strategy_tests)
+ set_tests_properties(seed.candidate_plans PROPERTIES TIMEOUT 10)
+ 
++add_executable(seedarc_seed_file_override_tests seed_file_override_tests.cpp)
++target_link_libraries(seedarc_seed_file_override_tests PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_file_override_tests)
++add_test(NAME seed.file_rank_overrides COMMAND seedarc_seed_file_override_tests)
++set_tests_properties(seed.file_rank_overrides PROPERTIES TIMEOUT 10)
++
++add_executable(seedarc_seed_path_override_tests seed_path_override_tests.cpp)
++target_link_libraries(seedarc_seed_path_override_tests PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_path_override_tests)
++add_test(NAME seed.path_rank_overrides COMMAND seedarc_seed_path_override_tests)
++set_tests_properties(seed.path_rank_overrides PROPERTIES TIMEOUT 10)
++
+ add_executable(seedarc_m3_compatibility_tests m3_compatibility_tests.cpp)
+ target_link_libraries(seedarc_m3_compatibility_tests PRIVATE SeedArc::core)
+ seedarc_target_defaults(seedarc_m3_compatibility_tests)
+@@ -27,6 +39,12 @@ foreach(suite IN ITEMS archive path index)
+ endforeach()
+ 
+ if(WIN32)
++    add_executable(seedarc_seed_archive_tests seed_archive_tests.cpp)
++    target_link_libraries(seedarc_seed_archive_tests PRIVATE seedarc_seed_study)
++    seedarc_target_defaults(seedarc_seed_archive_tests)
++    add_test(NAME seed.archive_integration COMMAND seedarc_seed_archive_tests "${PROJECT_SOURCE_DIR}/.sandbox-test")
++    set_tests_properties(seed.archive_integration PROPERTIES TIMEOUT 120)
++
+     add_executable(seedarc_safe_output_tests safe_output_tests.cpp)
+     target_link_libraries(seedarc_safe_output_tests PRIVATE SeedArc::core)
+     # Internal test seam (fault injection, volume-root predicate); not a public header.

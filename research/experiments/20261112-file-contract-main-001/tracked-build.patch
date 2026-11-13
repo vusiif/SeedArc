@@ -1,0 +1,54 @@
+diff --git a/core/CMakeLists.txt b/core/CMakeLists.txt
+index c75e125..0ece730 100644
+--- a/core/CMakeLists.txt
++++ b/core/CMakeLists.txt
+@@ -20,7 +20,9 @@ target_link_libraries(libseedarc PRIVATE zstd::libzstd liblzma::liblzma)
+ 
+ # Seed candidates stay outside the production archive library until experimental selection.
+ if((BUILD_TESTING AND NOT SEEDARC_BUILD_FUZZERS) OR SEEDARC_BUILD_RESEARCH_TOOLS)
+-    add_library(seedarc_seed_study STATIC seed/strategy.cpp)
++    add_library(seedarc_seed_study STATIC seed/strategy.cpp seed/file_overrides.cpp
++        seed/path_overrides.cpp)
++    target_link_libraries(seedarc_seed_study PRIVATE SeedArc::core)
+     target_include_directories(seedarc_seed_study PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
+         "${CMAKE_CURRENT_SOURCE_DIR}/include")
+     target_include_directories(seedarc_seed_study PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
+diff --git a/research/tools/CMakeLists.txt b/research/tools/CMakeLists.txt
+index 8bfc1b0..6cda477 100644
+--- a/research/tools/CMakeLists.txt
++++ b/research/tools/CMakeLists.txt
+@@ -2,3 +2,11 @@
+ add_executable(seedarc_seed_plan seed_plan.cpp)
+ target_link_libraries(seedarc_seed_plan PRIVATE seedarc_seed_study)
+ seedarc_target_defaults(seedarc_seed_plan)
++
++add_executable(seedarc_seed_scope_plan seed_scope_plan.cpp)
++target_link_libraries(seedarc_seed_scope_plan PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_scope_plan)
++
++add_executable(seedarc_seed_scope_contract seed_scope_contract.cpp)
++target_link_libraries(seedarc_seed_scope_contract PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_scope_contract)
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 6576214..f107fd2 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -11,6 +11,18 @@ seedarc_target_defaults(seedarc_seed_strategy_tests)
+ add_test(NAME seed.candidate_plans COMMAND seedarc_seed_strategy_tests)
+ set_tests_properties(seed.candidate_plans PROPERTIES TIMEOUT 10)
+ 
++add_executable(seedarc_seed_file_override_tests seed_file_override_tests.cpp)
++target_link_libraries(seedarc_seed_file_override_tests PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_file_override_tests)
++add_test(NAME seed.file_rank_overrides COMMAND seedarc_seed_file_override_tests)
++set_tests_properties(seed.file_rank_overrides PROPERTIES TIMEOUT 10)
++
++add_executable(seedarc_seed_path_override_tests seed_path_override_tests.cpp)
++target_link_libraries(seedarc_seed_path_override_tests PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_path_override_tests)
++add_test(NAME seed.path_rank_overrides COMMAND seedarc_seed_path_override_tests)
++set_tests_properties(seed.path_rank_overrides PROPERTIES TIMEOUT 10)
++
+ add_executable(seedarc_m3_compatibility_tests m3_compatibility_tests.cpp)
+ target_link_libraries(seedarc_m3_compatibility_tests PRIVATE SeedArc::core)
+ seedarc_target_defaults(seedarc_m3_compatibility_tests)

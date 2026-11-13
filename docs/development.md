@@ -43,7 +43,7 @@ ctest --preset gcc-ucrt64-debug
 
 ### CLion MCP 检查
 
-开发时使用 CLion MCP 实际检查相关文件，`get_file_problems` 要求 `errorsOnly=false`，保留 warning 与 error；记录文件范围与是否超时。通过 `get_compiler_info` 核对活动语言标准 / 编译选项，通过 `get_run_configurations` 发现真实运行配置。使用本项目绝对 projectPath；连接信息从已有客户端配置或 IDE 设置取得，不硬编码端口。
+CLion MCP 按较大开发阶段集中检查：日常小步修改以编译器警告、相关测试和格式检查验证；一个完整研究迭代、功能接入或里程碑验收前，统一检查本阶段相关文件。IDE 独有报错、工具链 / CMake 配置问题或用户指出具体提示时，中途按需检查。纯文档修改无需调用。所有参与 Agent 沿用此节奏，可由协调者在阶段集成后统一检查。服务不可用或超时时记录未覆盖范围与补查安排，继续不受影响的开发，不把未完成检查记为通过。具体诊断时，`get_file_problems` 要求 `errorsOnly=false`，保留 warning 与 error；记录文件范围与是否超时。通过 `get_compiler_info` 核对活动语言标准 / 编译选项，通过 `get_run_configurations` 发现真实运行配置。使用本项目绝对 projectPath；连接信息从已有客户端配置或 IDE 设置取得，不硬编码端口。
 
 **超时的已知原因（CLion 2026.3 / Nova 引擎，2026-11-11 实测）**：
 

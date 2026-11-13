@@ -1,0 +1,579 @@
+[
+  {
+    "file": "core/store_archive.cpp",
+    "result": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/core/store_archive.cpp",
+      "errors": [
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "Error cancelled() { return {ErrorCode::cancelled, \"operation cancelled\"}; }",
+          "line": 24,
+          "column": 28
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "    return std::unexpected(Error{ErrorCode::malformed_archive, std::move(message)});",
+          "line": 27,
+          "column": 33
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            Error{ErrorCode::invalid_argument, \"output path must name a new file or directory\"});",
+          "line": 39,
+          "column": 18
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::Target",
+          "lineContent": "        return Target{absolute.parent_path(), std::string{name.begin(), name.end()}};",
+          "line": 55,
+          "column": 22
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            Error{ErrorCode::unsafe_path, \"output name cannot be represented as UTF-8\"});",
+          "line": 58,
+          "column": 18
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'bytes' 可被设为 常量",
+          "lineContent": "    explicit MemorySource(std::span<const std::byte> bytes) : bytes_(bytes) {}",
+          "line": 74,
+          "column": 54
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'offset' 可被设为 常量",
+          "lineContent": "    [[nodiscard]] std::expected<void, Error> read_at(std::uint64_t offset,",
+          "line": 76,
+          "column": 68
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "        std::ranges::copy(bytes_.subspan(static_cast<std::size_t>(offset), out.size()),",
+          "line": 81,
+          "column": 42
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            return std::unexpected(Error{ErrorCode::io_error, \"cannot open archive for reading\"});",
+          "line": 95,
+          "column": 41
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            return std::unexpected(Error{ErrorCode::io_error, \"cannot determine archive size\"});",
+          "line": 100,
+          "column": 41
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'offset' 可被设为 常量",
+          "lineContent": "    [[nodiscard]] std::expected<void, Error> read_at(std::uint64_t offset,",
+          "line": 106,
+          "column": 68
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            return std::unexpected(Error{ErrorCode::io_error, \"archive read failed\"});",
+          "line": 116,
+          "column": 41
+        },
+        {
+          "severity": "INFO",
+          "description": "British roots ending with '-our' usually have '-or' in American English",
+          "lineContent": "    // empty files) still honours a cancellation instead of reporting success.",
+          "line": 142,
+          "column": 27
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "    std::vector<std::byte> index_bytes(static_cast<std::size_t>(header->index_bytes));",
+          "line": 166,
+          "column": 40
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "            const auto number = static_cast<std::size_t>(entry.first_block + i);",
+          "line": 201,
+          "column": 33
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "            buffer.resize(static_cast<std::size_t>(block.stored_size));",
+          "line": 203,
+          "column": 27
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "                decoded.resize(static_cast<std::size_t>(block.raw_size));",
+          "line": 211,
+          "column": 32
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "                    Error{ErrorCode::integrity_error,",
+          "line": 221,
+          "column": 26
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::ArchiveSummary",
+          "lineContent": "    return ArchiveSummary{header->entry_count, header->block_count, header->total_output,",
+          "line": 235,
+          "column": 26
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::ExtractSink::Created",
+          "lineContent": "        created_.push_back({*id, parent_entry(), std::string{*name}, true});",
+          "line": 273,
+          "column": 28
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::ExtractSink::Created",
+          "lineContent": "        pending_ = {file->identity(), parent_entry(), std::string{*name}, false};",
+          "line": 288,
+          "column": 20
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'bytes' 可被设为 常量",
+          "lineContent": "    [[nodiscard]] std::expected<void, Error> data(std::span<const std::byte> bytes) override {",
+          "line": 293,
+          "column": 78
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            return std::unexpected(Error{ErrorCode::io_error, \"extraction never started\"});",
+          "line": 319,
+          "column": 41
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'item' 可替换为结构化绑定",
+          "lineContent": "            const auto &item = created_[k];",
+          "line": 406,
+          "column": 25
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "                    Error{ErrorCode::io_error, \"internal error: staged tree order\"});",
+          "line": 412,
+          "column": 26
+        },
+        {
+          "severity": "WARN",
+          "description": "为每次调用复制形参 'stop'，考虑通过常量引用传递",
+          "lineContent": "verify_archive(const fs::path &archive, const ArchiveLimits &limits, std::stop_token stop) {",
+          "line": 473,
+          "column": 86
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'archive' 可被设为 常量",
+          "lineContent": "std::expected<ArchiveSummary, Error> verify_archive_bytes(std::span<const std::byte> archive,",
+          "line": 482,
+          "column": 86
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "        return std::unexpected(Error{ErrorCode::invalid_argument,",
+          "line": 529,
+          "column": 37
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "        return std::unexpected(Error{ErrorCode::invalid_argument, \"chunk size must not be zero\"});",
+          "line": 534,
+          "column": 37
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "        return std::unexpected(Error{ErrorCode::resource_limit, \"chunk size exceeds the limit\"});",
+          "line": 537,
+          "column": 37
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "                Error{ErrorCode::invalid_argument, \"Store does not take a compression level\"});",
+          "line": 545,
+          "column": 22
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::IndexEntry",
+          "lineContent": "        index.entries.push_back({entry.path, entry.directory, entry.size, block_count, blocks});",
+          "line": 588,
+          "column": 33
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "                Error{ErrorCode::resource_limit, \"input needs more blocks than the limit\"});",
+          "line": 592,
+          "column": 22
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "    index.blocks.resize(static_cast<std::size_t>(block_count));",
+          "line": 597,
+          "column": 25
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            return std::unexpected(Error{ErrorCode::invalid_argument, \"block plan count mismatch\"});",
+          "line": 624,
+          "column": 41
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'plan' 可替换为结构化绑定",
+          "lineContent": "        for (const auto &plan : *generated) {",
+          "line": 626,
+          "column": 26
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "                    Error{ErrorCode::invalid_argument, \"invalid block encoding plan\"});",
+          "line": 629,
+          "column": 26
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "                    Error{ErrorCode::io_error,",
+          "line": 675,
+          "column": 26
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::BlockDescriptor",
+          "lineContent": "            BlockDescriptor descriptor{offset, want, want, codec::store_id, 0, checksum};",
+          "line": 680,
+          "column": 39
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'plan' 可替换为结构化绑定",
+          "lineContent": "                const auto &plan = plans[block];",
+          "line": 682,
+          "column": 29
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'next_codec' 可被移动到if-init-statement中",
+          "lineContent": "                const auto next_codec = static_cast<std::uint32_t>(plan.codec);",
+          "line": 683,
+          "column": 28
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "                            Error{ErrorCode::integrity_error,",
+          "line": 709,
+          "column": 34
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::BlockDescriptor",
+          "lineContent": "                    descriptor = {offset, *size, want, codec_id, config, checksum};",
+          "line": 715,
+          "column": 34
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "        return std::unexpected(Error{ErrorCode::io_error, \"internal error: archive layout\"});",
+          "line": 739,
+          "column": 37
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::ArchiveSummary",
+          "lineContent": "    return ArchiveSummary{header.entry_count, block_count, total, archive_bytes};",
+          "line": 756,
+          "column": 26
+        },
+        {
+          "severity": "WARN",
+          "description": "为每次调用复制形参 'stop'，考虑通过常量引用传递",
+          "lineContent": "                                                      std::stop_token stop) {",
+          "line": 763,
+          "column": 71
+        }
+      ]
+    }
+  },
+  {
+    "file": "core/seed/archive_study.cpp",
+    "result": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/archive_study.cpp",
+      "errors": [
+        {
+          "severity": "INFO",
+          "description": "形参 'overrides' 可被设为 常量",
+          "lineContent": "                    std::span<const PathRankOverride> overrides, Candidate candidate,",
+          "line": 10,
+          "column": 55
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'candidate' 可被设为 常量",
+          "lineContent": "                    std::span<const PathRankOverride> overrides, Candidate candidate,",
+          "line": 10,
+          "column": 76
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'catalog_revision' 可被设为 常量",
+          "lineContent": "                    std::uint32_t catalog_revision, const std::stop_token &stop) {",
+          "line": 11,
+          "column": 35
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "        return std::unexpected(Error{ErrorCode::unsupported_feature, \"unsupported B2 study rules\"});",
+          "line": 13,
+          "column": 30
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'entries' 可被设为 常量",
+          "lineContent": "        [&](std::span<const IndexEntry> entries,",
+          "line": 17,
+          "column": 34
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'count' 可被设为 常量",
+          "lineContent": "            std::uint64_t count) -> std::expected<std::vector<internal::BlockEncoding>, Error> {",
+          "line": 18,
+          "column": 20
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            return std::unexpected(Error{ErrorCode::resource_limit, \"B2 study plan limit\"});",
+          "line": 20,
+          "column": 34
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "        blocks.reserve(static_cast<std::size_t>(count));",
+          "line": 23,
+          "column": 17
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "                return std::unexpected(Error{ErrorCode::resource_limit, \"B2 study file limit\"});",
+          "line": 30,
+          "column": 38
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "            report.files.push_back({i, entry.path});",
+          "line": 32,
+          "column": 29
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "                blocks.push_back({i, local, entry.first_block + local});",
+          "line": 34,
+          "column": 27
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'block' 可替换为结构化绑定",
+          "lineContent": "        for (const auto &block : report.planned) {",
+          "line": 45,
+          "column": 19
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::internal::BlockEncoding",
+          "lineContent": "            result.push_back({block.plan.codec, block.plan.level});",
+          "line": 46,
+          "column": 23
+        }
+      ]
+    }
+  },
+  {
+    "file": "research/tools/seed_archive.cpp",
+    "result": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp",
+      "errors": [
+        {
+          "severity": "INFO",
+          "description": "拼写错误: 在单词 'NOMINMAX' 中",
+          "lineContent": "#define NOMINMAX",
+          "line": 12,
+          "column": 9
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'value' 可被设为 常量",
+          "lineContent": "void json_string(std::string_view value) {",
+          "line": 34,
+          "column": 35
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'c' 可被移动到if-init-statement中",
+          "lineContent": "        const auto c = static_cast<unsigned char>(raw);",
+          "line": 37,
+          "column": 20
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "        return std::unexpected(seedarc::Error{seedarc::ErrorCode::io_error, \"read header failed\"});",
+          "line": 67,
+          "column": 46
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "    std::vector<std::byte> index(static_cast<std::size_t>(header->index_bytes));",
+          "line": 74,
+          "column": 34
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "        return std::unexpected(seedarc::Error{seedarc::ErrorCode::io_error, \"read index failed\"});",
+          "line": 77,
+          "column": 46
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'fixed' 可被移动到if-init-statement中",
+          "lineContent": "    const bool fixed = mode == \"store\" || mode == \"zstd3\" || mode == \"zstd6\" || mode == \"lzma6\";",
+          "line": 113,
+          "column": 16
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "            edits.push_back({std::string(target), 5, std::nullopt});",
+          "line": 125,
+          "column": 29
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "                                                 {0, mode == \"b-base\" ? 2U : 3U, 6}, edits);",
+          "line": 128,
+          "column": 50
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'entries' 可被设为 常量",
+          "lineContent": "        const internal::PlanBuilder builder = [&](std::span<const IndexEntry> entries,",
+          "line": 138,
+          "column": 79
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'count' 可被设为 常量",
+          "lineContent": "                                                  std::uint64_t count)",
+          "line": 139,
+          "column": 65
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "                    seedarc::Error{seedarc::ErrorCode::resource_limit, \"study limit\"});",
+          "line": 143,
+          "column": 35
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "                    report.files.push_back({i, entries[i].path});",
+          "line": 147,
+          "column": 44
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlannedBlock",
+          "lineContent": "                            {{i, local, entries[i].first_block + local}, {codec, config}});",
+          "line": 150,
+          "column": 29
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "                            {{i, local, entries[i].first_block + local}, {codec, config}});",
+          "line": 150,
+          "column": 30
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockPlan",
+          "lineContent": "                            {{i, local, entries[i].first_block + local}, {codec, config}});",
+          "line": 150,
+          "column": 74
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "            return std::vector<internal::BlockEncoding>(static_cast<std::size_t>(count),",
+          "line": 154,
+          "column": 57
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::internal::BlockEncoding",
+          "lineContent": "                                                        {codec, config});",
+          "line": 155,
+          "column": 57
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'p' 可替换为结构化绑定",
+          "lineContent": "        const auto &p = report.planned[i];",
+          "line": 188,
+          "column": 21
+        },
+        {
+          "severity": "INFO",
+          "description": "局部变量 'wide' 可被设为 常量",
+          "lineContent": "    int count = 0;",
+          "line": 207,
+          "column": 10
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,88 @@
+CMake is re-running because C:/Users/IceLolly/Music/Clion/SeedArc/build/msvc-asan/core/CMakeFiles/generate.stamp is out-of-date.
+  the file 'C:/Users/IceLolly/Music/Clion/SeedArc/core/CMakeLists.txt'
+  is newer than 'C:/Users/IceLolly/Music/Clion/SeedArc/build/msvc-asan/core/CMakeFiles/generate.stamp.depend'
+  result='-1'
+-- Running vcpkg install
+waiting to take filesystem lock on C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\.vcpkg-root...
+Detecting compiler hash for triplet x64-windows...
+Compiler found: C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe
+Detecting compiler hash for triplet x64-windows-static-md...
+Compiler found: C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe
+The following packages are already installed:
+    liblzma:x64-windows-static-md@5.8.4
+  * vcpkg-cmake:x64-windows@2025-08-07
+  * vcpkg-cmake-config:x64-windows@2026-07-21
+    zstd:x64-windows-static-md@1.5.7
+liblzma is compatible with built-in CMake targets:
+
+    find_package(LibLZMA REQUIRED)
+    target_link_libraries(main PRIVATE LibLZMA::LibLZMA)
+
+liblzma provides CMake targets:
+
+    find_package(liblzma CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE liblzma::liblzma)
+
+zstd provides CMake targets:
+
+  find_package(zstd CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE zstd::libzstd)
+
+All requested installations completed successfully in: 714 us
+-- Running vcpkg install - done
+-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.19045.
+-- Configuring done (6.5s)
+-- Generating done (0.2s)
+-- Build files have been written to: C:/Users/IceLolly/Music/Clion/SeedArc/build/msvc-asan
+适用于 .NET Framework MSBuild 版本 18.6.3+84d3e95b4
+
+  正在扫描源以查找模块依赖项...
+  store_archive.cpp
+  正在编译...
+  store_archive.cpp
+  libseedarc.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\core\Release\libseedarc.lib
+  正在扫描源以查找模块依赖项...
+  seedarc_archive_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_archive_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_cli.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\cli\Release\seedarc.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_codec_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_codec_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_core_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_core_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_fuzz_replay_archive.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\fuzz\Release\seedarc_fuzz_replay_archive.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_fuzz_replay_header.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\fuzz\Release\seedarc_fuzz_replay_header.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_fuzz_replay_path.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\fuzz\Release\seedarc_fuzz_replay_path.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_index_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_index_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_m3_compatibility_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_m3_compatibility_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_path_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_path_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_safe_output_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_safe_output_tests.exe
+  正在扫描源以查找模块依赖项...
+  archive_study.cpp
+  正在编译...
+  archive_study.cpp
+  seedarc_seed_study.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\core\Release\seedarc_seed_study.lib
+  Building Custom Rule C:/Users/IceLolly/Music/Clion/SeedArc/tests/CMakeLists.txt
+  正在扫描源以查找模块依赖项...
+  seed_archive_tests.cpp
+  正在编译...
+  seed_archive_tests.cpp
+  seedarc_seed_archive_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_seed_archive_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_seed_file_override_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_seed_file_override_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_seed_path_override_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_seed_path_override_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_seed_strategy_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_seed_strategy_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_store_acceptance_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_store_acceptance_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_store_archive_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_store_archive_tests.exe
+  正在扫描源以查找模块依赖项...
+  seedarc_store_memory_test.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-asan\tests\Release\seedarc_store_memory_test.exe

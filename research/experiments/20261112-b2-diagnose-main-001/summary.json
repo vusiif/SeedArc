@@ -1,0 +1,3658 @@
+{
+  "boundaries_identical": {
+    "binary": true,
+    "compressed": true,
+    "mixed": true,
+    "source": true,
+    "text": true
+  },
+  "archives_identical_to_b2_r3": {
+    "binary/store": true,
+    "binary/zstd3": true,
+    "binary/zstd6": true,
+    "binary/lzma6": true,
+    "binary/b-base": true,
+    "binary/b-global": true,
+    "binary/b-file": true,
+    "binary/b-cleared": true,
+    "compressed/store": true,
+    "compressed/zstd3": true,
+    "compressed/zstd6": true,
+    "compressed/lzma6": true,
+    "compressed/b-base": true,
+    "compressed/b-global": true,
+    "compressed/b-file": true,
+    "compressed/b-cleared": true,
+    "mixed/store": true,
+    "mixed/zstd3": true,
+    "mixed/zstd6": true,
+    "mixed/lzma6": true,
+    "mixed/b-base": true,
+    "mixed/b-global": true,
+    "mixed/b-file": true,
+    "mixed/b-cleared": true,
+    "source/store": true,
+    "source/zstd3": true,
+    "source/zstd6": true,
+    "source/lzma6": true,
+    "source/b-base": true,
+    "source/b-global": true,
+    "source/b-file": true,
+    "source/b-cleared": true,
+    "text/store": true,
+    "text/zstd3": true,
+    "text/zstd6": true,
+    "text/lzma6": true,
+    "text/b-base": true,
+    "text/b-global": true,
+    "text/b-file": true,
+    "text/b-cleared": true
+  },
+  "rows": [
+    {
+      "dataset_id": "binary",
+      "mode": "store",
+      "strategy": "store",
+      "archive_bytes": 393646,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 334,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_file": {
+        "binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "planned_store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "median_compress_seconds": 0.035272600000098464,
+      "median_verify_seconds": 0.022085300000071584,
+      "median_extract_seconds": 0.035925899999710964,
+      "max_compress_peak_working_set_bytes": 7282688
+    },
+    {
+      "dataset_id": "binary",
+      "mode": "zstd3",
+      "strategy": "B1-fixed-zstd3",
+      "archive_bytes": 393646,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 334,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_file": {
+        "binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "median_compress_seconds": 0.030750199999602046,
+      "median_verify_seconds": 0.024945900000602705,
+      "median_extract_seconds": 0.03521600000021863,
+      "max_compress_peak_working_set_bytes": 7950336
+    },
+    {
+      "dataset_id": "binary",
+      "mode": "zstd6",
+      "strategy": "zstd6",
+      "archive_bytes": 393646,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 334,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "zstd6": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_file": {
+        "binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "median_compress_seconds": 0.033016000000316126,
+      "median_verify_seconds": 0.02321860000029119,
+      "median_extract_seconds": 0.034996300000784686,
+      "max_compress_peak_working_set_bytes": 8224768
+    },
+    {
+      "dataset_id": "binary",
+      "mode": "lzma6",
+      "strategy": "lzma6",
+      "archive_bytes": 393646,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 334,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_file": {
+        "binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "median_compress_seconds": 0.07237119999990682,
+      "median_verify_seconds": 0.02204170000004524,
+      "median_extract_seconds": 0.03665679999994609,
+      "max_compress_peak_working_set_bytes": 8622080
+    },
+    {
+      "dataset_id": "binary",
+      "mode": "b-base",
+      "strategy": "b-base",
+      "archive_bytes": 393646,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 334,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 131072
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd3": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 196608
+        }
+      },
+      "by_file": {
+        "binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 327680
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "base": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "median_compress_seconds": 0.04374149999966903,
+      "median_verify_seconds": 0.02320730000064941,
+      "median_extract_seconds": 0.0386250999999902,
+      "max_compress_peak_working_set_bytes": 8704000
+    },
+    {
+      "dataset_id": "binary",
+      "mode": "b-global",
+      "strategy": "B0-current",
+      "archive_bytes": 393646,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 334,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 131072
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd4": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 196608
+        }
+      },
+      "by_file": {
+        "binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 327680
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "global": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "median_compress_seconds": 0.04783270000007178,
+      "median_verify_seconds": 0.031778500000655185,
+      "median_extract_seconds": 0.03799669999989419,
+      "max_compress_peak_working_set_bytes": 8708096
+    },
+    {
+      "dataset_id": "binary",
+      "mode": "b-file",
+      "strategy": "b-file",
+      "archive_bytes": 393646,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 334,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 131072
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd6": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 196608
+        }
+      },
+      "by_file": {
+        "binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 327680
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "file_override": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 196608
+        },
+        "global": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 196608
+        }
+      },
+      "median_compress_seconds": 0.04829079999944952,
+      "median_verify_seconds": 0.026157499999499123,
+      "median_extract_seconds": 0.03923650000069756,
+      "max_compress_peak_working_set_bytes": 8704000
+    },
+    {
+      "dataset_id": "binary",
+      "mode": "b-cleared",
+      "strategy": "b-cleared",
+      "archive_bytes": 393646,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 334,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 131072
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd4": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 196608
+        }
+      },
+      "by_file": {
+        "binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 327680
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "global": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "median_compress_seconds": 0.051803600000312144,
+      "median_verify_seconds": 0.021834299999682116,
+      "median_extract_seconds": 0.04412349999984144,
+      "max_compress_peak_working_set_bytes": 8708096
+    },
+    {
+      "dataset_id": "binary",
+      "mode": "b2-file-codec-c",
+      "strategy": "B2-file-codec (codec only)",
+      "archive_bytes": 393646,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 334,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_file": {
+        "binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_plan_source": {
+        "file_codec": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "median_compress_seconds": 0.036629300000640796,
+      "median_verify_seconds": 0.022743699999409728,
+      "median_extract_seconds": 0.03541750000022148,
+      "max_compress_peak_working_set_bytes": 11022336
+    },
+    {
+      "dataset_id": "binary",
+      "mode": "b2-file-codec",
+      "strategy": "B2-file-codec",
+      "archive_bytes": 393646,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 334,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_file": {
+        "binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_plan_source": {
+        "file_codec": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "median_compress_seconds": 0.03174140000010084,
+      "median_verify_seconds": 0.02222799999981362,
+      "median_extract_seconds": 0.03542410000045493,
+      "max_compress_peak_working_set_bytes": 11030528
+    },
+    {
+      "dataset_id": "compressed",
+      "mode": "store",
+      "strategy": "store",
+      "archive_bytes": 393834,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 381,
+        "data_bytes": 393357,
+        "data_bytes_from_blocks": 393357,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_planned_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_file": {
+        "packed.gz": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_store_cause": {
+        "planned_store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "median_compress_seconds": 0.031514700000116136,
+      "median_verify_seconds": 0.02197130000058678,
+      "median_extract_seconds": 0.03497280000010505,
+      "max_compress_peak_working_set_bytes": 7254016
+    },
+    {
+      "dataset_id": "compressed",
+      "mode": "zstd3",
+      "strategy": "B1-fixed-zstd3",
+      "archive_bytes": 393834,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 381,
+        "data_bytes": 393357,
+        "data_bytes_from_blocks": 393357,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_file": {
+        "packed.gz": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "median_compress_seconds": 0.031013299999358424,
+      "median_verify_seconds": 0.020745099999658123,
+      "median_extract_seconds": 0.03416449999986071,
+      "max_compress_peak_working_set_bytes": 7966720
+    },
+    {
+      "dataset_id": "compressed",
+      "mode": "zstd6",
+      "strategy": "zstd6",
+      "archive_bytes": 393834,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 381,
+        "data_bytes": 393357,
+        "data_bytes_from_blocks": 393357,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_planned_codec": {
+        "zstd6": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_file": {
+        "packed.gz": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "median_compress_seconds": 0.030747999999221065,
+      "median_verify_seconds": 0.025145100000372622,
+      "median_extract_seconds": 0.03531919999932143,
+      "max_compress_peak_working_set_bytes": 8245248
+    },
+    {
+      "dataset_id": "compressed",
+      "mode": "lzma6",
+      "strategy": "lzma6",
+      "archive_bytes": 393834,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 381,
+        "data_bytes": 393357,
+        "data_bytes_from_blocks": 393357,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_file": {
+        "packed.gz": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "median_compress_seconds": 0.06866919999993115,
+      "median_verify_seconds": 0.02330699999947683,
+      "median_extract_seconds": 0.03498000000035972,
+      "max_compress_peak_working_set_bytes": 8617984
+    },
+    {
+      "dataset_id": "compressed",
+      "mode": "b-base",
+      "strategy": "b-base",
+      "archive_bytes": 393834,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 381,
+        "data_bytes": 393357,
+        "data_bytes_from_blocks": 393357,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 131072
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd3": {
+          "blocks": 4,
+          "raw_bytes": 196749,
+          "stored_bytes": 196749
+        }
+      },
+      "by_file": {
+        "packed.gz": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 6,
+          "raw_bytes": 327821,
+          "stored_bytes": 327821
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "base": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "median_compress_seconds": 0.04486300000007759,
+      "median_verify_seconds": 0.03023990000019694,
+      "median_extract_seconds": 0.03441149999980553,
+      "max_compress_peak_working_set_bytes": 8704000
+    },
+    {
+      "dataset_id": "compressed",
+      "mode": "b-global",
+      "strategy": "B0-current",
+      "archive_bytes": 393834,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 381,
+        "data_bytes": 393357,
+        "data_bytes_from_blocks": 393357,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 131072
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd4": {
+          "blocks": 4,
+          "raw_bytes": 196749,
+          "stored_bytes": 196749
+        }
+      },
+      "by_file": {
+        "packed.gz": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 6,
+          "raw_bytes": 327821,
+          "stored_bytes": 327821
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "global": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "median_compress_seconds": 0.047059100000296894,
+      "median_verify_seconds": 0.022417599999243976,
+      "median_extract_seconds": 0.03434850000030565,
+      "max_compress_peak_working_set_bytes": 8716288
+    },
+    {
+      "dataset_id": "compressed",
+      "mode": "b-file",
+      "strategy": "b-file",
+      "archive_bytes": 393834,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 381,
+        "data_bytes": 393357,
+        "data_bytes_from_blocks": 393357,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 131072
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd6": {
+          "blocks": 4,
+          "raw_bytes": 196749,
+          "stored_bytes": 196749
+        }
+      },
+      "by_file": {
+        "packed.gz": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 6,
+          "raw_bytes": 327821,
+          "stored_bytes": 327821
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "file_override": {
+          "blocks": 4,
+          "raw_bytes": 196749,
+          "stored_bytes": 196749
+        },
+        "global": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 196608
+        }
+      },
+      "median_compress_seconds": 0.043563600000197766,
+      "median_verify_seconds": 0.021598899999844434,
+      "median_extract_seconds": 0.034403999999994994,
+      "max_compress_peak_working_set_bytes": 8708096
+    },
+    {
+      "dataset_id": "compressed",
+      "mode": "b-cleared",
+      "strategy": "b-cleared",
+      "archive_bytes": 393834,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 381,
+        "data_bytes": 393357,
+        "data_bytes_from_blocks": 393357,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 131072
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd4": {
+          "blocks": 4,
+          "raw_bytes": 196749,
+          "stored_bytes": 196749
+        }
+      },
+      "by_file": {
+        "packed.gz": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 6,
+          "raw_bytes": 327821,
+          "stored_bytes": 327821
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "global": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "median_compress_seconds": 0.0427906000004441,
+      "median_verify_seconds": 0.022037900000213995,
+      "median_extract_seconds": 0.03656330000012531,
+      "max_compress_peak_working_set_bytes": 8712192
+    },
+    {
+      "dataset_id": "compressed",
+      "mode": "b2-file-codec-c",
+      "strategy": "B2-file-codec (codec only)",
+      "archive_bytes": 393834,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 381,
+        "data_bytes": 393357,
+        "data_bytes_from_blocks": 393357,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_file": {
+        "packed.gz": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_plan_source": {
+        "file_codec": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "median_compress_seconds": 0.031736500000079104,
+      "median_verify_seconds": 0.0213714000001346,
+      "median_extract_seconds": 0.03395180000006803,
+      "max_compress_peak_working_set_bytes": 11030528
+    },
+    {
+      "dataset_id": "compressed",
+      "mode": "b2-file-codec",
+      "strategy": "B2-file-codec",
+      "archive_bytes": 393834,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 381,
+        "data_bytes": 393357,
+        "data_bytes_from_blocks": 393357,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_file": {
+        "packed.gz": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_store_cause": {
+        "fallback_no_space_gain": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "by_plan_source": {
+        "file_codec": {
+          "blocks": 7,
+          "raw_bytes": 393357,
+          "stored_bytes": 393357
+        }
+      },
+      "median_compress_seconds": 0.03630059999977675,
+      "median_verify_seconds": 0.026560300000710413,
+      "median_extract_seconds": 0.03440890000001673,
+      "max_compress_peak_working_set_bytes": 11022336
+    },
+    {
+      "dataset_id": "mixed",
+      "mode": "store",
+      "strategy": "store",
+      "archive_bytes": 788968,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 976,
+        "data_bytes": 787896,
+        "data_bytes_from_blocks": 787896,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 787896
+        }
+      },
+      "by_planned_codec": {
+        "store": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 787896
+        }
+      },
+      "by_file": {
+        "000-text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/packed.gz": {
+          "blocks": 1,
+          "raw_bytes": 1440,
+          "stored_bytes": 1440
+        },
+        "unicode/中文.txt": {
+          "blocks": 1,
+          "raw_bytes": 24,
+          "stored_bytes": 24
+        }
+      },
+      "by_store_cause": {
+        "planned_store": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 787896
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 787896
+        }
+      },
+      "median_compress_seconds": 0.04839049999918643,
+      "median_verify_seconds": 0.033627200000410085,
+      "median_extract_seconds": 0.058040999999320775,
+      "max_compress_peak_working_set_bytes": 7282688
+    },
+    {
+      "dataset_id": "mixed",
+      "mode": "zstd3",
+      "strategy": "B1-fixed-zstd3",
+      "archive_bytes": 394959,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 976,
+        "data_bytes": 393887,
+        "data_bytes_from_blocks": 393887,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393240,
+          "stored_bytes": 393240
+        },
+        "zstd3": {
+          "blocks": 7,
+          "raw_bytes": 394656,
+          "stored_bytes": 647
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 393887
+        }
+      },
+      "by_file": {
+        "000-text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        },
+        "sub/binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/packed.gz": {
+          "blocks": 1,
+          "raw_bytes": 1440,
+          "stored_bytes": 131
+        },
+        "unicode/中文.txt": {
+          "blocks": 1,
+          "raw_bytes": 24,
+          "stored_bytes": 24
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 7,
+          "raw_bytes": 394656,
+          "stored_bytes": 647
+        },
+        "fallback_no_space_gain": {
+          "blocks": 7,
+          "raw_bytes": 393240,
+          "stored_bytes": 393240
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 393887
+        }
+      },
+      "median_compress_seconds": 0.03750820000004751,
+      "median_verify_seconds": 0.03343299999960436,
+      "median_extract_seconds": 0.06235999999989872,
+      "max_compress_peak_working_set_bytes": 8044544
+    },
+    {
+      "dataset_id": "mixed",
+      "mode": "zstd6",
+      "strategy": "zstd6",
+      "archive_bytes": 394959,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 976,
+        "data_bytes": 393887,
+        "data_bytes_from_blocks": 393887,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393240,
+          "stored_bytes": 393240
+        },
+        "zstd6": {
+          "blocks": 7,
+          "raw_bytes": 394656,
+          "stored_bytes": 647
+        }
+      },
+      "by_planned_codec": {
+        "zstd6": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 393887
+        }
+      },
+      "by_file": {
+        "000-text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        },
+        "sub/binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/packed.gz": {
+          "blocks": 1,
+          "raw_bytes": 1440,
+          "stored_bytes": 131
+        },
+        "unicode/中文.txt": {
+          "blocks": 1,
+          "raw_bytes": 24,
+          "stored_bytes": 24
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 7,
+          "raw_bytes": 394656,
+          "stored_bytes": 647
+        },
+        "fallback_no_space_gain": {
+          "blocks": 7,
+          "raw_bytes": 393240,
+          "stored_bytes": 393240
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 393887
+        }
+      },
+      "median_compress_seconds": 0.036296000000220374,
+      "median_verify_seconds": 0.025877199999740697,
+      "median_extract_seconds": 0.05755330000010872,
+      "max_compress_peak_working_set_bytes": 8323072
+    },
+    {
+      "dataset_id": "mixed",
+      "mode": "lzma6",
+      "strategy": "lzma6",
+      "archive_bytes": 395403,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 976,
+        "data_bytes": 394331,
+        "data_bytes_from_blocks": 394331,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 7,
+          "raw_bytes": 394656,
+          "stored_bytes": 1091
+        },
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393240,
+          "stored_bytes": 393240
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 394331
+        }
+      },
+      "by_file": {
+        "000-text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 951
+        },
+        "sub/binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/packed.gz": {
+          "blocks": 1,
+          "raw_bytes": 1440,
+          "stored_bytes": 140
+        },
+        "unicode/中文.txt": {
+          "blocks": 1,
+          "raw_bytes": 24,
+          "stored_bytes": 24
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 7,
+          "raw_bytes": 394656,
+          "stored_bytes": 1091
+        },
+        "fallback_no_space_gain": {
+          "blocks": 7,
+          "raw_bytes": 393240,
+          "stored_bytes": 393240
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 394331
+        }
+      },
+      "median_compress_seconds": 0.0855678000007174,
+      "median_verify_seconds": 0.026615299999320996,
+      "median_extract_seconds": 0.056368700000348326,
+      "max_compress_peak_working_set_bytes": 8626176
+    },
+    {
+      "dataset_id": "mixed",
+      "mode": "b-base",
+      "strategy": "b-base",
+      "archive_bytes": 461862,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 976,
+        "data_bytes": 460790,
+        "data_bytes_from_blocks": 460790,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 9,
+          "raw_bytes": 460216,
+          "stored_bytes": 460216
+        },
+        "zstd3": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 4,
+          "raw_bytes": 262144,
+          "stored_bytes": 131388
+        },
+        "store": {
+          "blocks": 5,
+          "raw_bytes": 198072,
+          "stored_bytes": 198072
+        },
+        "zstd3": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 131330
+        }
+      },
+      "by_file": {
+        "000-text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        },
+        "sub/binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/packed.gz": {
+          "blocks": 1,
+          "raw_bytes": 1440,
+          "stored_bytes": 1440
+        },
+        "unicode/中文.txt": {
+          "blocks": 1,
+          "raw_bytes": 24,
+          "stored_bytes": 24
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 574
+        },
+        "fallback_no_space_gain": {
+          "blocks": 4,
+          "raw_bytes": 262144,
+          "stored_bytes": 262144
+        },
+        "planned_store": {
+          "blocks": 5,
+          "raw_bytes": 198072,
+          "stored_bytes": 198072
+        }
+      },
+      "by_plan_source": {
+        "base": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 460790
+        }
+      },
+      "median_compress_seconds": 0.05354989999977988,
+      "median_verify_seconds": 0.0251140000000305,
+      "median_extract_seconds": 0.055064799999854586,
+      "max_compress_peak_working_set_bytes": 9211904
+    },
+    {
+      "dataset_id": "mixed",
+      "mode": "b-global",
+      "strategy": "B0-current",
+      "archive_bytes": 461862,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 976,
+        "data_bytes": 460790,
+        "data_bytes_from_blocks": 460790,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 9,
+          "raw_bytes": 460216,
+          "stored_bytes": 460216
+        },
+        "zstd4": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 4,
+          "raw_bytes": 262144,
+          "stored_bytes": 131388
+        },
+        "store": {
+          "blocks": 5,
+          "raw_bytes": 198072,
+          "stored_bytes": 198072
+        },
+        "zstd4": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 131330
+        }
+      },
+      "by_file": {
+        "000-text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        },
+        "sub/binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/packed.gz": {
+          "blocks": 1,
+          "raw_bytes": 1440,
+          "stored_bytes": 1440
+        },
+        "unicode/中文.txt": {
+          "blocks": 1,
+          "raw_bytes": 24,
+          "stored_bytes": 24
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 574
+        },
+        "fallback_no_space_gain": {
+          "blocks": 4,
+          "raw_bytes": 262144,
+          "stored_bytes": 262144
+        },
+        "planned_store": {
+          "blocks": 5,
+          "raw_bytes": 198072,
+          "stored_bytes": 198072
+        }
+      },
+      "by_plan_source": {
+        "global": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 460790
+        }
+      },
+      "median_compress_seconds": 0.06015540000043984,
+      "median_verify_seconds": 0.025893899999573478,
+      "median_extract_seconds": 0.055707299999994575,
+      "max_compress_peak_working_set_bytes": 8794112
+    },
+    {
+      "dataset_id": "mixed",
+      "mode": "b-file",
+      "strategy": "b-file",
+      "archive_bytes": 461862,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 976,
+        "data_bytes": 460790,
+        "data_bytes_from_blocks": 460790,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 9,
+          "raw_bytes": 460216,
+          "stored_bytes": 460216
+        },
+        "zstd6": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 4,
+          "raw_bytes": 262144,
+          "stored_bytes": 131388
+        },
+        "store": {
+          "blocks": 5,
+          "raw_bytes": 198072,
+          "stored_bytes": 198072
+        },
+        "zstd4": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 131072
+        },
+        "zstd6": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_file": {
+        "000-text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        },
+        "sub/binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/packed.gz": {
+          "blocks": 1,
+          "raw_bytes": 1440,
+          "stored_bytes": 1440
+        },
+        "unicode/中文.txt": {
+          "blocks": 1,
+          "raw_bytes": 24,
+          "stored_bytes": 24
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 574
+        },
+        "fallback_no_space_gain": {
+          "blocks": 4,
+          "raw_bytes": 262144,
+          "stored_bytes": 262144
+        },
+        "planned_store": {
+          "blocks": 5,
+          "raw_bytes": 198072,
+          "stored_bytes": 198072
+        }
+      },
+      "by_plan_source": {
+        "file_override": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        },
+        "global": {
+          "blocks": 11,
+          "raw_bytes": 591288,
+          "stored_bytes": 460532
+        }
+      },
+      "median_compress_seconds": 0.05311660000006668,
+      "median_verify_seconds": 0.026173499999458727,
+      "median_extract_seconds": 0.06127600000036182,
+      "max_compress_peak_working_set_bytes": 9220096
+    },
+    {
+      "dataset_id": "mixed",
+      "mode": "b-cleared",
+      "strategy": "b-cleared",
+      "archive_bytes": 461862,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 976,
+        "data_bytes": 460790,
+        "data_bytes_from_blocks": 460790,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 9,
+          "raw_bytes": 460216,
+          "stored_bytes": 460216
+        },
+        "zstd4": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 4,
+          "raw_bytes": 262144,
+          "stored_bytes": 131388
+        },
+        "store": {
+          "blocks": 5,
+          "raw_bytes": 198072,
+          "stored_bytes": 198072
+        },
+        "zstd4": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 131330
+        }
+      },
+      "by_file": {
+        "000-text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        },
+        "sub/binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/packed.gz": {
+          "blocks": 1,
+          "raw_bytes": 1440,
+          "stored_bytes": 1440
+        },
+        "unicode/中文.txt": {
+          "blocks": 1,
+          "raw_bytes": 24,
+          "stored_bytes": 24
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 574
+        },
+        "fallback_no_space_gain": {
+          "blocks": 4,
+          "raw_bytes": 262144,
+          "stored_bytes": 262144
+        },
+        "planned_store": {
+          "blocks": 5,
+          "raw_bytes": 198072,
+          "stored_bytes": 198072
+        }
+      },
+      "by_plan_source": {
+        "global": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 460790
+        }
+      },
+      "median_compress_seconds": 0.05181399999946734,
+      "median_verify_seconds": 0.028057699999408214,
+      "median_extract_seconds": 0.05309749999923952,
+      "max_compress_peak_working_set_bytes": 8798208
+    },
+    {
+      "dataset_id": "mixed",
+      "mode": "b2-file-codec-c",
+      "strategy": "B2-file-codec (codec only)",
+      "archive_bytes": 394959,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 976,
+        "data_bytes": 393887,
+        "data_bytes_from_blocks": 393887,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393240,
+          "stored_bytes": 393240
+        },
+        "zstd3": {
+          "blocks": 7,
+          "raw_bytes": 394656,
+          "stored_bytes": 647
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 393887
+        }
+      },
+      "by_file": {
+        "000-text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        },
+        "sub/binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/packed.gz": {
+          "blocks": 1,
+          "raw_bytes": 1440,
+          "stored_bytes": 131
+        },
+        "unicode/中文.txt": {
+          "blocks": 1,
+          "raw_bytes": 24,
+          "stored_bytes": 24
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 7,
+          "raw_bytes": 394656,
+          "stored_bytes": 647
+        },
+        "fallback_no_space_gain": {
+          "blocks": 7,
+          "raw_bytes": 393240,
+          "stored_bytes": 393240
+        }
+      },
+      "by_plan_source": {
+        "file_codec": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 393887
+        }
+      },
+      "median_compress_seconds": 0.038714400000571914,
+      "median_verify_seconds": 0.030579600000237406,
+      "median_extract_seconds": 0.054051300000537594,
+      "max_compress_peak_working_set_bytes": 11026432
+    },
+    {
+      "dataset_id": "mixed",
+      "mode": "b2-file-codec",
+      "strategy": "B2-file-codec",
+      "archive_bytes": 394959,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 976,
+        "data_bytes": 393887,
+        "data_bytes_from_blocks": 393887,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 7,
+          "raw_bytes": 393240,
+          "stored_bytes": 393240
+        },
+        "zstd3": {
+          "blocks": 7,
+          "raw_bytes": 394656,
+          "stored_bytes": 647
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 393887
+        }
+      },
+      "by_file": {
+        "000-text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        },
+        "sub/binary.bin": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        },
+        "sub/packed.gz": {
+          "blocks": 1,
+          "raw_bytes": 1440,
+          "stored_bytes": 131
+        },
+        "unicode/中文.txt": {
+          "blocks": 1,
+          "raw_bytes": 24,
+          "stored_bytes": 24
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 7,
+          "raw_bytes": 394656,
+          "stored_bytes": 647
+        },
+        "fallback_no_space_gain": {
+          "blocks": 7,
+          "raw_bytes": 393240,
+          "stored_bytes": 393240
+        }
+      },
+      "by_plan_source": {
+        "file_codec": {
+          "blocks": 14,
+          "raw_bytes": 787896,
+          "stored_bytes": 393887
+        }
+      },
+      "median_compress_seconds": 0.04232190000038827,
+      "median_verify_seconds": 0.029486700000234123,
+      "median_extract_seconds": 0.05433850000008533,
+      "max_compress_peak_working_set_bytes": 11018240
+    },
+    {
+      "dataset_id": "source",
+      "mode": "store",
+      "strategy": "store",
+      "archive_bytes": 35426,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 294,
+        "data_bytes": 35036,
+        "data_bytes_from_blocks": 35036,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 35036
+        }
+      },
+      "by_planned_codec": {
+        "store": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 35036
+        }
+      },
+      "by_file": {
+        "checked_arithmetic.cpp": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 770
+        },
+        "store_archive.cpp": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 34036
+        },
+        "version.cpp": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        }
+      },
+      "by_store_cause": {
+        "planned_store": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 35036
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 35036
+        }
+      },
+      "median_compress_seconds": 0.021400200000243785,
+      "median_verify_seconds": 0.022996400000010908,
+      "median_extract_seconds": 0.028049300000020594,
+      "max_compress_peak_working_set_bytes": 7213056
+    },
+    {
+      "dataset_id": "source",
+      "mode": "zstd3",
+      "strategy": "B1-fixed-zstd3",
+      "archive_bytes": 9503,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 294,
+        "data_bytes": 9113,
+        "data_bytes_from_blocks": 9113,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "zstd3": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 9113
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 9113
+        }
+      },
+      "by_file": {
+        "checked_arithmetic.cpp": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store_archive.cpp": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 8614
+        },
+        "version.cpp": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 174
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 9113
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 9113
+        }
+      },
+      "median_compress_seconds": 0.022869600000376522,
+      "median_verify_seconds": 0.02207910000015545,
+      "median_extract_seconds": 0.022758000000067113,
+      "max_compress_peak_working_set_bytes": 7913472
+    },
+    {
+      "dataset_id": "source",
+      "mode": "zstd6",
+      "strategy": "zstd6",
+      "archive_bytes": 8835,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 294,
+        "data_bytes": 8445,
+        "data_bytes_from_blocks": 8445,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "zstd6": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 8445
+        }
+      },
+      "by_planned_codec": {
+        "zstd6": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 8445
+        }
+      },
+      "by_file": {
+        "checked_arithmetic.cpp": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 323
+        },
+        "store_archive.cpp": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7948
+        },
+        "version.cpp": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 174
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 8445
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 8445
+        }
+      },
+      "median_compress_seconds": 0.020430800000212912,
+      "median_verify_seconds": 0.02108310000039637,
+      "median_extract_seconds": 0.0240364999999656,
+      "max_compress_peak_working_set_bytes": 8175616
+    },
+    {
+      "dataset_id": "source",
+      "mode": "lzma6",
+      "strategy": "lzma6",
+      "archive_bytes": 8304,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 294,
+        "data_bytes": 7914,
+        "data_bytes_from_blocks": 7914,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 7914
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 7914
+        }
+      },
+      "by_file": {
+        "checked_arithmetic.cpp": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store_archive.cpp": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7411
+        },
+        "version.cpp": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 178
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 7914
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 7914
+        }
+      },
+      "median_compress_seconds": 0.027039599999625352,
+      "median_verify_seconds": 0.017177900000206137,
+      "median_extract_seconds": 0.03099339999971562,
+      "max_compress_peak_working_set_bytes": 8261632
+    },
+    {
+      "dataset_id": "source",
+      "mode": "b-base",
+      "strategy": "b-base",
+      "archive_bytes": 9559,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 294,
+        "data_bytes": 9169,
+        "data_bytes_from_blocks": 9169,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        },
+        "zstd3": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 8614
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        },
+        "zstd3": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 8614
+        }
+      },
+      "by_file": {
+        "checked_arithmetic.cpp": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store_archive.cpp": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 8614
+        },
+        "version.cpp": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 2,
+          "raw_bytes": 34806,
+          "stored_bytes": 8939
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        }
+      },
+      "by_plan_source": {
+        "base": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 9169
+        }
+      },
+      "median_compress_seconds": 0.02500569999938307,
+      "median_verify_seconds": 0.026511900000514288,
+      "median_extract_seconds": 0.026391399999738496,
+      "max_compress_peak_working_set_bytes": 7954432
+    },
+    {
+      "dataset_id": "source",
+      "mode": "b-global",
+      "strategy": "B0-current",
+      "archive_bytes": 9560,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 294,
+        "data_bytes": 9170,
+        "data_bytes_from_blocks": 9170,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        },
+        "zstd4": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 8615
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        },
+        "zstd4": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 8615
+        }
+      },
+      "by_file": {
+        "checked_arithmetic.cpp": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store_archive.cpp": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 8615
+        },
+        "version.cpp": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 2,
+          "raw_bytes": 34806,
+          "stored_bytes": 8940
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        }
+      },
+      "by_plan_source": {
+        "global": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 9170
+        }
+      },
+      "median_compress_seconds": 0.026551199999630626,
+      "median_verify_seconds": 0.020910600000206614,
+      "median_extract_seconds": 0.026214500000605767,
+      "max_compress_peak_working_set_bytes": 8351744
+    },
+    {
+      "dataset_id": "source",
+      "mode": "b-file",
+      "strategy": "b-file",
+      "archive_bytes": 8893,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 294,
+        "data_bytes": 8503,
+        "data_bytes_from_blocks": 8503,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        },
+        "zstd6": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7948
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        },
+        "zstd6": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7948
+        }
+      },
+      "by_file": {
+        "checked_arithmetic.cpp": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store_archive.cpp": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7948
+        },
+        "version.cpp": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 2,
+          "raw_bytes": 34806,
+          "stored_bytes": 8273
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        }
+      },
+      "by_plan_source": {
+        "file_override": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7948
+        },
+        "global": {
+          "blocks": 2,
+          "raw_bytes": 1000,
+          "stored_bytes": 555
+        }
+      },
+      "median_compress_seconds": 0.021241899999949965,
+      "median_verify_seconds": 0.020735400000376103,
+      "median_extract_seconds": 0.028865500000392785,
+      "max_compress_peak_working_set_bytes": 8208384
+    },
+    {
+      "dataset_id": "source",
+      "mode": "b-cleared",
+      "strategy": "b-cleared",
+      "archive_bytes": 9560,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 294,
+        "data_bytes": 9170,
+        "data_bytes_from_blocks": 9170,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        },
+        "zstd4": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 8615
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        },
+        "zstd4": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 8615
+        }
+      },
+      "by_file": {
+        "checked_arithmetic.cpp": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store_archive.cpp": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 8615
+        },
+        "version.cpp": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 2,
+          "raw_bytes": 34806,
+          "stored_bytes": 8940
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 230
+        }
+      },
+      "by_plan_source": {
+        "global": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 9170
+        }
+      },
+      "median_compress_seconds": 0.022101300000031188,
+      "median_verify_seconds": 0.017531200000121316,
+      "median_extract_seconds": 0.023540000000139116,
+      "max_compress_peak_working_set_bytes": 8343552
+    },
+    {
+      "dataset_id": "source",
+      "mode": "b2-file-codec-c",
+      "strategy": "B2-file-codec (codec only)",
+      "archive_bytes": 8300,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 294,
+        "data_bytes": 7910,
+        "data_bytes_from_blocks": 7910,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7411
+        },
+        "zstd3": {
+          "blocks": 2,
+          "raw_bytes": 1000,
+          "stored_bytes": 499
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7411
+        },
+        "zstd3": {
+          "blocks": 2,
+          "raw_bytes": 1000,
+          "stored_bytes": 499
+        }
+      },
+      "by_file": {
+        "checked_arithmetic.cpp": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 325
+        },
+        "store_archive.cpp": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7411
+        },
+        "version.cpp": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 174
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 7910
+        }
+      },
+      "by_plan_source": {
+        "file_codec": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 7910
+        }
+      },
+      "median_compress_seconds": 0.028640000000450527,
+      "median_verify_seconds": 0.01816430000053515,
+      "median_extract_seconds": 0.022815499999524036,
+      "max_compress_peak_working_set_bytes": 11026432
+    },
+    {
+      "dataset_id": "source",
+      "mode": "b2-file-codec",
+      "strategy": "B2-file-codec",
+      "archive_bytes": 8298,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 294,
+        "data_bytes": 7908,
+        "data_bytes_from_blocks": 7908,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7411
+        },
+        "zstd3": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 174
+        },
+        "zstd6": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 323
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7411
+        },
+        "zstd3": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 174
+        },
+        "zstd6": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 323
+        }
+      },
+      "by_file": {
+        "checked_arithmetic.cpp": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 323
+        },
+        "store_archive.cpp": {
+          "blocks": 1,
+          "raw_bytes": 34036,
+          "stored_bytes": 7411
+        },
+        "version.cpp": {
+          "blocks": 1,
+          "raw_bytes": 230,
+          "stored_bytes": 174
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 3,
+          "raw_bytes": 35036,
+          "stored_bytes": 7908
+        }
+      },
+      "by_plan_source": {
+        "file_codec": {
+          "blocks": 2,
+          "raw_bytes": 34266,
+          "stored_bytes": 7585
+        },
+        "file_override": {
+          "blocks": 1,
+          "raw_bytes": 770,
+          "stored_bytes": 323
+        }
+      },
+      "median_compress_seconds": 0.034209200000077544,
+      "median_verify_seconds": 0.027604500000052212,
+      "median_extract_seconds": 0.02656360000037239,
+      "max_compress_peak_working_set_bytes": 11018240
+    },
+    {
+      "dataset_id": "text",
+      "mode": "store",
+      "strategy": "store",
+      "archive_bytes": 393644,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 332,
+        "data_bytes": 393216,
+        "data_bytes_from_blocks": 393216,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_planned_codec": {
+        "store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_file": {
+        "text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_store_cause": {
+        "planned_store": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 393216
+        }
+      },
+      "median_compress_seconds": 0.03070819999993546,
+      "median_verify_seconds": 0.02217110000037792,
+      "median_extract_seconds": 0.03466339999977208,
+      "max_compress_peak_working_set_bytes": 7274496
+    },
+    {
+      "dataset_id": "text",
+      "mode": "zstd3",
+      "strategy": "B1-fixed-zstd3",
+      "archive_bytes": 944,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 332,
+        "data_bytes": 516,
+        "data_bytes_from_blocks": 516,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "zstd3": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_file": {
+        "text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "median_compress_seconds": 0.02372560000003432,
+      "median_verify_seconds": 0.025086999999984982,
+      "median_extract_seconds": 0.03406879999965895,
+      "max_compress_peak_working_set_bytes": 7913472
+    },
+    {
+      "dataset_id": "text",
+      "mode": "zstd6",
+      "strategy": "zstd6",
+      "archive_bytes": 944,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 332,
+        "data_bytes": 516,
+        "data_bytes_from_blocks": 516,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "zstd6": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_planned_codec": {
+        "zstd6": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_file": {
+        "text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "median_compress_seconds": 0.025942100000065693,
+      "median_verify_seconds": 0.025747499999852153,
+      "median_extract_seconds": 0.035725900000215915,
+      "max_compress_peak_working_set_bytes": 8175616
+    },
+    {
+      "dataset_id": "text",
+      "mode": "lzma6",
+      "strategy": "lzma6",
+      "archive_bytes": 1379,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 332,
+        "data_bytes": 951,
+        "data_bytes_from_blocks": 951,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 951
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 951
+        }
+      },
+      "by_file": {
+        "text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 951
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 951
+        }
+      },
+      "by_plan_source": {
+        "fixed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 951
+        }
+      },
+      "median_compress_seconds": 0.03430500000013126,
+      "median_verify_seconds": 0.03305540000019391,
+      "median_extract_seconds": 0.03556800000023941,
+      "max_compress_peak_working_set_bytes": 8568832
+    },
+    {
+      "dataset_id": "text",
+      "mode": "b-base",
+      "strategy": "b-base",
+      "archive_bytes": 66538,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 332,
+        "data_bytes": 66110,
+        "data_bytes_from_blocks": 66110,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd3": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd3": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_file": {
+        "text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 574
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "base": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        }
+      },
+      "median_compress_seconds": 0.028122299999267852,
+      "median_verify_seconds": 0.023095200000170735,
+      "median_extract_seconds": 0.03463330000067799,
+      "max_compress_peak_working_set_bytes": 8728576
+    },
+    {
+      "dataset_id": "text",
+      "mode": "b-global",
+      "strategy": "B0-current",
+      "archive_bytes": 66538,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 332,
+        "data_bytes": 66110,
+        "data_bytes_from_blocks": 66110,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd4": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd4": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_file": {
+        "text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 574
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "global": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        }
+      },
+      "median_compress_seconds": 0.026853100000153063,
+      "median_verify_seconds": 0.0294887000000017,
+      "median_extract_seconds": 0.03405220000058762,
+      "max_compress_peak_working_set_bytes": 8724480
+    },
+    {
+      "dataset_id": "text",
+      "mode": "b-file",
+      "strategy": "b-file",
+      "archive_bytes": 66538,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 332,
+        "data_bytes": 66110,
+        "data_bytes_from_blocks": 66110,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd6": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd6": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_file": {
+        "text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 574
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "file_override": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        },
+        "global": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 65852
+        }
+      },
+      "median_compress_seconds": 0.027284400000098685,
+      "median_verify_seconds": 0.03154790000007779,
+      "median_extract_seconds": 0.03441949999978533,
+      "max_compress_peak_working_set_bytes": 8724480
+    },
+    {
+      "dataset_id": "text",
+      "mode": "b-cleared",
+      "strategy": "b-cleared",
+      "archive_bytes": 66538,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 332,
+        "data_bytes": 66110,
+        "data_bytes_from_blocks": 66110,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd4": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_planned_codec": {
+        "lzma26": {
+          "blocks": 2,
+          "raw_bytes": 131072,
+          "stored_bytes": 316
+        },
+        "store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        },
+        "zstd4": {
+          "blocks": 3,
+          "raw_bytes": 196608,
+          "stored_bytes": 258
+        }
+      },
+      "by_file": {
+        "text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 5,
+          "raw_bytes": 327680,
+          "stored_bytes": 574
+        },
+        "planned_store": {
+          "blocks": 1,
+          "raw_bytes": 65536,
+          "stored_bytes": 65536
+        }
+      },
+      "by_plan_source": {
+        "global": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 66110
+        }
+      },
+      "median_compress_seconds": 0.027459399999315792,
+      "median_verify_seconds": 0.03159600000071805,
+      "median_extract_seconds": 0.03550459999951272,
+      "max_compress_peak_working_set_bytes": 8728576
+    },
+    {
+      "dataset_id": "text",
+      "mode": "b2-file-codec-c",
+      "strategy": "B2-file-codec (codec only)",
+      "archive_bytes": 944,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 332,
+        "data_bytes": 516,
+        "data_bytes_from_blocks": 516,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "zstd3": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_file": {
+        "text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_plan_source": {
+        "file_codec": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "median_compress_seconds": 0.02563099999952101,
+      "median_verify_seconds": 0.028342399999928602,
+      "median_extract_seconds": 0.034683499999118794,
+      "max_compress_peak_working_set_bytes": 11014144
+    },
+    {
+      "dataset_id": "text",
+      "mode": "b2-file-codec",
+      "strategy": "B2-file-codec",
+      "archive_bytes": 944,
+      "accounting": {
+        "header_bytes": 96,
+        "index_bytes": 332,
+        "data_bytes": 516,
+        "data_bytes_from_blocks": 516,
+        "seed_and_override_metadata_bytes": null,
+        "seed_and_override_metadata_status": "not serialized (header strategy_version=0, seed_length=0); missing item",
+        "reconciles": true
+      },
+      "repetitions": 3,
+      "deterministic": true,
+      "by_actual_codec": {
+        "zstd3": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_planned_codec": {
+        "zstd3": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_file": {
+        "text.txt": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_store_cause": {
+        "compressed": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "by_plan_source": {
+        "file_codec": {
+          "blocks": 6,
+          "raw_bytes": 393216,
+          "stored_bytes": 516
+        }
+      },
+      "median_compress_seconds": 0.02822959999957675,
+      "median_verify_seconds": 0.02822470000046451,
+      "median_extract_seconds": 0.03773570000066684,
+      "max_compress_peak_working_set_bytes": 11018240
+    }
+  ]
+}

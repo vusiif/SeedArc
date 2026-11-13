@@ -1,0 +1,15 @@
+Test project C:/Users/IceLolly/Music/Clion/SeedArc/build/msvc-vs2026-release
+    Start 9: seed.archive_integration
+1/1 Test #9: seed.archive_integration .........***Failed    0.10 sec
+fixture header invalid
+fixture retained at "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\.sandbox-test\\seed-archive-64324"
+seed archive checks failed
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.11 sec
+
+The following tests FAILED:
+	  9 - seed.archive_integration (Failed)
+Errors while running CTest

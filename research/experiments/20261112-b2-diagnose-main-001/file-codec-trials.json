@@ -1,0 +1,67 @@
+{
+  "text": {
+    "text.txt": {
+      "zstd3": 516,
+      "zstd6": 516,
+      "lzma6": 951
+    }
+  },
+  "source": {
+    "checked_arithmetic.cpp": {
+      "zstd3": 325,
+      "zstd6": 323,
+      "lzma6": 325
+    },
+    "store_archive.cpp": {
+      "zstd3": 8614,
+      "zstd6": 7948,
+      "lzma6": 7411
+    },
+    "version.cpp": {
+      "zstd3": 174,
+      "zstd6": 174,
+      "lzma6": 178
+    }
+  },
+  "binary": {
+    "binary.bin": {
+      "zstd3": 393216,
+      "zstd6": 393216,
+      "lzma6": 393216
+    }
+  },
+  "compressed": {
+    "packed.gz": {
+      "zstd3": 393357,
+      "zstd6": 393357,
+      "lzma6": 393357
+    }
+  },
+  "mixed": {
+    "000-text.txt": {
+      "zstd3": 516,
+      "zstd6": 516,
+      "lzma6": 951
+    },
+    "sub/binary.bin": {
+      "zstd3": 393216,
+      "zstd6": 393216,
+      "lzma6": 393216
+    },
+    "sub/empty": {
+      "zstd3": 0,
+      "zstd6": 0,
+      "lzma6": 0
+    },
+    "sub/packed.gz": {
+      "zstd3": 131,
+      "zstd6": 131,
+      "lzma6": 140
+    },
+    "unicode/中文.txt": {
+      "zstd3": 24,
+      "zstd6": 24,
+      "lzma6": 24
+    }
+  }
+}

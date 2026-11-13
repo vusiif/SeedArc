@@ -1,0 +1,217 @@
+{
+  "tool_sha256": "7a37a5d6d67b9b209d40fc2805837221c5efd7484d5e5d2c27b1e2cd934db7ff",
+  "note": "post-run rebuild after a behaviour-neutral FileDecision initialization fix (clang -Wmissing-designated-field-initializers); repetition-0 commands of the 7 P0-C modes rerun with the final tool",
+  "all_equal": true,
+  "cases": [
+    {
+      "dataset": "text",
+      "mode": "zstd3",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "lzma6",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "oracle-file",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "adaptive-0",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "adaptive-256k",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "adaptive-1m",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "adaptive-unbounded",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "zstd3",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "lzma6",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "oracle-file",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "adaptive-0",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "adaptive-256k",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "adaptive-1m",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "adaptive-unbounded",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "zstd3",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "lzma6",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "oracle-file",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "adaptive-0",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "adaptive-256k",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "adaptive-1m",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "adaptive-unbounded",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "zstd3",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "lzma6",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "oracle-file",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "adaptive-0",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "adaptive-256k",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "adaptive-1m",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "adaptive-unbounded",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "zstd3",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "lzma6",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "oracle-file",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "adaptive-0",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "adaptive-256k",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "adaptive-1m",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "adaptive-unbounded",
+      "archive_sha256_equal": true,
+      "decisions_and_trials_equal": true
+    }
+  ]
+}

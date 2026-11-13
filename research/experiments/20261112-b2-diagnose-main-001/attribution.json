@@ -1,0 +1,342 @@
+{
+  "binary": {
+    "index_bytes_identical_across_modes": true,
+    "archive_bytes": {
+      "store": 393646,
+      "B1-fixed-zstd3": 393646,
+      "zstd6": 393646,
+      "lzma6": 393646,
+      "b-base": 393646,
+      "B0-current": 393646,
+      "b-file": 393646,
+      "b-cleared": 393646,
+      "B2-file-codec (codec only)": 393646,
+      "B2-file-codec": 393646
+    },
+    "b0_minus_b1_bytes": 0,
+    "b0_vs_b1": {
+      "b0_fallback_store": {
+        "blocks": 5,
+        "delta_bytes": 0,
+        "block_indexes": [
+          0,
+          1,
+          3,
+          4,
+          5
+        ]
+      },
+      "b0_planned_store": {
+        "blocks": 1,
+        "delta_bytes": 0,
+        "block_indexes": [
+          2
+        ]
+      }
+    },
+    "b0_vs_b2_file_codec": {
+      "b0_fallback_store": {
+        "blocks": 5,
+        "delta_bytes": 0,
+        "block_indexes": [
+          0,
+          1,
+          3,
+          4,
+          5
+        ]
+      },
+      "b0_planned_store": {
+        "blocks": 1,
+        "delta_bytes": 0,
+        "block_indexes": [
+          2
+        ]
+      }
+    }
+  },
+  "compressed": {
+    "index_bytes_identical_across_modes": true,
+    "archive_bytes": {
+      "store": 393834,
+      "B1-fixed-zstd3": 393834,
+      "zstd6": 393834,
+      "lzma6": 393834,
+      "b-base": 393834,
+      "B0-current": 393834,
+      "b-file": 393834,
+      "b-cleared": 393834,
+      "B2-file-codec (codec only)": 393834,
+      "B2-file-codec": 393834
+    },
+    "b0_minus_b1_bytes": 0,
+    "b0_vs_b1": {
+      "b0_fallback_store": {
+        "blocks": 6,
+        "delta_bytes": 0,
+        "block_indexes": [
+          0,
+          1,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "b0_planned_store": {
+        "blocks": 1,
+        "delta_bytes": 0,
+        "block_indexes": [
+          2
+        ]
+      }
+    },
+    "b0_vs_b2_file_codec": {
+      "b0_fallback_store": {
+        "blocks": 6,
+        "delta_bytes": 0,
+        "block_indexes": [
+          0,
+          1,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "b0_planned_store": {
+        "blocks": 1,
+        "delta_bytes": 0,
+        "block_indexes": [
+          2
+        ]
+      }
+    }
+  },
+  "mixed": {
+    "index_bytes_identical_across_modes": true,
+    "archive_bytes": {
+      "store": 788968,
+      "B1-fixed-zstd3": 394959,
+      "zstd6": 394959,
+      "lzma6": 395403,
+      "b-base": 461862,
+      "B0-current": 461862,
+      "b-file": 461862,
+      "b-cleared": 461862,
+      "B2-file-codec (codec only)": 394959,
+      "B2-file-codec": 394959
+    },
+    "b0_minus_b1_bytes": 66903,
+    "b0_vs_b1": {
+      "b0_lzma26_vs_zstd3": {
+        "blocks": 2,
+        "delta_bytes": 144,
+        "block_indexes": [
+          0,
+          4
+        ]
+      },
+      "b0_zstd4_vs_zstd3": {
+        "blocks": 3,
+        "delta_bytes": 0,
+        "block_indexes": [
+          1,
+          3,
+          5
+        ]
+      },
+      "b0_planned_store": {
+        "blocks": 5,
+        "delta_bytes": 66759,
+        "block_indexes": [
+          2,
+          7,
+          10,
+          12,
+          13
+        ]
+      },
+      "b0_fallback_store": {
+        "blocks": 4,
+        "delta_bytes": 0,
+        "block_indexes": [
+          6,
+          8,
+          9,
+          11
+        ]
+      }
+    },
+    "b0_vs_b2_file_codec": {
+      "b0_lzma26_vs_zstd3": {
+        "blocks": 2,
+        "delta_bytes": 144,
+        "block_indexes": [
+          0,
+          4
+        ]
+      },
+      "b0_zstd4_vs_zstd3": {
+        "blocks": 3,
+        "delta_bytes": 0,
+        "block_indexes": [
+          1,
+          3,
+          5
+        ]
+      },
+      "b0_planned_store": {
+        "blocks": 5,
+        "delta_bytes": 66759,
+        "block_indexes": [
+          2,
+          7,
+          10,
+          12,
+          13
+        ]
+      },
+      "b0_fallback_store": {
+        "blocks": 4,
+        "delta_bytes": 0,
+        "block_indexes": [
+          6,
+          8,
+          9,
+          11
+        ]
+      }
+    }
+  },
+  "source": {
+    "index_bytes_identical_across_modes": true,
+    "archive_bytes": {
+      "store": 35426,
+      "B1-fixed-zstd3": 9503,
+      "zstd6": 8835,
+      "lzma6": 8304,
+      "b-base": 9559,
+      "B0-current": 9560,
+      "b-file": 8893,
+      "b-cleared": 9560,
+      "B2-file-codec (codec only)": 8300,
+      "B2-file-codec": 8298
+    },
+    "b0_minus_b1_bytes": 57,
+    "b0_vs_b1": {
+      "b0_lzma26_vs_zstd3": {
+        "blocks": 1,
+        "delta_bytes": 0,
+        "block_indexes": [
+          0
+        ]
+      },
+      "b0_zstd4_vs_zstd3": {
+        "blocks": 1,
+        "delta_bytes": 1,
+        "block_indexes": [
+          1
+        ]
+      },
+      "b0_planned_store": {
+        "blocks": 1,
+        "delta_bytes": 56,
+        "block_indexes": [
+          2
+        ]
+      }
+    },
+    "b0_vs_b2_file_codec": {
+      "b0_lzma26_vs_zstd6": {
+        "blocks": 1,
+        "delta_bytes": 2,
+        "block_indexes": [
+          0
+        ]
+      },
+      "b0_zstd4_vs_lzma26": {
+        "blocks": 1,
+        "delta_bytes": 1204,
+        "block_indexes": [
+          1
+        ]
+      },
+      "b0_planned_store": {
+        "blocks": 1,
+        "delta_bytes": 56,
+        "block_indexes": [
+          2
+        ]
+      }
+    }
+  },
+  "text": {
+    "index_bytes_identical_across_modes": true,
+    "archive_bytes": {
+      "store": 393644,
+      "B1-fixed-zstd3": 944,
+      "zstd6": 944,
+      "lzma6": 1379,
+      "b-base": 66538,
+      "B0-current": 66538,
+      "b-file": 66538,
+      "b-cleared": 66538,
+      "B2-file-codec (codec only)": 944,
+      "B2-file-codec": 944
+    },
+    "b0_minus_b1_bytes": 65594,
+    "b0_vs_b1": {
+      "b0_lzma26_vs_zstd3": {
+        "blocks": 2,
+        "delta_bytes": 144,
+        "block_indexes": [
+          0,
+          4
+        ]
+      },
+      "b0_zstd4_vs_zstd3": {
+        "blocks": 3,
+        "delta_bytes": 0,
+        "block_indexes": [
+          1,
+          3,
+          5
+        ]
+      },
+      "b0_planned_store": {
+        "blocks": 1,
+        "delta_bytes": 65450,
+        "block_indexes": [
+          2
+        ]
+      }
+    },
+    "b0_vs_b2_file_codec": {
+      "b0_lzma26_vs_zstd3": {
+        "blocks": 2,
+        "delta_bytes": 144,
+        "block_indexes": [
+          0,
+          4
+        ]
+      },
+      "b0_zstd4_vs_zstd3": {
+        "blocks": 3,
+        "delta_bytes": 0,
+        "block_indexes": [
+          1,
+          3,
+          5
+        ]
+      },
+      "b0_planned_store": {
+        "blocks": 1,
+        "delta_bytes": 65450,
+        "block_indexes": [
+          2
+        ]
+      }
+    }
+  }
+}

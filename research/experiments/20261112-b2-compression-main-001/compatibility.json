@@ -1,0 +1,285 @@
+[
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "store",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-store.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "verified: 7 entries, 787896 content bytes, 14 blocks, archive 788968 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "store",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-store.sarc",
+      "-o",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\old-decoder-store"
+    ],
+    "exit_code": 0,
+    "stdout": "extracted: 7 entries, 787896 content bytes, 14 blocks, archive 788968 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "zstd3",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-zstd3.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "verified: 7 entries, 787896 content bytes, 14 blocks, archive 394959 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "zstd3",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-zstd3.sarc",
+      "-o",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\old-decoder-zstd3"
+    ],
+    "exit_code": 0,
+    "stdout": "extracted: 7 entries, 787896 content bytes, 14 blocks, archive 394959 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "zstd6",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-zstd6.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "verified: 7 entries, 787896 content bytes, 14 blocks, archive 394959 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "zstd6",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-zstd6.sarc",
+      "-o",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\old-decoder-zstd6"
+    ],
+    "exit_code": 0,
+    "stdout": "extracted: 7 entries, 787896 content bytes, 14 blocks, archive 394959 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "lzma6",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-lzma6.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "verified: 7 entries, 787896 content bytes, 14 blocks, archive 395403 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "lzma6",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-lzma6.sarc",
+      "-o",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\old-decoder-lzma6"
+    ],
+    "exit_code": 0,
+    "stdout": "extracted: 7 entries, 787896 content bytes, 14 blocks, archive 395403 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "b-base",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-b-base.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "verified: 7 entries, 787896 content bytes, 14 blocks, archive 461862 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "b-base",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-b-base.sarc",
+      "-o",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\old-decoder-b-base"
+    ],
+    "exit_code": 0,
+    "stdout": "extracted: 7 entries, 787896 content bytes, 14 blocks, archive 461862 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "b-global",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-b-global.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "verified: 7 entries, 787896 content bytes, 14 blocks, archive 461862 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "b-global",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-b-global.sarc",
+      "-o",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\old-decoder-b-global"
+    ],
+    "exit_code": 0,
+    "stdout": "extracted: 7 entries, 787896 content bytes, 14 blocks, archive 461862 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "b-file",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-b-file.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "verified: 7 entries, 787896 content bytes, 14 blocks, archive 461862 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "b-file",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-b-file.sarc",
+      "-o",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\old-decoder-b-file"
+    ],
+    "exit_code": 0,
+    "stdout": "extracted: 7 entries, 787896 content bytes, 14 blocks, archive 461862 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "b-cleared",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-b-cleared.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "verified: 7 entries, 787896 content bytes, 14 blocks, archive 461862 bytes\r\n"
+  },
+  {
+    "direction": "old M3 decoder -> new archive",
+    "mode": "b-cleared",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-m3-baseline-main-001\\seedarc.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-b-cleared.sarc",
+      "-o",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\old-decoder-b-cleared"
+    ],
+    "exit_code": 0,
+    "stdout": "extracted: 7 entries, 787896 content bytes, 14 blocks, archive 461862 bytes\r\n"
+  },
+  {
+    "direction": "new decoder -> old M3 archive",
+    "fixture": "lzma2-text.sarc",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\msvc-vs2026-release\\research\\tools\\Release\\seedarc_seed_archive.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\tests\\fixtures\\m3\\lzma2-text.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"archive_bytes\":368,\"peak_working_set_bytes\":8691712}\r\n"
+  },
+  {
+    "direction": "new decoder -> old M3 archive",
+    "fixture": "lzma2-text.sarc",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\msvc-vs2026-release\\research\\tools\\Release\\seedarc_seed_archive.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\tests\\fixtures\\m3\\lzma2-text.sarc",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\new-decoder-lzma2-text"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"archive_bytes\":368,\"peak_working_set_bytes\":7671808}\r\n"
+  },
+  {
+    "direction": "new decoder -> old M3 archive",
+    "fixture": "store-empty.sarc",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\msvc-vs2026-release\\research\\tools\\Release\\seedarc_seed_archive.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\tests\\fixtures\\m3\\store-empty.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"archive_bytes\":96,\"peak_working_set_bytes\":6909952}\r\n"
+  },
+  {
+    "direction": "new decoder -> old M3 archive",
+    "fixture": "store-empty.sarc",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\msvc-vs2026-release\\research\\tools\\Release\\seedarc_seed_archive.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\tests\\fixtures\\m3\\store-empty.sarc",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\new-decoder-store-empty"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"archive_bytes\":96,\"peak_working_set_bytes\":7176192}\r\n"
+  },
+  {
+    "direction": "new decoder -> old M3 archive",
+    "fixture": "zstd-text.sarc",
+    "operation": "verify",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\msvc-vs2026-release\\research\\tools\\Release\\seedarc_seed_archive.exe",
+      "verify",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\tests\\fixtures\\m3\\zstd-text.sarc"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"archive_bytes\":282,\"peak_working_set_bytes\":7241728}\r\n"
+  },
+  {
+    "direction": "new decoder -> old M3 archive",
+    "fixture": "zstd-text.sarc",
+    "operation": "extract",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\msvc-vs2026-release\\research\\tools\\Release\\seedarc_seed_archive.exe",
+      "extract",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\tests\\fixtures\\m3\\zstd-text.sarc",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\new-decoder-zstd-text"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"archive_bytes\":282,\"peak_working_set_bytes\":7495680}\r\n"
+  }
+]

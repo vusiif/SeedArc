@@ -1,0 +1,16 @@
+[1/27] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/archive_study.cpp for CXX dependencies
+[2/27] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/store_archive.cpp for CXX dependencies
+[3/27] Generating CXX dyndep file core/CMakeFiles/seedarc_seed_study.dir/CXX.dd
+[4/24] Generating CXX dyndep file core/CMakeFiles/libseedarc.dir/CXX.dd
+[5/16] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp for CXX dependencies
+[6/16] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_archive_tests.cpp for CXX dependencies
+[7/16] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_archive.dir/CXX.dd
+[8/16] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_archive_tests.dir/CXX.dd
+[9/16] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/archive_study.cpp.obj
+[10/16] Building CXX object core/CMakeFiles/libseedarc.dir/store_archive.cpp.obj
+[11/16] Building CXX object research/tools/CMakeFiles/seedarc_seed_archive.dir/seed_archive.cpp.obj
+[12/16] Linking CXX static library core\liblibseedarc.a
+[13/16] Building CXX object tests/CMakeFiles/seedarc_seed_archive_tests.dir/seed_archive_tests.cpp.obj
+[14/16] Linking CXX static library core\libseedarc_seed_study.a
+[15/16] Linking CXX executable research\tools\seedarc_seed_archive.exe
+[16/16] Linking CXX executable tests\seedarc_seed_archive_tests.exe

@@ -1,0 +1,54 @@
+{
+  "run_id": "20261112-file-scope-main-001",
+  "observed_at": "2026-11-12T05:00:04.387198-08:00",
+  "code_commit": "f3deb4a15305760e4714136b93c066071ad87b02",
+  "dirty": true,
+  "git_status": " M STATUS.md\n M core/CMakeLists.txt\n M research/tools/CMakeLists.txt\n M tests/CMakeLists.txt\n?? core/seed/file_overrides.cpp\n?? core/seed/file_overrides.hpp\n?? \"docs/review_results/SeedArc_\\347\\247\\215\\345\\255\\220\\350\\256\\241\\345\\210\\222\\345\\257\\271\\347\\205\\247\\350\\257\\204\\344\\274\\260\\344\\270\\216\\344\\270\\213\\344\\270\\200\\350\\275\\256\\345\\256\\236\\351\\252\\214\\345\\273\\272\\350\\256\\256.md\"\n?? research/experiments/20261112-file-scope-main-001/\n?? research/ideas/seed-file-overrides-r1.md\n?? research/scripts/file_scope_table.py\n?? research/tools/seed_scope_plan.cpp\n?? tests/seed_file_override_tests.cpp\n",
+  "executable_sha256": "5e76377c9f2242d0125257d1b2c549762d03e15fa25fe0ad91e8dc584fe5c0d7",
+  "build": "MSVC 19.51 Release /O2 /Ob2 /DNDEBUG; research target only",
+  "os": "Windows-10-10.0.19045-SP0",
+  "cpu": "",
+  "python": "3.15.0 (tags/v3.15.0:d220409, Oct  9 2026, 11:55:56) [MSC v.1951 64 bit (AMD64)]",
+  "commands": [
+    [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\msvc-vs2026-release\\research\\tools\\Release\\seedarc_seed_scope_plan.exe",
+      "overlay-r1",
+      "1",
+      "3",
+      "-"
+    ],
+    [
+      "python",
+      "research/scripts/file_scope_table.py",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\experiments\\20261112-file-scope-main-001\\observation.json"
+    ]
+  ],
+  "exit_codes": [
+    0,
+    0
+  ],
+  "kind": "plan-only semantic observation",
+  "raw_output": "observation.json",
+  "analysis": "source/research/scripts/file_scope_table.py",
+  "source_manifest": "source-sha256.json",
+  "input_fixture": "3-files-4-blocks-r1, explicit identities in observation.json",
+  "base_candidate": {
+    "id": 2,
+    "revision": 1
+  },
+  "overlay_revision": 1,
+  "defaults": {
+    "codec_hex": "0",
+    "zstd_rank": 2,
+    "lzma2_rank": 6
+  },
+  "override": {
+    "file_id": 1,
+    "zstd_rank": 3,
+    "lzma2_rank": null
+  },
+  "search_seconds": null,
+  "archive_bytes": null,
+  "peak_memory_bytes": null,
+  "memory_note": "not measured; no compression or search was run"
+}

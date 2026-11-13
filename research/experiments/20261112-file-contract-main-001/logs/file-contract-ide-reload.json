@@ -1,0 +1,13 @@
+{
+  "status": "SUCCEEDED",
+  "profiles": [
+    {
+      "exitCode": 0,
+      "output": "-- Running vcpkg install\nDetecting compiler hash for triplet x64-windows...\nCompiler found: C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe\nDetecting compiler hash for triplet x64-windows-static-md...\nCompiler found: C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe\nThe following packages are already installed:\n    liblzma:x64-windows-static-md@5.8.4\n  * vcpkg-cmake:x64-windows@2025-08-07\n  * vcpkg-cmake-config:x64-windows@2026-07-21\n    zstd:x64-windows-static-md@1.5.7\nliblzma is compatible with built-in CMake targets:\n\n    find_package(LibLZMA REQUIRED)\n    target_link_libraries(main PRIVATE LibLZMA::LibLZMA)\n\nliblzma provides CMake targets:\n\n    find_package(liblzma CONFIG REQUIRED)\n    target_link_libraries(main PRIVATE liblzma::liblzma)\n\nzstd provides CMake targets:\n\n  find_package(zstd CONFIG REQUIRED)\n  target_link_libraries(main PRIVATE zstd::libzstd)\n\nAll requested installations completed successfully in: 646 us\n-- Running vcpkg install - done\n-- Configuring done (4.4s)\n-- Generating done (0.1s)\n-- Build files have been written to: C:/Users/IceLolly/Music/Clion/SeedArc/cmake-build-debug-vcpkg\n",
+      "outputTruncated": false,
+      "diagnostics": ""
+    }
+  ],
+  "projectRoot": "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc",
+  "relinked": false
+}

@@ -1,0 +1,139 @@
+[0/1] Re-running CMake...
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-mingw-static...
+Compiler found: C:/msys64/ucrt64/bin/x86_64-w64-mingw32-g++.exe
+The following packages will be rebuilt:
+    liblzma:x64-mingw-static@5.8.4 -- git+https://github.com/microsoft/vcpkg@e8240b76a93c7a55d2a1d52fb6023123c681b955
+  * vcpkg-cmake:x64-mingw-static@2025-08-07 -- git+https://github.com/microsoft/vcpkg@16b9390dfeaca6df7288ba3f827e40e48e5fc942
+  * vcpkg-cmake-config:x64-mingw-static@2026-07-21 -- git+https://github.com/microsoft/vcpkg@51befcb03097f8d19c1c59f9ec3625e69d85322a
+    zstd:x64-mingw-static@1.5.7 -- git+https://github.com/microsoft/vcpkg@31b7320fab13790c6861cb3c2d50dc8f60ca3602
+Additional packages (*) will be modified to complete this operation.
+Restored 0 package(s) from C:\Users\IceLolly\AppData\Local\vcpkg\archives in 172 us. Use --debug to see more details.
+Removing 1/8 zstd:x64-mingw-static
+Elapsed time to handle zstd:x64-mingw-static: 6.43 ms
+Removing 2/8 liblzma:x64-mingw-static
+Elapsed time to handle liblzma:x64-mingw-static: 10 ms
+Removing 3/8 vcpkg-cmake:x64-mingw-static
+Elapsed time to handle vcpkg-cmake:x64-mingw-static: 2.24 ms
+Removing 4/8 vcpkg-cmake-config:x64-mingw-static
+Elapsed time to handle vcpkg-cmake-config:x64-mingw-static: 2.11 ms
+Installing 5/8 vcpkg-cmake-config:x64-mingw-static@2026-07-21...
+vcpkg-cmake-config:x64-mingw-static@2026-07-21 package ABI: cacabc89ef2016cb9835160cf4cb935a830408833b2d2c83ff58a46ebf9c2567
+Building vcpkg-cmake-config:x64-mingw-static@2026-07-21...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\51befcb03097f8d19c1c59f9ec3625e69d85322a: info: installing from git registry git+https://github.com/microsoft/vcpkg@51befcb03097f8d19c1c59f9ec3625e69d85322a
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake-config_x64-mingw-static/share/vcpkg-cmake-config/vcpkg_cmake_config_fixup.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake-config_x64-mingw-static/share/vcpkg-cmake-config/vcpkg-port-config.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake-config_x64-mingw-static/share/vcpkg-cmake-config/copyright
+-- Skipping post-build validation due to VCPKG_POLICY_EMPTY_PACKAGE
+Starting submission of vcpkg-cmake-config:x64-mingw-static@2026-07-21 to 1 binary cache(s) in the background
+Elapsed time to handle vcpkg-cmake-config:x64-mingw-static: 60.7 ms
+Installing 6/8 vcpkg-cmake:x64-mingw-static@2025-08-07...
+vcpkg-cmake:x64-mingw-static@2025-08-07 package ABI: dd349d7d13374fc5d5b4cf67695205b77748cce37d14cfa0cd9409bfcf4e975a
+Building vcpkg-cmake:x64-mingw-static@2025-08-07...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\16b9390dfeaca6df7288ba3f827e40e48e5fc942: info: installing from git registry git+https://github.com/microsoft/vcpkg@16b9390dfeaca6df7288ba3f827e40e48e5fc942
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg_cmake_configure.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg_cmake_build.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg_cmake_install.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg-port-config.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/copyright
+-- Performing post-build validation
+Starting submission of vcpkg-cmake:x64-mingw-static@2025-08-07 to 1 binary cache(s) in the background
+Elapsed time to handle vcpkg-cmake:x64-mingw-static: 64.7 ms
+Completed submission of vcpkg-cmake-config:x64-mingw-static@2026-07-21 to 1 binary cache(s) in 38.8 ms
+Installing 7/8 liblzma:x64-mingw-static@5.8.4...
+liblzma:x64-mingw-static@5.8.4 package ABI: 2cea1bea3ea4f0bb582c3fb049241fb310eb6eeaf0ac576bdcce807da840dee7
+Building liblzma:x64-mingw-static@5.8.4...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\e8240b76a93c7a55d2a1d52fb6023123c681b955: info: installing from git registry git+https://github.com/microsoft/vcpkg@e8240b76a93c7a55d2a1d52fb6023123c681b955
+-- Using cached tukaani-project-xz-v5.8.4.tar.gz
+-- Cleaning sources at C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/blds/liblzma/src/v5.8.4-19a8d00df7.clean. Use --editable to skip cleaning for the packages you specify.
+-- Extracting source C:/Users/IceLolly/AppData/Local/vcpkg/downloads/tukaani-project-xz-v5.8.4.tar.gz
+-- Applying patch build-tools.patch
+-- Using source at C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/blds/liblzma/src/v5.8.4-19a8d00df7.clean
+-- Configuring x64-mingw-static
+-- Building x64-mingw-static-dbg
+-- Building x64-mingw-static-rel
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/liblzma_x64-mingw-static/lib/pkgconfig/liblzma.pc
+-- Using cached msys2-mingw-w64-x86_64-pkgconf-1~2.5.1-1-any.pkg.tar.zst
+-- Using cached msys2-msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst
+-- Using msys root at C:/Users/IceLolly/AppData/Local/vcpkg/downloads/tools/msys2/3e71d1f8e22ab23f
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/liblzma_x64-mingw-static/debug/lib/pkgconfig/liblzma.pc
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/liblzma_x64-mingw-static/share/liblzma/copyright
+-- Performing post-build validation
+Starting submission of liblzma:x64-mingw-static@5.8.4 to 1 binary cache(s) in the background
+Elapsed time to handle liblzma:x64-mingw-static: 38 s
+Completed submission of vcpkg-cmake:x64-mingw-static@2025-08-07 to 1 binary cache(s) in 39.1 ms
+Installing 8/8 zstd:x64-mingw-static@1.5.7...
+zstd:x64-mingw-static@1.5.7 package ABI: c7c23c2bfaf74f8767154e7268157641760d218ef7434aff81076944a9af59fb
+Building zstd:x64-mingw-static@1.5.7...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\31b7320fab13790c6861cb3c2d50dc8f60ca3602: info: installing from git registry git+https://github.com/microsoft/vcpkg@31b7320fab13790c6861cb3c2d50dc8f60ca3602
+-- Using cached facebook-zstd-v1.5.7.tar.gz
+-- Cleaning sources at C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/blds/zstd/src/v1.5.7-bb6cae2b2e.clean. Use --editable to skip cleaning for the packages you specify.
+-- Extracting source C:/Users/IceLolly/AppData/Local/vcpkg/downloads/facebook-zstd-v1.5.7.tar.gz
+-- Applying patch no-static-suffix.patch
+-- Applying patch fix-emscripten-and-clang-cl.patch
+-- Applying patch fix-windows-rc-compile.patch
+-- Using source at C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/blds/zstd/src/v1.5.7-bb6cae2b2e.clean
+-- Configuring x64-mingw-static
+-- Building x64-mingw-static-dbg
+-- Building x64-mingw-static-rel
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/zstd_x64-mingw-static/lib/pkgconfig/libzstd.pc
+-- Using cached msys2-mingw-w64-x86_64-pkgconf-1~2.5.1-1-any.pkg.tar.zst
+-- Using cached msys2-msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst
+-- Using msys root at C:/Users/IceLolly/AppData/Local/vcpkg/downloads/tools/msys2/3e71d1f8e22ab23f
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/zstd_x64-mingw-static/debug/lib/pkgconfig/libzstd.pc
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/zstd_x64-mingw-static/share/zstd/usage
+-- Performing post-build validation
+Starting submission of zstd:x64-mingw-static@1.5.7 to 1 binary cache(s) in the background
+Elapsed time to handle zstd:x64-mingw-static: 27 s
+Installed contents are licensed to you by owners. Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+Packages installed in this vcpkg installation declare the following licenses:
+(BSD-3-Clause OR GPL-2.0-only)
+0BSD
+MIT
+liblzma is compatible with built-in CMake targets:
+
+    find_package(LibLZMA REQUIRED)
+    target_link_libraries(main PRIVATE LibLZMA::LibLZMA)
+
+liblzma provides CMake targets:
+
+    find_package(liblzma CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE liblzma::liblzma)
+
+zstd provides CMake targets:
+
+  find_package(zstd CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE zstd::libzstd)
+
+Completed submission of liblzma:x64-mingw-static@5.8.4 to 1 binary cache(s) in 132 ms
+Waiting for 1 remaining binary cache submissions...
+Completed submission of zstd:x64-mingw-static@1.5.7 to 1 binary cache(s) in 435 ms (1/1)
+All requested installations completed successfully in: 1.1 min
+-- Running vcpkg install - done
+-- Configuring done (68.2s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug
+[1/29] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/codec/codec.cpp for CXX dependencies
+[2/29] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/adaptive_file.cpp for CXX dependencies
+[3/29] Generating CXX dyndep file core/CMakeFiles/libseedarc.dir/CXX.dd
+[4/21] Generating CXX dyndep file core/CMakeFiles/seedarc_seed_study.dir/CXX.dd
+[5/17] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp for CXX dependencies
+[6/17] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_adaptive_tests.cpp for CXX dependencies
+[7/17] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_archive.dir/CXX.dd
+[8/17] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/CXX.dd
+[9/17] Building CXX object core/CMakeFiles/libseedarc.dir/codec/codec.cpp.obj
+[10/17] Linking CXX static library core\liblibseedarc.a
+[11/17] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/adaptive_file.cpp.obj
+C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/adaptive_file.cpp:328:97: warning: missing field 'reason' initializer [-Wmissing-designated-field-initializers]
+  328 |             FileDecision decision{.file_id = i, .file_key = entry.path, .file_bytes = entry.size};
+      |                                                                                                 ^
+1 warning generated.
+[12/17] Linking CXX static library core\libseedarc_seed_study.a
+[13/17] Building CXX object tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/seed_adaptive_tests.cpp.obj
+[14/17] Building CXX object research/tools/CMakeFiles/seedarc_seed_archive.dir/seed_archive.cpp.obj
+[15/17] Linking CXX executable tests\seedarc_seed_adaptive_tests.exe
+[16/17] Linking CXX executable research\tools\seedarc_seed_archive.exe

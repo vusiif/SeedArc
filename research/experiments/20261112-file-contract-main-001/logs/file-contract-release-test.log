@@ -1,0 +1,73 @@
+Test project C:/Users/IceLolly/Music/Clion/SeedArc/build/msvc-vs2026-release
+      Start  1: core.boundaries
+ 1/34 Test  #1: core.boundaries ..................   Passed    0.03 sec
+      Start  2: seed.candidate_plans
+ 2/34 Test  #2: seed.candidate_plans .............   Passed    0.04 sec
+      Start  3: seed.file_rank_overrides
+ 3/34 Test  #3: seed.file_rank_overrides .........   Passed    0.17 sec
+      Start  4: seed.path_rank_overrides
+ 4/34 Test  #4: seed.path_rank_overrides .........   Passed    0.05 sec
+      Start  5: archive.m3_compatibility
+ 5/34 Test  #5: archive.m3_compatibility .........   Passed    0.03 sec
+      Start  6: archive.boundaries
+ 6/34 Test  #6: archive.boundaries ...............   Passed    0.02 sec
+      Start  7: path.boundaries
+ 7/34 Test  #7: path.boundaries ..................   Passed    0.02 sec
+      Start  8: index.boundaries
+ 8/34 Test  #8: index.boundaries .................   Passed    0.02 sec
+      Start  9: filesystem.safe_output
+ 9/34 Test  #9: filesystem.safe_output ...........   Passed    0.16 sec
+      Start 10: archive.store_round_trip
+10/34 Test #10: archive.store_round_trip .........   Passed    5.00 sec
+      Start 11: archive.store_acceptance
+11/34 Test #11: archive.store_acceptance .........   Passed    4.38 sec
+      Start 12: codec.round_trip
+12/34 Test #12: codec.round_trip .................   Passed    0.21 sec
+      Start 13: archive.store_bounded_memory
+13/34 Test #13: archive.store_bounded_memory .....   Passed    5.37 sec
+      Start 14: codec.zstd_bounded_memory
+14/34 Test #14: codec.zstd_bounded_memory ........   Passed    6.00 sec
+      Start 15: codec.lzma2_bounded_memory
+15/34 Test #15: codec.lzma2_bounded_memory .......   Passed   28.37 sec
+      Start 16: cli.help
+16/34 Test #16: cli.help .........................   Passed    0.06 sec
+      Start 17: cli.short_help
+17/34 Test #17: cli.short_help ...................   Passed    0.05 sec
+      Start 18: cli.help_command
+18/34 Test #18: cli.help_command .................   Passed    0.04 sec
+      Start 19: cli.version
+19/34 Test #19: cli.version ......................   Passed    0.04 sec
+      Start 20: cli.missing
+20/34 Test #20: cli.missing ......................   Passed    0.05 sec
+      Start 21: cli.unknown
+21/34 Test #21: cli.unknown ......................   Passed    0.05 sec
+      Start 22: cli.extra
+22/34 Test #22: cli.extra ........................   Passed    0.05 sec
+      Start 23: cli.search
+23/34 Test #23: cli.search .......................   Passed    0.05 sec
+      Start 24: cli.benchmark
+24/34 Test #24: cli.benchmark ....................   Passed    0.06 sec
+      Start 25: cli.compress_usage
+25/34 Test #25: cli.compress_usage ...............   Passed    0.12 sec
+      Start 26: cli.extract_usage
+26/34 Test #26: cli.extract_usage ................   Passed    0.06 sec
+      Start 27: cli.verify_usage
+27/34 Test #27: cli.verify_usage .................   Passed    0.07 sec
+      Start 28: cli.verify_missing
+28/34 Test #28: cli.verify_missing ...............   Passed    0.05 sec
+      Start 29: cli.codec_usage
+29/34 Test #29: cli.codec_usage ..................   Passed    0.18 sec
+      Start 30: cli.round_trip
+30/34 Test #30: cli.round_trip ...................   Passed    0.28 sec
+      Start 31: cli.codec_round_trip
+31/34 Test #31: cli.codec_round_trip .............   Passed    0.55 sec
+      Start 32: fuzz.replay.header
+32/34 Test #32: fuzz.replay.header ...............   Passed    0.02 sec
+      Start 33: fuzz.replay.path
+33/34 Test #33: fuzz.replay.path .................   Passed    0.03 sec
+      Start 34: fuzz.replay.archive
+34/34 Test #34: fuzz.replay.archive ..............   Passed    0.02 sec
+
+100% tests passed out of 34
+
+Total Test time (real) =  51.70 sec

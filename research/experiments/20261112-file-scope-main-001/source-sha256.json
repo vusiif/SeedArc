@@ -1,0 +1,11 @@
+{
+  "core/CMakeLists.txt": "946886895a8f6304b8b513cd307bf0e5f1cea404f22dd36e3237f102c72c6a5e",
+  "tests/CMakeLists.txt": "7585f50677b6e1071ae90a8a0962de668e55d555ab8b9dbcf8c6a9a95d3bf3dd",
+  "research/tools/CMakeLists.txt": "7b09eb0511e29cb903923f11e18630b3eee05e3dc9465c818dd18a6f86263467",
+  "core/seed/file_overrides.hpp": "7c0f03bf738527c391f80f997de2d6254bade9fa0a4a3205cc35f59324b7082f",
+  "core/seed/file_overrides.cpp": "eb874ea96a4dc49f30158e71ae27c525924e23edfca38143665cedc5679d47c3",
+  "tests/seed_file_override_tests.cpp": "fa136ae4edbaf67de0e8894b5cfd75c26ad781cb918d89d0b1bf0c6bc6a0476f",
+  "research/tools/seed_scope_plan.cpp": "1f403000deca12d2e89787c1dbd05b2785920f632d5d19bb03f0f9daa4e42bcf",
+  "research/ideas/seed-file-overrides-r1.md": "96d3689258a534d8b491f15411fc37cd8a1910f9b55b64f3892d4b3ceaa7f51a",
+  "research/scripts/file_scope_table.py": "d15bcae6fa09237e5a26110beb7656d343a2c52bfb8d7a83d3a62cec47314823"
+}

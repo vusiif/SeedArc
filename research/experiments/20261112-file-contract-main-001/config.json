@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-12",
+  "timezone": "America/Los_Angeles",
+  "git_commit": "f3deb4a15305760e4714136b93c066071ad87b02",
+  "dirty": true,
+  "input": "fixed synthetic logical paths and block IDs; no external dataset",
+  "license": "project fixtures GPL-3.0-or-later",
+  "plan_only": true,
+  "command": [
+    "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\msvc-vs2026-release\\research\\tools\\Release\\seedarc_seed_scope_contract.exe",
+    "--observe"
+  ],
+  "analysis_command": [
+    "python",
+    "research/scripts/file_contract_table.py",
+    "research\\experiments\\20261112-file-contract-main-001\\observation.json"
+  ],
+  "tool_sha256": "eb5190873d7861f699c96d8e85d44d9a8ca78cf965e2263b2c959ce44b170a19",
+  "compiler": "MSVC 19.51 / Release",
+  "cross_toolchain": {
+    "compiler": "Clang 22.1 / UCRT64 Debug",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\clang-ucrt64-debug\\research\\tools\\seedarc_seed_scope_contract.exe",
+      "--observe"
+    ],
+    "stdout_identical": true,
+    "tool_sha256": "12c57c8cc2182b5b28fdcf83a2fc747f34be6b403f49338a540baa21232137c9"
+  },
+  "platform": "Windows-10-10.0.19045-SP0",
+  "python": "3.15.0",
+  "peak_memory": null,
+  "generation_time": null,
+  "compression": null,
+  "search": null,
+  "exit_code": 0,
+  "observation_sha256": "75200a66d2741763091103def8390290d83e7eb91a543bb594dc5f1f65fa6531",
+  "cpu": "",
+  "repetitions": 1,
+  "threading": "single-threaded plan generation; no encoder threads",
+  "review_sha256": "86847f018b6033e65d1a4aa03971bbef201cf73df046d13cb1bfaabf9fdb2701",
+  "user_idea_hashes": {
+    "SeedArc_结构化种子设计草案.md": "368ad5b9138f5ab3691def36cd0a190d70dde5eb8086aa956b7d1aa7d6fb376a",
+    "SeedPack_项目设计方案_v2.md": "550dd2ba06ce33032850ad6d973e05c0a8f9fc58aeaee8d1201f71745e61d715"
+  },
+  "reproduce": "At git_commit, copy source/ over a checkout, then configure MSVC preset with -DSEEDARC_BUILD_RESEARCH_TOOLS=ON; build Release seedarc_seed_scope_contract and seedarc_seed_path_override_tests. Use config.command / analysis_command with local checkout paths."
+}

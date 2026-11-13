@@ -1,0 +1,166 @@
+[
+  {
+    "file": "core/seed/path_overrides.hpp",
+    "open": "[success]",
+    "active": {
+      "activeFilePath": "core\\seed\\path_overrides.hpp",
+      "openFiles": [
+        "README.md",
+        "cli\\main.cpp",
+        "tests\\codec_tests.cpp",
+        "core\\seed\\strategy.cpp",
+        "core\\seed\\strategy.hpp",
+        "tests\\seed_strategy_tests.cpp",
+        "tests\\m3_compatibility_tests.cpp",
+        "research\\tools\\seed_plan.cpp",
+        "third_party\\splitmix64\\splitmix64.hpp",
+        "core\\seed\\file_overrides.hpp",
+        "core\\seed\\file_overrides.cpp",
+        "tests\\seed_file_override_tests.cpp",
+        "research\\tools\\seed_scope_plan.cpp",
+        "tests\\store_archive_tests.cpp",
+        "core\\store_archive.cpp",
+        "core\\codec\\codec.hpp",
+        "tests\\store_acceptance_tests.cpp",
+        "tests\\safe_output_tests.cpp",
+        "fuzz\\path_fuzz.cpp",
+        "core\\archive.cpp",
+        "core\\filesystem\\archive_path.cpp",
+        "core\\include\\seedarc\\safe_output.hpp",
+        "fuzz\\archive_fuzz.cpp",
+        "core\\include\\seedarc\\archive.hpp",
+        "tests\\archive_tests.cpp",
+        "tests\\path_tests.cpp",
+        "core\\checked_arithmetic.cpp",
+        "core\\version.cpp",
+        "tests\\core_tests.cpp",
+        "core\\seed\\path_overrides.hpp"
+      ]
+    },
+    "result": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/path_overrides.hpp",
+      "errors": []
+    }
+  },
+  {
+    "file": "core/seed/path_overrides.cpp",
+    "open": "[success]",
+    "active": {
+      "activeFilePath": "core\\seed\\path_overrides.cpp",
+      "openFiles": [
+        "README.md",
+        "cli\\main.cpp",
+        "tests\\codec_tests.cpp",
+        "core\\seed\\strategy.cpp",
+        "core\\seed\\strategy.hpp",
+        "tests\\seed_strategy_tests.cpp",
+        "tests\\m3_compatibility_tests.cpp",
+        "research\\tools\\seed_plan.cpp",
+        "third_party\\splitmix64\\splitmix64.hpp",
+        "core\\seed\\file_overrides.hpp",
+        "core\\seed\\file_overrides.cpp",
+        "tests\\seed_file_override_tests.cpp",
+        "tests\\store_archive_tests.cpp",
+        "core\\store_archive.cpp",
+        "core\\codec\\codec.hpp",
+        "tests\\store_acceptance_tests.cpp",
+        "tests\\safe_output_tests.cpp",
+        "fuzz\\path_fuzz.cpp",
+        "core\\archive.cpp",
+        "core\\filesystem\\archive_path.cpp",
+        "core\\include\\seedarc\\safe_output.hpp",
+        "fuzz\\archive_fuzz.cpp",
+        "core\\include\\seedarc\\archive.hpp",
+        "tests\\archive_tests.cpp",
+        "tests\\path_tests.cpp",
+        "core\\checked_arithmetic.cpp",
+        "core\\version.cpp",
+        "tests\\core_tests.cpp",
+        "core\\seed\\path_overrides.hpp",
+        "core\\seed\\path_overrides.cpp"
+      ]
+    },
+    "result": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/path_overrides.cpp",
+      "errors": [
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "Error invalid(const char *message) { return {ErrorCode::invalid_argument, message}; }",
+          "line": 11,
+          "column": 45
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            Error{ErrorCode::unsupported_feature, \"unknown path catalog revision\"});",
+          "line": 20,
+          "column": 18
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "        return std::unexpected(Error{ErrorCode::resource_limit, \"path catalog input limit\"});",
+          "line": 24,
+          "column": 37
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'file' 可替换为结构化绑定",
+          "lineContent": "    for (const auto &file : files) {",
+          "line": 29,
+          "column": 22
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            return std::unexpected(Error{ErrorCode::resource_limit, \"path catalog byte limit\"});",
+          "line": 31,
+          "column": 41
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'file' 可替换为结构化绑定",
+          "lineContent": "    for (const auto &file : files) {",
+          "line": 39,
+          "column": 22
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::PathEntry",
+          "lineContent": "        paths.push_back({file.path, false});",
+          "line": 43,
+          "column": 25
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'entry' 可替换为结构化绑定",
+          "lineContent": "    for (const auto &entry : overrides) {",
+          "line": 60,
+          "column": 22
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "            return std::unexpected(Error{ErrorCode::resource_limit, \"override path byte limit\"});",
+          "line": 63,
+          "column": 41
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::Candidate",
+          "lineContent": "        if (const auto checked = make_plan({field_candidate, 1}, fields, 0); !checked) {",
+          "line": 78,
+          "column": 44
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FileRankOverride",
+          "lineContent": "            resolved.push_back({found->second, entry.zstd_rank, entry.lzma2_rank});",
+          "line": 83,
+          "column": 32
+        }
+      ]
+    }
+  }
+]

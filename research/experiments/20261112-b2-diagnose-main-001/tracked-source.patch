@@ -1,0 +1,338 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index d4fa83e..759d0c8 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -68,7 +68,9 @@
+ 2. **执行**：小步修改，遵循最小复杂度原则；根据风险级别自主推进或先确认。遇到环境阻塞按第 4 节处理。
+ 3. **验证**：运行与变更对应的构建、格式化、单测、往返、负面、性能或分析任务；不能运行则记录原因与阻塞。
+ 4. **交付**：说明修改内容 / 关键决定、实际执行命令与结果、未验证项及风险、需要用户完成的安装或确认；不要把“未来计划”写成“已经完成”。
+-5. **CLion MCP 诊断**：开发时使用已连接的 CLion MCP 检查相关文件的 warning / error，修改后、交付前获取包含 warnings 的诊断，并核对当前项目、工具链、C++ 标准与 CMake 加载状态。传入本项目绝对 `projectPath`，沿用 IDE 的真实配置；按需通过 IDE 打开相关文件和使用已有运行配置。所有参与 Agent 均须遵守，外部执行者需单独验证连接或由协调者集成后检查。修复与任务相关、确认有效的诊断；存疑提示说明依据，不为清零而禁用检查、压低标准或无关重构。超时、索引 / CMake 未就绪、服务不可用时明确记录覆盖范围和阻塞，不能将部分 / 空结果当成无问题。IDE 检查与真实构建 / CTest 互补，不能互相替代；命令行 clang-tidy 不冒充 CLion 检查。
++5. **CLion MCP 阶段性诊断**：日常小步修改使用编译器警告、相关测试和格式检查验证，无需每轮调用 CLion 或要求用户切换前台。在一个较大开发阶段完成、阶段验收前，集中检查本阶段涉及文件的 warning / error，例如一个完整研究迭代、压缩管线接入或里程碑；阶段内的问题修复后按需复查受影响文件，不重复检查未变化文件。遇到 IDE 独有报错、工具链 / CMake 配置问题，或用户指出具体提示时，可中途按需检查。纯文档修改无需 CLion 诊断。
++
++   集中检查时获取包含 warnings 的诊断（`errorsOnly=false`），核对当前项目、工具链、C++ 标准与 CMake 加载状态。传入本项目绝对 `projectPath`，沿用 IDE 的真实配置；按需通过 IDE 打开相关文件和使用已有运行配置。所有参与 Agent 均遵守该节奏；外部执行者可由协调者在阶段集成后统一检查，不要求每个 Agent 每轮重复调用。修复与任务相关、确认有效的诊断；存疑提示说明依据，不为清零而禁用检查、压低标准或无关重构。超时、索引 / CMake 未就绪、服务不可用时明确记录覆盖范围、未验证项与补查安排，继续不受影响的开发；未补齐前不能声称 IDE 检查或阶段验收全部通过。IDE 检查与真实构建 / CTest 互补，不能互相替代；命令行 clang-tidy 不冒充 CLion 检查。
+ 
+ CLion 诊断需要前台焦点时，先提醒用户将 IDE 放到前台并保持，准备好后逐个打开文件再查询；不要在窗口失焦时连续重试，也不把超时解释为代码没有问题。
+ 
+diff --git a/STATUS.md b/STATUS.md
+index 81eb3d6..f4e6dd0 100644
+--- a/STATUS.md
++++ b/STATUS.md
+@@ -4,6 +4,12 @@
+ 
+ ## 当前基线
+ 
++- 最新B2-r3具体计划压缩接入已验证：生产core消费具体计划，研究层解释B与覆盖；归档格式不变。Release/ASan全量各35/35、Clang定向5/5，120/120磁盘往返与双向旧包兼容通过。集中CLion9文件无ERROR，保留2条公开stop_token值传递建议。见 [验证](docs/b2-compression-validation.md)与[基线](research/experiments/20261112-b2-compression-main-001/preview.md)。仅源码样本文件覆盖减667字节，其余4类不变；未冻结Seed或宣称普遍收益。
++
++- 最新 B2-r2 计划层契约已验证：精确路径匹配、目标删除 / 重命名后旧覆盖失效、叠加等级3→4→6→4、空文件 / 无目标 Codec 无变化、10000块单文件测试；Release34/34、ASan定向4/4、Clang定向3/3，7文件IDE无WARN/ERROR。见 [记录](docs/file-contract-validation.md)与[对照](research/experiments/20261112-file-contract-main-001/preview.md)。Seed 编码仍未冻结。
++
++- 最新研究原型 overlay-r1 已验证：固定3文件12块，全局Zstd修改影响5块、文件1覆盖影响块5/6、清除恢复当前默认；保留A/B-r1与归档格式。Release全量33/33，定向ASan/Clang及IDE运行通过；待用户评估文件粒度。见 [本轮记录](docs/file-scope-validation.md)。
++
+ - M0 工程骨架已完成：C++23 核心库、CLI、CMake presets 与 CTest。
+ - M2 **P1 / P2 修复后独立复验通过，阶段完成**（代码 `4c547b2`）：主线程重建并执行 MSVC Release 25/25、ASan Release 25/25、CLion Debug 定向验收 exitCode=0；四个修复相关文件 IDE 诊断完整返回无 ERROR。原实现者七套配置证据保留。发布树保留已确认的私有 DACL，受信同 SID / SYSTEM / 管理员在最终复核后修改不在保证内；格式仍实验性、未冻结。见 [验收记录](docs/m2-acceptance.md)“第二轮独立复验”。
+ - M3 **独立验收通过，阶段完成**（DEV-004 / ACC-003，2026-11-12）：按块 Zstandard / LZMA2 编码与 Store 回退，依赖由 vcpkg manifest 钉住版本与 baseline；本轮独立 Release / ASan 各 30/30、CLion 13/14 文件完整返回无 ERROR（另 1 文件由用户人工补查仅拼写提示）；随后修复默认 Debug profile，IDE CLI 与 codec 测试均成功；原实现者七套配置（含 ASan）30/30，Fuzz 短跑无崩溃；CLion 诊断（clang-ucrt64-debug，errorsOnly=false）覆盖 13 个改动文件，无 ERROR，修复 2 条有效 WARN 后三套配置复测 30/30。见 [M3 记录](docs/m3-validation.md)。
+@@ -20,7 +26,7 @@
+ | M1 | 实验格式与安全 I/O | 完成（用户 2026-11-11 验收） | 六套配置 + ASan 18/18，故障注入与 Fuzz 短跑通过，CLion 诊断无剩余 ERROR；已知限制：真实 SUBST 未测、Fuzz 仅短跑；见 M1 记录 |
+ | M2 | Store 归档往返 | 完成（2026-11-11 独立复验通过） | 代码 4c547b2；独立 Release / ASan 各 25/25，IDE Debug 定向回归通过；保留已确认 DACL 与信任边界，见 [验收记录](docs/m2-acceptance.md) |
+ | M3 | Zstd / LZMA2 | 完成（2026-11-12 独立验收） | 本轮 Release / ASan 各 30/30、IDE 13/14 完整诊断无 ERROR，限制见 M3 记录；原实现者 七套配置 + ASan 30/30，archive Fuzz 180 s 无崩溃；CLion 诊断无 ERROR、2 条 WARN 已修；见 [M3 记录](docs/m3-validation.md)、[ADR-0003](docs/decisions/0003-m3-zstd-lzma2-codecs.md) |
+-| M4 | 种子设计探索、确定性与 MVP | M4-A 原型验证通过，待用户语义评估 | 先比较候选并由用户评估语义，再选择实验方案接入；固定向量、归档复现、动态检查与基线 |
++| M4 | 种子设计探索、确定性与 MVP | B2-r3真实压缩实验已验证，待用户评估与继续选型 | 先比较候选并由用户评估语义，再选择实验方案接入；固定向量、归档复现、动态检查与基线 |
+ | UI-1 | 按人工交互测试需要启动的轻量 Qt GUI | 延后，按需启动 | 基础操作、往返与错误显示、界面响应，核心无 Qt 依赖 |
+ | M5 | 公平基准与预算搜索 | 待开始 | 可复现实验、取消与最优结果保留 |
+ | UI-2 | M5 后的搜索界面 | 待开始 | 预算、真实搜索曲线与结果对比 |
+@@ -39,6 +45,9 @@
+ | DEV-001 | M0 工程骨架 | 主 Agent | CMake 配置、core、cli、tests、构建说明与 STATUS | 完成 | 六套配置各 13/13，ASan 13/13、格式及静态检查通过；见 [M0 记录](docs/m0-validation.md) |
+ | REV-001 | 外部审查阶段 1 修复 | 主 Agent | README、开发计划、验证记录、ADR、CLI 提示、error.hpp、archive.hpp、safe_output、相关测试、ADR-0002 | 待验收 | 审查原文 [docs/review_results/](docs/review_results/SeedArc_项目代码审查.md) 未改动。采纳：状态统一到 STATUS；CLI 提示去里程碑化；新增 `ErrorCode::cancelled`；`max_blocks` 1000000→262144 并加 `limits_are_coherent` 与边界测试；M2 约束写入 [ADR-0002](docs/decisions/0002-m2-store-archive-constraints.md)。延后：流式写出 / 事务 / 完整索引（M2）、CI（需用户决定，Linux 需先定 POSIX 路径规则）、CRC32C 加速（先测量）。六套 + ASan 18/18、format / tidy 通过；CLion（前台、逐个打开）复查 6 个改动文件无 ERROR，仅风格提示；safe_output.cpp 两条 `Clang-Tidy: Potential memory leak`（第 248 行 `new (storage.data()) FILE_RENAME_INFO{}` 及其在析构处的报告点）判为误报：placement new 不分配堆内存，对象可平凡析构，存储归 `std::vector` 所有；未压制检查 |
+ | DEV-003 | M2 Store 归档端到端 | 原实现 / 修复会话；本轮主 Agent 独立验收 | core、cli、tests、fuzz、ADR-0002、M2 记录、README、STATUS | 完成 | P1 / P2 独立复验通过：Release / ASan 各 25/25，IDE Debug 定向回归成功，4 文件完整诊断无 ERROR；本轮未改实现、未提交推送；[验收记录](docs/m2-acceptance.md) |
++| DEV-008 | B2-r3 具体计划压缩接入与小型基线 | 主 Agent | core内部计划入口、seed研究适配、工具 / 测试 / CMake、规则 / 新实验与状态 | 集成与小型基线通过，待用户评估 | Release/ASan各35/35、Clang5/5，修正后定向回归通过；120次磁盘往返、双向兼容、5例跨工具链一致；9文件CLion无ERROR，限制见 [记录](docs/b2-compression-validation.md) |
++| DEV-007 | B2-r2 文件身份与叠加契约 | 主 Agent | core/seed/path_overrides、测试 / 研究工具 / 规则与新实验、相关 CMake、STATUS | 集成验证通过，待用户评估 | Release34/34、最终定向4/4；ASan定向4/4及最终新测试1/1，Clang3/3；7文件IDE无WARN/ERROR，IDE测试与工具退出0；见 [记录](docs/file-contract-validation.md) |
++| DEV-006 | 文件级等级覆盖最小原型 | 主 Agent；子任务 m4_seed_prototype | core/seed/file_overrides、研究工具、相关 CMake / 测试、规则与本轮实验 / 验证记录 | 集成验证通过，待用户评估 | Release 33/33，IDE 修正后定向3/3、ASan定向3/3、Clang定向2/2；4组跨编译器输出一致，4文件IDE无ERROR（保留1条已核实include提示）；不改A/B或归档，见 [验证记录](docs/file-scope-validation.md) |
+ | DEV-005 | M4-A 种子候选原型与小型 M3 基线 | 主 Agent；子任务 m4_seed_prototype | core/seed、research/tools、相关 CMake / 测试、third_party/splitmix64；research 配置 / 脚本 / 本轮实验 / 文档 | 原型通过，待用户评估 | 主线程 Release / ASan 各 32/32、Clang 定向 2/2，跨工具链 4 组输出字节一致；6 文件完整 IDE 诊断无 WARN / ERROR，IDE 两个目标运行成功；基线 27/27，通过范围与限制见 [M4-A 记录](docs/m4a-validation.md) |
+ | PLAN-004 | Seed 探索路线与优先级调整 | 主 Agent | 开发计划、架构、research/ideas、STATUS | 完成（仅设计记录） | 位宽 / 字段 / 映射未冻结；新增表示与映射替换边界、候选修订及旧包解码约束，加入 Agent 规范；A/B/C 候选与用户评估关口，GUI 按需、Actions 延后；未实施算法或运行实验，见 [设计探索](research/ideas/seed-design-study.md) |
+ | IDE-002 | CLion 默认 Debug 依赖配置修复 | 主 Agent | 本地 CLion Debug profile、开发说明、M3 记录、STATUS | 完成 | MCP 重新加载成功；确认 MSVC / C++23 模式与 vcpkg 依赖；IDE CLI 版本、codec 测试均 exitCode=0，CMake 文件完整诊断无问题，见 M3 记录末节 |
+@@ -51,8 +60,8 @@
+ - 文档及模板检查：本地 Markdown 链接目标存在、JSON 模板可解析、研究归档目录齐备。
+ - M0：MSVC 19.51、GCC 16.2、Clang 22.1 的 Debug / Release 编译、链接、运行及 CTest 全部通过，每套 13 项；MSVC Release ASan 13/13，clang-format 与 clang-tidy 的分析器检查通过。命令、范围和日志位置见 [M0 验证记录](docs/m0-validation.md)。
+ - M2（2026-11-11）：七套配置全量重建后 CTest 24/24、构建 0 警告、MSVC ASan 无报告；`clang-format` / `clang-tidy` 通过；64 MiB 单文件往返峰值工作集增长约 1.4 MiB（断言上界 16 MiB）；Fuzz 短跑结果、命令、日志位置和未验证项见 [M2 记录](docs/m2-validation.md)。本轮未取得 CLion 诊断（clion MCP 服务 ECONNREFUSED）。
+-- M4-A：两个本轮实验为 20261112-m3-baseline-main-001、20261112-seed-plans-main-001；前者为小型单块合成基线，后者仅观察拟议计划。尚未运行真实数据 / Seed 搜索性能评估、持续 Fuzz。
+-- 本轮子任务 m4_seed_prototype 已交还写权限；无运行中的构建 / 研究任务。实验事实与源码快照见上述 run ID。
++- M4-A：研究运行包括 20261112-m3-baseline-main-001、20261112-seed-plans-main-001，以及文件覆盖观察 20261112-file-scope-main-001、行为契约观察 20261112-file-contract-main-001、真实压缩首轮 20261112-b2-compression-main-001；前者为小型单块合成基线，后者仅观察拟议计划。已运行小型磁盘源码/自制样本压缩基线；尚未运行独立代表性真实语料 / Seed搜索评估、持续Fuzz。
++- 本轮 DEV-008 由主 Agent 实现与验证，未启动新子任务；前轮子任务 m4_seed_prototype 已交还写权限；无运行中的构建 / 研究任务。实验事实与源码快照见上述 run ID。
+ - CLion MCP：通过客户端已有配置发现回环服务（不硬编码连接地址），initialize 确认为 CLion MCP Server 2026.3.0.1；实际调用 tools/list、get_run_configurations、get_compiler_info、open_file_in_editor、get_all_open_file_paths 和 get_file_problems。确认 SeedArc 项目、MSVC Debug、`-std:c++latest` 和 `/Zc:__cplusplus`；活动编辑器为 cli/main.cpp。当前会话无原生 JetBrains 工具入口，使用已配置服务的实际 MCP JSON-RPC 调用，不以命令行分析冒充 IDE。
+ - M1 第三轮（2026-11-11）：六套 presets 与 MSVC ASan 构建 0 警告、CTest 18/18（新增 fuzz 语料重放 2 项）；`msvc-fuzz` libFuzzer header 3065144 次 / path 576342 次（各 151 s）无崩溃；format / tidy（13 个 .cpp）通过；CLion 仍 timedOut。用户想法 SHA256 复核未变。
+ - M1 第二轮（2026-11-11）：六套 presets 与 MSVC ASan 构建 0 警告、CTest 16/16；clang-format / clang-tidy（全部 10 个 .cpp）通过；CLion get_file_problems 对 4 个文件仍 timedOut。详见 [M1 记录](docs/m1-validation.md)。用户想法两份 SHA256 复核未变。
+@@ -60,7 +69,9 @@
+ 
+ ## 阻塞、限制与下一步
+ 
+-- 2026-11-12 用户最新方向：优先种子设计，先比较候选、让用户测试语义，再选择实验方案；不提前冻结位宽 / 字段 / PRNG；后续持续探索，通过表示与映射解耦、候选修订和旧数据兼容保留修改空间，不预建插件系统。设计输入见 [Seed 设计探索](research/ideas/seed-design-study.md)。GUI 仅在交互测试需要时启动；Actions 延后，本轮未创建工作流。M4-A 第一轮规则与小型基线已完成；下一步请用户评估字段语义与修改粒度，再决定候选迭代，不提前推进归档集成。
++- DEV-008已完成B2-r3真实压缩首轮。下一步评估小型基线并选择更有代表性的授权数据，再设计公平预算的候选/搜索对照；固定Codec分配中的Store占比代价需要考虑。最终Seed编码、身份和映射仍可探索。当前B2-r1/r2/r3与文档规则改动均未提交推送；用户原稿与旧实验未改写。
++
++- 2026-11-12 用户最新方向：优先种子设计，先比较候选、让用户测试语义，再选择实验方案；不提前冻结位宽 / 字段 / PRNG；后续持续探索，通过表示与映射解耦、候选修订和旧数据兼容保留修改空间，不预建插件系统。设计输入见 [Seed 设计探索](research/ideas/seed-design-study.md)。GUI 仅在交互测试需要时启动；Actions 延后，本轮未创建工作流。M4-A与B2-r3小型真实压缩实验已完成；下一步评估基线及更有代表性的语料，再决定搜索对照，不自动冻结协议。
+ 
+ - CLion 旧手工 Debug profile 缺 vcpkg 工具链问题已修复（IDE-002）：当前使用 `cmake-build-debug-vcpkg`，MCP 重新加载、IDE CLI 和 codec 测试均成功；旧目录保留。用户人工补查最后一个旧测试文件仅拼写提示，忽略。历史 IDE 运行失败已由本次成功验证补齐，详见 M3 记录末节。
+ 
+@@ -73,7 +84,7 @@
+ - M2（DEV-003）P1 / P2 已在代码 `4c547b2` 修复并独立复验通过；本轮仅更新验收 / 状态文档，未提交或推送。私有 DACL 行为已确认；ASan 需 VC Tools `bin\Hostx64\x64` 在进程 PATH。用户想法两份 SHA256 未变，测试无残留，无后台任务；下一步为 M4；M3 独立验收见 ACC-003，本轮不启动新阶段。
+ - **M2 独立验收历史**：首轮 Release 24/24，但新增回归在 Release / CLion Debug 复现两项缺陷而未通过；本轮修复后已通过上述独立复验。历史失败、修复、最新证据分别保留在 [验收记录](docs/m2-acceptance.md)，不删除负面证据。需要 IDE 前台时先提醒用户配合。
+ - Git 仓库属主为沙盒账户，当前用户执行 git 报 dubious ownership；本轮仅以单次 `git -c safe.directory=…` 读取状态，未修改全局 Git 配置（是否添加 safe.directory 由用户决定）。
+-- 后续开发使用 CLion MCP 获取相关文件 warning / error：CLion 在前台，逐个 `open_file_in_editor` 后查询。REV-001 改动的 6 个 C++ 文件已复核（见任务表）。
++- 2026-11-12 用户确认 CLion 改为阶段性集中检查：日常小步修改运行编译器 / 测试 / 格式检查，完整研究迭代、功能接入或里程碑验收前统一检查相关文件；IDE 独有问题、配置问题及用户指定提示按需提前检查，纯文档修改免检。所有 Agent 遵守，协调者可集成后统一检查；异常记录未覆盖范围并继续独立工作，不冒充通过。规则已同步 AGENTS.md 与开发说明。需要诊断时仍先确认前台，逐文件打开再查询。历史 REV-001 诊断证据保留于任务表。
+ 
+ ## 更新约定
+ 
+diff --git a/core/CMakeLists.txt b/core/CMakeLists.txt
+index c75e125..613c34b 100644
+--- a/core/CMakeLists.txt
++++ b/core/CMakeLists.txt
+@@ -20,7 +20,9 @@ target_link_libraries(libseedarc PRIVATE zstd::libzstd liblzma::liblzma)
+ 
+ # Seed candidates stay outside the production archive library until experimental selection.
+ if((BUILD_TESTING AND NOT SEEDARC_BUILD_FUZZERS) OR SEEDARC_BUILD_RESEARCH_TOOLS)
+-    add_library(seedarc_seed_study STATIC seed/strategy.cpp)
++    add_library(seedarc_seed_study STATIC seed/strategy.cpp seed/file_overrides.cpp
++        seed/path_overrides.cpp seed/archive_study.cpp)
++    target_link_libraries(seedarc_seed_study PRIVATE SeedArc::core)
+     target_include_directories(seedarc_seed_study PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
+         "${CMAKE_CURRENT_SOURCE_DIR}/include")
+     target_include_directories(seedarc_seed_study PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
+diff --git a/core/store_archive.cpp b/core/store_archive.cpp
+index ae79447..5b4736c 100644
+--- a/core/store_archive.cpp
++++ b/core/store_archive.cpp
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-3.0-or-later
+ #include "seedarc/store_archive.hpp"
+ 
++#include "archive_plan.hpp"
+ #include "codec/codec.hpp"
+ #include "filesystem/input_tree.hpp"
+ #include "seedarc/archive_index.hpp"
+@@ -518,10 +519,16 @@ std::expected<ArchiveSummary, Error> extract_archive(const fs::path &archive,
+     return result;
+ }
+ 
+-std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+-                                                      const fs::path &output_archive,
+-                                                      const CompressOptions &options,
+-                                                      std::stop_token stop) {
++namespace {
++std::expected<ArchiveSummary, Error> compress_archive_impl(const fs::path &input,
++                                                           const fs::path &output_archive,
++                                                           const CompressOptions &options,
++                                                           const internal::PlanBuilder *builder,
++                                                           const std::stop_token &stop) {
++    if (builder && (!*builder || options.codec != Codec::store || options.level)) {
++        return std::unexpected(Error{ErrorCode::invalid_argument,
++                                     "planned encoding requires a builder and no fixed codec"});
++    }
+     const auto &limits = options.limits;
+     if (options.chunk_size_bytes == 0) {
+         return std::unexpected(Error{ErrorCode::invalid_argument, "chunk size must not be zero"});
+@@ -529,7 +536,7 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+     if (options.chunk_size_bytes > limits.max_chunk_bytes) {
+         return std::unexpected(Error{ErrorCode::resource_limit, "chunk size exceeds the limit"});
+     }
+-    const auto codec_id = static_cast<std::uint32_t>(options.codec);
++    auto codec_id = static_cast<std::uint32_t>(options.codec);
+     std::uint32_t config = 0;
+     std::optional<codec::Encoder> encoder;
+     if (options.codec == Codec::store) {
+@@ -603,6 +610,31 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+     if (const auto provisional = encode_header(header, limits); !provisional) {
+         return std::unexpected(provisional.error());
+     }
++    std::vector<internal::BlockEncoding> plans;
++    bool needs_encoding = encoder.has_value();
++    if (builder) {
++        if (stop.stop_requested()) {
++            return std::unexpected(cancelled());
++        }
++        auto generated = (*builder)(index.entries, block_count);
++        if (!generated) {
++            return std::unexpected(generated.error());
++        }
++        if (generated->size() != block_count) {
++            return std::unexpected(Error{ErrorCode::invalid_argument, "block plan count mismatch"});
++        }
++        for (const auto &plan : *generated) {
++            if (!codec::valid_block_codec(static_cast<std::uint32_t>(plan.codec), plan.config)) {
++                return std::unexpected(
++                    Error{ErrorCode::invalid_argument, "invalid block encoding plan"});
++            }
++            needs_encoding = needs_encoding || plan.codec != Codec::store;
++        }
++        plans = std::move(*generated);
++        if (stop.stop_requested()) {
++            return std::unexpected(cancelled());
++        }
++    }
+     if (auto reserved = output->reserve_prefix(archive_header_bytes); !reserved) {
+         return std::unexpected(reserved.error());
+     }
+@@ -610,8 +642,8 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+     const auto chunk_capacity =
+         static_cast<std::size_t>((std::min)(std::uint64_t{options.chunk_size_bytes}, total));
+     std::vector<std::byte> buffer(chunk_capacity); // one chunk at most
+-    std::vector<std::byte> packed(encoder ? chunk_capacity : 0);
+-    std::vector<std::byte> check(encoder ? chunk_capacity : 0);
++    std::vector<std::byte> packed(needs_encoding ? chunk_capacity : 0);
++    std::vector<std::byte> check(needs_encoding ? chunk_capacity : 0);
+     codec::Decoder decoder;
+     std::uint64_t offset = 0;
+     std::size_t block = 0;
+@@ -646,6 +678,22 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+             const auto checksum = crc32c(chunk);
+             std::span<const std::byte> stored = chunk;
+             BlockDescriptor descriptor{offset, want, want, codec::store_id, 0, checksum};
++            if (builder) {
++                const auto &plan = plans[block];
++                const auto next_codec = static_cast<std::uint32_t>(plan.codec);
++                if (next_codec != codec_id || plan.config != config) {
++                    encoder.reset(); // At most one live encoder, including codec switches.
++                    if (plan.codec != Codec::store) {
++                        auto created = codec::Encoder::create(next_codec, plan.config);
++                        if (!created) {
++                            return std::unexpected(created.error());
++                        }
++                        encoder.emplace(std::move(*created));
++                    }
++                    codec_id = next_codec;
++                    config = plan.config;
++                }
++            }
+             if (encoder) {
+                 const auto size = encoder->encode(chunk, std::span{packed}.first(want - 1));
+                 if (!size) {
+@@ -707,6 +755,21 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+     }
+     return ArchiveSummary{header.entry_count, block_count, total, archive_bytes};
+ }
++} // namespace
++
++std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
++                                                      const fs::path &output_archive,
++                                                      const CompressOptions &options,
++                                                      std::stop_token stop) {
++    return compress_archive_impl(input, output_archive, options, nullptr, stop);
++}
++
++std::expected<ArchiveSummary, Error>
++internal::compress_archive_planned(const fs::path &input, const fs::path &output_archive,
++                                   const CompressOptions &options, const PlanBuilder &builder,
++                                   const std::stop_token &stop) {
++    return compress_archive_impl(input, output_archive, options, &builder, stop);
++}
+ 
+ std::string codec_library_versions() { return codec::library_versions(); }
+ } // namespace seedarc::experimental
+diff --git a/docs/development.md b/docs/development.md
+index 4971a05..2a866bc 100644
+--- a/docs/development.md
++++ b/docs/development.md
+@@ -43,7 +43,7 @@ ctest --preset gcc-ucrt64-debug
+ 
+ ### CLion MCP 检查
+ 
+-开发时使用 CLion MCP 实际检查相关文件，`get_file_problems` 要求 `errorsOnly=false`，保留 warning 与 error；记录文件范围与是否超时。通过 `get_compiler_info` 核对活动语言标准 / 编译选项，通过 `get_run_configurations` 发现真实运行配置。使用本项目绝对 projectPath；连接信息从已有客户端配置或 IDE 设置取得，不硬编码端口。
++CLion MCP 按较大开发阶段集中检查：日常小步修改以编译器警告、相关测试和格式检查验证；一个完整研究迭代、功能接入或里程碑验收前，统一检查本阶段相关文件。IDE 独有报错、工具链 / CMake 配置问题或用户指出具体提示时，中途按需检查。纯文档修改无需调用。所有参与 Agent 沿用此节奏，可由协调者在阶段集成后统一检查。服务不可用或超时时记录未覆盖范围与补查安排，继续不受影响的开发，不把未完成检查记为通过。具体诊断时，`get_file_problems` 要求 `errorsOnly=false`，保留 warning 与 error；记录文件范围与是否超时。通过 `get_compiler_info` 核对活动语言标准 / 编译选项，通过 `get_run_configurations` 发现真实运行配置。使用本项目绝对 projectPath；连接信息从已有客户端配置或 IDE 设置取得，不硬编码端口。
+ 
+ **超时的已知原因（CLion 2026.3 / Nova 引擎，2026-11-11 实测）**：
+ 
+diff --git a/research/ideas/seed-design-study.md b/research/ideas/seed-design-study.md
+index cfb9807..3745719 100644
+--- a/research/ideas/seed-design-study.md
++++ b/research/ideas/seed-design-study.md
+@@ -91,3 +91,15 @@
+ ## 9. 第一轮原型与证据
+ 
+ A/B-r1 的 [规则及向量](seed-candidates-r1.md) 已实现为独立研究目标；[M4-A 验证记录](../../docs/m4a-validation.md) 链接固定算法小型基线、原始计划与对照表。用户语义评估待完成。B-r1 仅每 codec 全局等级，A 支持逐块等级，能力不同；第一轮输出不能证明搜索收益或公平比较。后续仍按第 8 节保留修改空间，不冻结种子协议。
++
++## 10. 文件级等级覆盖探索
++
++按第二份评估继续验证独立 [overlay-r1](seed-file-overrides-r1.md)：固定文件归属，只覆盖可选等级字段，不更改 A/B-r1 或 codec 分配。功能与集成证据见 [验证记录](../../docs/file-scope-validation.md)，用户可比较全局修改、文件覆盖与清除的差异。覆盖表不是已选择的紧凑种子，文件插入 / 重命名稳定性仍未解决；是否需要更细粒度及如何由种子生成覆盖，留待用户评估和后续实验。
++
++## 11. B2-r2 文件身份与合并契约
++
++2026-11-12：文件级控制继续保留；新增独立 catalog-r1 通过完整清单中的精确规范路径绑定当前文件 ID，复用既有路径校验和 overlay-r1。匹配身份与 global ID 驱动的 Codec 分配分开验证；清除恢复当前全局默认。规则见 [B2-r2](seed-file-contract-r2.md)，事实见 [新实验](../experiments/20261112-file-contract-main-001/record.md)。真实压缩、搜索收益与最终 Seed 编码仍未决定。
++
++## 12. B2-r3 具体计划压缩接入
++
++2026-11-12：研究层将B-r1/catalog-r1/overlay-r1生成的具体计划接入同一次安全枚举后的编码管线，生产core不解释Seed、不改归档格式。规则见 [r3](seed-compression-r3.md)，事实见 [实验](../experiments/20261112-b2-compression-main-001/record.md)与[验证记录](../../docs/b2-compression-validation.md)。120次磁盘往返通过，相同Codec分配下文件覆盖仅在源码样本小667字节、其余4类无体积变化；不构成普遍收益或最终选型。
+diff --git a/research/scripts/README.md b/research/scripts/README.md
+index c3e22cd..518032e 100644
+--- a/research/scripts/README.md
++++ b/research/scripts/README.md
+@@ -3,3 +3,15 @@
+ `m3_baseline.py` 使用 Python 标准库生成小型合成数据，运行固定算法、逐文件哈希往返验证并汇总原始指标。用 `--help` 查看用法；每次使用新 run ID，生成数据和大产物保留在 research/local，小型证据保存在 research/experiments。调用者须验证传入 CLI 的 Release 构建来源；内存未测量，合成输入不代表实际性能。
+ 
+ 脚本应记录依赖 / 版本、输入格式、命令与输出；从保留的原始指标生成报告，不覆盖原始数据。对缺字段、失败运行及单位明确处理；null / 未测量不当成 0。随机分析固定并记录种子。
++
++`file_scope_table.py <observation.json>` 校验 overlay-r1 的逐行继承 / 清除行为与变化集合，向 stdout 输出对照表；要求选中与未选中文件均存在实际受影响块，避免用空操作证明隔离。只读原始 JSON，不覆盖实验数据；不将拟议计划转换为压缩收益结论。
++
++## B2-r2 文件身份对照
++
++`python research/scripts/file_contract_table.py research/experiments/20261112-file-contract-main-001/observation.json` 验证原始拟议计划的逐字段合并、清除、身份扰动与无变化结果，输出 Markdown 摘要；仅使用 Python 标准库，不执行压缩或性能测试。
++
++## B2-r3 真实压缩基线
++
++`b2_compression.py --tool <Release seedarc_seed_archive.exe> --run-id <new-id> --repetitions 3` 生成磁盘样本并运行8方案的压缩/验证/提取，记录完整归档、逐字节往返、时间、峰值工作集与拟议/实际计划。依赖仅Python标准库和本机研究工具；现有run不覆盖（可预先只登记record.md）。大型产物保留research/local。
++
++`python research/scripts/b2_report.py research/experiments/20261112-b2-compression-main-001/raw.json` 从保存的原始结果复核并生成Markdown表，使用同目录b2_compression.py中的验证/聚合函数，不执行压缩。固定单算法与相同Codec分配的文件覆盖对照分别解释，不自动宣称收益。
+diff --git a/research/tools/CMakeLists.txt b/research/tools/CMakeLists.txt
+index 8bfc1b0..e4b2831 100644
+--- a/research/tools/CMakeLists.txt
++++ b/research/tools/CMakeLists.txt
+@@ -2,3 +2,17 @@
+ add_executable(seedarc_seed_plan seed_plan.cpp)
+ target_link_libraries(seedarc_seed_plan PRIVATE seedarc_seed_study)
+ seedarc_target_defaults(seedarc_seed_plan)
++
++add_executable(seedarc_seed_scope_plan seed_scope_plan.cpp)
++target_link_libraries(seedarc_seed_scope_plan PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_scope_plan)
++
++add_executable(seedarc_seed_scope_contract seed_scope_contract.cpp)
++target_link_libraries(seedarc_seed_scope_contract PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_scope_contract)
++
++if(WIN32)
++    add_executable(seedarc_seed_archive seed_archive.cpp)
++    target_link_libraries(seedarc_seed_archive PRIVATE seedarc_seed_study psapi shell32)
++    seedarc_target_defaults(seedarc_seed_archive)
++endif()
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 6576214..c4e2782 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -11,6 +11,18 @@ seedarc_target_defaults(seedarc_seed_strategy_tests)
+ add_test(NAME seed.candidate_plans COMMAND seedarc_seed_strategy_tests)
+ set_tests_properties(seed.candidate_plans PROPERTIES TIMEOUT 10)
+ 
++add_executable(seedarc_seed_file_override_tests seed_file_override_tests.cpp)
++target_link_libraries(seedarc_seed_file_override_tests PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_file_override_tests)
++add_test(NAME seed.file_rank_overrides COMMAND seedarc_seed_file_override_tests)
++set_tests_properties(seed.file_rank_overrides PROPERTIES TIMEOUT 10)
++
++add_executable(seedarc_seed_path_override_tests seed_path_override_tests.cpp)
++target_link_libraries(seedarc_seed_path_override_tests PRIVATE seedarc_seed_study)
++seedarc_target_defaults(seedarc_seed_path_override_tests)
++add_test(NAME seed.path_rank_overrides COMMAND seedarc_seed_path_override_tests)
++set_tests_properties(seed.path_rank_overrides PROPERTIES TIMEOUT 10)
++
+ add_executable(seedarc_m3_compatibility_tests m3_compatibility_tests.cpp)
+ target_link_libraries(seedarc_m3_compatibility_tests PRIVATE SeedArc::core)
+ seedarc_target_defaults(seedarc_m3_compatibility_tests)
+@@ -27,6 +39,12 @@ foreach(suite IN ITEMS archive path index)
+ endforeach()
+ 
+ if(WIN32)
++    add_executable(seedarc_seed_archive_tests seed_archive_tests.cpp)
++    target_link_libraries(seedarc_seed_archive_tests PRIVATE seedarc_seed_study)
++    seedarc_target_defaults(seedarc_seed_archive_tests)
++    add_test(NAME seed.archive_integration COMMAND seedarc_seed_archive_tests "${PROJECT_SOURCE_DIR}/.sandbox-test")
++    set_tests_properties(seed.archive_integration PROPERTIES TIMEOUT 120)
++
+     add_executable(seedarc_safe_output_tests safe_output_tests.cpp)
+     target_link_libraries(seedarc_safe_output_tests PRIVATE SeedArc::core)
+     # Internal test seam (fault injection, volume-root predicate); not a public header.

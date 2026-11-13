@@ -1,0 +1,666 @@
+[
+  {
+    "file": "tests/seed_path_override_tests.cpp",
+    "open": "[success]",
+    "activeFilePath": "tests\\seed_path_override_tests.cpp",
+    "result": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_path_override_tests.cpp",
+      "errors": [
+        {
+          "severity": "INFO",
+          "description": "形参 'condition' 可被设为 常量",
+          "lineContent": "void check(bool condition, std::string_view message) {",
+          "line": 14,
+          "column": 17
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'message' 可被设为 常量",
+          "lineContent": "void check(bool condition, std::string_view message) {",
+          "line": 14,
+          "column": 45
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'files' 可被设为 常量",
+          "lineContent": "void reject(std::span<const study::PlanFile> files, std::span<const study::BlockIdentity> blocks,",
+          "line": 20,
+          "column": 46
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'blocks' 可被设为 常量",
+          "lineContent": "void reject(std::span<const study::PlanFile> files, std::span<const study::BlockIdentity> blocks,",
+          "line": 20,
+          "column": 91
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'edits' 可被设为 常量",
+          "lineContent": "            std::span<const study::PathRankOverride> edits, ErrorCode code,",
+          "line": 21,
+          "column": 54
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'code' 可被设为 常量",
+          "lineContent": "            std::span<const study::PathRankOverride> edits, ErrorCode code,",
+          "line": 21,
+          "column": 71
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'revision' 可被设为 常量",
+          "lineContent": "            std::uint32_t revision = 1) {",
+          "line": 22,
+          "column": 27
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const auto result = study::make_path_file_plans({0, 2, 6}, files, blocks, edits, revision);",
+          "line": 23,
+          "column": 53
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "        {0, \"a.txt\"}, {1, \"dir/b.txt\"}, {2, \"c.txt\"}, {3, \"empty.txt\"}};",
+          "line": 30,
+          "column": 9
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "        {0, \"a.txt\"}, {1, \"dir/b.txt\"}, {2, \"c.txt\"}, {3, \"empty.txt\"}};",
+          "line": 30,
+          "column": 23
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "        {0, \"a.txt\"}, {1, \"dir/b.txt\"}, {2, \"c.txt\"}, {3, \"empty.txt\"}};",
+          "line": 30,
+          "column": 41
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "        {0, \"a.txt\"}, {1, \"dir/b.txt\"}, {2, \"c.txt\"}, {3, \"empty.txt\"}};",
+          "line": 30,
+          "column": 55
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "        blocks.push_back({i / 4, i % 4, i});",
+          "line": 33,
+          "column": 26
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "    const std::array edit{study::PathRankOverride{\"dir/b.txt\", 5, std::nullopt}};",
+          "line": 35,
+          "column": 50
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const auto base = study::make_path_file_plans({0, 2, 6}, files, blocks, {});",
+          "line": 36,
+          "column": 51
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const auto global = study::make_path_file_plans({0, 3, 6}, files, blocks, {});",
+          "line": 37,
+          "column": 53
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const auto overlay = study::make_path_file_plans({0, 3, 6}, files, blocks, edit);",
+          "line": 38,
+          "column": 54
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const auto cleared = study::make_path_file_plans({0, 3, 6}, files, blocks, {});",
+          "line": 39,
+          "column": 54
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    files.insert(files.begin(), {99, \"0-inserted.txt\"});",
+          "line": 64,
+          "column": 33
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "    blocks.push_back({99, 0, 99});",
+          "line": 65,
+          "column": 22
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    auto shifted = study::make_path_file_plans({0, 3, 6}, files, blocks, edit);",
+          "line": 68,
+          "column": 48
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'f' 可替换为结构化绑定",
+          "lineContent": "    for (auto &f : files) {",
+          "line": 74,
+          "column": 16
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    shifted = study::make_path_file_plans({0, 3, 6}, files, blocks, edit);",
+          "line": 85,
+          "column": 43
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'b' 可替换为结构化绑定",
+          "lineContent": "        for (const auto &b : *shifted) {",
+          "line": 89,
+          "column": 26
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::Candidate",
+          "lineContent": "                {study::field_candidate, 1}, study::FieldSeed{0, 3, 6}, b.identity.global_block_id);",
+          "line": 91,
+          "column": 17
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "                {study::field_candidate, 1}, study::FieldSeed{0, 3, 6}, b.identity.global_block_id);",
+          "line": 91,
+          "column": 62
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'f' 可替换为结构化绑定",
+          "lineContent": "    for (auto &f : files) {",
+          "line": 100,
+          "column": 16
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    const std::array special_files{study::PlanFile{0, \"empty.txt\"},",
+          "line": 110,
+          "column": 51
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "                                   study::PlanFile{1, \"single.txt\"},",
+          "line": 111,
+          "column": 51
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "                                   study::PlanFile{2, \"large.txt\"}};",
+          "line": 112,
+          "column": 51
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "    std::vector<study::BlockIdentity> large{{1, 0, 0}}; // B-r1 global0 is LZMA2.",
+          "line": 113,
+          "column": 45
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "        large.push_back({2, i, i + 1});",
+          "line": 115,
+          "column": 25
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "    const std::array empty_edit{study::PathRankOverride{\"empty.txt\", 5, std::nullopt}};",
+          "line": 117,
+          "column": 56
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "    const std::array no_target_edit{study::PathRankOverride{\"single.txt\", 5, std::nullopt}};",
+          "line": 118,
+          "column": 60
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "    const std::array large_edit{study::PathRankOverride{\"large.txt\", 5, std::nullopt}};",
+          "line": 119,
+          "column": 56
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const auto large_base = study::make_path_file_plans({0, 3, 6}, special_files, large, {});",
+          "line": 120,
+          "column": 57
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "        study::make_path_file_plans({0, 3, 6}, special_files, large, empty_edit);",
+          "line": 122,
+          "column": 37
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "        study::make_path_file_plans({0, 3, 6}, special_files, large, no_target_edit);",
+          "line": 124,
+          "column": 37
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "        study::make_path_file_plans({0, 3, 6}, special_files, large, large_edit);",
+          "line": 126,
+          "column": 37
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    const std::array one{study::PlanFile{0, \"ok.txt\"}};",
+          "line": 143,
+          "column": 41
+        },
+        {
+          "severity": "WARN",
+          "description": "变量 'unknown_block' 可被设为 constexpr",
+          "lineContent": "    const std::array unknown_block{study::BlockIdentity{99, 0, 0}};",
+          "line": 144,
+          "column": 22
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "    const std::array unknown_block{study::BlockIdentity{99, 0, 0}};",
+          "line": 144,
+          "column": 56
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const auto all_empty = study::make_path_file_plans({0, 2, 6}, one, {}, {});",
+          "line": 147,
+          "column": 56
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const auto bad_default = study::make_path_file_plans({0, 19, 6}, {}, {}, {});",
+          "line": 149,
+          "column": 58
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "    for (const auto &bad : std::array{study::PathRankOverride{\"ok.txt\", 19, std::nullopt},",
+          "line": 151,
+          "column": 62
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "                                      study::PathRankOverride{\"ok.txt\", std::nullopt, 10},",
+          "line": 152,
+          "column": 62
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "                                      study::PathRankOverride{\"ok.txt\", std::nullopt, std::nullopt},",
+          "line": 153,
+          "column": 62
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "                                      study::PathRankOverride{\"OK.txt\", 5, std::nullopt},",
+          "line": 154,
+          "column": 62
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "                                      study::PathRankOverride{\"missing.txt\", 5, std::nullopt}}) {",
+          "line": 155,
+          "column": 62
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "    const std::array duplicates{study::PathRankOverride{\"ok.txt\", 5, std::nullopt},",
+          "line": 159,
+          "column": 56
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "                                study::PathRankOverride{\"ok.txt\", std::nullopt, 3}};",
+          "line": 160,
+          "column": 56
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    const std::array duplicate_id{study::PlanFile{0, \"a\"}, study::PlanFile{0, \"b\"}};",
+          "line": 162,
+          "column": 50
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    const std::array duplicate_id{study::PlanFile{0, \"a\"}, study::PlanFile{0, \"b\"}};",
+          "line": 162,
+          "column": 75
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    const std::array case_collision{study::PlanFile{0, \"a\"}, study::PlanFile{1, \"A\"}};",
+          "line": 164,
+          "column": 52
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    const std::array case_collision{study::PlanFile{0, \"a\"}, study::PlanFile{1, \"A\"}};",
+          "line": 164,
+          "column": 77
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    const std::array duplicate_path{study::PlanFile{0, \"a\"}, study::PlanFile{1, \"a\"}};",
+          "line": 166,
+          "column": 52
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    const std::array duplicate_path{study::PlanFile{0, \"a\"}, study::PlanFile{1, \"a\"}};",
+          "line": 166,
+          "column": 77
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "        const std::array bad{study::PlanFile{0, path}};",
+          "line": 169,
+          "column": 45
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    const std::array unicode{study::PlanFile{0, \"\\xc3\\xa9.txt\"}};",
+          "line": 172,
+          "column": 45
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "    const std::array unicode_edit{study::PathRankOverride{\"\\xc3\\xa9.txt\", 5, std::nullopt}};",
+          "line": 173,
+          "column": 58
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    check(study::make_path_file_plans({0, 2, 6}, unicode, {}, unicode_edit).has_value(),",
+          "line": 174,
+          "column": 39
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "        many.push_back({i, \"f\" + std::to_string(i)});",
+          "line": 178,
+          "column": 24
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    check(study::make_path_file_plans({0, 2, 6}, many, {}, {}).has_value(),",
+          "line": 182,
+          "column": 39
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    const std::array oversized{study::PlanFile{0, std::string(4097, 'a')}};",
+          "line": 184,
+          "column": 47
+        }
+      ]
+    }
+  },
+  {
+    "file": "research/tools/seed_scope_contract.cpp",
+    "open": "[success]",
+    "activeFilePath": "research\\tools\\seed_scope_contract.cpp",
+    "result": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_scope_contract.cpp",
+      "errors": [
+        {
+          "severity": "INFO",
+          "description": "形参 'name' 可被设为 常量",
+          "lineContent": "bool observe(std::string_view name, const std::vector<study::PlanFile> &files,",
+          "line": 19,
+          "column": 31
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'target' 可被设为 常量",
+          "lineContent": "             const std::vector<study::BlockIdentity> &blocks, std::string_view target) {",
+          "line": 20,
+          "column": 80
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "    const std::array edits{study::PathRankOverride{std::string(target), 5, std::nullopt}};",
+          "line": 21,
+          "column": 51
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const std::array stages{study::make_path_file_plans({0, 2, 6}, files, blocks, {}),",
+          "line": 22,
+          "column": 57
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "                            study::make_path_file_plans({0, 3, 6}, files, blocks, {}),",
+          "line": 23,
+          "column": 57
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "                            study::make_path_file_plans({0, 3, 6}, files, blocks, edits),",
+          "line": 24,
+          "column": 57
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "                            study::make_path_file_plans({0, 3, 6}, files, blocks, {})};",
+          "line": 25,
+          "column": 57
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'id' 可替换为结构化绑定",
+          "lineContent": "        const auto &id = (*stages[0])[i].identity;",
+          "line": 47,
+          "column": 21
+        },
+        {
+          "severity": "WARN",
+          "description": "变量 'keys' 可被移动到inner scope中",
+          "lineContent": "        constexpr std::array keys{\"base\", \"global\", \"file\", \"cleared\"};",
+          "line": 51,
+          "column": 30
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'argc' 可被设为 常量",
+          "lineContent": "int main(int argc, char *argv[]) {",
+          "line": 65,
+          "column": 14
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "        {0, \"a.txt\"}, {1, \"dir/b.txt\"}, {2, \"c.txt\"}, {3, \"empty.txt\"}};",
+          "line": 80,
+          "column": 9
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "        {0, \"a.txt\"}, {1, \"dir/b.txt\"}, {2, \"c.txt\"}, {3, \"empty.txt\"}};",
+          "line": 80,
+          "column": 23
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "        {0, \"a.txt\"}, {1, \"dir/b.txt\"}, {2, \"c.txt\"}, {3, \"empty.txt\"}};",
+          "line": 80,
+          "column": 41
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "        {0, \"a.txt\"}, {1, \"dir/b.txt\"}, {2, \"c.txt\"}, {3, \"empty.txt\"}};",
+          "line": 80,
+          "column": 55
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "        blocks.push_back({i / 4, i % 4, i});",
+          "line": 83,
+          "column": 26
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    files.insert(files.begin(), {99, \"0-inserted.txt\"});",
+          "line": 93,
+          "column": 33
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "    blocks.push_back({99, 0, 99});",
+          "line": 94,
+          "column": 22
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'f' 可替换为结构化绑定",
+          "lineContent": "    for (auto &f : files) {",
+          "line": 103,
+          "column": 16
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "    const std::array stale{study::PathRankOverride{\"dir/b.txt\", 5, std::nullopt}};",
+          "line": 118,
+          "column": 51
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'f' 可替换为结构化绑定",
+          "lineContent": "    for (auto &f : files) {",
+          "line": 119,
+          "column": 16
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const auto renamed = study::make_path_file_plans({0, 3, 6}, files, blocks, stale);",
+          "line": 124,
+          "column": 54
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'removed' 可被移动到if-init-statement中",
+          "lineContent": "    const auto removed = study::make_path_file_plans({0, 3, 6}, files, blocks, stale);",
+          "line": 127,
+          "column": 16
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "    const auto removed = study::make_path_file_plans({0, 3, 6}, files, blocks, stale);",
+          "line": 127,
+          "column": 54
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    files = {{0, \"empty.txt\"}, {1, \"single.txt\"}, {2, \"large.txt\"}};",
+          "line": 133,
+          "column": 14
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    files = {{0, \"empty.txt\"}, {1, \"single.txt\"}, {2, \"large.txt\"}};",
+          "line": 133,
+          "column": 32
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PlanFile",
+          "lineContent": "    files = {{0, \"empty.txt\"}, {1, \"single.txt\"}, {2, \"large.txt\"}};",
+          "line": 133,
+          "column": 51
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "    blocks = {{1, 0, 0}};",
+          "line": 134,
+          "column": 15
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::BlockIdentity",
+          "lineContent": "        blocks.push_back({2, i, i + 1});",
+          "line": 136,
+          "column": 26
+        }
+      ]
+    }
+  }
+]

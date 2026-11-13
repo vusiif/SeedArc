@@ -1,0 +1,85 @@
+{
+  "fileName": "store_archive.cpp",
+  "configurationDisplayName": "libseedarc | Debug",
+  "languageKind": "CPP",
+  "compilerKind": "msvc",
+  "compilerExecutable": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+  "compilerSwitches": [
+    "/DLZMA_API_STATIC",
+    "-IC:/Users/IceLolly/Music/Clion/SeedArc/core/include",
+    "-IC:/Users/IceLolly/Music/Clion/SeedArc/cmake-build-debug-vcpkg/core/generated",
+    "-IC:/Users/IceLolly/Music/Clion/SeedArc/core",
+    "-IC:/Users/IceLolly/Music/Clion/SeedArc/cmake-build-debug-vcpkg/vcpkg_installed/x64-windows-static-md/include",
+    "/DWIN32",
+    "/D_WINDOWS",
+    "/EHsc",
+    "/Ob0",
+    "/Od",
+    "/RTC1",
+    "-std:c++latest",
+    "-MDd",
+    "-Zi",
+    "/W4",
+    "/permissive-",
+    "/Zc:__cplusplus",
+    "/utf-8"
+  ],
+  "implicitIncludes": [],
+  "headerSearchPaths": [
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/um"
+    },
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/shared"
+    },
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/winrt"
+    },
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/cppwinrt"
+    },
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Users/IceLolly/Music/Clion/SeedArc/core/include"
+    },
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Users/IceLolly/Music/Clion/SeedArc/cmake-build-debug-vcpkg/core/generated"
+    },
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Users/IceLolly/Music/Clion/SeedArc/core"
+    },
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Users/IceLolly/Music/Clion/SeedArc/cmake-build-debug-vcpkg/vcpkg_installed/x64-windows-static-md/include"
+    },
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.51.36231/include"
+    },
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Auxiliary/VS/include"
+    },
+    {
+      "typeName": "Pointer",
+      "isUser": false,
+      "pathInfo": "file://C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/ucrt"
+    }
+  ]
+}

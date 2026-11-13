@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "seedarc/store_archive.hpp"
 
+#include "archive_plan.hpp"
 #include "codec/codec.hpp"
 #include "filesystem/input_tree.hpp"
 #include "seedarc/archive_index.hpp"
@@ -518,10 +519,16 @@ std::expected<ArchiveSummary, Error> extract_archive(const fs::path &archive,
     return result;
 }
 
-std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
-                                                      const fs::path &output_archive,
-                                                      const CompressOptions &options,
-                                                      std::stop_token stop) {
+namespace {
+std::expected<ArchiveSummary, Error> compress_archive_impl(const fs::path &input,
+                                                           const fs::path &output_archive,
+                                                           const CompressOptions &options,
+                                                           const internal::PlanBuilder *builder,
+                                                           const std::stop_token &stop) {
+    if (builder && (!*builder || options.codec != Codec::store || options.level)) {
+        return std::unexpected(Error{ErrorCode::invalid_argument,
+                                     "planned encoding requires a builder and no fixed codec"});
+    }
     const auto &limits = options.limits;
     if (options.chunk_size_bytes == 0) {
         return std::unexpected(Error{ErrorCode::invalid_argument, "chunk size must not be zero"});
@@ -529,7 +536,7 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
     if (options.chunk_size_bytes > limits.max_chunk_bytes) {
         return std::unexpected(Error{ErrorCode::resource_limit, "chunk size exceeds the limit"});
     }
-    const auto codec_id = static_cast<std::uint32_t>(options.codec);
+    auto codec_id = static_cast<std::uint32_t>(options.codec);
     std::uint32_t config = 0;
     std::optional<codec::Encoder> encoder;
     if (options.codec == Codec::store) {
@@ -603,6 +610,31 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
     if (const auto provisional = encode_header(header, limits); !provisional) {
         return std::unexpected(provisional.error());
     }
+    std::vector<internal::BlockEncoding> plans;
+    bool needs_encoding = encoder.has_value();
+    if (builder) {
+        if (stop.stop_requested()) {
+            return std::unexpected(cancelled());
+        }
+        auto generated = (*builder)(index.entries, block_count);
+        if (!generated) {
+            return std::unexpected(generated.error());
+        }
+        if (generated->size() != block_count) {
+            return std::unexpected(Error{ErrorCode::invalid_argument, "block plan count mismatch"});
+        }
+        for (const auto &plan : *generated) {
+            if (!codec::valid_block_codec(static_cast<std::uint32_t>(plan.codec), plan.config)) {
+                return std::unexpected(
+                    Error{ErrorCode::invalid_argument, "invalid block encoding plan"});
+            }
+            needs_encoding = needs_encoding || plan.codec != Codec::store;
+        }
+        plans = std::move(*generated);
+        if (stop.stop_requested()) {
+            return std::unexpected(cancelled());
+        }
+    }
     if (auto reserved = output->reserve_prefix(archive_header_bytes); !reserved) {
         return std::unexpected(reserved.error());
     }
@@ -610,8 +642,8 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
     const auto chunk_capacity =
         static_cast<std::size_t>((std::min)(std::uint64_t{options.chunk_size_bytes}, total));
     std::vector<std::byte> buffer(chunk_capacity); // one chunk at most
-    std::vector<std::byte> packed(encoder ? chunk_capacity : 0);
-    std::vector<std::byte> check(encoder ? chunk_capacity : 0);
+    std::vector<std::byte> packed(needs_encoding ? chunk_capacity : 0);
+    std::vector<std::byte> check(needs_encoding ? chunk_capacity : 0);
     codec::Decoder decoder;
     std::uint64_t offset = 0;
     std::size_t block = 0;
@@ -646,6 +678,22 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
             const auto checksum = crc32c(chunk);
             std::span<const std::byte> stored = chunk;
             BlockDescriptor descriptor{offset, want, want, codec::store_id, 0, checksum};
+            if (builder) {
+                const auto &plan = plans[block];
+                const auto next_codec = static_cast<std::uint32_t>(plan.codec);
+                if (next_codec != codec_id || plan.config != config) {
+                    encoder.reset(); // At most one live encoder, including codec switches.
+                    if (plan.codec != Codec::store) {
+                        auto created = codec::Encoder::create(next_codec, plan.config);
+                        if (!created) {
+                            return std::unexpected(created.error());
+                        }
+                        encoder.emplace(std::move(*created));
+                    }
+                    codec_id = next_codec;
+                    config = plan.config;
+                }
+            }
             if (encoder) {
                 const auto size = encoder->encode(chunk, std::span{packed}.first(want - 1));
                 if (!size) {
@@ -706,6 +754,21 @@ std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
         return std::unexpected(committed.error());
     }
     return ArchiveSummary{header.entry_count, block_count, total, archive_bytes};
+}
+} // namespace
+
+std::expected<ArchiveSummary, Error> compress_archive(const fs::path &input,
+                                                      const fs::path &output_archive,
+                                                      const CompressOptions &options,
+                                                      std::stop_token stop) {
+    return compress_archive_impl(input, output_archive, options, nullptr, stop);
+}
+
+std::expected<ArchiveSummary, Error>
+internal::compress_archive_planned(const fs::path &input, const fs::path &output_archive,
+                                   const CompressOptions &options, const PlanBuilder &builder,
+                                   const std::stop_token &stop) {
+    return compress_archive_impl(input, output_archive, options, &builder, stop);
 }
 
 std::string codec_library_versions() { return codec::library_versions(); }

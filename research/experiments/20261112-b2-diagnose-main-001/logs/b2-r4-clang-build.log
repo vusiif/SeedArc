@@ -1,0 +1,4 @@
+[1/4] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp for CXX dependencies
+[2/4] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_archive.dir/CXX.dd
+[3/4] Building CXX object research/tools/CMakeFiles/seedarc_seed_archive.dir/seed_archive.cpp.obj
+[4/4] Linking CXX executable research\tools\seedarc_seed_archive.exe

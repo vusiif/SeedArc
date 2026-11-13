@@ -1,0 +1,206 @@
+{
+  "repeated_archives": [
+    {
+      "dataset": "binary",
+      "mode": "store",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "zstd3",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "zstd6",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "lzma6",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "b-base",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "b-global",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "b-file",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "binary",
+      "mode": "b-cleared",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "store",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "zstd3",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "zstd6",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "lzma6",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "b-base",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "b-global",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "b-file",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "compressed",
+      "mode": "b-cleared",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "store",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "zstd3",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "zstd6",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "lzma6",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "b-base",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "b-global",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "b-file",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "mixed",
+      "mode": "b-cleared",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "store",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "zstd3",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "zstd6",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "lzma6",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "b-base",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "b-global",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "b-file",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "source",
+      "mode": "b-cleared",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "store",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "zstd3",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "zstd6",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "lzma6",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "b-base",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "b-global",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "b-file",
+      "repeated_archives_byte_equal": true
+    },
+    {
+      "dataset": "text",
+      "mode": "b-cleared",
+      "repeated_archives_byte_equal": true
+    }
+  ],
+  "cleared_vs_global_byte_comparisons": 15,
+  "passed": true
+}

@@ -1,0 +1,87 @@
+{
+  "status": "completed",
+  "run_id": "20261112-b2-adaptive-main-001",
+  "repetitions": 3,
+  "modes": [
+    "store",
+    "zstd3",
+    "zstd6",
+    "lzma6",
+    "b-base",
+    "b-global",
+    "b-file",
+    "b-cleared",
+    "oracle-file",
+    "adaptive-0",
+    "adaptive-256k",
+    "adaptive-1m",
+    "adaptive-unbounded"
+  ],
+  "labels": {
+    "zstd3": "Fixed Zstd-3",
+    "lzma6": "Fixed LZMA2-6",
+    "oracle-file": "Oracle-file（参考上限）",
+    "adaptive-0": "Adaptive-file @ 0",
+    "adaptive-256k": "Adaptive-file @ 262144",
+    "adaptive-1m": "Adaptive-file @ 1048576",
+    "adaptive-unbounded": "Adaptive-file @ unbounded"
+  },
+  "budgets": {
+    "adaptive-0": "0",
+    "adaptive-256k": "262144",
+    "adaptive-1m": "1048576",
+    "adaptive-unbounded": "unbounded"
+  },
+  "chunk_bytes": 65536,
+  "threads": 1,
+  "selector": {
+    "version": "adaptive-file-r1",
+    "min_file_bytes": 16384,
+    "min_gain_permille": 20,
+    "min_gain_bytes": 64,
+    "samples": "{0, n/2, n-1}",
+    "trial_order": [
+      "zstd3",
+      "lzma6",
+      "zstd6"
+    ],
+    "registered_in": "research/ideas/seed-adaptive-file-r5.md"
+  },
+  "oracle": "oracle-file-r1: all blocks x {zstd3, zstd6, lzma6} in-process; r4 B2-file-codec rule",
+  "timing": "call_wall/cpu: inside the tool around compress (includes the selector's decision); decision_*: inside the planner; encode = call - decision; process wall from Python includes startup/JSON. CPU: GetProcessTimes / GetThreadTimes (≈15.6 ms resolution)",
+  "memory": "GetProcessMemoryInfo PeakWorkingSetSize per process; includes tool/report",
+  "cache": "no warmup; uncontrolled OS caches; rotate mode order each repetition",
+  "tool_sha256": "3021923d55a488d49cd52deba112950241f4355ee6dd69843a237e17e197e7d2",
+  "script_sha256": "7157c7e34cf734d6e283331463b187667f68d4417bca0fb857ee2835ca27c967",
+  "build": {
+    "preset": "msvc-vs2026-release",
+    "config": "Release",
+    "CMAKE_CXX_FLAGS:STRING": "/DWIN32 /D_WINDOWS /EHsc",
+    "CMAKE_CXX_FLAGS_RELEASE:STRING": "/O2 /Ob2 /DNDEBUG",
+    "CMAKE_TOOLCHAIN_FILE:FILEPATH": "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/vcpkg/scripts/buildsystems/vcpkg.cmake",
+    "SEEDARC_BUILD_RESEARCH_TOOLS:BOOL": "ON",
+    "VCPKG_TARGET_TRIPLET:STRING": "x64-windows-static-md",
+    "CMAKE_GENERATOR:INTERNAL": "Visual Studio 18 2026"
+  },
+  "vcpkg_manifest_sha256": "d2b23b818fea1b030226f2a47facb376cb83b26255bd82e8040b13eec8986641",
+  "started_at": "2026-11-12T07:41:02.879854-08:00",
+  "git_commit": "f3deb4a15305760e4714136b93c066071ad87b02",
+  "dirty": true,
+  "os": "Windows-10-10.0.19045-SP0",
+  "cpu": "AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD",
+  "logical_cpus": 16,
+  "python": "3.15.0 (tags/v3.15.0:d220409, Oct  9 2026, 11:55:56) [MSC v.1951 64 bit (AMD64)]",
+  "invocation": [
+    "C:\\Users\\IceLolly\\AppData\\Local\\Programs\\Python\\Python315\\python.exe",
+    "research/scripts/b2_adaptive.py",
+    "--tool",
+    "build/msvc-vs2026-release/research/tools/Release/seedarc_seed_archive.exe",
+    "--run-id",
+    "20261112-b2-adaptive-main-001",
+    "--repetitions",
+    "3"
+  ],
+  "codec_versions": "SeedArc B2-r5 study; zstd 1.5.7, liblzma 5.8.4",
+  "dataset_manifest_sha256": "219f139d381484ba4c2b0cd1b584a902f82a3fca8af01f1e5085cdbaf5d7d322",
+  "finished_at": "2026-11-12T07:41:26.947012-08:00"
+}

@@ -1,0 +1,9 @@
+Test project C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug
+    Start  9: seed.archive_integration
+1/2 Test  #9: seed.archive_integration .........   Passed    0.15 sec
+    Start 10: seed.adaptive_file
+2/2 Test #10: seed.adaptive_file ...............   Passed    0.39 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =   0.54 sec

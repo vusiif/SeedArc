@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="sans-serif" font-size="12">
+<rect width="720" height="420" fill="#fff"/>
+<line x1="70" y1="350" x2="650" y2="350" stroke="#333"/>
+<line x1="70" y1="70" x2="70" y2="350" stroke="#333"/>
+<line x1="70" y1="79.8" x2="650" y2="79.8" stroke="#bbb" stroke-dasharray="4 3"/>
+<text x="360.0" y="395" text-anchor="middle">五组合计：compress 调用墙钟中位数之和 (ms，含决策)</text>
+<text x="18" y="210.0" transform="rotate(-90 18 210.0)" text-anchor="middle">归档合计 − Fixed Zstd-3 (B)</text>
+<text x="70" y="50" font-weight="bold">B2-r5：归档大小与时间（3 次中位数，单机，非显著性结论）</text>
+<text x="70.0" y="366" text-anchor="middle">0</text>
+<text x="360.0" y="366" text-anchor="middle">109</text>
+<text x="650.0" y="366" text-anchor="middle">217</text>
+<text x="64" y="354.0" text-anchor="end">-1376</text>
+<text x="64" y="83.8" text-anchor="end">0</text>
+<text x="64" y="74.0" text-anchor="end">50</text>
+<circle cx="230.9" cy="79.8" r="5" fill="#2a6fb0"/>
+<text x="238.9" y="71.8">Fixed Zstd-3 (+0 B, 60 ms)</text>
+<circle cx="578.6" cy="142.7" r="5" fill="#2a6fb0"/>
+<text x="586.6" y="148.7">Fixed LZMA2-6 (-320 B, 191 ms)</text>
+<circle cx="228.1" cy="79.8" r="5" fill="#2a6fb0"/>
+<text x="236.1" y="99.8">Adaptive-file @ 0 (+0 B, 59 ms)</text>
+<circle cx="261.7" cy="316.1" r="5" fill="#2a6fb0"/>
+<text x="269.7" y="308.1">Adaptive-file @ 262144 (-1203 B, 72 ms)</text>
+<circle cx="420.9" cy="316.1" r="5" fill="#2a6fb0"/>
+<text x="428.9" y="322.1">Adaptive-file @ 1048576 (-1203 B, 132 ms)</text>
+<circle cx="412.2" cy="316.1" r="5" fill="#2a6fb0"/>
+<text x="420.2" y="336.1">Adaptive-file @ unbounded (-1203 B, 128 ms)</text>
+<circle cx="597.3" cy="316.5" r="5" fill="#2a6fb0"/>
+<text x="605.3" y="308.5">Oracle-file（参考上限） (-1205 B, 198 ms)</text>
+</svg>

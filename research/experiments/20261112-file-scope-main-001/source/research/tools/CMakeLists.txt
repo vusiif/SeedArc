@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+add_executable(seedarc_seed_plan seed_plan.cpp)
+target_link_libraries(seedarc_seed_plan PRIVATE seedarc_seed_study)
+seedarc_target_defaults(seedarc_seed_plan)
+
+add_executable(seedarc_seed_scope_plan seed_scope_plan.cpp)
+target_link_libraries(seedarc_seed_scope_plan PRIVATE seedarc_seed_study)
+seedarc_target_defaults(seedarc_seed_scope_plan)

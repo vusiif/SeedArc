@@ -1,0 +1,19 @@
+{
+  "core/archive_plan.hpp": "c150529c17364852747b6b4437361e967c4f4db8a16ec11be75d4db0f17c1b60",
+  "core/CMakeLists.txt": "1c2b6a46adcad8e250557e581005f744399ae14ca894d44df58689029d64939e",
+  "core/codec/codec.cpp": "a6c8c387803643fad6eaf541196b092ed5b453c87e769fdf4cfd528a781929a7",
+  "core/codec/codec.hpp": "0cc4674b6bc805ec2c78217729203d52173002beb66fa14bbe66cc8eac461912",
+  "core/filesystem/input_tree.hpp": "faff30a839b70092d3c22a1ed1b5c4d48be8a73e93f3c4ee2c5fa72451dae177",
+  "core/seed/adaptive_file.cpp": "9683b7053dfe9914aa7636a7e1be39193268a97f053039bf979cee3e840ca3d4",
+  "core/seed/adaptive_file.hpp": "334251cbb7dda7b7a6e5d2f07caa53279cceecc72384ccab472dedddee609a6a",
+  "core/seed/file_overrides.hpp": "7c0f03bf738527c391f80f997de2d6254bade9fa0a4a3205cc35f59324b7082f",
+  "core/seed/path_overrides.hpp": "799c9484879e909c920a054d3e11f144b3356de2e4f9b59498a1e736d2993e96",
+  "core/seed/strategy.hpp": "8c70b1b41c952451cf044b083fd751a3688a33e184173221eeeb3da1563fc1e2",
+  "core/store_archive.cpp": "c31c76499ec980829341efaa9e4d829093e17ca636252d5a893f9b3689290ebf",
+  "research/scripts/b2_adaptive.py": "7157c7e34cf734d6e283331463b187667f68d4417bca0fb857ee2835ca27c967",
+  "research/tools/CMakeLists.txt": "aa9f13b069d99d80424f85e9a4de84dbceae560adb952ec85b724502ad468234",
+  "research/tools/seed_archive.cpp": "205689a507b7430402866900d4a556fd703542a6757a22d8bab0ac89856aa7f8",
+  "tests/CMakeLists.txt": "274bb7275879fac6b1e885d9b697faeb5aadce4219519d2d1fcb34c0a1d1b71a",
+  "tests/seed_adaptive_tests.cpp": "1e41502dd7683317a5c3b4f911b0c5229bfeaf362313def8c6e1d9b4dfeadf96",
+  "vcpkg.json": "d2b23b818fea1b030226f2a47facb376cb83b26255bd82e8040b13eec8986641"
+}

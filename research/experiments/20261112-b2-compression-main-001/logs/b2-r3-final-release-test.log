@@ -1,0 +1,21 @@
+Test project C:/Users/IceLolly/Music/Clion/SeedArc/build/msvc-vs2026-release
+    Start  2: seed.candidate_plans
+1/8 Test  #2: seed.candidate_plans .............   Passed    0.02 sec
+    Start  3: seed.file_rank_overrides
+2/8 Test  #3: seed.file_rank_overrides .........   Passed    0.03 sec
+    Start  4: seed.path_rank_overrides
+3/8 Test  #4: seed.path_rank_overrides .........   Passed    0.03 sec
+    Start  5: archive.m3_compatibility
+4/8 Test  #5: archive.m3_compatibility .........   Passed    0.02 sec
+    Start  9: seed.archive_integration
+5/8 Test  #9: seed.archive_integration .........   Passed    0.16 sec
+    Start 11: archive.store_round_trip
+6/8 Test #11: archive.store_round_trip .........   Passed    5.03 sec
+    Start 13: codec.round_trip
+7/8 Test #13: codec.round_trip .................   Passed    0.29 sec
+    Start 32: cli.codec_round_trip
+8/8 Test #32: cli.codec_round_trip .............   Passed    0.77 sec
+
+100% tests passed out of 8
+
+Total Test time (real) =   6.37 sec

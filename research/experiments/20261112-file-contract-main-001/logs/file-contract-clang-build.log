@@ -1,0 +1,156 @@
+[0/1] Re-running CMake...
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-mingw-static...
+Compiler found: C:/msys64/ucrt64/bin/x86_64-w64-mingw32-g++.exe
+The following packages will be rebuilt:
+    liblzma:x64-mingw-static@5.8.4 -- git+https://github.com/microsoft/vcpkg@e8240b76a93c7a55d2a1d52fb6023123c681b955
+  * vcpkg-cmake:x64-mingw-static@2025-08-07 -- git+https://github.com/microsoft/vcpkg@16b9390dfeaca6df7288ba3f827e40e48e5fc942
+  * vcpkg-cmake-config:x64-mingw-static@2026-07-21 -- git+https://github.com/microsoft/vcpkg@51befcb03097f8d19c1c59f9ec3625e69d85322a
+    zstd:x64-mingw-static@1.5.7 -- git+https://github.com/microsoft/vcpkg@31b7320fab13790c6861cb3c2d50dc8f60ca3602
+Additional packages (*) will be modified to complete this operation.
+Restored 0 package(s) from C:\Users\IceLolly\AppData\Local\vcpkg\archives in 1.75 ms. Use --debug to see more details.
+Removing 1/8 zstd:x64-mingw-static
+Elapsed time to handle zstd:x64-mingw-static: 9.19 ms
+Removing 2/8 liblzma:x64-mingw-static
+Elapsed time to handle liblzma:x64-mingw-static: 20.4 ms
+Removing 3/8 vcpkg-cmake:x64-mingw-static
+Elapsed time to handle vcpkg-cmake:x64-mingw-static: 3.96 ms
+Removing 4/8 vcpkg-cmake-config:x64-mingw-static
+Elapsed time to handle vcpkg-cmake-config:x64-mingw-static: 4.12 ms
+Installing 5/8 vcpkg-cmake-config:x64-mingw-static@2026-07-21...
+vcpkg-cmake-config:x64-mingw-static@2026-07-21 package ABI: 0073cb2a0c38e027c24581e83d2dc5cc9a4138a6573951183ce06b18455921e7
+Building vcpkg-cmake-config:x64-mingw-static@2026-07-21...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\51befcb03097f8d19c1c59f9ec3625e69d85322a: info: installing from git registry git+https://github.com/microsoft/vcpkg@51befcb03097f8d19c1c59f9ec3625e69d85322a
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake-config_x64-mingw-static/share/vcpkg-cmake-config/vcpkg_cmake_config_fixup.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake-config_x64-mingw-static/share/vcpkg-cmake-config/vcpkg-port-config.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake-config_x64-mingw-static/share/vcpkg-cmake-config/copyright
+-- Skipping post-build validation due to VCPKG_POLICY_EMPTY_PACKAGE
+Starting submission of vcpkg-cmake-config:x64-mingw-static@2026-07-21 to 1 binary cache(s) in the background
+Elapsed time to handle vcpkg-cmake-config:x64-mingw-static: 65.2 ms
+Installing 6/8 vcpkg-cmake:x64-mingw-static@2025-08-07...
+vcpkg-cmake:x64-mingw-static@2025-08-07 package ABI: 4cccb85acb38fcd005ee7d31d3df2ec9da03cf09a73e756338d952cd3f61acfe
+Building vcpkg-cmake:x64-mingw-static@2025-08-07...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\16b9390dfeaca6df7288ba3f827e40e48e5fc942: info: installing from git registry git+https://github.com/microsoft/vcpkg@16b9390dfeaca6df7288ba3f827e40e48e5fc942
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg_cmake_configure.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg_cmake_build.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg_cmake_install.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg-port-config.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/copyright
+-- Performing post-build validation
+Starting submission of vcpkg-cmake:x64-mingw-static@2025-08-07 to 1 binary cache(s) in the background
+Elapsed time to handle vcpkg-cmake:x64-mingw-static: 71 ms
+Installing 7/8 liblzma:x64-mingw-static@5.8.4...
+liblzma:x64-mingw-static@5.8.4 package ABI: 9d9e1acf04e04ea05f740bf97a280d7d83c79f0a10ef99e1c6696057653c5649
+Building liblzma:x64-mingw-static@5.8.4...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\e8240b76a93c7a55d2a1d52fb6023123c681b955: info: installing from git registry git+https://github.com/microsoft/vcpkg@e8240b76a93c7a55d2a1d52fb6023123c681b955
+-- Using cached tukaani-project-xz-v5.8.4.tar.gz
+-- Cleaning sources at C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/blds/liblzma/src/v5.8.4-19a8d00df7.clean. Use --editable to skip cleaning for the packages you specify.
+-- Extracting source C:/Users/IceLolly/AppData/Local/vcpkg/downloads/tukaani-project-xz-v5.8.4.tar.gz
+-- Applying patch build-tools.patch
+-- Using source at C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/blds/liblzma/src/v5.8.4-19a8d00df7.clean
+-- Configuring x64-mingw-static
+-- Building x64-mingw-static-dbg
+-- Building x64-mingw-static-rel
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/liblzma_x64-mingw-static/lib/pkgconfig/liblzma.pc
+-- Using cached msys2-mingw-w64-x86_64-pkgconf-1~2.5.1-1-any.pkg.tar.zst
+-- Using cached msys2-msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst
+-- Using msys root at C:/Users/IceLolly/AppData/Local/vcpkg/downloads/tools/msys2/3e71d1f8e22ab23f
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/liblzma_x64-mingw-static/debug/lib/pkgconfig/liblzma.pc
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/liblzma_x64-mingw-static/share/liblzma/copyright
+-- Performing post-build validation
+Starting submission of liblzma:x64-mingw-static@5.8.4 to 1 binary cache(s) in the background
+Elapsed time to handle liblzma:x64-mingw-static: 47 s
+warning: Failed to store binary cache C:\Users\IceLolly\AppData\Local\vcpkg\archives\00\0073cb2a0c38e027c24581e83d2dc5cc9a4138a6573951183ce06b18455921e7.zip
+鎷掔粷璁块棶銆?Completed submission of vcpkg-cmake-config:x64-mingw-static@2026-07-21 to 0 binary cache(s) in 11 s
+warning: Failed to store binary cache C:\Users\IceLolly\AppData\Local\vcpkg\archives\4c\4cccb85acb38fcd005ee7d31d3df2ec9da03cf09a73e756338d952cd3f61acfe.zip
+绯荤粺鎵句笉鍒版寚瀹氱殑璺緞銆?Completed submission of vcpkg-cmake:x64-mingw-static@2025-08-07 to 0 binary cache(s) in 11 s
+Installing 8/8 zstd:x64-mingw-static@1.5.7...
+zstd:x64-mingw-static@1.5.7 package ABI: 7425daac33d426fcfa02d426497604241511880aa85db99546c02b8524339c28
+Building zstd:x64-mingw-static@1.5.7...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\31b7320fab13790c6861cb3c2d50dc8f60ca3602: info: installing from git registry git+https://github.com/microsoft/vcpkg@31b7320fab13790c6861cb3c2d50dc8f60ca3602
+-- Using cached facebook-zstd-v1.5.7.tar.gz
+-- Cleaning sources at C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/blds/zstd/src/v1.5.7-bb6cae2b2e.clean. Use --editable to skip cleaning for the packages you specify.
+-- Extracting source C:/Users/IceLolly/AppData/Local/vcpkg/downloads/facebook-zstd-v1.5.7.tar.gz
+-- Applying patch no-static-suffix.patch
+-- Applying patch fix-emscripten-and-clang-cl.patch
+-- Applying patch fix-windows-rc-compile.patch
+-- Using source at C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/blds/zstd/src/v1.5.7-bb6cae2b2e.clean
+-- Configuring x64-mingw-static
+-- Building x64-mingw-static-dbg
+-- Building x64-mingw-static-rel
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/zstd_x64-mingw-static/lib/pkgconfig/libzstd.pc
+-- Using cached msys2-mingw-w64-x86_64-pkgconf-1~2.5.1-1-any.pkg.tar.zst
+-- Using cached msys2-msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst
+-- Using msys root at C:/Users/IceLolly/AppData/Local/vcpkg/downloads/tools/msys2/3e71d1f8e22ab23f
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/zstd_x64-mingw-static/debug/lib/pkgconfig/libzstd.pc
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/zstd_x64-mingw-static/share/zstd/usage
+-- Performing post-build validation
+Starting submission of zstd:x64-mingw-static@1.5.7 to 1 binary cache(s) in the background
+Elapsed time to handle zstd:x64-mingw-static: 30 s
+Installed contents are licensed to you by owners. Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+Packages installed in this vcpkg installation declare the following licenses:
+(BSD-3-Clause OR GPL-2.0-only)
+0BSD
+MIT
+liblzma is compatible with built-in CMake targets:
+
+    find_package(LibLZMA REQUIRED)
+    target_link_libraries(main PRIVATE LibLZMA::LibLZMA)
+
+liblzma provides CMake targets:
+
+    find_package(liblzma CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE liblzma::liblzma)
+
+zstd provides CMake targets:
+
+  find_package(zstd CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE zstd::libzstd)
+
+warning: Failed to store binary cache C:\Users\IceLolly\AppData\Local\vcpkg\archives\9d\9d9e1acf04e04ea05f740bf97a280d7d83c79f0a10ef99e1c6696057653c5649.zip
+绯荤粺鎵句笉鍒版寚瀹氱殑璺緞銆?Completed submission of liblzma:x64-mingw-static@5.8.4 to 0 binary cache(s) in 11 s
+Waiting for 1 remaining binary cache submissions...
+warning: Failed to store binary cache C:\Users\IceLolly\AppData\Local\vcpkg\archives\74\7425daac33d426fcfa02d426497604241511880aa85db99546c02b8524339c28.zip
+绯荤粺鎵句笉鍒版寚瀹氱殑璺緞銆?Completed submission of zstd:x64-mingw-static@1.5.7 to 0 binary cache(s) in 12 s (1/1)
+All requested installations completed successfully in: 1.3 min
+-- Running vcpkg install - done
+-- Configuring done (91.9s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug
+[1/33] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_strategy_tests.dir/CXX.dd
+[2/32] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_file_override_tests.dir/CXX.dd
+[3/31] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/codec/codec.cpp for CXX dependencies
+[4/31] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/path_overrides.cpp for CXX dependencies
+[5/31] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_scope_contract.cpp for CXX dependencies
+[6/31] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_path_override_tests.cpp for CXX dependencies
+[7/31] Generating CXX dyndep file core/CMakeFiles/libseedarc.dir/CXX.dd
+[8/23] Generating CXX dyndep file core/CMakeFiles/seedarc_seed_study.dir/CXX.dd
+[9/21] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_scope_contract.dir/CXX.dd
+[10/21] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_path_override_tests.dir/CXX.dd
+[11/21] Building CXX object core/CMakeFiles/libseedarc.dir/codec/codec.cpp.obj
+[12/21] Linking CXX static library core\liblibseedarc.a
+[13/21] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/path_overrides.cpp.obj
+[14/21] Building CXX object research/tools/CMakeFiles/seedarc_seed_scope_contract.dir/seed_scope_contract.cpp.obj
+[15/21] Linking CXX static library core\libseedarc_seed_study.a
+[16/21] Building CXX object tests/CMakeFiles/seedarc_seed_path_override_tests.dir/seed_path_override_tests.cpp.obj
+[17/21] Linking CXX executable tests\seedarc_seed_strategy_tests.exe
+FAILED: [code=1] tests/seedarc_seed_strategy_tests.exe 
+C:\Windows\system32\cmd.exe /C "cd . && C:\msys64\ucrt64\bin\clang++.exe -g  tests/CMakeFiles/seedarc_seed_strategy_tests.dir/seed_strategy_tests.cpp.obj -o tests\seedarc_seed_strategy_tests.exe -Wl,--out-implib,tests\libseedarc_seed_strategy_tests.dll.a -Wl,--major-image-version,0,--minor-image-version,0  core/libseedarc_seed_study.a  core/liblibseedarc.a  -lntdll  -lbcrypt  -lnormaliz  -ladvapi32  vcpkg_installed/x64-mingw-static/debug/lib/libzstd.a  vcpkg_installed/x64-mingw-static/debug/lib/liblzma.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 && C:\Windows\system32\cmd.exe /C "cd /D C:\Users\IceLolly\Music\Clion\SeedArc\build\clang-ucrt64-debug\tests && C:\Users\IceLolly\AppData\Local\Microsoft\WindowsApps\Microsoft.PowerShell_8wekyb3d8bbwe\pwsh.exe -noprofile -executionpolicy Bypass -file "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/vcpkg/scripts/buildsystems/msbuild/applocal.ps1" -targetBinary C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/tests/seedarc_seed_strategy_tests.exe -installedDir C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/x64-mingw-static/debug/bin -OutVariable out""
+The system cannot execute the specified program.
+[18/21] Linking CXX executable research\tools\seedarc_seed_scope_contract.exe
+FAILED: [code=1] research/tools/seedarc_seed_scope_contract.exe 
+C:\Windows\system32\cmd.exe /C "cd . && C:\msys64\ucrt64\bin\clang++.exe -g  research/tools/CMakeFiles/seedarc_seed_scope_contract.dir/seed_scope_contract.cpp.obj -o research\tools\seedarc_seed_scope_contract.exe -Wl,--out-implib,research\tools\libseedarc_seed_scope_contract.dll.a -Wl,--major-image-version,0,--minor-image-version,0  core/libseedarc_seed_study.a  core/liblibseedarc.a  -lntdll  -lbcrypt  -lnormaliz  -ladvapi32  vcpkg_installed/x64-mingw-static/debug/lib/libzstd.a  vcpkg_installed/x64-mingw-static/debug/lib/liblzma.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 && C:\Windows\system32\cmd.exe /C "cd /D C:\Users\IceLolly\Music\Clion\SeedArc\build\clang-ucrt64-debug\research\tools && C:\Users\IceLolly\AppData\Local\Microsoft\WindowsApps\Microsoft.PowerShell_8wekyb3d8bbwe\pwsh.exe -noprofile -executionpolicy Bypass -file "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/vcpkg/scripts/buildsystems/msbuild/applocal.ps1" -targetBinary C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/research/tools/seedarc_seed_scope_contract.exe -installedDir C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/x64-mingw-static/debug/bin -OutVariable out""
+The system cannot execute the specified program.
+[19/21] Linking CXX executable tests\seedarc_seed_file_override_tests.exe
+FAILED: [code=1] tests/seedarc_seed_file_override_tests.exe 
+C:\Windows\system32\cmd.exe /C "cd . && C:\msys64\ucrt64\bin\clang++.exe -g  tests/CMakeFiles/seedarc_seed_file_override_tests.dir/seed_file_override_tests.cpp.obj -o tests\seedarc_seed_file_override_tests.exe -Wl,--out-implib,tests\libseedarc_seed_file_override_tests.dll.a -Wl,--major-image-version,0,--minor-image-version,0  core/libseedarc_seed_study.a  core/liblibseedarc.a  -lntdll  -lbcrypt  -lnormaliz  -ladvapi32  vcpkg_installed/x64-mingw-static/debug/lib/libzstd.a  vcpkg_installed/x64-mingw-static/debug/lib/liblzma.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 && C:\Windows\system32\cmd.exe /C "cd /D C:\Users\IceLolly\Music\Clion\SeedArc\build\clang-ucrt64-debug\tests && C:\Users\IceLolly\AppData\Local\Microsoft\WindowsApps\Microsoft.PowerShell_8wekyb3d8bbwe\pwsh.exe -noprofile -executionpolicy Bypass -file "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/vcpkg/scripts/buildsystems/msbuild/applocal.ps1" -targetBinary C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/tests/seedarc_seed_file_override_tests.exe -installedDir C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/x64-mingw-static/debug/bin -OutVariable out""
+The system cannot execute the specified program.
+[20/21] Linking CXX executable tests\seedarc_seed_path_override_tests.exe
+FAILED: [code=1] tests/seedarc_seed_path_override_tests.exe 
+C:\Windows\system32\cmd.exe /C "cd . && C:\msys64\ucrt64\bin\clang++.exe -g  tests/CMakeFiles/seedarc_seed_path_override_tests.dir/seed_path_override_tests.cpp.obj -o tests\seedarc_seed_path_override_tests.exe -Wl,--out-implib,tests\libseedarc_seed_path_override_tests.dll.a -Wl,--major-image-version,0,--minor-image-version,0  core/libseedarc_seed_study.a  core/liblibseedarc.a  -lntdll  -lbcrypt  -lnormaliz  -ladvapi32  vcpkg_installed/x64-mingw-static/debug/lib/libzstd.a  vcpkg_installed/x64-mingw-static/debug/lib/liblzma.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 && C:\Windows\system32\cmd.exe /C "cd /D C:\Users\IceLolly\Music\Clion\SeedArc\build\clang-ucrt64-debug\tests && C:\Users\IceLolly\AppData\Local\Microsoft\WindowsApps\Microsoft.PowerShell_8wekyb3d8bbwe\pwsh.exe -noprofile -executionpolicy Bypass -file "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/vcpkg/scripts/buildsystems/msbuild/applocal.ps1" -targetBinary C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/tests/seedarc_seed_path_override_tests.exe -installedDir C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug/vcpkg_installed/x64-mingw-static/debug/bin -OutVariable out""
+The system cannot execute the specified program.
+ninja: build stopped: subcommand failed.

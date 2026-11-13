@@ -1,0 +1,354 @@
+[
+  {
+    "file": "core/archive_plan.hpp",
+    "result": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/core/archive_plan.hpp",
+      "errors": []
+    }
+  },
+  {
+    "file": "core/seed/archive_study.hpp",
+    "result": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/archive_study.hpp",
+      "errors": [
+        {
+          "severity": "INFO",
+          "description": "Two consecutive dots",
+          "lineContent": "// global_block_id equals the writer's block ordinal for this invocation (0..N-1).",
+          "line": 14,
+          "column": 76
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::Candidate",
+          "lineContent": "                    Candidate candidate = {field_candidate, 1}, std::uint32_t catalog_revision = 1,",
+          "line": 20,
+          "column": 43
+        }
+      ]
+    }
+  },
+  {
+    "file": "tests/seed_archive_tests.cpp",
+    "result": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_archive_tests.cpp",
+      "errors": [
+        {
+          "severity": "INFO",
+          "description": "拼写错误: 在单词 'NOMINMAX' 中",
+          "lineContent": "#define NOMINMAX",
+          "line": 14,
+          "column": 9
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'condition' 可被设为 常量",
+          "lineContent": "void check(bool condition, const char *message) {",
+          "line": 24,
+          "column": 17
+        },
+        {
+          "severity": "INFO",
+          "description": "可以推导模板实参",
+          "lineContent": "    std::vector<char> chars{std::istreambuf_iterator<char>{file}, {}};",
+          "line": 35,
+          "column": 53
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'bytes' 可被设为 常量",
+          "lineContent": "void write(const fs::path &path, std::span<const std::byte> bytes) {",
+          "line": 40,
+          "column": 61
+        },
+        {
+          "severity": "INFO",
+          "description": "可以推导模板实参",
+          "lineContent": "        std::vector<std::byte> text(12 * 4096, std::byte{'a'});",
+          "line": 83,
+          "column": 20
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "        const std::array edits{study::PathRankOverride{\"target.txt\", 5, std::nullopt}};",
+          "line": 91,
+          "column": 51
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "            study::compress_b2_archive(input, work / \"base.sarc\", options, {0, 2, 6}, {});",
+          "line": 93,
+          "column": 72
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "            study::compress_b2_archive(input, work / \"global.sarc\", options, {0, 3, 6}, {});",
+          "line": 95,
+          "column": 74
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "            study::compress_b2_archive(input, work / \"edited.sarc\", options, {0, 3, 6}, edits);",
+          "line": 97,
+          "column": 74
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "            study::compress_b2_archive(input, work / \"cleared.sarc\", options, {0, 3, 6}, {});",
+          "line": 99,
+          "column": 75
+        },
+        {
+          "severity": "INFO",
+          "description": "可以推导模板实参",
+          "lineContent": "                      read(out / \"tiny.bin\") == std::vector<std::byte>(tiny.begin(), tiny.end()) &&",
+          "line": 113,
+          "column": 56
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'actual' 可替换为结构化绑定",
+          "lineContent": "        const auto actual = index_of(read(work / \"edited.sarc\"));",
+          "line": 117,
+          "column": 16
+        },
+        {
+          "severity": "INFO",
+          "description": "变量 'p' 可替换为结构化绑定",
+          "lineContent": "            const auto &p = edited->planned[i];",
+          "line": 120,
+          "column": 21
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "        const std::array empty_edit{study::PathRankOverride{\"empty\", 5, std::nullopt}};",
+          "line": 137,
+          "column": 56
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "                                                             options, {0, 3, 6}, empty_edit);",
+          "line": 139,
+          "column": 67
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "        const std::array tiny_edit{study::PathRankOverride{\"tiny.bin\", 5, std::nullopt}};",
+          "line": 142,
+          "column": 55
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "            input / \"tiny.bin\", work / \"tiny-base.sarc\", options, {0, 3, 6}, {});",
+          "line": 144,
+          "column": 63
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "            input / \"tiny.bin\", work / \"tiny-edit.sarc\", options, {0, 3, 6}, tiny_edit);",
+          "line": 146,
+          "column": 63
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'n' 可被设为 常量",
+          "lineContent": "                                                                   std::uint64_t n)",
+          "line": 157,
+          "column": 78
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "                    static_cast<std::size_t>(n),",
+          "line": 160,
+          "column": 17
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::internal::BlockEncoding",
+          "lineContent": "                    {selected_codec, selected_codec == Codec::store ? 0U : 6U});",
+          "line": 161,
+          "column": 17
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "            study::compress_b2_archive(input, work / \"base.sarc\", options, {0, 3, 6}, edits);",
+          "line": 173,
+          "column": 72
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::PathRankOverride",
+          "lineContent": "        const std::array stale{study::PathRankOverride{\"missing\", 5, std::nullopt}};",
+          "line": 180,
+          "column": 51
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "        rejected(study::compress_b2_archive(input, bad, options, {0, 3, 6}, stale),",
+          "line": 181,
+          "column": 62
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "        rejected(study::compress_b2_archive(input, bad, options, {0, 3, 6}, {}, {2, 99}),",
+          "line": 183,
+          "column": 62
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::Candidate",
+          "lineContent": "        rejected(study::compress_b2_archive(input, bad, options, {0, 3, 6}, {}, {2, 99}),",
+          "line": 183,
+          "column": 77
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "        rejected(study::compress_b2_archive(input, bad, options, {0, 19, 6}, {}),",
+          "line": 185,
+          "column": 62
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::FieldSeed",
+          "lineContent": "        rejected(study::compress_b2_archive(input, bad, options, {0, 3, 6}, {}, {2, 1}, 1,",
+          "line": 189,
+          "column": 62
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::seed_study::Candidate",
+          "lineContent": "        rejected(study::compress_b2_archive(input, bad, options, {0, 3, 6}, {}, {2, 1}, 1,",
+          "line": 189,
+          "column": 77
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'count' 可被设为 常量",
+          "lineContent": "                                                         std::uint64_t count)",
+          "line": 194,
+          "column": 68
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::Error",
+          "lineContent": "                        seedarc::Error{ErrorCode::invalid_argument, \"planner failed\"});",
+          "line": 198,
+          "column": 35
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "                std::vector<internal::BlockEncoding> plans(static_cast<std::size_t>(count),",
+          "line": 200,
+          "column": 56
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::internal::BlockEncoding",
+          "lineContent": "                                                           {Codec::store, 0});",
+          "line": 201,
+          "column": 56
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::internal::BlockEncoding",
+          "lineContent": "                    plans[0] = {static_cast<Codec>(99), 0};",
+          "line": 206,
+          "column": 28
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::internal::BlockEncoding",
+          "lineContent": "                    plans[0] = {Codec::zstd, 0};",
+          "line": 209,
+          "column": 28
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::internal::BlockEncoding",
+          "lineContent": "                    plans[0] = {Codec::store, 1};",
+          "line": 212,
+          "column": 28
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'count' 可被设为 常量",
+          "lineContent": "                                                         std::uint64_t count)",
+          "line": 225,
+          "column": 68
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "            return std::vector<internal::BlockEncoding>(static_cast<std::size_t>(count),",
+          "line": 228,
+          "column": 53
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::internal::BlockEncoding",
+          "lineContent": "                                                        {Codec::store, 0});",
+          "line": 229,
+          "column": 53
+        },
+        {
+          "severity": "INFO",
+          "description": "形参 'count' 可被设为 常量",
+          "lineContent": "                                                         std::uint64_t count)",
+          "line": 235,
+          "column": 68
+        },
+        {
+          "severity": "INFO",
+          "description": "冗余static_cast",
+          "lineContent": "            return std::vector<internal::BlockEncoding>(static_cast<std::size_t>(count),",
+          "line": 240,
+          "column": 53
+        },
+        {
+          "severity": "INFO",
+          "description": "请使用指定的初始值设定项初始化 struct seedarc::experimental::internal::BlockEncoding",
+          "lineContent": "                                                        {Codec::store, 0});",
+          "line": 241,
+          "column": 53
+        }
+      ]
+    }
+  },
+  {
+    "file": "core/CMakeLists.txt",
+    "result": {
+      "filePath": "core/CMakeLists.txt",
+      "errors": []
+    }
+  },
+  {
+    "file": "tests/CMakeLists.txt",
+    "result": {
+      "filePath": "tests/CMakeLists.txt",
+      "errors": []
+    }
+  },
+  {
+    "file": "research/tools/CMakeLists.txt",
+    "result": {
+      "filePath": "research/tools/CMakeLists.txt",
+      "errors": []
+    }
+  }
+]

@@ -1,0 +1,5 @@
+file_codec 1 3 000-text.txt
+file_codec 1 3 sub/binary.bin
+file_codec 1 3 sub/empty
+file_codec 1 3 sub/packed.gz
+file_codec 1 3 unicode/中文.txt

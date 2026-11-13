@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "seedarc",
+  "version": "0.1.0",
+  "license": "GPL-3.0-or-later",
+  "dependencies": [
+    {
+      "name": "zstd",
+      "version>=": "1.5.7"
+    },
+    {
+      "name": "liblzma",
+      "version>=": "5.8.4"
+    }
+  ],
+  "overrides": [
+    {
+      "name": "zstd",
+      "version": "1.5.7"
+    },
+    {
+      "name": "liblzma",
+      "version": "5.8.4"
+    }
+  ]
+}

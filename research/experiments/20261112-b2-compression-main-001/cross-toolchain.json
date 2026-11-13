@@ -1,0 +1,72 @@
+[
+  {
+    "dataset": "text",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\clang-ucrt64-debug\\research\\tools\\seedarc_seed_archive.exe",
+      "compress",
+      "b-file",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\text",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\clang-text.sarc",
+      "text.txt"
+    ],
+    "exit_code": 0,
+    "plan_and_actual_blocks_identical": true,
+    "archive_bytes_identical": true
+  },
+  {
+    "dataset": "source",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\clang-ucrt64-debug\\research\\tools\\seedarc_seed_archive.exe",
+      "compress",
+      "b-file",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\source",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\clang-source.sarc",
+      "store_archive.cpp"
+    ],
+    "exit_code": 0,
+    "plan_and_actual_blocks_identical": true,
+    "archive_bytes_identical": true
+  },
+  {
+    "dataset": "binary",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\clang-ucrt64-debug\\research\\tools\\seedarc_seed_archive.exe",
+      "compress",
+      "b-file",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\binary",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\clang-binary.sarc",
+      "binary.bin"
+    ],
+    "exit_code": 0,
+    "plan_and_actual_blocks_identical": true,
+    "archive_bytes_identical": true
+  },
+  {
+    "dataset": "compressed",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\clang-ucrt64-debug\\research\\tools\\seedarc_seed_archive.exe",
+      "compress",
+      "b-file",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\compressed",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\clang-compressed.sarc",
+      "packed.gz"
+    ],
+    "exit_code": 0,
+    "plan_and_actual_blocks_identical": true,
+    "archive_bytes_identical": true
+  },
+  {
+    "dataset": "mixed",
+    "command": [
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\build\\clang-ucrt64-debug\\research\\tools\\seedarc_seed_archive.exe",
+      "compress",
+      "b-file",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\mixed",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\clang-mixed.sarc",
+      "000-text.txt"
+    ],
+    "exit_code": 0,
+    "plan_and_actual_blocks_identical": true,
+    "archive_bytes_identical": true
+  }
+]

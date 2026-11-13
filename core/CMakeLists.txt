@@ -20,7 +20,9 @@ target_link_libraries(libseedarc PRIVATE zstd::libzstd liblzma::liblzma)
 
 # Seed candidates stay outside the production archive library until experimental selection.
 if((BUILD_TESTING AND NOT SEEDARC_BUILD_FUZZERS) OR SEEDARC_BUILD_RESEARCH_TOOLS)
-    add_library(seedarc_seed_study STATIC seed/strategy.cpp)
+    add_library(seedarc_seed_study STATIC seed/strategy.cpp seed/file_overrides.cpp
+        seed/path_overrides.cpp seed/archive_study.cpp seed/adaptive_file.cpp)
+    target_link_libraries(seedarc_seed_study PRIVATE SeedArc::core)
     target_include_directories(seedarc_seed_study PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
         "${CMAKE_CURRENT_SOURCE_DIR}/include")
     target_include_directories(seedarc_seed_study PRIVATE "${PROJECT_SOURCE_DIR}/third_party")

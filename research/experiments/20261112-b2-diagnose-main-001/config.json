@@ -1,0 +1,71 @@
+{
+  "status": "completed",
+  "run_id": "20261112-b2-diagnose-main-001",
+  "repetitions": 3,
+  "modes": [
+    "store",
+    "zstd3",
+    "zstd6",
+    "lzma6",
+    "b-base",
+    "b-global",
+    "b-file",
+    "b-cleared",
+    "b2-file-codec-c",
+    "b2-file-codec"
+  ],
+  "labels": {
+    "b-global": "B0-current",
+    "zstd3": "B1-fixed-zstd3",
+    "b2-file-codec": "B2-file-codec",
+    "b2-file-codec-c": "B2-file-codec (codec only)"
+  },
+  "chunk_bytes": 65536,
+  "b_rules": {
+    "candidate": {
+      "id": 2,
+      "revision": 1
+    },
+    "catalog_revision": 1,
+    "overlay_revision": 1,
+    "codec_seed": 0,
+    "lzma2_preset": 6,
+    "zstd_levels": {
+      "b-base": 3,
+      "b-global": 4,
+      "b-file": "6 on target over 4",
+      "b-cleared": 4
+    }
+  },
+  "b2_file_codec_rule": "per file: zstd3 vs lzma6 by total stored bytes from repetition-0 same-boundary fixed runs (tie -> zstd3); then zstd 3->6 file override only if smaller. Store implicit via per-block fallback. Encode-side oracle, 3 trial configs per file; not seed-coded; index already carries per-block codec/config so decode needs no extra metadata.",
+  "threads": 1,
+  "seed_search": null,
+  "archive_strategy_version": 0,
+  "archive_seed_length": 0,
+  "build": "caller-supplied MSVC Release (msvc-vs2026-release)",
+  "timing": "process wall time incl startup, planning, round-trip self-check and JSON evidence",
+  "memory": "GetProcessMemoryInfo PeakWorkingSetSize per process; includes tool/report",
+  "cache": "no warmup; uncontrolled OS caches; rotate direct-mode order each repetition",
+  "tool_sha256": "a3fce97524ee49dbd4656f896a5f3cec0aa7bc4c4116b1dab21ace45a26588f4",
+  "script_sha256": "c30b52359a07b61ec2f9c859fa398e851b18ccee21ee2d03377eb65eb9d72e3f",
+  "started_at": "2026-11-12T06:49:23.871650-08:00",
+  "git_commit": "f3deb4a15305760e4714136b93c066071ad87b02",
+  "dirty": true,
+  "os": "Windows-10-10.0.19045-SP0",
+  "cpu": "AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD",
+  "logical_cpus": 16,
+  "python": "3.15.0 (tags/v3.15.0:d220409, Oct  9 2026, 11:55:56) [MSC v.1951 64 bit (AMD64)]",
+  "invocation": [
+    "C:\\Users\\IceLolly\\AppData\\Local\\Programs\\Python\\Python315\\python.exe",
+    "research/scripts/b2_diagnose.py",
+    "--tool",
+    "build/msvc-vs2026-release/research/tools/Release/seedarc_seed_archive.exe",
+    "--run-id",
+    "20261112-b2-diagnose-main-001",
+    "--repetitions",
+    "3"
+  ],
+  "codec_versions": "SeedArc B2-r3 study; zstd 1.5.7, liblzma 5.8.4",
+  "dataset_manifest_sha256": "0fa096dc72e34a504b6f4c2e7b93f1ac88c84e9269fcf9e8eba22130ef1ce185",
+  "finished_at": "2026-11-12T06:49:41.820628-08:00"
+}

@@ -1,0 +1,42 @@
+ M AGENTS.md
+ M STATUS.md
+ M core/CMakeLists.txt
+ M core/store_archive.cpp
+ M docs/development.md
+ M research/ideas/seed-design-study.md
+ M research/scripts/README.md
+ M research/tools/CMakeLists.txt
+ M tests/CMakeLists.txt
+?? core/archive_plan.hpp
+?? core/seed/archive_study.cpp
+?? core/seed/archive_study.hpp
+?? core/seed/file_overrides.cpp
+?? core/seed/file_overrides.hpp
+?? core/seed/path_overrides.cpp
+?? core/seed/path_overrides.hpp
+?? docs/b2-compression-validation.md
+?? docs/debug.log
+?? docs/file-contract-validation.md
+?? docs/file-scope-validation.md
+?? "docs/review_results/SeedArc_B2-r2\350\257\204\344\274\260\344\270\216B2-r3\347\234\237\345\256\236\345\216\213\347\274\251\351\252\214\346\224\266\350\256\241\345\210\222.md"
+?? "docs/review_results/SeedArc_B2-r3\351\246\226\350\275\256\350\257\204\344\274\260\344\270\216B2-r4\344\274\230\345\214\226\350\256\241\345\210\222.md"
+?? "docs/review_results/SeedArc_B2\346\226\207\344\273\266\347\272\247\350\246\206\347\233\226\351\242\227\347\262\222\345\272\246\350\257\204\344\274\260\344\270\216r2\351\252\214\346\224\266\345\273\272\350\256\256.md"
+?? "docs/review_results/SeedArc_\347\247\215\345\255\220\350\256\241\345\210\222\345\257\271\347\205\247\350\257\204\344\274\260\344\270\216\344\270\213\344\270\200\350\275\256\345\256\236\351\252\214\345\273\272\350\256\256.md"
+?? research/experiments/20261112-b2-compression-main-001/
+?? research/experiments/20261112-b2-diagnose-main-001/
+?? research/experiments/20261112-file-contract-main-001/
+?? research/experiments/20261112-file-scope-main-001/
+?? research/ideas/seed-compression-r3.md
+?? research/ideas/seed-file-contract-r2.md
+?? research/ideas/seed-file-overrides-r1.md
+?? research/scripts/b2_compression.py
+?? research/scripts/b2_diagnose.py
+?? research/scripts/b2_report.py
+?? research/scripts/file_contract_table.py
+?? research/scripts/file_scope_table.py
+?? research/tools/seed_archive.cpp
+?? research/tools/seed_scope_contract.cpp
+?? research/tools/seed_scope_plan.cpp
+?? tests/seed_archive_tests.cpp
+?? tests/seed_file_override_tests.cpp
+?? tests/seed_path_override_tests.cpp

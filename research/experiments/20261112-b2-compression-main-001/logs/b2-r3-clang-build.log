@@ -1,0 +1,114 @@
+[0/1] Re-running CMake...
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-mingw-static...
+Compiler found: C:/msys64/ucrt64/bin/x86_64-w64-mingw32-g++.exe
+The following packages are already installed:
+    liblzma:x64-mingw-static@5.8.4
+  * vcpkg-cmake:x64-mingw-static@2025-08-07
+  * vcpkg-cmake-config:x64-mingw-static@2026-07-21
+    zstd:x64-mingw-static@1.5.7
+liblzma is compatible with built-in CMake targets:
+
+    find_package(LibLZMA REQUIRED)
+    target_link_libraries(main PRIVATE LibLZMA::LibLZMA)
+
+liblzma provides CMake targets:
+
+    find_package(liblzma CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE liblzma::liblzma)
+
+zstd provides CMake targets:
+
+  find_package(zstd CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE zstd::libzstd)
+
+All requested installations completed successfully in: 722 us
+-- Running vcpkg install - done
+-- Configuring done (2.8s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug
+[1/40] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_strategy_tests.dir/CXX.dd
+[2/39] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_file_override_tests.dir/CXX.dd
+[3/38] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_path_override_tests.dir/CXX.dd
+[4/37] Generating CXX dyndep file tests/CMakeFiles/seedarc_m3_compatibility_tests.dir/CXX.dd
+[5/36] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/archive_study.cpp for CXX dependencies
+[6/36] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/store_archive.cpp for CXX dependencies
+[7/36] Generating CXX dyndep file core/CMakeFiles/seedarc_seed_study.dir/CXX.dd
+[8/33] Generating CXX dyndep file core/CMakeFiles/libseedarc.dir/CXX.dd
+[9/25] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_archive_tests.cpp for CXX dependencies
+[10/25] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp for CXX dependencies
+[11/25] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_archive_tests.dir/CXX.dd
+[12/25] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_archive.dir/CXX.dd
+[13/25] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/archive_study.cpp.obj
+[14/25] Building CXX object core/CMakeFiles/libseedarc.dir/store_archive.cpp.obj
+[15/25] Linking CXX static library core\liblibseedarc.a
+[16/25] Linking CXX static library core\libseedarc_seed_study.a
+[17/25] Building CXX object research/tools/CMakeFiles/seedarc_seed_archive.dir/seed_archive.cpp.obj
+C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp:94:60: warning: 'u8path<char *, std::filesystem::path, char>' is deprecated: use 'path((const char8_t*)&*source)' instead [-Wdeprecated-declarations]
+   94 |         const auto result = argc == 3 ? verify_archive(fs::u8path(argv[2]))
+      |                                                            ^
+C:/msys64/ucrt64/include/c++/16.2.0/bits/fs_path.h:845:5: note: 'u8path<char *, std::filesystem::path, char>' has been explicitly marked deprecated here
+  845 |     _GLIBCXX20_DEPRECATED_SUGGEST("path((const char8_t*)&*source)")
+      |     ^
+C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32/bits/c++config.h:144:45: note: expanded from macro '_GLIBCXX20_DEPRECATED_SUGGEST'
+  144 | # define _GLIBCXX20_DEPRECATED_SUGGEST(ALT) _GLIBCXX_DEPRECATED_SUGGEST(ALT)
+      |                                             ^
+C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32/bits/c++config.h:112:19: note: expanded from macro '_GLIBCXX_DEPRECATED_SUGGEST'
+  112 |   __attribute__ ((__deprecated__ ("use '" ALT "' instead")))
+      |                   ^
+C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp:95:61: warning: 'u8path<char *, std::filesystem::path, char>' is deprecated: use 'path((const char8_t*)&*source)' instead [-Wdeprecated-declarations]
+   95 |                                       : extract_archive(fs::u8path(argv[2]), fs::u8path(argv[3]));
+      |                                                             ^
+C:/msys64/ucrt64/include/c++/16.2.0/bits/fs_path.h:845:5: note: 'u8path<char *, std::filesystem::path, char>' has been explicitly marked deprecated here
+  845 |     _GLIBCXX20_DEPRECATED_SUGGEST("path((const char8_t*)&*source)")
+      |     ^
+C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32/bits/c++config.h:144:45: note: expanded from macro '_GLIBCXX20_DEPRECATED_SUGGEST'
+  144 | # define _GLIBCXX20_DEPRECATED_SUGGEST(ALT) _GLIBCXX_DEPRECATED_SUGGEST(ALT)
+      |                                             ^
+C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32/bits/c++config.h:112:19: note: expanded from macro '_GLIBCXX_DEPRECATED_SUGGEST'
+  112 |   __attribute__ ((__deprecated__ ("use '" ALT "' instead")))
+      |                   ^
+C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp:95:82: warning: 'u8path<char *, std::filesystem::path, char>' is deprecated: use 'path((const char8_t*)&*source)' instead [-Wdeprecated-declarations]
+   95 |                                       : extract_archive(fs::u8path(argv[2]), fs::u8path(argv[3]));
+      |                                                                                  ^
+C:/msys64/ucrt64/include/c++/16.2.0/bits/fs_path.h:845:5: note: 'u8path<char *, std::filesystem::path, char>' has been explicitly marked deprecated here
+  845 |     _GLIBCXX20_DEPRECATED_SUGGEST("path((const char8_t*)&*source)")
+      |     ^
+C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32/bits/c++config.h:144:45: note: expanded from macro '_GLIBCXX20_DEPRECATED_SUGGEST'
+  144 | # define _GLIBCXX20_DEPRECATED_SUGGEST(ALT) _GLIBCXX_DEPRECATED_SUGGEST(ALT)
+      |                                             ^
+C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32/bits/c++config.h:112:19: note: expanded from macro '_GLIBCXX_DEPRECATED_SUGGEST'
+  112 |   __attribute__ ((__deprecated__ ("use '" ALT "' instead")))
+      |                   ^
+C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp:119:28: warning: 'u8path<char *, std::filesystem::path, char>' is deprecated: use 'path((const char8_t*)&*source)' instead [-Wdeprecated-declarations]
+  119 |     const auto input = fs::u8path(argv[3]), archive = fs::u8path(argv[4]);
+      |                            ^
+C:/msys64/ucrt64/include/c++/16.2.0/bits/fs_path.h:845:5: note: 'u8path<char *, std::filesystem::path, char>' has been explicitly marked deprecated here
+  845 |     _GLIBCXX20_DEPRECATED_SUGGEST("path((const char8_t*)&*source)")
+      |     ^
+C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32/bits/c++config.h:144:45: note: expanded from macro '_GLIBCXX20_DEPRECATED_SUGGEST'
+  144 | # define _GLIBCXX20_DEPRECATED_SUGGEST(ALT) _GLIBCXX_DEPRECATED_SUGGEST(ALT)
+      |                                             ^
+C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32/bits/c++config.h:112:19: note: expanded from macro '_GLIBCXX_DEPRECATED_SUGGEST'
+  112 |   __attribute__ ((__deprecated__ ("use '" ALT "' instead")))
+      |                   ^
+C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp:119:59: warning: 'u8path<char *, std::filesystem::path, char>' is deprecated: use 'path((const char8_t*)&*source)' instead [-Wdeprecated-declarations]
+  119 |     const auto input = fs::u8path(argv[3]), archive = fs::u8path(argv[4]);
+      |                                                           ^
+C:/msys64/ucrt64/include/c++/16.2.0/bits/fs_path.h:845:5: note: 'u8path<char *, std::filesystem::path, char>' has been explicitly marked deprecated here
+  845 |     _GLIBCXX20_DEPRECATED_SUGGEST("path((const char8_t*)&*source)")
+      |     ^
+C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32/bits/c++config.h:144:45: note: expanded from macro '_GLIBCXX20_DEPRECATED_SUGGEST'
+  144 | # define _GLIBCXX20_DEPRECATED_SUGGEST(ALT) _GLIBCXX_DEPRECATED_SUGGEST(ALT)
+      |                                             ^
+C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32/bits/c++config.h:112:19: note: expanded from macro '_GLIBCXX_DEPRECATED_SUGGEST'
+  112 |   __attribute__ ((__deprecated__ ("use '" ALT "' instead")))
+      |                   ^
+5 warnings generated.
+[18/25] Building CXX object tests/CMakeFiles/seedarc_seed_archive_tests.dir/seed_archive_tests.cpp.obj
+[19/25] Linking CXX executable tests\seedarc_seed_strategy_tests.exe
+[20/25] Linking CXX executable tests\seedarc_seed_file_override_tests.exe
+[21/25] Linking CXX executable tests\seedarc_seed_path_override_tests.exe
+[22/25] Linking CXX executable tests\seedarc_m3_compatibility_tests.exe
+[23/25] Linking CXX executable research\tools\seedarc_seed_archive.exe
+[24/25] Linking CXX executable tests\seedarc_seed_archive_tests.exe

@@ -1,0 +1,67 @@
+{
+  "status": "completed",
+  "run_id": "20261112-b2-compression-main-001",
+  "repetitions": 3,
+  "modes": [
+    "store",
+    "zstd3",
+    "zstd6",
+    "lzma6",
+    "b-base",
+    "b-global",
+    "b-file",
+    "b-cleared"
+  ],
+  "chunk_bytes": 65536,
+  "candidate": {
+    "id": 2,
+    "revision": 1
+  },
+  "catalog_revision": 1,
+  "overlay_revision": 1,
+  "codec_seed": 0,
+  "threads": 1,
+  "candidate_count": 1,
+  "search_seconds": null,
+  "archive_strategy_version": 0,
+  "archive_seed_length": 0,
+  "build": "caller-supplied MSVC Release; see build evidence",
+  "timing": "process wall time incl startup, planning, round-trip self-check and JSON evidence",
+  "memory": "GetProcessMemoryInfo PeakWorkingSetSize per operation process; includes tool/report",
+  "cache": "no warmup; uncontrolled OS caches; rotate mode order each repetition",
+  "usage": "exploratory integration baseline; no held-out corpus, tuning or search",
+  "tool_sha256": "9cc5d54abd195b291a3dbf4960cd01db7ca2ab4789e5a0996e5e6f64cf6dcad2",
+  "script_sha256": "f8e9378e202a8cf6ed8db1c26f8e881cdea07bc4ac843992bf7f3eb775afb2f7",
+  "started_at": "2026-11-12T06:27:23.309326-08:00",
+  "git_commit": "f3deb4a15305760e4714136b93c066071ad87b02",
+  "dirty": true,
+  "os": "Windows-10-10.0.19045-SP0",
+  "cpu": "AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD",
+  "logical_cpus": 16,
+  "python": "3.15.0 (tags/v3.15.0:d220409, Oct  9 2026, 11:55:56) [MSC v.1951 64 bit (AMD64)]",
+  "invocation": [
+    "C:\\Users\\IceLolly\\AppData\\Local\\Programs\\Python\\Python315\\python.exe",
+    "research/scripts/b2_compression.py",
+    "--tool",
+    "build/msvc-vs2026-release/research/tools/Release/seedarc_seed_archive.exe",
+    "--run-id",
+    "20261112-b2-compression-main-001",
+    "--repetitions",
+    "3"
+  ],
+  "codec_versions": "SeedArc B2-r3 study; zstd 1.5.7, liblzma 5.8.4",
+  "dataset_manifest_sha256": "5c6c42b8096937002f8f9350f02e4abbebe736a1dd4fd47afb9ef9b23422b938",
+  "finished_at": "2026-11-12T06:27:38.093879-08:00",
+  "review_sha256": "cf03065c318ec5687185290ddeab2d2a290fb00f2a5ee4ecf9f2dd528d02c292",
+  "user_idea_hashes": {
+    "SeedArc_结构化种子设计草案.md": "368ad5b9138f5ab3691def36cd0a190d70dde5eb8086aa956b7d1aa7d6fb376a",
+    "SeedPack_项目设计方案_v2.md": "550dd2ba06ce33032850ad6d973e05c0a8f9fc58aeaee8d1201f71745e61d715"
+  },
+  "source_snapshot_manifest": "source-sha256.json",
+  "analysis_command": [
+    "python",
+    "research/scripts/b2_report.py",
+    "research\\experiments\\20261112-b2-compression-main-001\\raw.json"
+  ],
+  "reproduce": "At git_commit overlay source/, configure msvc-vs2026-release with SEEDARC_BUILD_RESEARCH_TOOLS=ON, build Release seedarc_seed_archive; run archived b2_compression.py in the repository scripts location with a NEW run-id. Dataset source originals are under dataset-source/."
+}

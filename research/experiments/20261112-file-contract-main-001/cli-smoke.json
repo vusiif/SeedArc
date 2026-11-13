@@ -1,0 +1,33 @@
+[
+  {
+    "args": [],
+    "exit_code": 2,
+    "stdout_bytes": 0,
+    "stderr": "Usage: seedarc_seed_scope_contract --observe | --help\r\nFixed catalog-r1/B-r1 plan-only identity and edit contract fixtures.\r\nZstd levels: base3 -> global4 -> target6 -> clear4; codec seed0, LZMA2 preset6.\r\nNo real file I/O, compression, search, or seed serialization.\r\n"
+  },
+  {
+    "args": [
+      "--help"
+    ],
+    "exit_code": 0,
+    "stdout_bytes": 269,
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--observe",
+      "extra"
+    ],
+    "exit_code": 2,
+    "stdout_bytes": 0,
+    "stderr": "Usage: seedarc_seed_scope_contract --observe | --help\r\nFixed catalog-r1/B-r1 plan-only identity and edit contract fixtures.\r\nZstd levels: base3 -> global4 -> target6 -> clear4; codec seed0, LZMA2 preset6.\r\nNo real file I/O, compression, search, or seed serialization.\r\n"
+  },
+  {
+    "args": [
+      "overlay-r2"
+    ],
+    "exit_code": 2,
+    "stdout_bytes": 0,
+    "stderr": "Usage: seedarc_seed_scope_contract --observe | --help\r\nFixed catalog-r1/B-r1 plan-only identity and edit contract fixtures.\r\nZstd levels: base3 -> global4 -> target6 -> clear4; codec seed0, LZMA2 preset6.\r\nNo real file I/O, compression, search, or seed serialization.\r\n"
+  }
+]

@@ -1,0 +1,60 @@
+CMake is re-running because C:/Users/IceLolly/Music/Clion/SeedArc/build/msvc-vs2026-release/research/tools/CMakeFiles/generate.stamp is out-of-date.
+  the file 'C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/CMakeLists.txt'
+  is newer than 'C:/Users/IceLolly/Music/Clion/SeedArc/build/msvc-vs2026-release/research/tools/CMakeFiles/generate.stamp.depend'
+  result='-1'
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-windows...
+Compiler found: C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe
+Detecting compiler hash for triplet x64-windows-static-md...
+Compiler found: C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe
+The following packages are already installed:
+    liblzma:x64-windows-static-md@5.8.4
+  * vcpkg-cmake:x64-windows@2025-08-07
+  * vcpkg-cmake-config:x64-windows@2026-07-21
+    zstd:x64-windows-static-md@1.5.7
+liblzma is compatible with built-in CMake targets:
+
+    find_package(LibLZMA REQUIRED)
+    target_link_libraries(main PRIVATE LibLZMA::LibLZMA)
+
+liblzma provides CMake targets:
+
+    find_package(liblzma CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE liblzma::liblzma)
+
+zstd provides CMake targets:
+
+  find_package(zstd CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE zstd::libzstd)
+
+All requested installations completed successfully in: 1.1 ms
+-- Running vcpkg install - done
+-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.19045.
+-- Configuring done (4.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: C:/Users/IceLolly/Music/Clion/SeedArc/build/msvc-vs2026-release
+适用于 .NET Framework MSBuild 版本 18.6.3+84d3e95b4
+
+  正在扫描源以查找模块依赖项...
+  libseedarc.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-vs2026-release\core\Release\libseedarc.lib
+  正在扫描源以查找模块依赖项...
+  seedarc_seed_study.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-vs2026-release\core\Release\seedarc_seed_study.lib
+  正在扫描源以查找模块依赖项...
+  seed_archive.cpp
+  正在编译...
+  seed_archive.cpp
+C:\Users\IceLolly\Music\Clion\SeedArc\research\tools\seed_archive.cpp(94,60): warning C4996: 'std::filesystem::u8path': warning STL4021: The std::filesystem::u8path() overloads are deprecated in C++20. The constructors of std::filesystem::path provide equivalent functionality via construction from u8string, u8string_view, or iterators with value_type char8_t. You can define _SILENCE_CXX20_U8PATH_DEPRECATION_WARNING or _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS to suppress this warning. [C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-vs2026-release\research\tools\seedarc_seed_archive.vcxproj]
+C:\Users\IceLolly\Music\Clion\SeedArc\research\tools\seed_archive.cpp(95,61): warning C4996: 'std::filesystem::u8path': warning STL4021: The std::filesystem::u8path() overloads are deprecated in C++20. The constructors of std::filesystem::path provide equivalent functionality via construction from u8string, u8string_view, or iterators with value_type char8_t. You can define _SILENCE_CXX20_U8PATH_DEPRECATION_WARNING or _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS to suppress this warning. [C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-vs2026-release\research\tools\seedarc_seed_archive.vcxproj]
+C:\Users\IceLolly\Music\Clion\SeedArc\research\tools\seed_archive.cpp(119,28): warning C4996: 'std::filesystem::u8path': warning STL4021: The std::filesystem::u8path() overloads are deprecated in C++20. The constructors of std::filesystem::path provide equivalent functionality via construction from u8string, u8string_view, or iterators with value_type char8_t. You can define _SILENCE_CXX20_U8PATH_DEPRECATION_WARNING or _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS to suppress this warning. [C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-vs2026-release\research\tools\seedarc_seed_archive.vcxproj]
+  seedarc_seed_archive.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-vs2026-release\research\tools\Release\seedarc_seed_archive.exe
+适用于 .NET Framework MSBuild 版本 18.6.3+84d3e95b4
+
+  正在扫描源以查找模块依赖项...
+  libseedarc.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-vs2026-release\core\Release\libseedarc.lib
+  正在扫描源以查找模块依赖项...
+  seedarc_seed_study.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-vs2026-release\core\Release\seedarc_seed_study.lib
+  正在扫描源以查找模块依赖项...
+  seed_archive_tests.cpp
+  正在编译...
+  seed_archive_tests.cpp
+  seedarc_seed_archive_tests.vcxproj -> C:\Users\IceLolly\Music\Clion\SeedArc\build\msvc-vs2026-release\tests\Release\seedarc_seed_archive_tests.exe

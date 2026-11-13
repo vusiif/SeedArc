@@ -1,0 +1,12 @@
+[1/16] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/adaptive_file.cpp for CXX dependencies
+[2/16] Generating CXX dyndep file core/CMakeFiles/seedarc_seed_study.dir/CXX.dd
+[3/12] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_adaptive_tests.cpp for CXX dependencies
+[4/12] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/seed_archive.cpp for CXX dependencies
+[5/12] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/CXX.dd
+[6/12] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_archive.dir/CXX.dd
+[7/12] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/adaptive_file.cpp.obj
+[8/12] Linking CXX static library core\libseedarc_seed_study.a
+[9/12] Building CXX object tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/seed_adaptive_tests.cpp.obj
+[10/12] Building CXX object research/tools/CMakeFiles/seedarc_seed_archive.dir/seed_archive.cpp.obj
+[11/12] Linking CXX executable tests\seedarc_seed_adaptive_tests.exe
+[12/12] Linking CXX executable research\tools\seedarc_seed_archive.exe

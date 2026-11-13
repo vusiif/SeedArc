@@ -91,3 +91,15 @@
 ## 9. 第一轮原型与证据
 
 A/B-r1 的 [规则及向量](seed-candidates-r1.md) 已实现为独立研究目标；[M4-A 验证记录](../../docs/m4a-validation.md) 链接固定算法小型基线、原始计划与对照表。用户语义评估待完成。B-r1 仅每 codec 全局等级，A 支持逐块等级，能力不同；第一轮输出不能证明搜索收益或公平比较。后续仍按第 8 节保留修改空间，不冻结种子协议。
+
+## 10. 文件级等级覆盖探索
+
+按第二份评估继续验证独立 [overlay-r1](seed-file-overrides-r1.md)：固定文件归属，只覆盖可选等级字段，不更改 A/B-r1 或 codec 分配。功能与集成证据见 [验证记录](../../docs/file-scope-validation.md)，用户可比较全局修改、文件覆盖与清除的差异。覆盖表不是已选择的紧凑种子，文件插入 / 重命名稳定性仍未解决；是否需要更细粒度及如何由种子生成覆盖，留待用户评估和后续实验。
+
+## 11. B2-r2 文件身份与合并契约
+
+2026-11-12：文件级控制继续保留；新增独立 catalog-r1 通过完整清单中的精确规范路径绑定当前文件 ID，复用既有路径校验和 overlay-r1。匹配身份与 global ID 驱动的 Codec 分配分开验证；清除恢复当前全局默认。规则见 [B2-r2](seed-file-contract-r2.md)，事实见 [新实验](../experiments/20261112-file-contract-main-001/record.md)。真实压缩、搜索收益与最终 Seed 编码仍未决定。
+
+## 12. B2-r3 具体计划压缩接入
+
+2026-11-12：研究层将B-r1/catalog-r1/overlay-r1生成的具体计划接入同一次安全枚举后的编码管线，生产core不解释Seed、不改归档格式。规则见 [r3](seed-compression-r3.md)，事实见 [实验](../experiments/20261112-b2-compression-main-001/record.md)与[验证记录](../../docs/b2-compression-validation.md)。120次磁盘往返通过，相同Codec分配下文件覆盖仅在源码样本小667字节、其余4类无体积变化；不构成普遍收益或最终选型。

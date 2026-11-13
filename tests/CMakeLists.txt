@@ -11,6 +11,18 @@ seedarc_target_defaults(seedarc_seed_strategy_tests)
 add_test(NAME seed.candidate_plans COMMAND seedarc_seed_strategy_tests)
 set_tests_properties(seed.candidate_plans PROPERTIES TIMEOUT 10)
 
+add_executable(seedarc_seed_file_override_tests seed_file_override_tests.cpp)
+target_link_libraries(seedarc_seed_file_override_tests PRIVATE seedarc_seed_study)
+seedarc_target_defaults(seedarc_seed_file_override_tests)
+add_test(NAME seed.file_rank_overrides COMMAND seedarc_seed_file_override_tests)
+set_tests_properties(seed.file_rank_overrides PROPERTIES TIMEOUT 10)
+
+add_executable(seedarc_seed_path_override_tests seed_path_override_tests.cpp)
+target_link_libraries(seedarc_seed_path_override_tests PRIVATE seedarc_seed_study)
+seedarc_target_defaults(seedarc_seed_path_override_tests)
+add_test(NAME seed.path_rank_overrides COMMAND seedarc_seed_path_override_tests)
+set_tests_properties(seed.path_rank_overrides PROPERTIES TIMEOUT 10)
+
 add_executable(seedarc_m3_compatibility_tests m3_compatibility_tests.cpp)
 target_link_libraries(seedarc_m3_compatibility_tests PRIVATE SeedArc::core)
 seedarc_target_defaults(seedarc_m3_compatibility_tests)
@@ -27,6 +39,18 @@ foreach(suite IN ITEMS archive path index)
 endforeach()
 
 if(WIN32)
+    add_executable(seedarc_seed_archive_tests seed_archive_tests.cpp)
+    target_link_libraries(seedarc_seed_archive_tests PRIVATE seedarc_seed_study)
+    seedarc_target_defaults(seedarc_seed_archive_tests)
+    add_test(NAME seed.archive_integration COMMAND seedarc_seed_archive_tests "${PROJECT_SOURCE_DIR}/.sandbox-test")
+    set_tests_properties(seed.archive_integration PROPERTIES TIMEOUT 120)
+
+    add_executable(seedarc_seed_adaptive_tests seed_adaptive_tests.cpp)
+    target_link_libraries(seedarc_seed_adaptive_tests PRIVATE seedarc_seed_study)
+    seedarc_target_defaults(seedarc_seed_adaptive_tests)
+    add_test(NAME seed.adaptive_file COMMAND seedarc_seed_adaptive_tests "${PROJECT_SOURCE_DIR}/.sandbox-test")
+    set_tests_properties(seed.adaptive_file PROPERTIES TIMEOUT 120)
+
     add_executable(seedarc_safe_output_tests safe_output_tests.cpp)
     target_link_libraries(seedarc_safe_output_tests PRIVATE SeedArc::core)
     # Internal test seam (fault injection, volume-root predicate); not a public header.

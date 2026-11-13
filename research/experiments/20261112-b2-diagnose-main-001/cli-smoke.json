@@ -1,0 +1,75 @@
+{
+  "tool": "build/msvc-vs2026-release/research/tools/Release/seedarc_seed_archive.exe",
+  "note": "file-plan parser smoke on a 2-file scratch input; run by main Agent 2026-11-12; archive must not exist after failure",
+  "cases": [
+    {
+      "case": "valid plan",
+      "exit": 0,
+      "result": "archive 522 B = 96+211+215; plan_source file_codec/file_override; 1-byte file fell back to Store"
+    },
+    {
+      "case": "missing file",
+      "exit": 1,
+      "stderr": "plan misses file: sub/b c.bin",
+      "archive_exists": false
+    },
+    {
+      "case": "unknown path",
+      "exit": 1,
+      "stderr": "plan names a path not in the input",
+      "archive_exists": false
+    },
+    {
+      "case": "duplicate path",
+      "exit": 1,
+      "stderr": "duplicate plan path",
+      "archive_exists": false
+    },
+    {
+      "case": "codec 3",
+      "exit": 1,
+      "stderr": "invalid plan codec, config or path",
+      "archive_exists": false
+    },
+    {
+      "case": "zstd level 20",
+      "exit": 1,
+      "stderr": "invalid block encoding plan (core)",
+      "archive_exists": false
+    },
+    {
+      "case": "store level 5",
+      "exit": 1,
+      "stderr": "invalid block encoding plan (core)",
+      "archive_exists": false
+    },
+    {
+      "case": "no trailing newline",
+      "exit": 1,
+      "stderr": "plan line lacks a newline",
+      "archive_exists": false
+    },
+    {
+      "case": "unknown source tag",
+      "exit": 1,
+      "stderr": "unknown plan source",
+      "archive_exists": false
+    },
+    {
+      "case": "empty plan",
+      "exit": 1,
+      "stderr": "plan misses file: a.txt",
+      "archive_exists": false
+    },
+    {
+      "case": "file-plan with '-'",
+      "exit": 2,
+      "stderr": "usage"
+    },
+    {
+      "case": "fixed mode with a target",
+      "exit": 2,
+      "stderr": "usage"
+    }
+  ]
+}

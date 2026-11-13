@@ -1,0 +1,4 @@
+[1/4] Linking CXX executable tests\seedarc_seed_strategy_tests.exe
+[2/4] Linking CXX executable tests\seedarc_seed_file_override_tests.exe
+[3/4] Linking CXX executable research\tools\seedarc_seed_scope_contract.exe
+[4/4] Linking CXX executable tests\seedarc_seed_path_override_tests.exe

@@ -1,0 +1,11 @@
+Test project C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-debug
+    Start 2: seed.candidate_plans
+1/3 Test #2: seed.candidate_plans .............   Passed    0.05 sec
+    Start 3: seed.file_rank_overrides
+2/3 Test #3: seed.file_rank_overrides .........   Passed    0.13 sec
+    Start 4: seed.path_rank_overrides
+3/3 Test #4: seed.path_rank_overrides .........   Passed    0.10 sec
+
+100% tests passed out of 3
+
+Total Test time (real) =   0.28 sec

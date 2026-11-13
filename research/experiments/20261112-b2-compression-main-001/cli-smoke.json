@@ -1,0 +1,94 @@
+[
+  {
+    "arguments": [],
+    "expected_exit": 2,
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "Experimental concrete-plan compression; no seed wire format or search.\r\nUsage: seedarc_seed_archive compress MODE INPUT ARCHIVE TARGET_PATH|-\r\n       seedarc_seed_archive verify ARCHIVE\r\n       seedarc_seed_archive extract ARCHIVE NEW_DIRECTORY\r\n       seedarc_seed_archive --version | --help\r\nMODE: store, zstd3, zstd6, lzma6, b-base, b-global, b-file, b-cleared.\r\n64 KiB chunks. B-r1 codec seed0, LZMA2 preset6. Zstd levels: base3, global4,\r\nfile6 on TARGET_PATH over global4, cleared4. Target required only for b-file.\r\nPaths are UTF-8; target is an exact canonical relative archive path.\r\n"
+  },
+  {
+    "arguments": [
+      "--help"
+    ],
+    "expected_exit": 0,
+    "exit_code": 0,
+    "stdout": "Experimental concrete-plan compression; no seed wire format or search.\r\nUsage: seedarc_seed_archive compress MODE INPUT ARCHIVE TARGET_PATH|-\r\n       seedarc_seed_archive verify ARCHIVE\r\n       seedarc_seed_archive extract ARCHIVE NEW_DIRECTORY\r\n       seedarc_seed_archive --version | --help\r\nMODE: store, zstd3, zstd6, lzma6, b-base, b-global, b-file, b-cleared.\r\n64 KiB chunks. B-r1 codec seed0, LZMA2 preset6. Zstd levels: base3, global4,\r\nfile6 on TARGET_PATH over global4, cleared4. Target required only for b-file.\r\nPaths are UTF-8; target is an exact canonical relative archive path.\r\n",
+    "stderr": ""
+  },
+  {
+    "arguments": [
+      "compress",
+      "unknown",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\mixed",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\cli-invalid.sarc",
+      "-"
+    ],
+    "expected_exit": 2,
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "Experimental concrete-plan compression; no seed wire format or search.\r\nUsage: seedarc_seed_archive compress MODE INPUT ARCHIVE TARGET_PATH|-\r\n       seedarc_seed_archive verify ARCHIVE\r\n       seedarc_seed_archive extract ARCHIVE NEW_DIRECTORY\r\n       seedarc_seed_archive --version | --help\r\nMODE: store, zstd3, zstd6, lzma6, b-base, b-global, b-file, b-cleared.\r\n64 KiB chunks. B-r1 codec seed0, LZMA2 preset6. Zstd levels: base3, global4,\r\nfile6 on TARGET_PATH over global4, cleared4. Target required only for b-file.\r\nPaths are UTF-8; target is an exact canonical relative archive path.\r\n"
+  },
+  {
+    "arguments": [
+      "compress",
+      "b-file",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\mixed",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\cli-invalid.sarc",
+      "-"
+    ],
+    "expected_exit": 2,
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "Experimental concrete-plan compression; no seed wire format or search.\r\nUsage: seedarc_seed_archive compress MODE INPUT ARCHIVE TARGET_PATH|-\r\n       seedarc_seed_archive verify ARCHIVE\r\n       seedarc_seed_archive extract ARCHIVE NEW_DIRECTORY\r\n       seedarc_seed_archive --version | --help\r\nMODE: store, zstd3, zstd6, lzma6, b-base, b-global, b-file, b-cleared.\r\n64 KiB chunks. B-r1 codec seed0, LZMA2 preset6. Zstd levels: base3, global4,\r\nfile6 on TARGET_PATH over global4, cleared4. Target required only for b-file.\r\nPaths are UTF-8; target is an exact canonical relative archive path.\r\n"
+  },
+  {
+    "arguments": [
+      "compress",
+      "b-global",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\mixed",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\cli-invalid.sarc",
+      "000-text.txt"
+    ],
+    "expected_exit": 2,
+    "exit_code": 2,
+    "stdout": "",
+    "stderr": "Experimental concrete-plan compression; no seed wire format or search.\r\nUsage: seedarc_seed_archive compress MODE INPUT ARCHIVE TARGET_PATH|-\r\n       seedarc_seed_archive verify ARCHIVE\r\n       seedarc_seed_archive extract ARCHIVE NEW_DIRECTORY\r\n       seedarc_seed_archive --version | --help\r\nMODE: store, zstd3, zstd6, lzma6, b-base, b-global, b-file, b-cleared.\r\n64 KiB chunks. B-r1 codec seed0, LZMA2 preset6. Zstd levels: base3, global4,\r\nfile6 on TARGET_PATH over global4, cleared4. Target required only for b-file.\r\nPaths are UTF-8; target is an exact canonical relative archive path.\r\n"
+  },
+  {
+    "arguments": [
+      "compress",
+      "b-file",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\mixed",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\cli-invalid.sarc",
+      "missing.txt"
+    ],
+    "expected_exit": 1,
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "override path has no exact catalog match\r\n"
+  },
+  {
+    "arguments": [
+      "compress",
+      "b-global",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\mixed",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\0-mixed-b-file.sarc",
+      "-"
+    ],
+    "expected_exit": 1,
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "output name already exists\r\n"
+  },
+  {
+    "arguments": [
+      "compress",
+      "b-file",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\inputs\\mixed",
+      "C:\\Users\\IceLolly\\Music\\Clion\\SeedArc\\research\\local\\20261112-b2-compression-main-001\\校验结果.sarc",
+      "unicode/中文.txt"
+    ],
+    "exit_code": 0,
+    "non_ascii_path_and_target": true
+  }
+]

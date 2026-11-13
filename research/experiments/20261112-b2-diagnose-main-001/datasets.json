@@ -1,0 +1,85 @@
+{
+  "id": "b2-on-disk-r3 (reused)",
+  "r3_manifest_sha256": "5c6c42b8096937002f8f9350f02e4abbebe736a1dd4fd47afb9ef9b23422b938",
+  "source_files": {
+    "core/checked_arithmetic.cpp": "59b233ec87511f7f7b57b09c5866fd763e4498e443886b3631a8a0a9ab119151",
+    "core/store_archive.cpp": "c31c76499ec980829341efaa9e4d829093e17ca636252d5a893f9b3689290ebf",
+    "core/version.cpp": "7a09d81ef846fa592484b6f2f707d4b31c96268248f6e705c82b2ae3c66a0af3"
+  },
+  "datasets": {
+    "text": {
+      "files": {
+        "text.txt": {
+          "bytes": 393216,
+          "sha256": "01854e183739b4ae12c7b5031130729726e5f35398143e0862218bfa1c497df8"
+        }
+      },
+      "target": "text.txt",
+      "identical_to_r3": true
+    },
+    "source": {
+      "files": {
+        "checked_arithmetic.cpp": {
+          "bytes": 770,
+          "sha256": "59b233ec87511f7f7b57b09c5866fd763e4498e443886b3631a8a0a9ab119151"
+        },
+        "store_archive.cpp": {
+          "bytes": 34036,
+          "sha256": "c31c76499ec980829341efaa9e4d829093e17ca636252d5a893f9b3689290ebf"
+        },
+        "version.cpp": {
+          "bytes": 230,
+          "sha256": "7a09d81ef846fa592484b6f2f707d4b31c96268248f6e705c82b2ae3c66a0af3"
+        }
+      },
+      "target": "store_archive.cpp",
+      "identical_to_r3": true
+    },
+    "binary": {
+      "files": {
+        "binary.bin": {
+          "bytes": 393216,
+          "sha256": "6dff28ae719333a97017340c41150b1b198ad4c2d321c42375fdbb5a12432985"
+        }
+      },
+      "target": "binary.bin",
+      "identical_to_r3": true
+    },
+    "compressed": {
+      "files": {
+        "packed.gz": {
+          "bytes": 393357,
+          "sha256": "6858e1638f05aa76a86be2b29c1bcf9736c3691777d2e999bd00dff5297e087e"
+        }
+      },
+      "target": "packed.gz",
+      "identical_to_r3": true
+    },
+    "mixed": {
+      "files": {
+        "000-text.txt": {
+          "bytes": 393216,
+          "sha256": "01854e183739b4ae12c7b5031130729726e5f35398143e0862218bfa1c497df8"
+        },
+        "sub/binary.bin": {
+          "bytes": 393216,
+          "sha256": "6dff28ae719333a97017340c41150b1b198ad4c2d321c42375fdbb5a12432985"
+        },
+        "sub/empty": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "sub/packed.gz": {
+          "bytes": 1440,
+          "sha256": "59384f3fa4cb1e07ccd445b7e300e91f79c0e7ba07eb53128347d6fe23f664cc"
+        },
+        "unicode/中文.txt": {
+          "bytes": 24,
+          "sha256": "b804a84c7ef04e3fe1d43cdcb416f4dde2d7ee4d67143b9fcc23909854469a36"
+        }
+      },
+      "target": "000-text.txt",
+      "identical_to_r3": true
+    }
+  }
+}

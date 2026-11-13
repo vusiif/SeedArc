@@ -1,0 +1,12 @@
+[
+  {
+    "name": "seedarc_seed_archive",
+    "description": "CMake 应用程序配置",
+    "supportsDynamicLaunchOverrides": true
+  },
+  {
+    "name": "seedarc_seed_archive_tests",
+    "description": "CMake 应用程序配置",
+    "supportsDynamicLaunchOverrides": true
+  }
+]

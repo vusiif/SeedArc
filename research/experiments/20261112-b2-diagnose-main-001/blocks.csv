@@ -1,0 +1,361 @@
+dataset_id,mode,strategy,file_key,file_id,file_block_index,block_index,block_id,raw_bytes,planned_codec,planned_level,actual_codec,actual_level,candidate_status,candidate_encoded_bytes,stored_bytes,fallback_to_store,fallback_reason,store_cause,plan_source
+binary,store,store,binary.bin,0,0,0,0,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+binary,store,store,binary.bin,0,1,1,1,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+binary,store,store,binary.bin,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+binary,store,store,binary.bin,0,3,3,3,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+binary,store,store,binary.bin,0,4,4,4,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+binary,store,store,binary.bin,0,5,5,5,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+binary,zstd3,B1-fixed-zstd3,binary.bin,0,0,0,0,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd3,B1-fixed-zstd3,binary.bin,0,1,1,1,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd3,B1-fixed-zstd3,binary.bin,0,2,2,2,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd3,B1-fixed-zstd3,binary.bin,0,3,3,3,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd3,B1-fixed-zstd3,binary.bin,0,4,4,4,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd3,B1-fixed-zstd3,binary.bin,0,5,5,5,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd6,zstd6,binary.bin,0,0,0,0,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd6,zstd6,binary.bin,0,1,1,1,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd6,zstd6,binary.bin,0,2,2,2,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd6,zstd6,binary.bin,0,3,3,3,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd6,zstd6,binary.bin,0,4,4,4,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,zstd6,zstd6,binary.bin,0,5,5,5,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,lzma6,lzma6,binary.bin,0,0,0,0,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,lzma6,lzma6,binary.bin,0,1,1,1,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,lzma6,lzma6,binary.bin,0,2,2,2,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,lzma6,lzma6,binary.bin,0,3,3,3,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,lzma6,lzma6,binary.bin,0,4,4,4,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,lzma6,lzma6,binary.bin,0,5,5,5,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+binary,b-base,b-base,binary.bin,0,0,0,0,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+binary,b-base,b-base,binary.bin,0,1,1,1,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+binary,b-base,b-base,binary.bin,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,base
+binary,b-base,b-base,binary.bin,0,3,3,3,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+binary,b-base,b-base,binary.bin,0,4,4,4,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+binary,b-base,b-base,binary.bin,0,5,5,5,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+binary,b-global,B0-current,binary.bin,0,0,0,0,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-global,B0-current,binary.bin,0,1,1,1,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-global,B0-current,binary.bin,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+binary,b-global,B0-current,binary.bin,0,3,3,3,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-global,B0-current,binary.bin,0,4,4,4,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-global,B0-current,binary.bin,0,5,5,5,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-file,b-file,binary.bin,0,0,0,0,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-file,b-file,binary.bin,0,1,1,1,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_override
+binary,b-file,b-file,binary.bin,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+binary,b-file,b-file,binary.bin,0,3,3,3,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_override
+binary,b-file,b-file,binary.bin,0,4,4,4,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-file,b-file,binary.bin,0,5,5,5,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_override
+binary,b-cleared,b-cleared,binary.bin,0,0,0,0,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-cleared,b-cleared,binary.bin,0,1,1,1,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-cleared,b-cleared,binary.bin,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+binary,b-cleared,b-cleared,binary.bin,0,3,3,3,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-cleared,b-cleared,binary.bin,0,4,4,4,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b-cleared,b-cleared,binary.bin,0,5,5,5,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+binary,b2-file-codec-c,B2-file-codec (codec only),binary.bin,0,0,0,0,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec-c,B2-file-codec (codec only),binary.bin,0,1,1,1,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec-c,B2-file-codec (codec only),binary.bin,0,2,2,2,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec-c,B2-file-codec (codec only),binary.bin,0,3,3,3,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec-c,B2-file-codec (codec only),binary.bin,0,4,4,4,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec-c,B2-file-codec (codec only),binary.bin,0,5,5,5,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec,B2-file-codec,binary.bin,0,0,0,0,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec,B2-file-codec,binary.bin,0,1,1,1,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec,B2-file-codec,binary.bin,0,2,2,2,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec,B2-file-codec,binary.bin,0,3,3,3,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec,B2-file-codec,binary.bin,0,4,4,4,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+binary,b2-file-codec,B2-file-codec,binary.bin,0,5,5,5,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,store,store,packed.gz,0,0,0,0,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+compressed,store,store,packed.gz,0,1,1,1,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+compressed,store,store,packed.gz,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+compressed,store,store,packed.gz,0,3,3,3,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+compressed,store,store,packed.gz,0,4,4,4,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+compressed,store,store,packed.gz,0,5,5,5,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+compressed,store,store,packed.gz,0,6,6,6,141,store,0,store,0,not_attempted,,141,false,,planned_store,fixed
+compressed,zstd3,B1-fixed-zstd3,packed.gz,0,0,0,0,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd3,B1-fixed-zstd3,packed.gz,0,1,1,1,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd3,B1-fixed-zstd3,packed.gz,0,2,2,2,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd3,B1-fixed-zstd3,packed.gz,0,3,3,3,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd3,B1-fixed-zstd3,packed.gz,0,4,4,4,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd3,B1-fixed-zstd3,packed.gz,0,5,5,5,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd3,B1-fixed-zstd3,packed.gz,0,6,6,6,141,zstd,3,store,0,rejected_not_smaller,,141,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd6,zstd6,packed.gz,0,0,0,0,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd6,zstd6,packed.gz,0,1,1,1,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd6,zstd6,packed.gz,0,2,2,2,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd6,zstd6,packed.gz,0,3,3,3,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd6,zstd6,packed.gz,0,4,4,4,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd6,zstd6,packed.gz,0,5,5,5,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,zstd6,zstd6,packed.gz,0,6,6,6,141,zstd,6,store,0,rejected_not_smaller,,141,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,lzma6,lzma6,packed.gz,0,0,0,0,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,lzma6,lzma6,packed.gz,0,1,1,1,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,lzma6,lzma6,packed.gz,0,2,2,2,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,lzma6,lzma6,packed.gz,0,3,3,3,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,lzma6,lzma6,packed.gz,0,4,4,4,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,lzma6,lzma6,packed.gz,0,5,5,5,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,lzma6,lzma6,packed.gz,0,6,6,6,141,lzma2,6,store,0,rejected_not_smaller,,141,true,no_space_gain,fallback_no_space_gain,fixed
+compressed,b-base,b-base,packed.gz,0,0,0,0,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+compressed,b-base,b-base,packed.gz,0,1,1,1,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+compressed,b-base,b-base,packed.gz,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,base
+compressed,b-base,b-base,packed.gz,0,3,3,3,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+compressed,b-base,b-base,packed.gz,0,4,4,4,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+compressed,b-base,b-base,packed.gz,0,5,5,5,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+compressed,b-base,b-base,packed.gz,0,6,6,6,141,zstd,3,store,0,rejected_not_smaller,,141,true,no_space_gain,fallback_no_space_gain,base
+compressed,b-global,B0-current,packed.gz,0,0,0,0,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-global,B0-current,packed.gz,0,1,1,1,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-global,B0-current,packed.gz,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+compressed,b-global,B0-current,packed.gz,0,3,3,3,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-global,B0-current,packed.gz,0,4,4,4,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-global,B0-current,packed.gz,0,5,5,5,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-global,B0-current,packed.gz,0,6,6,6,141,zstd,4,store,0,rejected_not_smaller,,141,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-file,b-file,packed.gz,0,0,0,0,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-file,b-file,packed.gz,0,1,1,1,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_override
+compressed,b-file,b-file,packed.gz,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+compressed,b-file,b-file,packed.gz,0,3,3,3,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_override
+compressed,b-file,b-file,packed.gz,0,4,4,4,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-file,b-file,packed.gz,0,5,5,5,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_override
+compressed,b-file,b-file,packed.gz,0,6,6,6,141,zstd,6,store,0,rejected_not_smaller,,141,true,no_space_gain,fallback_no_space_gain,file_override
+compressed,b-cleared,b-cleared,packed.gz,0,0,0,0,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-cleared,b-cleared,packed.gz,0,1,1,1,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-cleared,b-cleared,packed.gz,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+compressed,b-cleared,b-cleared,packed.gz,0,3,3,3,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-cleared,b-cleared,packed.gz,0,4,4,4,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-cleared,b-cleared,packed.gz,0,5,5,5,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+compressed,b-cleared,b-cleared,packed.gz,0,6,6,6,141,zstd,4,store,0,rejected_not_smaller,,141,true,no_space_gain,fallback_no_space_gain,global
+compressed,b2-file-codec-c,B2-file-codec (codec only),packed.gz,0,0,0,0,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec-c,B2-file-codec (codec only),packed.gz,0,1,1,1,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec-c,B2-file-codec (codec only),packed.gz,0,2,2,2,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec-c,B2-file-codec (codec only),packed.gz,0,3,3,3,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec-c,B2-file-codec (codec only),packed.gz,0,4,4,4,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec-c,B2-file-codec (codec only),packed.gz,0,5,5,5,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec-c,B2-file-codec (codec only),packed.gz,0,6,6,6,141,zstd,3,store,0,rejected_not_smaller,,141,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec,B2-file-codec,packed.gz,0,0,0,0,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec,B2-file-codec,packed.gz,0,1,1,1,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec,B2-file-codec,packed.gz,0,2,2,2,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec,B2-file-codec,packed.gz,0,3,3,3,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec,B2-file-codec,packed.gz,0,4,4,4,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec,B2-file-codec,packed.gz,0,5,5,5,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+compressed,b2-file-codec,B2-file-codec,packed.gz,0,6,6,6,141,zstd,3,store,0,rejected_not_smaller,,141,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,store,store,000-text.txt,0,0,0,0,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,000-text.txt,0,1,1,1,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,000-text.txt,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,000-text.txt,0,3,3,3,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,000-text.txt,0,4,4,4,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,000-text.txt,0,5,5,5,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,sub/binary.bin,2,0,6,6,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,sub/binary.bin,2,1,7,7,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,sub/binary.bin,2,2,8,8,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,sub/binary.bin,2,3,9,9,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,sub/binary.bin,2,4,10,10,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,sub/binary.bin,2,5,11,11,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+mixed,store,store,sub/packed.gz,4,0,12,12,1440,store,0,store,0,not_attempted,,1440,false,,planned_store,fixed
+mixed,store,store,unicode/中文.txt,6,0,13,13,24,store,0,store,0,not_attempted,,24,false,,planned_store,fixed
+mixed,zstd3,B1-fixed-zstd3,000-text.txt,0,0,0,0,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+mixed,zstd3,B1-fixed-zstd3,000-text.txt,0,1,1,1,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+mixed,zstd3,B1-fixed-zstd3,000-text.txt,0,2,2,2,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+mixed,zstd3,B1-fixed-zstd3,000-text.txt,0,3,3,3,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+mixed,zstd3,B1-fixed-zstd3,000-text.txt,0,4,4,4,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+mixed,zstd3,B1-fixed-zstd3,000-text.txt,0,5,5,5,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+mixed,zstd3,B1-fixed-zstd3,sub/binary.bin,2,0,6,6,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd3,B1-fixed-zstd3,sub/binary.bin,2,1,7,7,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd3,B1-fixed-zstd3,sub/binary.bin,2,2,8,8,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd3,B1-fixed-zstd3,sub/binary.bin,2,3,9,9,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd3,B1-fixed-zstd3,sub/binary.bin,2,4,10,10,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd3,B1-fixed-zstd3,sub/binary.bin,2,5,11,11,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd3,B1-fixed-zstd3,sub/packed.gz,4,0,12,12,1440,zstd,3,zstd,3,accepted,131,131,false,,,fixed
+mixed,zstd3,B1-fixed-zstd3,unicode/中文.txt,6,0,13,13,24,zstd,3,store,0,rejected_not_smaller,,24,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd6,zstd6,000-text.txt,0,0,0,0,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+mixed,zstd6,zstd6,000-text.txt,0,1,1,1,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+mixed,zstd6,zstd6,000-text.txt,0,2,2,2,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+mixed,zstd6,zstd6,000-text.txt,0,3,3,3,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+mixed,zstd6,zstd6,000-text.txt,0,4,4,4,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+mixed,zstd6,zstd6,000-text.txt,0,5,5,5,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+mixed,zstd6,zstd6,sub/binary.bin,2,0,6,6,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd6,zstd6,sub/binary.bin,2,1,7,7,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd6,zstd6,sub/binary.bin,2,2,8,8,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd6,zstd6,sub/binary.bin,2,3,9,9,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd6,zstd6,sub/binary.bin,2,4,10,10,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd6,zstd6,sub/binary.bin,2,5,11,11,65536,zstd,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,zstd6,zstd6,sub/packed.gz,4,0,12,12,1440,zstd,6,zstd,6,accepted,131,131,false,,,fixed
+mixed,zstd6,zstd6,unicode/中文.txt,6,0,13,13,24,zstd,6,store,0,rejected_not_smaller,,24,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,lzma6,lzma6,000-text.txt,0,0,0,0,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,fixed
+mixed,lzma6,lzma6,000-text.txt,0,1,1,1,65536,lzma2,6,lzma2,6,accepted,159,159,false,,,fixed
+mixed,lzma6,lzma6,000-text.txt,0,2,2,2,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,fixed
+mixed,lzma6,lzma6,000-text.txt,0,3,3,3,65536,lzma2,6,lzma2,6,accepted,159,159,false,,,fixed
+mixed,lzma6,lzma6,000-text.txt,0,4,4,4,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,fixed
+mixed,lzma6,lzma6,000-text.txt,0,5,5,5,65536,lzma2,6,lzma2,6,accepted,159,159,false,,,fixed
+mixed,lzma6,lzma6,sub/binary.bin,2,0,6,6,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,lzma6,lzma6,sub/binary.bin,2,1,7,7,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,lzma6,lzma6,sub/binary.bin,2,2,8,8,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,lzma6,lzma6,sub/binary.bin,2,3,9,9,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,lzma6,lzma6,sub/binary.bin,2,4,10,10,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,lzma6,lzma6,sub/binary.bin,2,5,11,11,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,lzma6,lzma6,sub/packed.gz,4,0,12,12,1440,lzma2,6,lzma2,6,accepted,140,140,false,,,fixed
+mixed,lzma6,lzma6,unicode/中文.txt,6,0,13,13,24,lzma2,6,store,0,rejected_not_smaller,,24,true,no_space_gain,fallback_no_space_gain,fixed
+mixed,b-base,b-base,000-text.txt,0,0,0,0,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,base
+mixed,b-base,b-base,000-text.txt,0,1,1,1,65536,zstd,3,zstd,3,accepted,86,86,false,,,base
+mixed,b-base,b-base,000-text.txt,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,base
+mixed,b-base,b-base,000-text.txt,0,3,3,3,65536,zstd,3,zstd,3,accepted,86,86,false,,,base
+mixed,b-base,b-base,000-text.txt,0,4,4,4,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,base
+mixed,b-base,b-base,000-text.txt,0,5,5,5,65536,zstd,3,zstd,3,accepted,86,86,false,,,base
+mixed,b-base,b-base,sub/binary.bin,2,0,6,6,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+mixed,b-base,b-base,sub/binary.bin,2,1,7,7,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,base
+mixed,b-base,b-base,sub/binary.bin,2,2,8,8,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+mixed,b-base,b-base,sub/binary.bin,2,3,9,9,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+mixed,b-base,b-base,sub/binary.bin,2,4,10,10,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,base
+mixed,b-base,b-base,sub/binary.bin,2,5,11,11,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,base
+mixed,b-base,b-base,sub/packed.gz,4,0,12,12,1440,store,0,store,0,not_attempted,,1440,false,,planned_store,base
+mixed,b-base,b-base,unicode/中文.txt,6,0,13,13,24,store,0,store,0,not_attempted,,24,false,,planned_store,base
+mixed,b-global,B0-current,000-text.txt,0,0,0,0,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+mixed,b-global,B0-current,000-text.txt,0,1,1,1,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+mixed,b-global,B0-current,000-text.txt,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+mixed,b-global,B0-current,000-text.txt,0,3,3,3,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+mixed,b-global,B0-current,000-text.txt,0,4,4,4,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+mixed,b-global,B0-current,000-text.txt,0,5,5,5,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+mixed,b-global,B0-current,sub/binary.bin,2,0,6,6,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-global,B0-current,sub/binary.bin,2,1,7,7,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+mixed,b-global,B0-current,sub/binary.bin,2,2,8,8,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-global,B0-current,sub/binary.bin,2,3,9,9,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-global,B0-current,sub/binary.bin,2,4,10,10,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+mixed,b-global,B0-current,sub/binary.bin,2,5,11,11,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-global,B0-current,sub/packed.gz,4,0,12,12,1440,store,0,store,0,not_attempted,,1440,false,,planned_store,global
+mixed,b-global,B0-current,unicode/中文.txt,6,0,13,13,24,store,0,store,0,not_attempted,,24,false,,planned_store,global
+mixed,b-file,b-file,000-text.txt,0,0,0,0,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+mixed,b-file,b-file,000-text.txt,0,1,1,1,65536,zstd,6,zstd,6,accepted,86,86,false,,,file_override
+mixed,b-file,b-file,000-text.txt,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+mixed,b-file,b-file,000-text.txt,0,3,3,3,65536,zstd,6,zstd,6,accepted,86,86,false,,,file_override
+mixed,b-file,b-file,000-text.txt,0,4,4,4,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+mixed,b-file,b-file,000-text.txt,0,5,5,5,65536,zstd,6,zstd,6,accepted,86,86,false,,,file_override
+mixed,b-file,b-file,sub/binary.bin,2,0,6,6,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-file,b-file,sub/binary.bin,2,1,7,7,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+mixed,b-file,b-file,sub/binary.bin,2,2,8,8,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-file,b-file,sub/binary.bin,2,3,9,9,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-file,b-file,sub/binary.bin,2,4,10,10,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+mixed,b-file,b-file,sub/binary.bin,2,5,11,11,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-file,b-file,sub/packed.gz,4,0,12,12,1440,store,0,store,0,not_attempted,,1440,false,,planned_store,global
+mixed,b-file,b-file,unicode/中文.txt,6,0,13,13,24,store,0,store,0,not_attempted,,24,false,,planned_store,global
+mixed,b-cleared,b-cleared,000-text.txt,0,0,0,0,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+mixed,b-cleared,b-cleared,000-text.txt,0,1,1,1,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+mixed,b-cleared,b-cleared,000-text.txt,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+mixed,b-cleared,b-cleared,000-text.txt,0,3,3,3,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+mixed,b-cleared,b-cleared,000-text.txt,0,4,4,4,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+mixed,b-cleared,b-cleared,000-text.txt,0,5,5,5,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+mixed,b-cleared,b-cleared,sub/binary.bin,2,0,6,6,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-cleared,b-cleared,sub/binary.bin,2,1,7,7,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+mixed,b-cleared,b-cleared,sub/binary.bin,2,2,8,8,65536,zstd,4,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-cleared,b-cleared,sub/binary.bin,2,3,9,9,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-cleared,b-cleared,sub/binary.bin,2,4,10,10,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+mixed,b-cleared,b-cleared,sub/binary.bin,2,5,11,11,65536,lzma2,6,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,global
+mixed,b-cleared,b-cleared,sub/packed.gz,4,0,12,12,1440,store,0,store,0,not_attempted,,1440,false,,planned_store,global
+mixed,b-cleared,b-cleared,unicode/中文.txt,6,0,13,13,24,store,0,store,0,not_attempted,,24,false,,planned_store,global
+mixed,b2-file-codec-c,B2-file-codec (codec only),000-text.txt,0,0,0,0,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),000-text.txt,0,1,1,1,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),000-text.txt,0,2,2,2,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),000-text.txt,0,3,3,3,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),000-text.txt,0,4,4,4,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),000-text.txt,0,5,5,5,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),sub/binary.bin,2,0,6,6,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),sub/binary.bin,2,1,7,7,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),sub/binary.bin,2,2,8,8,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),sub/binary.bin,2,3,9,9,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),sub/binary.bin,2,4,10,10,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),sub/binary.bin,2,5,11,11,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),sub/packed.gz,4,0,12,12,1440,zstd,3,zstd,3,accepted,131,131,false,,,file_codec
+mixed,b2-file-codec-c,B2-file-codec (codec only),unicode/中文.txt,6,0,13,13,24,zstd,3,store,0,rejected_not_smaller,,24,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec,B2-file-codec,000-text.txt,0,0,0,0,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec,B2-file-codec,000-text.txt,0,1,1,1,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec,B2-file-codec,000-text.txt,0,2,2,2,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec,B2-file-codec,000-text.txt,0,3,3,3,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec,B2-file-codec,000-text.txt,0,4,4,4,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec,B2-file-codec,000-text.txt,0,5,5,5,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+mixed,b2-file-codec,B2-file-codec,sub/binary.bin,2,0,6,6,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec,B2-file-codec,sub/binary.bin,2,1,7,7,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec,B2-file-codec,sub/binary.bin,2,2,8,8,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec,B2-file-codec,sub/binary.bin,2,3,9,9,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec,B2-file-codec,sub/binary.bin,2,4,10,10,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec,B2-file-codec,sub/binary.bin,2,5,11,11,65536,zstd,3,store,0,rejected_not_smaller,,65536,true,no_space_gain,fallback_no_space_gain,file_codec
+mixed,b2-file-codec,B2-file-codec,sub/packed.gz,4,0,12,12,1440,zstd,3,zstd,3,accepted,131,131,false,,,file_codec
+mixed,b2-file-codec,B2-file-codec,unicode/中文.txt,6,0,13,13,24,zstd,3,store,0,rejected_not_smaller,,24,true,no_space_gain,fallback_no_space_gain,file_codec
+source,store,store,checked_arithmetic.cpp,0,0,0,0,770,store,0,store,0,not_attempted,,770,false,,planned_store,fixed
+source,store,store,store_archive.cpp,1,0,1,1,34036,store,0,store,0,not_attempted,,34036,false,,planned_store,fixed
+source,store,store,version.cpp,2,0,2,2,230,store,0,store,0,not_attempted,,230,false,,planned_store,fixed
+source,zstd3,B1-fixed-zstd3,checked_arithmetic.cpp,0,0,0,0,770,zstd,3,zstd,3,accepted,325,325,false,,,fixed
+source,zstd3,B1-fixed-zstd3,store_archive.cpp,1,0,1,1,34036,zstd,3,zstd,3,accepted,8614,8614,false,,,fixed
+source,zstd3,B1-fixed-zstd3,version.cpp,2,0,2,2,230,zstd,3,zstd,3,accepted,174,174,false,,,fixed
+source,zstd6,zstd6,checked_arithmetic.cpp,0,0,0,0,770,zstd,6,zstd,6,accepted,323,323,false,,,fixed
+source,zstd6,zstd6,store_archive.cpp,1,0,1,1,34036,zstd,6,zstd,6,accepted,7948,7948,false,,,fixed
+source,zstd6,zstd6,version.cpp,2,0,2,2,230,zstd,6,zstd,6,accepted,174,174,false,,,fixed
+source,lzma6,lzma6,checked_arithmetic.cpp,0,0,0,0,770,lzma2,6,lzma2,6,accepted,325,325,false,,,fixed
+source,lzma6,lzma6,store_archive.cpp,1,0,1,1,34036,lzma2,6,lzma2,6,accepted,7411,7411,false,,,fixed
+source,lzma6,lzma6,version.cpp,2,0,2,2,230,lzma2,6,lzma2,6,accepted,178,178,false,,,fixed
+source,b-base,b-base,checked_arithmetic.cpp,0,0,0,0,770,lzma2,6,lzma2,6,accepted,325,325,false,,,base
+source,b-base,b-base,store_archive.cpp,1,0,1,1,34036,zstd,3,zstd,3,accepted,8614,8614,false,,,base
+source,b-base,b-base,version.cpp,2,0,2,2,230,store,0,store,0,not_attempted,,230,false,,planned_store,base
+source,b-global,B0-current,checked_arithmetic.cpp,0,0,0,0,770,lzma2,6,lzma2,6,accepted,325,325,false,,,global
+source,b-global,B0-current,store_archive.cpp,1,0,1,1,34036,zstd,4,zstd,4,accepted,8615,8615,false,,,global
+source,b-global,B0-current,version.cpp,2,0,2,2,230,store,0,store,0,not_attempted,,230,false,,planned_store,global
+source,b-file,b-file,checked_arithmetic.cpp,0,0,0,0,770,lzma2,6,lzma2,6,accepted,325,325,false,,,global
+source,b-file,b-file,store_archive.cpp,1,0,1,1,34036,zstd,6,zstd,6,accepted,7948,7948,false,,,file_override
+source,b-file,b-file,version.cpp,2,0,2,2,230,store,0,store,0,not_attempted,,230,false,,planned_store,global
+source,b-cleared,b-cleared,checked_arithmetic.cpp,0,0,0,0,770,lzma2,6,lzma2,6,accepted,325,325,false,,,global
+source,b-cleared,b-cleared,store_archive.cpp,1,0,1,1,34036,zstd,4,zstd,4,accepted,8615,8615,false,,,global
+source,b-cleared,b-cleared,version.cpp,2,0,2,2,230,store,0,store,0,not_attempted,,230,false,,planned_store,global
+source,b2-file-codec-c,B2-file-codec (codec only),checked_arithmetic.cpp,0,0,0,0,770,zstd,3,zstd,3,accepted,325,325,false,,,file_codec
+source,b2-file-codec-c,B2-file-codec (codec only),store_archive.cpp,1,0,1,1,34036,lzma2,6,lzma2,6,accepted,7411,7411,false,,,file_codec
+source,b2-file-codec-c,B2-file-codec (codec only),version.cpp,2,0,2,2,230,zstd,3,zstd,3,accepted,174,174,false,,,file_codec
+source,b2-file-codec,B2-file-codec,checked_arithmetic.cpp,0,0,0,0,770,zstd,6,zstd,6,accepted,323,323,false,,,file_override
+source,b2-file-codec,B2-file-codec,store_archive.cpp,1,0,1,1,34036,lzma2,6,lzma2,6,accepted,7411,7411,false,,,file_codec
+source,b2-file-codec,B2-file-codec,version.cpp,2,0,2,2,230,zstd,3,zstd,3,accepted,174,174,false,,,file_codec
+text,store,store,text.txt,0,0,0,0,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+text,store,store,text.txt,0,1,1,1,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+text,store,store,text.txt,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+text,store,store,text.txt,0,3,3,3,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+text,store,store,text.txt,0,4,4,4,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+text,store,store,text.txt,0,5,5,5,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,fixed
+text,zstd3,B1-fixed-zstd3,text.txt,0,0,0,0,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+text,zstd3,B1-fixed-zstd3,text.txt,0,1,1,1,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+text,zstd3,B1-fixed-zstd3,text.txt,0,2,2,2,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+text,zstd3,B1-fixed-zstd3,text.txt,0,3,3,3,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+text,zstd3,B1-fixed-zstd3,text.txt,0,4,4,4,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+text,zstd3,B1-fixed-zstd3,text.txt,0,5,5,5,65536,zstd,3,zstd,3,accepted,86,86,false,,,fixed
+text,zstd6,zstd6,text.txt,0,0,0,0,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+text,zstd6,zstd6,text.txt,0,1,1,1,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+text,zstd6,zstd6,text.txt,0,2,2,2,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+text,zstd6,zstd6,text.txt,0,3,3,3,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+text,zstd6,zstd6,text.txt,0,4,4,4,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+text,zstd6,zstd6,text.txt,0,5,5,5,65536,zstd,6,zstd,6,accepted,86,86,false,,,fixed
+text,lzma6,lzma6,text.txt,0,0,0,0,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,fixed
+text,lzma6,lzma6,text.txt,0,1,1,1,65536,lzma2,6,lzma2,6,accepted,159,159,false,,,fixed
+text,lzma6,lzma6,text.txt,0,2,2,2,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,fixed
+text,lzma6,lzma6,text.txt,0,3,3,3,65536,lzma2,6,lzma2,6,accepted,159,159,false,,,fixed
+text,lzma6,lzma6,text.txt,0,4,4,4,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,fixed
+text,lzma6,lzma6,text.txt,0,5,5,5,65536,lzma2,6,lzma2,6,accepted,159,159,false,,,fixed
+text,b-base,b-base,text.txt,0,0,0,0,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,base
+text,b-base,b-base,text.txt,0,1,1,1,65536,zstd,3,zstd,3,accepted,86,86,false,,,base
+text,b-base,b-base,text.txt,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,base
+text,b-base,b-base,text.txt,0,3,3,3,65536,zstd,3,zstd,3,accepted,86,86,false,,,base
+text,b-base,b-base,text.txt,0,4,4,4,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,base
+text,b-base,b-base,text.txt,0,5,5,5,65536,zstd,3,zstd,3,accepted,86,86,false,,,base
+text,b-global,B0-current,text.txt,0,0,0,0,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+text,b-global,B0-current,text.txt,0,1,1,1,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+text,b-global,B0-current,text.txt,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+text,b-global,B0-current,text.txt,0,3,3,3,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+text,b-global,B0-current,text.txt,0,4,4,4,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+text,b-global,B0-current,text.txt,0,5,5,5,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+text,b-file,b-file,text.txt,0,0,0,0,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+text,b-file,b-file,text.txt,0,1,1,1,65536,zstd,6,zstd,6,accepted,86,86,false,,,file_override
+text,b-file,b-file,text.txt,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+text,b-file,b-file,text.txt,0,3,3,3,65536,zstd,6,zstd,6,accepted,86,86,false,,,file_override
+text,b-file,b-file,text.txt,0,4,4,4,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+text,b-file,b-file,text.txt,0,5,5,5,65536,zstd,6,zstd,6,accepted,86,86,false,,,file_override
+text,b-cleared,b-cleared,text.txt,0,0,0,0,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+text,b-cleared,b-cleared,text.txt,0,1,1,1,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+text,b-cleared,b-cleared,text.txt,0,2,2,2,65536,store,0,store,0,not_attempted,,65536,false,,planned_store,global
+text,b-cleared,b-cleared,text.txt,0,3,3,3,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+text,b-cleared,b-cleared,text.txt,0,4,4,4,65536,lzma2,6,lzma2,6,accepted,158,158,false,,,global
+text,b-cleared,b-cleared,text.txt,0,5,5,5,65536,zstd,4,zstd,4,accepted,86,86,false,,,global
+text,b2-file-codec-c,B2-file-codec (codec only),text.txt,0,0,0,0,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec-c,B2-file-codec (codec only),text.txt,0,1,1,1,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec-c,B2-file-codec (codec only),text.txt,0,2,2,2,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec-c,B2-file-codec (codec only),text.txt,0,3,3,3,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec-c,B2-file-codec (codec only),text.txt,0,4,4,4,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec-c,B2-file-codec (codec only),text.txt,0,5,5,5,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec,B2-file-codec,text.txt,0,0,0,0,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec,B2-file-codec,text.txt,0,1,1,1,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec,B2-file-codec,text.txt,0,2,2,2,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec,B2-file-codec,text.txt,0,3,3,3,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec,B2-file-codec,text.txt,0,4,4,4,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec
+text,b2-file-codec,B2-file-codec,text.txt,0,5,5,5,65536,zstd,3,zstd,3,accepted,86,86,false,,,file_codec

@@ -1,0 +1,23 @@
+[
+  {
+    "file": "core/CMakeLists.txt",
+    "result": {
+      "filePath": "core/CMakeLists.txt",
+      "errors": []
+    }
+  },
+  {
+    "file": "tests/CMakeLists.txt",
+    "result": {
+      "filePath": "tests/CMakeLists.txt",
+      "errors": []
+    }
+  },
+  {
+    "file": "research/tools/CMakeLists.txt",
+    "result": {
+      "filePath": "research/tools/CMakeLists.txt",
+      "errors": []
+    }
+  }
+]
