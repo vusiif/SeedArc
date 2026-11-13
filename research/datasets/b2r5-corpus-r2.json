@@ -1,0 +1,162 @@
+{
+  "corpus_id": "b2r5-corpus-r2",
+  "created_at": "2026-11-12T22:03:25.295230-08:00",
+  "source": "data already installed on the evaluation machine; no download",
+  "machine": {
+    "os": "Windows-10-10.0.19045-SP0",
+    "cmake": "cmake version 4.4.3",
+    "python_lib": "CPython 3.15.0 standard library"
+  },
+  "split_policy": "project groups merged into components by shared content SHA256 (across pools); component -> sha256('b2r5-corpus-r2:<component key>')[0] even: dev, odd: test; fixed before any compression; test never used for tuning; empty files excluded",
+  "selection": "per pool and split: sorted corpus paths until the byte / file caps (whole components never move sides)",
+  "chunk_bytes": 65536,
+  "skipped": {
+    "source-python:empty": 7,
+    "config-cmake-pkg:empty": 3
+  },
+  "fixes": "b2r5-corpus-r1 known defect r1-dev-test-content-overlap",
+  "datasets": {
+    "many-small-docs": {
+      "type": "many small files (reStructuredText docs)",
+      "license": "BSD-3-Clause (Kitware CMake documentation)",
+      "redistribution": "local evaluation only; not redistributed",
+      "grouping": "CMake share/<version>/Help/<section>",
+      "sources": [
+        "cmake-share"
+      ],
+      "caps": {
+        "split_bytes": 4194304,
+        "split_files": 2000
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/many-small-docs",
+          "file_count": 746,
+          "bytes": 781749,
+          "blocks": 746,
+          "components": 11,
+          "distinct_content": 746,
+          "median_file_bytes": 586,
+          "listing": "b2r5-corpus-r2/dev-many-small-docs.tsv",
+          "listing_sha256": "1a60f269602b5f55e892dec5387af84fd307c9b193f22101de84a6cfcacd325c"
+        },
+        "test": {
+          "dataset_id": "test/many-small-docs",
+          "file_count": 1621,
+          "bytes": 2881931,
+          "blocks": 1624,
+          "components": 9,
+          "distinct_content": 1621,
+          "median_file_bytes": 426,
+          "listing": "b2r5-corpus-r2/test-many-small-docs.tsv",
+          "listing_sha256": "edc3b01d0115ad3512fcc38951a8110e18223c72930649ed9dcf1ff1128eac3e"
+        }
+      }
+    },
+    "source-python": {
+      "type": "source code (Python standard library)",
+      "license": "PSF-2.0 (CPython standard library)",
+      "redistribution": "local evaluation only; not redistributed",
+      "grouping": "top-level package (a top-level module file is its own group)",
+      "sources": [
+        "python-lib"
+      ],
+      "caps": {
+        "split_bytes": 8388608,
+        "split_files": 2000
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/source-python",
+          "file_count": 349,
+          "bytes": 6209082,
+          "blocks": 371,
+          "components": 87,
+          "distinct_content": 349,
+          "median_file_bytes": 9914,
+          "listing": "b2r5-corpus-r2/dev-source-python.tsv",
+          "listing_sha256": "108a09a48f71c9d3c2f547cae53276e1252328f828465c0b0d794141ae9d64d3"
+        },
+        "test": {
+          "dataset_id": "test/source-python",
+          "file_count": 337,
+          "bytes": 6534042,
+          "blocks": 368,
+          "components": 99,
+          "distinct_content": 335,
+          "median_file_bytes": 8808,
+          "listing": "b2r5-corpus-r2/test-source-python.tsv",
+          "listing_sha256": "66224235f8f02ee69a4e683de702b925eb96c70dc9cc7dd15e4fe8594b723f0d"
+        }
+      }
+    },
+    "config-cmake-pkg": {
+      "type": "configuration (CMake modules, package configs, pkg-config, MSYS2 etc)",
+      "license": "BSD-3-Clause (CMake modules); per package (MSYS2 configs)",
+      "redistribution": "local evaluation only; not redistributed",
+      "grouping": "CMake share/<version>/Modules/<dir> | package | .pc file | etc/<top>",
+      "sources": [
+        "cmake-share",
+        "ucrt64-lib-cmake",
+        "ucrt64-pkgconfig",
+        "msys2-etc"
+      ],
+      "caps": {
+        "split_bytes": 8388608,
+        "split_files": 2000
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/config-cmake-pkg",
+          "file_count": 1432,
+          "bytes": 4568151,
+          "blocks": 1447,
+          "components": 263,
+          "distinct_content": 1339,
+          "median_file_bytes": 329,
+          "listing": "b2r5-corpus-r2/dev-config-cmake-pkg.tsv",
+          "listing_sha256": "eee4f66e5a2a5f5faa748e85b9e0c44804b60f964f6379278510f5f87c3dbdc8"
+        },
+        "test": {
+          "dataset_id": "test/config-cmake-pkg",
+          "file_count": 336,
+          "bytes": 2201926,
+          "blocks": 342,
+          "components": 248,
+          "distinct_content": 334,
+          "median_file_bytes": 2395,
+          "listing": "b2r5-corpus-r2/test-config-cmake-pkg.tsv",
+          "listing_sha256": "cca6ec9dc8a55c6abcac652a290832abf1bbbcc18c333bab52ee309ef690b7b2"
+        }
+      }
+    }
+  },
+  "largest_components": [
+    [
+      "source-python|python-lib|encodings",
+      1456322
+    ],
+    [
+      "many-small-docs|cmake-share|cmake-4.4/Help/manual",
+      862114
+    ],
+    [
+      "source-python|python-lib|idlelib",
+      800136
+    ],
+    [
+      "config-cmake-pkg|msys2-etc|pki",
+      740452
+    ],
+    [
+      "many-small-docs|cmake-share|cmake-4.4/Help/command",
+      708180
+    ]
+  ],
+  "disjointness_check": {
+    "dev_hashes": 2434,
+    "test_hashes": 2290,
+    "shared": 0,
+    "components": 717
+  }
+}

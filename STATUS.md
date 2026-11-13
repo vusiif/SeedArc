@@ -4,6 +4,8 @@
 
 ## 当前基线
 
+- 2026-11-12 提交整理：补充 DEV-013 已出现的工作区产物，尚未完成该研究阶段。r1 实验记录已更正 dev / test 内容重叠（614 个 test 文件）；新增 [r2 语料说明](research/datasets/b2r5-corpus-r2.md)、JSON / TSV 与生成脚本。此次实际检查：`b2_corpus_r2.py --check` 内容交集为 0，六份清单哈希与 JSON 一致，Python 语法和 JSON 解析通过。`core/codec/dictionary.*` 仅保存为未验证研究草稿，尚未纳入 CMake、编译或往返测试，不属于已完成能力。未重新运行构建、CTest、ASan 或 CLion；调试日志 `docs/debug.log` 不纳入提交。最新基线提交已为 `631cb39`（此前“未提交推送”属于历史记录）；本条对应的后续提交以 Git 记录为准。
+
 - 最新 B2-r5 P1 独立评估已完成（DEV-012）：adaptive-file-r1 已冻结（[配置](research/configs/adaptive-file-r1.frozen.json)，默认参数有回归测试）；新建本机独立语料 [b2r5-corpus-r1](research/datasets/b2r5-corpus-r1.md)（10 类，dev / test 各约 89 MB，按路径哈希预先划分，没有下载外部数据）。在 test 上 350/350 往返通过：Adaptive-r1 各档逐文件都不比 Zstd-3 大，但无界档（−7.45 %，14.5 s）被 Fixed LZMA2-6（−7.95 %，13.6 s）在大小和速度上同时压过；256 KiB / 1 MiB 档几乎全部耗尽预算（−0.09 % / −0.66 %）；Oracle 只比 LZMA2-6 再小 0.025 %；B-r1 seed0（有 Seed、无搜索）+26.1 %。消融 G5（有 Seed + 预算搜索）缺项，本轮不对 Seed 的独立价值下结论。见 [run 记录](research/experiments/20261112-b2-independent-main-001/record.md)、[消融设计](research/ideas/seed-ablation-r1.md)。另：其余测试夹具清理的 `remove_all` 已统一换成有界的 `tests/test_fixture.hpp`（原 seed_test_fixture.hpp 提升为通用）。
 
 - 最新 B2-r5 P0 已完成（DEV-010）：P0-A 复现 r4 的 8 个原方案与 Oracle 共 45 组归档 SHA256 一致；P0-B 新增研究层 Adaptive-file 选择器 `adaptive-file-r1`（默认 Zstd-3、首中尾抽样、显式试编码预算、确定性回退，只输出既有 BlockPlan，归档 / 编解码 / 索引不变，metadata_bytes=0）；P0-C 统一预算对照：五组合计 Zstd-3 1,192,886 B / 60 ms，Adaptive ≥256 KiB 1,191,683 B（−1,203 B）/ 72–132 ms，Oracle 1,191,681 B / 198 ms，LZMA2-6 −320 B / 191 ms。收益全部来自 source 的一个文件；各档都不比 Zstd-3 大。195/195 往返通过，Release 36/36。仅开发样本，未调参，下一步 P1 独立语料。见 [run 记录](research/experiments/20261112-b2-adaptive-main-001/record.md)与[预登记规则](research/ideas/seed-adaptive-file-r5.md)。

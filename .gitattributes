@@ -1,2 +1,4 @@
 # Preserve raw experiment evidence and source snapshots byte for byte.
 /research/experiments/** -text
+# Dataset manifests hash the exact listing bytes.
+/research/datasets/b2r5-corpus-r2/*.tsv -text

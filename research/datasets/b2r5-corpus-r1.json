@@ -416,5 +416,21 @@
         }
       }
     }
-  }
+  },
+  "known_defects": [
+    {
+      "id": "r1-dev-test-content-overlap",
+      "found": "2026-11-12 (user review; re-counted by DEV-013)",
+      "description": "the split is by path hash only, so identical content can land on both sides: 614 test files (427 distinct SHA256) also occur in dev",
+      "by_pool": {
+        "many-small-terminfo": 540,
+        "config-cmake": 37,
+        "duplicate-licenses": 23,
+        "source-headers": 13,
+        "binary-native": 1
+      },
+      "impact": "the r1 test split is not fully independent of dev; DEV-012 results stand as recorded (no tuning used dev), but are not a clean held-out evaluation for those pools",
+      "fixed_in": "b2r5-corpus-r2 (group / content-hash disjoint split with an automatic check)"
+    }
+  ]
 }

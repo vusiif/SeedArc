@@ -130,3 +130,7 @@ python research/scripts/b2_independent.py --analyze-only research/experiments/20
 - 夹具清理改为有界的 `tests/test_fixture.hpp` 之后，`codec.round_trip`、`archive.store_round_trip`、`archive.store_acceptance`、`seed.archive_integration`、`seed.adaptive_file` 在 GCC Debug 与 Clang Debug 下各重复 50 次（每次 60 s 超时），0 失败、0 超时，没有残留夹具。
 - CLion `get_file_problems`（errorsOnly=false）：`test_fixture.hpp`、`codec_tests.cpp`、`store_acceptance_tests.cpp`、`seed_adaptive_tests.cpp`、`seed_archive_tests.cpp` 均 0 ERROR / 0 WARNING，只有 INFO 级风格提示。`store_archive_tests.cpp` 起初两次超时（120 s 与 240 s）；用户把 CLion 切到前台后补查完成：0 ERROR / 0 WARNING，只有 INFO（冗余限定符、const 形参、指定初始值设定项、拼写等，均为既有风格，未改动）。至此 6 个改动的测试文件全部覆盖。
 - 没有运行：Fuzz、UBSan、非 Windows 平台；Python 脚本没有做 IDE 诊断。
+
+## 事后更正（2026-11-12，DEV-013）
+
+本次 test 划分与 dev 有内容重叠：614 个 test 文件的 SHA256 也出现在 dev（见 [r1 已知缺陷](../../datasets/b2r5-corpus-r1.md#已知缺陷2026-11-12-登记dev-013-复核)）。本轮没有用 dev 调参，上面的数字保持原样；但对受影响的数据池（尤其 terminfo），“独立测试集”的说法要打折扣。另经复核，Oracle 比 Fixed LZMA2-6 小 10,927 B（0.025 %），数字无误。

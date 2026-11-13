@@ -47,3 +47,7 @@ dev 划分的规模见 JSON 清单。所有 20 个数据集都已用 zstd3 确�
 ## 恢复方式
 
 在同一台机器、同一批已安装软件的前提下，重新运行 `python research/scripts/b2_corpus.py --corpus-id <新 ID>` 即可重建。重建后用逐文件 TSV 里的 SHA256 核对；系统日志、pacman 缓存等会随时间变化，核对不一致时必须记为新版本语料。这份语料不适合在其他机器上逐字节复现，其他机器只能按同样的规则重建出同类语料。
+
+## 已知缺陷（2026-11-12 登记，DEV-013 复核）
+
+r1 只按**路径**哈希划分，相同内容可能同时落在两侧。复核结果：test 中有 **614 个文件**（427 种内容）的 SHA256 也出现在 dev，其中 many-small-terminfo 540、config-cmake 37、duplicate-licenses 23、source-headers 13、binary-native 1。DEV-012 没有用 dev 调参，结果按原记录保留、不改写；但这几个数据池不能算作干净的留出评估。修正版本见 [b2r5-corpus-r2](b2r5-corpus-r2.md)。
