@@ -1,0 +1,16 @@
+ M tests/codec_tests.cpp
+ M tests/seed_adaptive_tests.cpp
+ M tests/seed_archive_tests.cpp
+ M tests/store_acceptance_tests.cpp
+ M tests/store_archive_tests.cpp
+RM tests/seed_test_fixture.hpp -> tests/test_fixture.hpp
+?? docs/debug.log
+?? "docs/review_results/SeedArc_\351\241\271\347\233\256\350\257\204\344\274\260\344\270\216\345\217\221\345\261\225\345\273\272\350\256\256_2026-11-12.md"
+?? research/configs/adaptive-file-r1.frozen.json
+?? research/datasets/b2r5-corpus-r1.json
+?? research/datasets/b2r5-corpus-r1.md
+?? research/datasets/b2r5-corpus-r1/
+?? research/experiments/20261112-b2-independent-main-001/
+?? research/ideas/seed-ablation-r1.md
+?? research/scripts/b2_corpus.py
+?? research/scripts/b2_independent.py

@@ -3,6 +3,7 @@
 // be published (P1), and cancellation must be honoured by runs with no file data (P2).
 #include "safe_output_internal.hpp"
 #include "seedarc/store_archive.hpp"
+#include "test_fixture.hpp"
 
 #include <array>
 #include <filesystem>
@@ -212,17 +213,13 @@ int main(int argc, char *argv[]) {
 
     // This test creates only regular files/directories. Check the exact absolute boundary,
     // reject any reparse object, then remove only this invocation's private fixture.
-    bool safe = work.parent_path() == base &&
-                (GetFileAttributesW(work.c_str()) & FILE_ATTRIBUTE_REPARSE_POINT) == 0;
-    for (const auto &item : fs::recursive_directory_iterator(work)) {
-        const auto attributes = GetFileAttributesW(item.path().c_str());
-        safe = safe && attributes != INVALID_FILE_ATTRIBUTES &&
-               (attributes & FILE_ATTRIBUTE_REPARSE_POINT) == 0;
-    }
-    if (safe) {
-        fs::remove_all(work);
-    } else {
-        std::cerr << "fixture retained at " << work << '\n';
+    // reparse_free() also rejects a reparse point at `work` itself.
+    const bool safe = work.parent_path() == base && test_fixture::reparse_free(work);
+    // Bounded removal instead of remove_all() (libstdc++ can spin on a vanishing entry, DEV-011).
+    const auto cleanup = safe ? test_fixture::remove_tree(work) : std::error_code{};
+    if (!safe || cleanup) {
+        std::cerr << "fixture retained at " << work << (cleanup ? ": " + cleanup.message() : "")
+                  << '\n';
     }
     std::cout << (failures == 0 ? "all acceptance checks passed" : "acceptance checks failed")
               << '\n';

@@ -1,0 +1,6 @@
+{
+  "file": "research/local/20261112-b2-independent-main-001/raw.full.json",
+  "sha256": "364ea0c3a9df51fff0f83226a625b3ed32f318c8bfb87f90f258e92ed05f0de2",
+  "bytes": 46647237,
+  "note": "complete tool outputs of all 350 runs (selector decisions of every repetition); raw.json here keeps repetition-0 decisions, Oracle sampled_blocks reduced to a count"
+}

@@ -5,6 +5,7 @@
 #include "seedarc/archive_index.hpp"
 #include "seedarc/safe_output.hpp"
 #include "seedarc/store_archive.hpp"
+#include "test_fixture.hpp"
 #include "win_test_support.hpp"
 
 #include <algorithm>
@@ -804,18 +805,11 @@ int main(int argc, char *argv[]) {
 
     // Everything under `work` was created by this process. The only reparse point was removed as
     // a link above; refuse the recursive cleanup if any is still present.
-    bool reparse_free = true;
-    for (const auto &item : fs::recursive_directory_iterator(work)) {
-        const auto attributes = GetFileAttributesW(item.path().c_str());
-        if (attributes == INVALID_FILE_ATTRIBUTES ||
-            (attributes & FILE_ATTRIBUTE_REPARSE_POINT) != 0) {
-            reparse_free = false;
-        }
-    }
+    // Bounded helpers: libstdc++ remove_all() can spin on a vanishing foreign entry (DEV-011).
+    const bool reparse_free = test_fixture::reparse_free(work);
     check(reparse_free, "test tree contains no reparse points before cleanup");
     if (reparse_free) {
-        std::error_code ec;
-        fs::remove_all(work, ec);
+        const auto ec = test_fixture::remove_tree(work);
         check(!ec && !fs::exists(work), "remove the private test tree");
     }
     return failures == 0 ? 0 : 1;

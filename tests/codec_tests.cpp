@@ -5,6 +5,7 @@
 #include "codec/codec.hpp"
 #include "seedarc/archive_index.hpp"
 #include "seedarc/store_archive.hpp"
+#include "test_fixture.hpp"
 
 #include <algorithm>
 #include <array>
@@ -436,16 +437,13 @@ int main(int argc, char *argv[]) {
         ++failures;
     }
     // Only regular files and directories are created here; refuse to clean anything else.
-    bool safe = work.parent_path() == base;
-    for (const auto &item : fs::recursive_directory_iterator(work)) {
-        const auto attributes = GetFileAttributesW(item.path().c_str());
-        safe = safe && attributes != INVALID_FILE_ATTRIBUTES &&
-               (attributes & FILE_ATTRIBUTE_REPARSE_POINT) == 0;
-    }
-    if (safe && failures == 0) {
-        fs::remove_all(work);
-    } else {
-        std::cerr << "fixture retained at " << work << '\n';
+    const bool safe = work.parent_path() == base && test_fixture::reparse_free(work);
+    // Bounded removal instead of remove_all() (libstdc++ can spin on a vanishing entry, DEV-011).
+    const auto cleanup =
+        safe && failures == 0 ? test_fixture::remove_tree(work) : std::error_code{};
+    if (!safe || failures != 0 || cleanup) {
+        std::cerr << "fixture retained at " << work << (cleanup ? ": " + cleanup.message() : "")
+                  << '\n';
     }
     std::cout << (failures == 0 ? "all codec checks passed" : "codec checks failed") << '\n';
     return failures == 0 ? 0 : 1;

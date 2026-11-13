@@ -1,0 +1,239 @@
+diff --git a/tests/codec_tests.cpp b/tests/codec_tests.cpp
+index e951d8a..c81dd71 100644
+--- a/tests/codec_tests.cpp
++++ b/tests/codec_tests.cpp
+@@ -5,6 +5,7 @@
+ #include "codec/codec.hpp"
+ #include "seedarc/archive_index.hpp"
+ #include "seedarc/store_archive.hpp"
++#include "test_fixture.hpp"
+ 
+ #include <algorithm>
+ #include <array>
+@@ -436,16 +437,13 @@ int main(int argc, char *argv[]) {
+         ++failures;
+     }
+     // Only regular files and directories are created here; refuse to clean anything else.
+-    bool safe = work.parent_path() == base;
+-    for (const auto &item : fs::recursive_directory_iterator(work)) {
+-        const auto attributes = GetFileAttributesW(item.path().c_str());
+-        safe = safe && attributes != INVALID_FILE_ATTRIBUTES &&
+-               (attributes & FILE_ATTRIBUTE_REPARSE_POINT) == 0;
+-    }
+-    if (safe && failures == 0) {
+-        fs::remove_all(work);
+-    } else {
+-        std::cerr << "fixture retained at " << work << '\n';
++    const bool safe = work.parent_path() == base && test_fixture::reparse_free(work);
++    // Bounded removal instead of remove_all() (libstdc++ can spin on a vanishing entry, DEV-011).
++    const auto cleanup =
++        safe && failures == 0 ? test_fixture::remove_tree(work) : std::error_code{};
++    if (!safe || failures != 0 || cleanup) {
++        std::cerr << "fixture retained at " << work << (cleanup ? ": " + cleanup.message() : "")
++                  << '\n';
+     }
+     std::cout << (failures == 0 ? "all codec checks passed" : "codec checks failed") << '\n';
+     return failures == 0 ? 0 : 1;
+diff --git a/tests/seed_adaptive_tests.cpp b/tests/seed_adaptive_tests.cpp
+index 90d2e60..d14dc3f 100644
+--- a/tests/seed_adaptive_tests.cpp
++++ b/tests/seed_adaptive_tests.cpp
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-3.0-or-later
+ #include "seed/adaptive_file.hpp"
+-#include "seed_test_fixture.hpp"
++#include "test_fixture.hpp"
+ 
+ #include <algorithm>
+ #include <array>
+@@ -128,6 +128,15 @@ int main(int argc, char *argv[]) {
+         write(input / "e-repeat.txt", repeat);
+         CompressOptions options;
+         options.chunk_size_bytes = 4096;
++        // Frozen r1 parameters (research/configs/adaptive-file-r1.frozen.json): changing any of
++        // these requires a new selector_version, never a silent edit of r1.
++        const study::SelectorConfig frozen{};
++        static_assert(study::adaptive_selector_version == "adaptive-file-r1");
++        static_assert(study::oracle_selector_version == "oracle-file-r1");
++        check(frozen.kind == study::SelectorKind::adaptive && frozen.trial_budget_bytes == 0 &&
++                  frozen.min_file_bytes == 16384 && frozen.min_gain_permille == 20 &&
++                  frozen.min_gain_bytes == 64 && !frozen.cpu_ms,
++              "adaptive-file-r1 defaults match the frozen configuration");
+         study::SelectorConfig unbounded;
+         unbounded.trial_budget_bytes = study::unbounded_trial_budget;
+ 
+@@ -266,7 +275,7 @@ int main(int argc, char *argv[]) {
+     }
+     std::error_code cleanup;
+     if (safe && failures == 0) {
+-        cleanup = seed_test::remove_tree(work); // not remove_all(): see seed_test_fixture.hpp
++        cleanup = test_fixture::remove_tree(work); // not remove_all(): see test_fixture.hpp
+     }
+     if (!safe || failures != 0 || cleanup) {
+         std::cerr << "fixture retained at " << work << (cleanup ? ": " + cleanup.message() : "")
+diff --git a/tests/seed_archive_tests.cpp b/tests/seed_archive_tests.cpp
+index f831d17..78a89f0 100644
+--- a/tests/seed_archive_tests.cpp
++++ b/tests/seed_archive_tests.cpp
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-3.0-or-later
+ #include "archive_plan.hpp"
+ #include "seed/archive_study.hpp"
+-#include "seed_test_fixture.hpp"
++#include "test_fixture.hpp"
+ 
+ #include <algorithm>
+ #include <array>
+@@ -192,12 +192,12 @@ int main(int argc, char *argv[]) {
+             const bool marked = held != INVALID_HANDLE_VALUE &&
+                                 SetFileInformationByHandle(held, FileDispositionInfo, &disposition,
+                                                            sizeof(disposition));
+-            check(marked && !seed_test::vanished(pending),
++            check(marked && !test_fixture::vanished(pending),
+                   "a delete-pending object is a leftover, not a vanished entry");
+             if (held != INVALID_HANDLE_VALUE) {
+                 CloseHandle(held);
+             }
+-            check(seed_test::vanished(pending), "a deleted object is reported as vanished");
++            check(test_fixture::vanished(pending), "a deleted object is reported as vanished");
+         }
+         const auto bad = failed_writes / "bad.sarc";
+         const std::array stale{study::PathRankOverride{"missing", 5, std::nullopt}};
+@@ -271,7 +271,7 @@ int main(int argc, char *argv[]) {
+         // only a listed name that no longer exists is excused, and it is reported.
+         bool no_leftovers = true;
+         for (const auto &entry : fs::directory_iterator(failed_writes)) {
+-            const bool gone = seed_test::vanished(entry.path());
++            const bool gone = test_fixture::vanished(entry.path());
+             std::cerr << (gone ? "ignored vanished foreign entry: "
+                                : "leftover after failed write: ")
+                       << entry.path().filename().string() << '\n';
+@@ -300,7 +300,7 @@ int main(int argc, char *argv[]) {
+     }
+     std::error_code cleanup;
+     if (safe && failures == 0) {
+-        cleanup = seed_test::remove_tree(work); // not remove_all(): see seed_test_fixture.hpp
++        cleanup = test_fixture::remove_tree(work); // not remove_all(): see test_fixture.hpp
+     }
+     if (!safe || failures != 0 || cleanup) {
+         std::cerr << "fixture retained at " << work << (cleanup ? ": " + cleanup.message() : "")
+diff --git a/tests/store_acceptance_tests.cpp b/tests/store_acceptance_tests.cpp
+index 14b8372..43cc337 100644
+--- a/tests/store_acceptance_tests.cpp
++++ b/tests/store_acceptance_tests.cpp
+@@ -3,6 +3,7 @@
+ // be published (P1), and cancellation must be honoured by runs with no file data (P2).
+ #include "safe_output_internal.hpp"
+ #include "seedarc/store_archive.hpp"
++#include "test_fixture.hpp"
+ 
+ #include <array>
+ #include <filesystem>
+@@ -212,17 +213,13 @@ int main(int argc, char *argv[]) {
+ 
+     // This test creates only regular files/directories. Check the exact absolute boundary,
+     // reject any reparse object, then remove only this invocation's private fixture.
+-    bool safe = work.parent_path() == base &&
+-                (GetFileAttributesW(work.c_str()) & FILE_ATTRIBUTE_REPARSE_POINT) == 0;
+-    for (const auto &item : fs::recursive_directory_iterator(work)) {
+-        const auto attributes = GetFileAttributesW(item.path().c_str());
+-        safe = safe && attributes != INVALID_FILE_ATTRIBUTES &&
+-               (attributes & FILE_ATTRIBUTE_REPARSE_POINT) == 0;
+-    }
+-    if (safe) {
+-        fs::remove_all(work);
+-    } else {
+-        std::cerr << "fixture retained at " << work << '\n';
++    // reparse_free() also rejects a reparse point at `work` itself.
++    const bool safe = work.parent_path() == base && test_fixture::reparse_free(work);
++    // Bounded removal instead of remove_all() (libstdc++ can spin on a vanishing entry, DEV-011).
++    const auto cleanup = safe ? test_fixture::remove_tree(work) : std::error_code{};
++    if (!safe || cleanup) {
++        std::cerr << "fixture retained at " << work << (cleanup ? ": " + cleanup.message() : "")
++                  << '\n';
+     }
+     std::cout << (failures == 0 ? "all acceptance checks passed" : "acceptance checks failed")
+               << '\n';
+diff --git a/tests/store_archive_tests.cpp b/tests/store_archive_tests.cpp
+index a7a51f2..2649e02 100644
+--- a/tests/store_archive_tests.cpp
++++ b/tests/store_archive_tests.cpp
+@@ -5,6 +5,7 @@
+ #include "seedarc/archive_index.hpp"
+ #include "seedarc/safe_output.hpp"
+ #include "seedarc/store_archive.hpp"
++#include "test_fixture.hpp"
+ #include "win_test_support.hpp"
+ 
+ #include <algorithm>
+@@ -804,18 +805,11 @@ int main(int argc, char *argv[]) {
+ 
+     // Everything under `work` was created by this process. The only reparse point was removed as
+     // a link above; refuse the recursive cleanup if any is still present.
+-    bool reparse_free = true;
+-    for (const auto &item : fs::recursive_directory_iterator(work)) {
+-        const auto attributes = GetFileAttributesW(item.path().c_str());
+-        if (attributes == INVALID_FILE_ATTRIBUTES ||
+-            (attributes & FILE_ATTRIBUTE_REPARSE_POINT) != 0) {
+-            reparse_free = false;
+-        }
+-    }
++    // Bounded helpers: libstdc++ remove_all() can spin on a vanishing foreign entry (DEV-011).
++    const bool reparse_free = test_fixture::reparse_free(work);
+     check(reparse_free, "test tree contains no reparse points before cleanup");
+     if (reparse_free) {
+-        std::error_code ec;
+-        fs::remove_all(work, ec);
++        const auto ec = test_fixture::remove_tree(work);
+         check(!ec && !fs::exists(work), "remove the private test tree");
+     }
+     return failures == 0 ? 0 : 1;
+diff --git a/tests/test_fixture.hpp b/tests/test_fixture.hpp
+index 5e6e1b4..89e82f8 100644
+--- a/tests/test_fixture.hpp
++++ b/tests/test_fixture.hpp
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-3.0-or-later
+ #pragma once
+ 
+-// Windows fixture helpers for the seed tests. Some hosts briefly list a foreign "<NAME>.tmp"
++// Windows fixture helpers shared by the tests. Some hosts briefly list a foreign "<NAME>.tmp"
+ // entry (the deleted name upper-cased plus ".tmp") about a millisecond after a file is deleted;
+ // it can never be opened (ERROR_FILE_NOT_FOUND) and is not the deleted object. See STATUS DEV-011.
+ 
+@@ -13,7 +13,7 @@
+ #endif
+ #include <windows.h>
+ 
+-namespace seed_test {
++namespace test_fixture {
+ // True only for a name that is gone by the time it is opened. A real leftover, including one
+ // still delete-pending behind an open handle (ERROR_ACCESS_DENIED), is not "vanished".
+ inline bool vanished(const std::filesystem::path &path) {
+@@ -67,4 +67,25 @@ inline std::error_code remove_tree(const std::filesystem::path &root, int depth
+     }
+     return ec;
+ }
+-} // namespace seed_test
++// True when every entry below `root` is a plain file or directory (no reparse point that a
++// recursive removal could follow). A name gone by the time it is examined is not a risk.
++inline bool reparse_free(const std::filesystem::path &root) {
++    namespace fs = std::filesystem;
++    const auto attributes = GetFileAttributesW(root.c_str());
++    if (attributes == INVALID_FILE_ATTRIBUTES || (attributes & FILE_ATTRIBUTE_REPARSE_POINT) != 0) {
++        return false;
++    }
++    std::error_code ec;
++    for (fs::recursive_directory_iterator it(root, ec), end; it != end; it.increment(ec)) {
++        if (ec) {
++            return false;
++        }
++        const auto item = GetFileAttributesW(it->path().c_str());
++        if (item == INVALID_FILE_ATTRIBUTES ? !vanished(it->path())
++                                            : (item & FILE_ATTRIBUTE_REPARSE_POINT) != 0) {
++            return false;
++        }
++    }
++    return !ec;
++}
++} // namespace test_fixture

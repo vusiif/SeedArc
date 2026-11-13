@@ -1,0 +1,420 @@
+{
+  "corpus_id": "b2r5-corpus-r1",
+  "created_at": "2026-11-12T17:43:01.854425-08:00",
+  "source": "data already installed on the evaluation machine; no download",
+  "machine": {
+    "os": "Windows-10-10.0.19045-SP0",
+    "cmake": "cmake version 4.4.3"
+  },
+  "split_policy": "sha256('<corpus>:<pool>:<relative_path>')[0] even -> dev, odd -> test; fixed before any compression; test is never used to tune parameters",
+  "selection": "per split: sorted relative paths; skip files over the per-file cap, symlinks, unreadable files and paths the archive rejects (recorded); stop at the byte / file caps",
+  "chunk_bytes": 65536,
+  "datasets": {
+    "source-headers": {
+      "type": "source / text",
+      "source": "MSYS2 ucrt64/include (installed package headers)",
+      "license": "per package; mingw-w64 headers ZPL-2.1 / public domain, others see ucrt64/share/licenses",
+      "redistribution": "local evaluation only; not redistributed",
+      "extensions": "all",
+      "caps": {
+        "split_bytes": 12582912,
+        "split_files": 2000,
+        "per_file_bytes": 4194304
+      },
+      "skipped": {
+        "over_file_cap": 2,
+        "unreadable": 0,
+        "empty_name_or_reserved": 0
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/source-headers",
+          "file_count": 840,
+          "bytes": 12582906,
+          "blocks": 903,
+          "empty_files": 10,
+          "listing": "b2r5-corpus-r1/dev-source-headers.tsv",
+          "listing_sha256": "ad24382e252f01fb7732bbb374b57889aa85d96e1b51880a942f9e01a671f12f",
+          "distinct_content": 831
+        },
+        "test": {
+          "dataset_id": "test/source-headers",
+          "file_count": 798,
+          "bytes": 12582909,
+          "blocks": 865,
+          "empty_files": 11,
+          "listing": "b2r5-corpus-r1/test-source-headers.tsv",
+          "listing_sha256": "06df17220aeeee18f1232f84170e03d9a2b056c164828f771d7d9115e3ac76eb",
+          "distinct_content": 787
+        }
+      }
+    },
+    "config-cmake": {
+      "type": "config / text",
+      "source": "CMake installation share/ (modules, templates, help)",
+      "license": "BSD-3-Clause (Kitware CMake)",
+      "redistribution": "local evaluation only; not redistributed",
+      "extensions": "all",
+      "caps": {
+        "split_bytes": 12582912,
+        "split_files": 2000,
+        "per_file_bytes": 4194304
+      },
+      "skipped": {
+        "over_file_cap": 0,
+        "unreadable": 0,
+        "empty_name_or_reserved": 0
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/config-cmake",
+          "file_count": 2000,
+          "bytes": 4816133,
+          "blocks": 2008,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/dev-config-cmake.tsv",
+          "listing_sha256": "d291d7d605c756f48af7d450984fc302c25c7732257fd60007ae2511e105f6fd",
+          "distinct_content": 1979
+        },
+        "test": {
+          "dataset_id": "test/config-cmake",
+          "file_count": 2000,
+          "bytes": 4626840,
+          "blocks": 2007,
+          "empty_files": 1,
+          "listing": "b2r5-corpus-r1/test-config-cmake.tsv",
+          "listing_sha256": "cfc2632ea8c55adc78ecb0a80823876f6d6b529fb532c5930cefe17cb588409c",
+          "distinct_content": 1972
+        }
+      }
+    },
+    "logs-windows": {
+      "type": "logs",
+      "source": "Windows\\Logs text logs of this machine",
+      "license": "none (machine-generated; may contain machine identifiers)",
+      "redistribution": "local only; never committed or shared",
+      "extensions": [
+        ".log",
+        ".txt"
+      ],
+      "caps": {
+        "split_bytes": 12582912,
+        "split_files": 2000,
+        "per_file_bytes": 4194304
+      },
+      "skipped": {
+        "over_file_cap": 3,
+        "unreadable": 0,
+        "empty_name_or_reserved": 0
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/logs-windows",
+          "file_count": 52,
+          "bytes": 4365491,
+          "blocks": 102,
+          "empty_files": 1,
+          "listing": "b2r5-corpus-r1/dev-logs-windows.tsv",
+          "listing_sha256": "c07d4b81cfbddccc9782b47a56f353dfb3b72de26d02b3c9fa2f22d84d7cb157",
+          "distinct_content": 52
+        },
+        "test": {
+          "dataset_id": "test/logs-windows",
+          "file_count": 52,
+          "bytes": 7158056,
+          "blocks": 145,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/test-logs-windows.tsv",
+          "listing_sha256": "324716f6da42ae5dd54e733259815d1365b9e7b85d35be2bf0ae9cb2e6d33524",
+          "distinct_content": 52
+        }
+      }
+    },
+    "structured-inf": {
+      "type": "structured data",
+      "source": "Windows\\INF driver setup files (INI-like structured text)",
+      "license": "Microsoft / hardware vendors (system files)",
+      "redistribution": "local only; not redistributable",
+      "extensions": [
+        ".inf"
+      ],
+      "caps": {
+        "split_bytes": 12582912,
+        "split_files": 2000,
+        "per_file_bytes": 4194304
+      },
+      "skipped": {
+        "over_file_cap": 0,
+        "unreadable": 0,
+        "empty_name_or_reserved": 0
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/structured-inf",
+          "file_count": 278,
+          "bytes": 12582543,
+          "blocks": 409,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/dev-structured-inf.tsv",
+          "listing_sha256": "a6ae753f71933e8fb7d073a13bb2027770bcfd5eb8cfaf231b93566f6d0177cb",
+          "distinct_content": 278
+        },
+        "test": {
+          "dataset_id": "test/structured-inf",
+          "file_count": 241,
+          "bytes": 12582874,
+          "blocks": 373,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/test-structured-inf.tsv",
+          "listing_sha256": "4cb59dcaae421baa9a517c556af70dbc3834e31f9777167094bb35f4073ac37c",
+          "distinct_content": 240
+        }
+      }
+    },
+    "binary-native": {
+      "type": "native binary",
+      "source": "MSYS2 ucrt64/bin DLL and EXE",
+      "license": "per package (GPL / LGPL / MIT / BSD ...); see ucrt64/share/licenses",
+      "redistribution": "local evaluation only; not redistributed",
+      "extensions": [
+        ".dll",
+        ".exe"
+      ],
+      "caps": {
+        "split_bytes": 16777216,
+        "split_files": 2000,
+        "per_file_bytes": 4194304
+      },
+      "skipped": {
+        "over_file_cap": 14,
+        "unreadable": 0,
+        "empty_name_or_reserved": 0
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/binary-native",
+          "file_count": 32,
+          "bytes": 16749044,
+          "blocks": 272,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/dev-binary-native.tsv",
+          "listing_sha256": "09a95545df4349fb2dc2f2ab6f288c77a1a6a2010e4630bbe32b1f3d1ceba7a5",
+          "distinct_content": 31
+        },
+        "test": {
+          "dataset_id": "test/binary-native",
+          "file_count": 30,
+          "bytes": 16774829,
+          "blocks": 272,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/test-binary-native.tsv",
+          "listing_sha256": "ead6f1acf51065e38b81882f27457fa22002e7883c2dcd067144832418475c7f",
+          "distinct_content": 27
+        }
+      }
+    },
+    "compressed-packages": {
+      "type": "already compressed (zstd archives)",
+      "source": "MSYS2 pacman package cache *.pkg.tar.zst",
+      "license": "per package; see each package",
+      "redistribution": "local evaluation only; not redistributed",
+      "extensions": [
+        ".zst"
+      ],
+      "caps": {
+        "split_bytes": 16777216,
+        "split_files": 2000,
+        "per_file_bytes": 4194304
+      },
+      "skipped": {
+        "over_file_cap": 25,
+        "unreadable": 0,
+        "empty_name_or_reserved": 0
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/compressed-packages",
+          "file_count": 56,
+          "bytes": 16773894,
+          "blocks": 290,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/dev-compressed-packages.tsv",
+          "listing_sha256": "44796198aa0658f1265a88419beacd08fb7da8aed325342adb761736425a811f",
+          "distinct_content": 56
+        },
+        "test": {
+          "dataset_id": "test/compressed-packages",
+          "file_count": 32,
+          "bytes": 16764602,
+          "blocks": 272,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/test-compressed-packages.tsv",
+          "listing_sha256": "e429e432eddbded3000b30f550f0671d1ea33f499362bd0f7b4ffac6914b5006",
+          "distinct_content": 32
+        }
+      }
+    },
+    "image-jpeg": {
+      "type": "already compressed (images)",
+      "source": "Windows\\Web wallpapers and screen images",
+      "license": "Microsoft (Windows component)",
+      "redistribution": "local only; not redistributable",
+      "extensions": [
+        ".jpeg",
+        ".jpg",
+        ".png"
+      ],
+      "caps": {
+        "split_bytes": 12582912,
+        "split_files": 2000,
+        "per_file_bytes": 8388608
+      },
+      "skipped": {
+        "over_file_cap": 0,
+        "unreadable": 0,
+        "empty_name_or_reserved": 0
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/image-jpeg",
+          "file_count": 17,
+          "bytes": 10411609,
+          "blocks": 168,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/dev-image-jpeg.tsv",
+          "listing_sha256": "baa713d4038894ff84246bd8f4a5bb91253571c9e8e8c68294491188e6037bc8",
+          "distinct_content": 17
+        },
+        "test": {
+          "dataset_id": "test/image-jpeg",
+          "file_count": 11,
+          "bytes": 6180159,
+          "blocks": 100,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/test-image-jpeg.tsv",
+          "listing_sha256": "17f0e230d5335dd7c8eaa57bc6d813450234a2cfeb307a13a50f8bfe17114c88",
+          "distinct_content": 11
+        }
+      }
+    },
+    "audio-pcm": {
+      "type": "audio (uncompressed PCM WAV)",
+      "source": "Windows\\Media system sounds (WAV PCM)",
+      "license": "Microsoft (Windows component)",
+      "redistribution": "local only; not redistributable",
+      "extensions": [
+        ".wav"
+      ],
+      "caps": {
+        "split_bytes": 12582912,
+        "split_files": 2000,
+        "per_file_bytes": 4194304
+      },
+      "skipped": {
+        "over_file_cap": 0,
+        "unreadable": 0,
+        "empty_name_or_reserved": 0
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/audio-pcm",
+          "file_count": 32,
+          "bytes": 9132884,
+          "blocks": 156,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/dev-audio-pcm.tsv",
+          "listing_sha256": "ee7705a2af95d210a71825e0f5a37e3287827b9d59855fdff8c0dd6d35abebb9",
+          "distinct_content": 32
+        },
+        "test": {
+          "dataset_id": "test/audio-pcm",
+          "file_count": 38,
+          "bytes": 10500266,
+          "blocks": 180,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/test-audio-pcm.tsv",
+          "listing_sha256": "1369635933a4cfcfd66f57b28fee71fa7d6d142e285123ed695a1f1eac19d2b8",
+          "distinct_content": 38
+        }
+      }
+    },
+    "many-small-terminfo": {
+      "type": "many small files",
+      "source": "MSYS2 ncurses terminfo database (compiled entries)",
+      "license": "ncurses: MIT-X11 style",
+      "redistribution": "local evaluation only; not redistributed",
+      "extensions": "all",
+      "caps": {
+        "split_bytes": 12582912,
+        "split_files": 2000,
+        "per_file_bytes": 4194304
+      },
+      "skipped": {
+        "over_file_cap": 0,
+        "unreadable": 0,
+        "empty_name_or_reserved": 0
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/many-small-terminfo",
+          "file_count": 1419,
+          "bytes": 1676882,
+          "blocks": 1419,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/dev-many-small-terminfo.tsv",
+          "listing_sha256": "e61978ee085bf31f654f0263626ccda2ac4fc2dba55cfff20b780f5d98ab526b",
+          "distinct_content": 1121
+        },
+        "test": {
+          "dataset_id": "test/many-small-terminfo",
+          "file_count": 1477,
+          "bytes": 1689703,
+          "blocks": 1477,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/test-many-small-terminfo.tsv",
+          "listing_sha256": "f72f7580293d539b05da58e7188dd7e38243e47d2c8a664a69a407dc6eea55d9",
+          "distinct_content": 1132
+        }
+      }
+    },
+    "duplicate-licenses": {
+      "type": "cross-file duplicates",
+      "source": "MSYS2 usr/share/licenses + ucrt64/share/licenses (many identical licence texts)",
+      "license": "licence texts themselves (GPL / LGPL / MIT / ...)",
+      "redistribution": "local evaluation only",
+      "extensions": "all",
+      "caps": {
+        "split_bytes": 12582912,
+        "split_files": 2000,
+        "per_file_bytes": 4194304
+      },
+      "skipped": {
+        "over_file_cap": 0,
+        "unreadable": 0,
+        "empty_name_or_reserved": 0
+      },
+      "splits": {
+        "dev": {
+          "dataset_id": "dev/duplicate-licenses",
+          "file_count": 45,
+          "bytes": 423208,
+          "blocks": 45,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/dev-duplicate-licenses.tsv",
+          "listing_sha256": "751065b5ab5054a5572796dcb8b00a052787caaadc2b083fb4922d2b008fed33",
+          "distinct_content": 35
+        },
+        "test": {
+          "dataset_id": "test/duplicate-licenses",
+          "file_count": 52,
+          "bytes": 625576,
+          "blocks": 52,
+          "empty_files": 0,
+          "listing": "b2r5-corpus-r1/test-duplicate-licenses.tsv",
+          "listing_sha256": "ccea7fd28513de95b765bc18b9ec8f2cad87a94d140d137f65f3785d58608dbd",
+          "distinct_content": 39
+        }
+      }
+    }
+  }
+}

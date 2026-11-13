@@ -1,0 +1,201 @@
+[0/1] Re-running CMake...
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-mingw-static...
+Compiler found: C:/msys64/ucrt64/bin/x86_64-w64-mingw32-g++.exe
+The following packages will be rebuilt:
+    liblzma:x64-mingw-static@5.8.4 -- git+https://github.com/microsoft/vcpkg@e8240b76a93c7a55d2a1d52fb6023123c681b955
+  * vcpkg-cmake:x64-mingw-static@2025-08-07 -- git+https://github.com/microsoft/vcpkg@16b9390dfeaca6df7288ba3f827e40e48e5fc942
+  * vcpkg-cmake-config:x64-mingw-static@2026-07-21 -- git+https://github.com/microsoft/vcpkg@51befcb03097f8d19c1c59f9ec3625e69d85322a
+    zstd:x64-mingw-static@1.5.7 -- git+https://github.com/microsoft/vcpkg@31b7320fab13790c6861cb3c2d50dc8f60ca3602
+Additional packages (*) will be modified to complete this operation.
+Restored 0 package(s) from C:\Users\IceLolly\AppData\Local\vcpkg\archives in 561 us. Use --debug to see more details.
+Removing 1/8 zstd:x64-mingw-static
+Elapsed time to handle zstd:x64-mingw-static: 9.11 ms
+Removing 2/8 liblzma:x64-mingw-static
+Elapsed time to handle liblzma:x64-mingw-static: 16.1 ms
+Removing 3/8 vcpkg-cmake:x64-mingw-static
+Elapsed time to handle vcpkg-cmake:x64-mingw-static: 5.14 ms
+Removing 4/8 vcpkg-cmake-config:x64-mingw-static
+Elapsed time to handle vcpkg-cmake-config:x64-mingw-static: 5.65 ms
+Installing 5/8 vcpkg-cmake-config:x64-mingw-static@2026-07-21...
+vcpkg-cmake-config:x64-mingw-static@2026-07-21 package ABI: 2d20ac26b29737e2ad2d777da0c50433a8a74b2418530628f17579fc4051bf8e
+Building vcpkg-cmake-config:x64-mingw-static@2026-07-21...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\51befcb03097f8d19c1c59f9ec3625e69d85322a: info: installing from git registry git+https://github.com/microsoft/vcpkg@51befcb03097f8d19c1c59f9ec3625e69d85322a
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake-config_x64-mingw-static/share/vcpkg-cmake-config/vcpkg_cmake_config_fixup.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake-config_x64-mingw-static/share/vcpkg-cmake-config/vcpkg-port-config.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake-config_x64-mingw-static/share/vcpkg-cmake-config/copyright
+-- Skipping post-build validation due to VCPKG_POLICY_EMPTY_PACKAGE
+Starting submission of vcpkg-cmake-config:x64-mingw-static@2026-07-21 to 1 binary cache(s) in the background
+Elapsed time to handle vcpkg-cmake-config:x64-mingw-static: 92.8 ms
+Installing 6/8 vcpkg-cmake:x64-mingw-static@2025-08-07...
+vcpkg-cmake:x64-mingw-static@2025-08-07 package ABI: 882079958e41afca8e272d9108651aa1e76ed6bc5100831b7953c9ce60bacd9b
+Building vcpkg-cmake:x64-mingw-static@2025-08-07...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\16b9390dfeaca6df7288ba3f827e40e48e5fc942: info: installing from git registry git+https://github.com/microsoft/vcpkg@16b9390dfeaca6df7288ba3f827e40e48e5fc942
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg_cmake_configure.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg_cmake_build.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg_cmake_install.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/vcpkg-port-config.cmake
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/vcpkg-cmake_x64-mingw-static/share/vcpkg-cmake/copyright
+-- Performing post-build validation
+Starting submission of vcpkg-cmake:x64-mingw-static@2025-08-07 to 1 binary cache(s) in the background
+Elapsed time to handle vcpkg-cmake:x64-mingw-static: 75.7 ms
+Installing 7/8 liblzma:x64-mingw-static@5.8.4...
+liblzma:x64-mingw-static@5.8.4 package ABI: 25a393c274eca741ef2240cc499f5ee4dd67d774f8df73c045fb9a5c13951991
+Building liblzma:x64-mingw-static@5.8.4...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\e8240b76a93c7a55d2a1d52fb6023123c681b955: info: installing from git registry git+https://github.com/microsoft/vcpkg@e8240b76a93c7a55d2a1d52fb6023123c681b955
+-- Using cached tukaani-project-xz-v5.8.4.tar.gz
+-- Extracting source C:/Users/IceLolly/AppData/Local/vcpkg/downloads/tukaani-project-xz-v5.8.4.tar.gz
+-- Applying patch build-tools.patch
+-- Using source at C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/blds/liblzma/src/v5.8.4-19a8d00df7.clean
+-- Configuring x64-mingw-static
+-- Building x64-mingw-static-dbg
+-- Building x64-mingw-static-rel
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/liblzma_x64-mingw-static/lib/pkgconfig/liblzma.pc
+-- Using cached msys2-mingw-w64-x86_64-pkgconf-1~2.5.1-1-any.pkg.tar.zst
+-- Using cached msys2-msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst
+-- Using msys root at C:/Users/IceLolly/AppData/Local/vcpkg/downloads/tools/msys2/3e71d1f8e22ab23f
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/liblzma_x64-mingw-static/debug/lib/pkgconfig/liblzma.pc
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/liblzma_x64-mingw-static/share/liblzma/copyright
+-- Performing post-build validation
+Starting submission of liblzma:x64-mingw-static@5.8.4 to 1 binary cache(s) in the background
+Elapsed time to handle liblzma:x64-mingw-static: 39 s
+Completed submission of vcpkg-cmake-config:x64-mingw-static@2026-07-21 to 1 binary cache(s) in 78.2 ms
+Completed submission of vcpkg-cmake:x64-mingw-static@2025-08-07 to 1 binary cache(s) in 49.1 ms
+Installing 8/8 zstd:x64-mingw-static@1.5.7...
+zstd:x64-mingw-static@1.5.7 package ABI: 70024a9fe88c3e11895f1aed6cb32a71e4ade1bdd765512fda871fa6efefb81c
+Building zstd:x64-mingw-static@1.5.7...
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\triplets\community\x64-mingw-static.cmake: info: loaded community triplet from here. Community triplets are not built in the curated registry and are thus less likely to succeed.
+C:\Users\IceLolly\AppData\Local\vcpkg\registries\git-trees\31b7320fab13790c6861cb3c2d50dc8f60ca3602: info: installing from git registry git+https://github.com/microsoft/vcpkg@31b7320fab13790c6861cb3c2d50dc8f60ca3602
+-- Using cached facebook-zstd-v1.5.7.tar.gz
+-- Extracting source C:/Users/IceLolly/AppData/Local/vcpkg/downloads/facebook-zstd-v1.5.7.tar.gz
+-- Applying patch no-static-suffix.patch
+-- Applying patch fix-emscripten-and-clang-cl.patch
+-- Applying patch fix-windows-rc-compile.patch
+-- Using source at C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/blds/zstd/src/v1.5.7-bb6cae2b2e.clean
+-- Configuring x64-mingw-static
+-- Building x64-mingw-static-dbg
+-- Building x64-mingw-static-rel
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/zstd_x64-mingw-static/lib/pkgconfig/libzstd.pc
+-- Using cached msys2-mingw-w64-x86_64-pkgconf-1~2.5.1-1-any.pkg.tar.zst
+-- Using cached msys2-msys2-runtime-3.6.5-1-x86_64.pkg.tar.zst
+-- Using msys root at C:/Users/IceLolly/AppData/Local/vcpkg/downloads/tools/msys2/3e71d1f8e22ab23f
+-- Fixing pkgconfig file: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/zstd_x64-mingw-static/debug/lib/pkgconfig/libzstd.pc
+-- Installing: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug/vcpkg_installed/vcpkg/pkgs/zstd_x64-mingw-static/share/zstd/usage
+-- Performing post-build validation
+Starting submission of zstd:x64-mingw-static@1.5.7 to 1 binary cache(s) in the background
+Elapsed time to handle zstd:x64-mingw-static: 25 s
+Installed contents are licensed to you by owners. Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+Packages installed in this vcpkg installation declare the following licenses:
+(BSD-3-Clause OR GPL-2.0-only)
+0BSD
+MIT
+liblzma is compatible with built-in CMake targets:
+
+    find_package(LibLZMA REQUIRED)
+    target_link_libraries(main PRIVATE LibLZMA::LibLZMA)
+
+liblzma provides CMake targets:
+
+    find_package(liblzma CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE liblzma::liblzma)
+
+zstd provides CMake targets:
+
+  find_package(zstd CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE zstd::libzstd)
+
+Completed submission of liblzma:x64-mingw-static@5.8.4 to 1 binary cache(s) in 182 ms
+Waiting for 1 remaining binary cache submissions...
+Completed submission of zstd:x64-mingw-static@1.5.7 to 1 binary cache(s) in 412 ms (1/1)
+All requested installations completed successfully in: 1.1 min
+-- Running vcpkg install - done
+-- Configuring done (68.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/IceLolly/Music/Clion/SeedArc/build/gcc-ucrt64-debug
+[1/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/archive.cpp for CXX dependencies
+[2/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/codec/codec.cpp for CXX dependencies
+[3/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/strategy.cpp for CXX dependencies
+[4/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/path_overrides.cpp for CXX dependencies
+[5/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/store_archive.cpp for CXX dependencies
+[6/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/file_overrides.cpp for CXX dependencies
+[7/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/archive_study.cpp for CXX dependencies
+[8/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_strategy_tests.cpp for CXX dependencies
+[9/100] Generating CXX dyndep file tests/CMakeFiles/seedarc_core_tests.dir/CXX.dd
+[10/99] Generating CXX dyndep file tests/CMakeFiles/seedarc_archive_tests.dir/CXX.dd
+[11/98] Generating CXX dyndep file tests/CMakeFiles/seedarc_path_tests.dir/CXX.dd
+[12/97] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_file_override_tests.cpp for CXX dependencies
+[13/97] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/adaptive_file.cpp for CXX dependencies
+[14/97] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_strategy_tests.dir/CXX.dd
+[15/97] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/m3_compatibility_tests.cpp for CXX dependencies
+[16/97] Generating CXX dyndep file tests/CMakeFiles/seedarc_index_tests.dir/CXX.dd
+[17/96] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_path_override_tests.cpp for CXX dependencies
+[18/96] Generating CXX dyndep file tests/CMakeFiles/seedarc_safe_output_tests.dir/CXX.dd
+[19/95] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_header.dir/CXX.dd
+[20/93] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_file_override_tests.dir/CXX.dd
+[21/93] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_path.dir/CXX.dd
+[22/91] Generating CXX dyndep file core/CMakeFiles/seedarc_seed_study.dir/CXX.dd
+[23/91] Generating CXX dyndep file tests/CMakeFiles/seedarc_m3_compatibility_tests.dir/CXX.dd
+[24/91] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_path_override_tests.dir/CXX.dd
+[25/91] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/fuzz/archive_fuzz.cpp for CXX dependencies
+[26/91] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_archive.dir/CXX.dd
+[27/90] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/cli/main.cpp for CXX dependencies
+[28/90] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/filesystem/safe_output.cpp for CXX dependencies
+[29/90] Generating CXX dyndep file cli/CMakeFiles/seedarc_cli.dir/CXX.dd
+[30/90] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_archive_tests.cpp for CXX dependencies
+[31/90] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/store_acceptance_tests.cpp for CXX dependencies
+[32/90] Generating CXX dyndep file core/CMakeFiles/libseedarc.dir/CXX.dd
+[33/85] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_archive_tests.dir/CXX.dd
+[34/85] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_adaptive_tests.cpp for CXX dependencies
+[35/85] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_acceptance_tests.dir/CXX.dd
+[36/85] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/store_archive_tests.cpp for CXX dependencies
+[37/85] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/CXX.dd
+[38/85] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_archive_tests.dir/CXX.dd
+[39/85] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/store_memory_test.cpp for CXX dependencies
+[40/85] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_memory_test.dir/CXX.dd
+[41/85] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/codec_tests.cpp for CXX dependencies
+[42/85] Generating CXX dyndep file tests/CMakeFiles/seedarc_codec_tests.dir/CXX.dd
+[43/85] Building CXX object core/CMakeFiles/libseedarc.dir/codec/codec.cpp.obj
+[44/85] Building CXX object tests/CMakeFiles/seedarc_seed_strategy_tests.dir/seed_strategy_tests.cpp.obj
+[45/85] Building CXX object core/CMakeFiles/libseedarc.dir/archive.cpp.obj
+[46/85] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/strategy.cpp.obj
+[47/85] Building CXX object tests/CMakeFiles/seedarc_m3_compatibility_tests.dir/m3_compatibility_tests.cpp.obj
+[48/85] Building CXX object tests/CMakeFiles/seedarc_seed_file_override_tests.dir/seed_file_override_tests.cpp.obj
+[49/85] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/archive_study.cpp.obj
+[50/85] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/file_overrides.cpp.obj
+[51/85] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/path_overrides.cpp.obj
+[52/85] Building CXX object fuzz/CMakeFiles/seedarc_fuzz_replay_archive.dir/archive_fuzz.cpp.obj
+[53/85] Building CXX object tests/CMakeFiles/seedarc_seed_path_override_tests.dir/seed_path_override_tests.cpp.obj
+[54/85] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/adaptive_file.cpp.obj
+[55/85] Building CXX object core/CMakeFiles/libseedarc.dir/store_archive.cpp.obj
+[56/85] Building CXX object cli/CMakeFiles/seedarc_cli.dir/main.cpp.obj
+[57/85] Building CXX object tests/CMakeFiles/seedarc_seed_archive_tests.dir/seed_archive_tests.cpp.obj
+[58/85] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/safe_output.cpp.obj
+[59/85] Building CXX object tests/CMakeFiles/seedarc_store_memory_test.dir/store_memory_test.cpp.obj
+[60/85] Linking CXX static library core\liblibseedarc.a
+[61/85] Linking CXX static library core\libseedarc_seed_study.a
+[62/85] Building CXX object tests/CMakeFiles/seedarc_store_acceptance_tests.dir/store_acceptance_tests.cpp.obj
+[63/85] Building CXX object tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/seed_adaptive_tests.cpp.obj
+[64/85] Building CXX object tests/CMakeFiles/seedarc_codec_tests.dir/codec_tests.cpp.obj
+[65/85] Linking CXX executable tests\seedarc_core_tests.exe
+[66/85] Building CXX object tests/CMakeFiles/seedarc_store_archive_tests.dir/store_archive_tests.cpp.obj
+[67/85] Linking CXX executable tests\seedarc_safe_output_tests.exe
+[68/85] Linking CXX executable tests\seedarc_store_memory_test.exe
+[69/85] Linking CXX executable cli\seedarc.exe
+[70/85] Linking CXX executable tests\seedarc_m3_compatibility_tests.exe
+[71/85] Linking CXX executable tests\seedarc_seed_strategy_tests.exe
+[72/85] Linking CXX executable fuzz\seedarc_fuzz_replay_path.exe
+[73/85] Linking CXX executable fuzz\seedarc_fuzz_replay_header.exe
+[74/85] Linking CXX executable tests\seedarc_index_tests.exe
+[75/85] Linking CXX executable tests\seedarc_seed_file_override_tests.exe
+[76/85] Linking CXX executable tests\seedarc_seed_archive_tests.exe
+[77/85] Linking CXX executable tests\seedarc_path_tests.exe
+[78/85] Linking CXX executable tests\seedarc_archive_tests.exe
+[79/85] Linking CXX executable tests\seedarc_seed_path_override_tests.exe
+[80/85] Linking CXX executable fuzz\seedarc_fuzz_replay_archive.exe
+[81/85] Linking CXX executable tests\seedarc_seed_adaptive_tests.exe
+[82/85] Linking CXX executable tests\seedarc_store_acceptance_tests.exe
+[83/85] Linking CXX executable tests\seedarc_codec_tests.exe
+[84/85] Linking CXX executable tests\seedarc_store_archive_tests.exe

@@ -1,0 +1,55 @@
+[1/77] Generating CXX dyndep file cli/CMakeFiles/seedarc_cli.dir/CXX.dd
+[2/76] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_plan.dir/CXX.dd
+[3/75] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_scope_plan.dir/CXX.dd
+[4/74] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_scope_contract.dir/CXX.dd
+[5/73] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_archive.dir/CXX.dd
+[6/71] Generating CXX dyndep file tests/CMakeFiles/seedarc_core_tests.dir/CXX.dd
+[7/70] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_strategy_tests.dir/CXX.dd
+[8/69] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_file_override_tests.dir/CXX.dd
+[9/68] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_path_override_tests.dir/CXX.dd
+[10/67] Generating CXX dyndep file tests/CMakeFiles/seedarc_m3_compatibility_tests.dir/CXX.dd
+[11/66] Generating CXX dyndep file tests/CMakeFiles/seedarc_archive_tests.dir/CXX.dd
+[12/65] Generating CXX dyndep file tests/CMakeFiles/seedarc_path_tests.dir/CXX.dd
+[13/64] Generating CXX dyndep file tests/CMakeFiles/seedarc_index_tests.dir/CXX.dd
+[14/63] Generating CXX dyndep file tests/CMakeFiles/seedarc_safe_output_tests.dir/CXX.dd
+[15/62] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_memory_test.dir/CXX.dd
+[16/61] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_header.dir/CXX.dd
+[17/59] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_path.dir/CXX.dd
+[18/57] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_archive.dir/CXX.dd
+[19/55] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_archive_tests.cpp for CXX dependencies
+[20/55] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/codec_tests.cpp for CXX dependencies
+[21/55] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/store_archive_tests.cpp for CXX dependencies
+[22/55] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/store_acceptance_tests.cpp for CXX dependencies
+[23/55] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_adaptive_tests.cpp for CXX dependencies
+[24/55] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_archive_tests.dir/CXX.dd
+[25/55] Generating CXX dyndep file tests/CMakeFiles/seedarc_codec_tests.dir/CXX.dd
+[26/55] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_acceptance_tests.dir/CXX.dd
+[27/55] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_archive_tests.dir/CXX.dd
+[28/55] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/CXX.dd
+[29/55] Linking CXX executable tests\seedarc_seed_strategy_tests.exe
+[30/55] Linking CXX executable research\tools\seedarc_seed_scope_contract.exe
+[31/55] Linking CXX executable tests\seedarc_m3_compatibility_tests.exe
+[32/55] Linking CXX executable tests\seedarc_path_tests.exe
+[33/55] Linking CXX executable tests\seedarc_seed_path_override_tests.exe
+[34/55] Linking CXX executable tests\seedarc_archive_tests.exe
+[35/55] Building CXX object tests/CMakeFiles/seedarc_store_acceptance_tests.dir/store_acceptance_tests.cpp.obj
+[36/55] Building CXX object tests/CMakeFiles/seedarc_seed_archive_tests.dir/seed_archive_tests.cpp.obj
+[37/55] Building CXX object tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/seed_adaptive_tests.cpp.obj
+[38/55] Linking CXX executable tests\seedarc_core_tests.exe
+[39/55] Linking CXX executable research\tools\seedarc_seed_scope_plan.exe
+[40/55] Linking CXX executable research\tools\seedarc_seed_plan.exe
+[41/55] Linking CXX executable tests\seedarc_seed_file_override_tests.exe
+[42/55] Linking CXX executable tests\seedarc_index_tests.exe
+[43/55] Building CXX object tests/CMakeFiles/seedarc_codec_tests.dir/codec_tests.cpp.obj
+[44/55] Linking CXX executable fuzz\seedarc_fuzz_replay_header.exe
+[45/55] Linking CXX executable cli\seedarc.exe
+[46/55] Linking CXX executable tests\seedarc_store_memory_test.exe
+[47/55] Linking CXX executable tests\seedarc_safe_output_tests.exe
+[48/55] Linking CXX executable fuzz\seedarc_fuzz_replay_path.exe
+[49/55] Building CXX object tests/CMakeFiles/seedarc_store_archive_tests.dir/store_archive_tests.cpp.obj
+[50/55] Linking CXX executable fuzz\seedarc_fuzz_replay_archive.exe
+[51/55] Linking CXX executable tests\seedarc_store_acceptance_tests.exe
+[52/55] Linking CXX executable tests\seedarc_seed_archive_tests.exe
+[53/55] Linking CXX executable tests\seedarc_seed_adaptive_tests.exe
+[54/55] Linking CXX executable tests\seedarc_codec_tests.exe
+[55/55] Linking CXX executable tests\seedarc_store_archive_tests.exe

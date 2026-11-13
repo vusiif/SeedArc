@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "seed/adaptive_file.hpp"
-#include "seed_test_fixture.hpp"
+#include "test_fixture.hpp"
 
 #include <algorithm>
 #include <array>
@@ -128,6 +128,15 @@ int main(int argc, char *argv[]) {
         write(input / "e-repeat.txt", repeat);
         CompressOptions options;
         options.chunk_size_bytes = 4096;
+        // Frozen r1 parameters (research/configs/adaptive-file-r1.frozen.json): changing any of
+        // these requires a new selector_version, never a silent edit of r1.
+        const study::SelectorConfig frozen{};
+        static_assert(study::adaptive_selector_version == "adaptive-file-r1");
+        static_assert(study::oracle_selector_version == "oracle-file-r1");
+        check(frozen.kind == study::SelectorKind::adaptive && frozen.trial_budget_bytes == 0 &&
+                  frozen.min_file_bytes == 16384 && frozen.min_gain_permille == 20 &&
+                  frozen.min_gain_bytes == 64 && !frozen.cpu_ms,
+              "adaptive-file-r1 defaults match the frozen configuration");
         study::SelectorConfig unbounded;
         unbounded.trial_budget_bytes = study::unbounded_trial_budget;
 
@@ -266,7 +275,7 @@ int main(int argc, char *argv[]) {
     }
     std::error_code cleanup;
     if (safe && failures == 0) {
-        cleanup = seed_test::remove_tree(work); // not remove_all(): see seed_test_fixture.hpp
+        cleanup = test_fixture::remove_tree(work); // not remove_all(): see test_fixture.hpp
     }
     if (!safe || failures != 0 || cleanup) {
         std::cerr << "fixture retained at " << work << (cleanup ? ": " + cleanup.message() : "")

@@ -1,0 +1,35 @@
+{
+  "config_id": "adaptive-file-r1.frozen",
+  "frozen_at": "2026-11-12",
+  "frozen_by": "DEV-012 (main Agent, delegated by the B2 coordinator session)",
+  "status": "frozen: later evaluations use exactly these values; any change needs a new selector_version (r2+)",
+  "selector_version": "adaptive-file-r1",
+  "oracle_version": "oracle-file-r1",
+  "code": {
+    "commit": "4cea9e22a2fa590107fe8a94f439f1a771e33f93",
+    "core/seed/adaptive_file.cpp": "9683b7053dfe9914aa7636a7e1be39193268a97f053039bf979cee3e840ca3d4",
+    "core/seed/adaptive_file.hpp": "334251cbb7dda7b7a6e5d2f07caa53279cceecc72384ccab472dedddee609a6a",
+    "research/tools/seed_archive.cpp": "205689a507b7430402866900d4a556fd703542a6757a22d8bab0ac89856aa7f8",
+    "regression_test": "tests/seed_adaptive_tests.cpp asserts the defaults below (seed.adaptive_file)"
+  },
+  "parameters": {
+    "chunk_bytes": 65536,
+    "default_codec": {"codec": "zstd", "level": 3},
+    "min_file_bytes": 16384,
+    "sample_blocks": "{0, floor(n/2), n-1}, deduplicated, ascending",
+    "first_trials": [{"codec": "zstd", "level": 3}, {"codec": "lzma2", "level": 6}],
+    "zstd6_trial_condition": "zstd3 sample saving >= min_gain_permille of sample bytes, and budget remains",
+    "min_gain_permille": 20,
+    "min_gain_bytes": 64,
+    "switch_rule": "candidate saves >= 2% of the zstd3 sample bytes AND extrapolated saving (gain * file_bytes / sample_bytes) >= 64 B; lowest estimate wins; ties zstd3 -> lzma2-6 -> zstd6",
+    "trial_length_rule": "encoder output must be strictly smaller than the raw block, else counted as raw (Store fallback)",
+    "budget_unit": "raw bytes fed to trial encoders, cumulative over the archive, reserved per file (2 x sample, then 1 x sample for zstd6)",
+    "file_order": "canonical manifest order",
+    "fallbacks": ["empty_file", "below_min_size", "budget_exhausted", "no_gain", "insufficient_gain", "trial_failed"]
+  },
+  "registered_budget_tiers_bytes": {"adaptive-256k": 262144, "adaptive-1m": 1048576, "adaptive-unbounded": "unbounded"},
+  "metadata_bytes": 0,
+  "metadata_note": "decision fully expressed by the existing per-block index codec/config; nothing serialized",
+  "registered_in": "research/ideas/seed-adaptive-file-r5.md",
+  "dev_observations_before_freeze": "run 20261112-b2-adaptive-main-001 (5 self-made dev samples); not tuned on them"
+}

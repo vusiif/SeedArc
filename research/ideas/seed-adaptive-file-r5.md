@@ -32,3 +32,7 @@
 ## 结果
 
 run [20261112-b2-adaptive-main-001](../experiments/20261112-b2-adaptive-main-001/record.md)：H1 在 5 组 × 4 档全部成立；H2 在 5 组都成立，但只有 source 是有意义的检验（Adaptive 8,300 B / Oracle 8,298 B / Zstd-3 9,503 B），其余四组 Oracle 与 Zstd-3 一样大。全部收益来自一个文件；在 binary / compressed 上的试编码成本没有换来任何收益。只是开发样本，须在独立评估集上检验（P1）。
+
+## 独立评估（P1，冻结版本）
+
+r1 已冻结为 [adaptive-file-r1.frozen.json](../configs/adaptive-file-r1.frozen.json)。在 [b2r5-corpus-r1](../datasets/b2r5-corpus-r1.md) 的 test 划分上，run [20261112-b2-independent-main-001](../experiments/20261112-b2-independent-main-001/record.md) 的结果：各预算档逐文件都不比 Zstd-3 大（H1 依然成立）；但无界档（−7.45 %）比 Fixed LZMA2-6（−7.95 %）更大、也更慢，Oracle 只比 LZMA2-6 再小 0.025 %。对 r2 的方向建议（尚未实施，须在 dev 划分上做）：把 LZMA2-6 纳入默认或候选顺序、重新审视小文件阈值、用廉价特征跳过已压缩数据、改按时间计预算。

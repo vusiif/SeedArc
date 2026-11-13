@@ -23,3 +23,9 @@
 ## B2-r5 Adaptive-file 与统一预算对照
 
 `b2_adaptive.py --tool <Release seedarc_seed_archive.exe> --run-id <new-id> --repetitions 3` 复用 r3/r4 样本（哈希核对），运行 8 个 r4 原方案（P0-A 复现，要求归档 SHA256 与 r4 相同）、`oracle-file`（须等于 r4 B2-file-codec）与 `adaptive-file` 四档预算（0、256 KiB、1 MiB、无界），全部逐字节往返；输出 `summary.json`（P0-A 核对、预登记假设、逐组成本）、`preview.md` 与 `size-vs-time.svg`。`--analyze-only <run 目录>` 只读 raw.json 重新生成。导入同目录 `b2_diagnose.py` 的样本与工具函数；仅 Python 标准库。选择器参数在 [seed-adaptive-file-r5](../ideas/seed-adaptive-file-r5.md) 预先登记，不在开发样本上调参。
+
+## B2-r5 P1 独立语料与评估
+
+`b2_corpus.py [--corpus-id b2r5-corpus-r1]` 从本机已安装的软件和系统文件构建 10 类数据池，在压缩之前按相对路径哈希分成 dev / test。内容复制到被忽略的 `research/local/<corpus>/`；元数据（相对路径、字节、SHA256、许可证、块数）写入 `research/datasets/`。不下载任何数据，清单不写绝对路径。
+
+`b2_independent.py --tool <Release seedarc_seed_archive.exe> --run-id <new-id> --repetitions 5` 只评估 test 划分：Fixed Zstd-3、Fixed LZMA2-6、冻结的 Adaptive-file-r1 三档预算、Oracle-file、B-r1 seed0（消融 G4）。运行前先按清单核对 test 划分；方案顺序每次轮换；测量前做热缓存。输出 summary.json（均值、中位数、分位数、逐文件节省分布、每 KiB 的额外 CPU）与 preview.md。`--analyze-only` 只读 raw.json 与 per_file.csv 重新生成分析。依赖同目录的 `b2_adaptive.py` / `b2_diagnose.py`；仅使用 Python 标准库。

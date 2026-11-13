@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "archive_plan.hpp"
 #include "seed/archive_study.hpp"
-#include "seed_test_fixture.hpp"
+#include "test_fixture.hpp"
 
 #include <algorithm>
 #include <array>
@@ -192,12 +192,12 @@ int main(int argc, char *argv[]) {
             const bool marked = held != INVALID_HANDLE_VALUE &&
                                 SetFileInformationByHandle(held, FileDispositionInfo, &disposition,
                                                            sizeof(disposition));
-            check(marked && !seed_test::vanished(pending),
+            check(marked && !test_fixture::vanished(pending),
                   "a delete-pending object is a leftover, not a vanished entry");
             if (held != INVALID_HANDLE_VALUE) {
                 CloseHandle(held);
             }
-            check(seed_test::vanished(pending), "a deleted object is reported as vanished");
+            check(test_fixture::vanished(pending), "a deleted object is reported as vanished");
         }
         const auto bad = failed_writes / "bad.sarc";
         const std::array stale{study::PathRankOverride{"missing", 5, std::nullopt}};
@@ -271,7 +271,7 @@ int main(int argc, char *argv[]) {
         // only a listed name that no longer exists is excused, and it is reported.
         bool no_leftovers = true;
         for (const auto &entry : fs::directory_iterator(failed_writes)) {
-            const bool gone = seed_test::vanished(entry.path());
+            const bool gone = test_fixture::vanished(entry.path());
             std::cerr << (gone ? "ignored vanished foreign entry: "
                                : "leftover after failed write: ")
                       << entry.path().filename().string() << '\n';
@@ -300,7 +300,7 @@ int main(int argc, char *argv[]) {
     }
     std::error_code cleanup;
     if (safe && failures == 0) {
-        cleanup = seed_test::remove_tree(work); // not remove_all(): see seed_test_fixture.hpp
+        cleanup = test_fixture::remove_tree(work); // not remove_all(): see test_fixture.hpp
     }
     if (!safe || failures != 0 || cleanup) {
         std::cerr << "fixture retained at " << work << (cleanup ? ": " + cleanup.message() : "")

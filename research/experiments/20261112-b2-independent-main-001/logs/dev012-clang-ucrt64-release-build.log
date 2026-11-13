@@ -1,0 +1,140 @@
+[0/1] Re-running CMake...
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-mingw-static...
+Compiler found: C:/msys64/ucrt64/bin/x86_64-w64-mingw32-g++.exe
+The following packages will be rebuilt:
+    liblzma:x64-mingw-static@5.8.4 -- git+https://github.com/microsoft/vcpkg@e8240b76a93c7a55d2a1d52fb6023123c681b955
+  * vcpkg-cmake:x64-mingw-static@2025-08-07 -- git+https://github.com/microsoft/vcpkg@16b9390dfeaca6df7288ba3f827e40e48e5fc942
+  * vcpkg-cmake-config:x64-mingw-static@2026-07-21 -- git+https://github.com/microsoft/vcpkg@51befcb03097f8d19c1c59f9ec3625e69d85322a
+    zstd:x64-mingw-static@1.5.7 -- git+https://github.com/microsoft/vcpkg@31b7320fab13790c6861cb3c2d50dc8f60ca3602
+Additional packages (*) will be modified to complete this operation.
+Restored 4 package(s) from C:\Users\IceLolly\AppData\Local\vcpkg\archives in 70.1 ms. Use --debug to see more details.
+Removing 1/8 zstd:x64-mingw-static
+Elapsed time to handle zstd:x64-mingw-static: 7.5 ms
+Removing 2/8 liblzma:x64-mingw-static
+Elapsed time to handle liblzma:x64-mingw-static: 16 ms
+Removing 3/8 vcpkg-cmake:x64-mingw-static
+Elapsed time to handle vcpkg-cmake:x64-mingw-static: 5.31 ms
+Removing 4/8 vcpkg-cmake-config:x64-mingw-static
+Elapsed time to handle vcpkg-cmake-config:x64-mingw-static: 4.77 ms
+Installing 5/8 vcpkg-cmake-config:x64-mingw-static@2026-07-21...
+vcpkg-cmake-config:x64-mingw-static@2026-07-21 package ABI: 2d20ac26b29737e2ad2d777da0c50433a8a74b2418530628f17579fc4051bf8e
+Elapsed time to handle vcpkg-cmake-config:x64-mingw-static: 6.33 ms
+Installing 6/8 vcpkg-cmake:x64-mingw-static@2025-08-07...
+vcpkg-cmake:x64-mingw-static@2025-08-07 package ABI: 882079958e41afca8e272d9108651aa1e76ed6bc5100831b7953c9ce60bacd9b
+Elapsed time to handle vcpkg-cmake:x64-mingw-static: 6 ms
+Installing 7/8 liblzma:x64-mingw-static@5.8.4...
+liblzma:x64-mingw-static@5.8.4 package ABI: 25a393c274eca741ef2240cc499f5ee4dd67d774f8df73c045fb9a5c13951991
+Elapsed time to handle liblzma:x64-mingw-static: 11.1 ms
+Installing 8/8 zstd:x64-mingw-static@1.5.7...
+zstd:x64-mingw-static@1.5.7 package ABI: 70024a9fe88c3e11895f1aed6cb32a71e4ade1bdd765512fda871fa6efefb81c
+Elapsed time to handle zstd:x64-mingw-static: 9.73 ms
+Installed contents are licensed to you by owners. Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+Packages installed in this vcpkg installation declare the following licenses:
+(BSD-3-Clause OR GPL-2.0-only)
+0BSD
+MIT
+liblzma is compatible with built-in CMake targets:
+
+    find_package(LibLZMA REQUIRED)
+    target_link_libraries(main PRIVATE LibLZMA::LibLZMA)
+
+liblzma provides CMake targets:
+
+    find_package(liblzma CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE liblzma::liblzma)
+
+zstd provides CMake targets:
+
+  find_package(zstd CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE zstd::libzstd)
+
+All requested installations completed successfully in: 69.9 ms
+-- Running vcpkg install - done
+-- Configuring done (2.7s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/IceLolly/Music/Clion/SeedArc/build/clang-ucrt64-release
+[1/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/archive.cpp for CXX dependencies
+[2/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/store_archive.cpp for CXX dependencies
+[3/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/codec/codec.cpp for CXX dependencies
+[4/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/strategy.cpp for CXX dependencies
+[5/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/file_overrides.cpp for CXX dependencies
+[6/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/path_overrides.cpp for CXX dependencies
+[7/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/archive_study.cpp for CXX dependencies
+[8/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/seed/adaptive_file.cpp for CXX dependencies
+[9/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_strategy_tests.cpp for CXX dependencies
+[10/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_file_override_tests.cpp for CXX dependencies
+[11/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_path_override_tests.cpp for CXX dependencies
+[12/100] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/m3_compatibility_tests.cpp for CXX dependencies
+[13/100] Generating CXX dyndep file tests/CMakeFiles/seedarc_core_tests.dir/CXX.dd
+[14/99] Generating CXX dyndep file tests/CMakeFiles/seedarc_archive_tests.dir/CXX.dd
+[15/98] Generating CXX dyndep file tests/CMakeFiles/seedarc_path_tests.dir/CXX.dd
+[16/97] Generating CXX dyndep file tests/CMakeFiles/seedarc_index_tests.dir/CXX.dd
+[17/96] Generating CXX dyndep file core/CMakeFiles/seedarc_seed_study.dir/CXX.dd
+[18/96] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/core/filesystem/safe_output.cpp for CXX dependencies
+[19/96] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_strategy_tests.dir/CXX.dd
+[20/96] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_file_override_tests.dir/CXX.dd
+[21/96] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_path_override_tests.dir/CXX.dd
+[22/96] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/cli/main.cpp for CXX dependencies
+[23/96] Generating CXX dyndep file tests/CMakeFiles/seedarc_m3_compatibility_tests.dir/CXX.dd
+[24/96] Generating CXX dyndep file tests/CMakeFiles/seedarc_safe_output_tests.dir/CXX.dd
+[25/95] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_header.dir/CXX.dd
+[26/93] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_path.dir/CXX.dd
+[27/91] Generating CXX dyndep file core/CMakeFiles/libseedarc.dir/CXX.dd
+[28/86] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/fuzz/archive_fuzz.cpp for CXX dependencies
+[29/86] Generating CXX dyndep file cli/CMakeFiles/seedarc_cli.dir/CXX.dd
+[30/86] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_archive_tests.cpp for CXX dependencies
+[31/86] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/seed_adaptive_tests.cpp for CXX dependencies
+[32/86] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/store_archive_tests.cpp for CXX dependencies
+[33/86] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/store_acceptance_tests.cpp for CXX dependencies
+[34/86] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/codec_tests.cpp for CXX dependencies
+[35/86] Scanning C:/Users/IceLolly/Music/Clion/SeedArc/tests/store_memory_test.cpp for CXX dependencies
+[36/86] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_archive_tests.dir/CXX.dd
+[37/86] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/CXX.dd
+[38/86] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_acceptance_tests.dir/CXX.dd
+[39/86] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_archive_tests.dir/CXX.dd
+[40/86] Generating CXX dyndep file tests/CMakeFiles/seedarc_codec_tests.dir/CXX.dd
+[41/86] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_memory_test.dir/CXX.dd
+[42/86] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_archive.dir/CXX.dd
+[43/85] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/strategy.cpp.obj
+[44/85] Building CXX object tests/CMakeFiles/seedarc_seed_strategy_tests.dir/seed_strategy_tests.cpp.obj
+[45/85] Building CXX object core/CMakeFiles/libseedarc.dir/archive.cpp.obj
+[46/85] Building CXX object core/CMakeFiles/libseedarc.dir/codec/codec.cpp.obj
+[47/85] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/archive_study.cpp.obj
+[48/85] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/path_overrides.cpp.obj
+[49/85] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/file_overrides.cpp.obj
+[50/85] Building CXX object tests/CMakeFiles/seedarc_seed_file_override_tests.dir/seed_file_override_tests.cpp.obj
+[51/85] Building CXX object tests/CMakeFiles/seedarc_m3_compatibility_tests.dir/m3_compatibility_tests.cpp.obj
+[52/85] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/adaptive_file.cpp.obj
+[53/85] Building CXX object tests/CMakeFiles/seedarc_seed_path_override_tests.dir/seed_path_override_tests.cpp.obj
+[54/85] Building CXX object cli/CMakeFiles/seedarc_cli.dir/main.cpp.obj
+[55/85] Building CXX object core/CMakeFiles/libseedarc.dir/store_archive.cpp.obj
+[56/85] Building CXX object fuzz/CMakeFiles/seedarc_fuzz_replay_archive.dir/archive_fuzz.cpp.obj
+[57/85] Building CXX object tests/CMakeFiles/seedarc_store_acceptance_tests.dir/store_acceptance_tests.cpp.obj
+[58/85] Building CXX object tests/CMakeFiles/seedarc_seed_archive_tests.dir/seed_archive_tests.cpp.obj
+[59/85] Building CXX object tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/seed_adaptive_tests.cpp.obj
+[60/85] Building CXX object tests/CMakeFiles/seedarc_store_memory_test.dir/store_memory_test.cpp.obj
+[61/85] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/safe_output.cpp.obj
+[62/85] Linking CXX static library core\liblibseedarc.a
+[63/85] Linking CXX static library core\libseedarc_seed_study.a
+[64/85] Building CXX object tests/CMakeFiles/seedarc_store_archive_tests.dir/store_archive_tests.cpp.obj
+[65/85] Building CXX object tests/CMakeFiles/seedarc_codec_tests.dir/codec_tests.cpp.obj
+[66/85] Linking CXX executable tests\seedarc_seed_strategy_tests.exe
+[67/85] Linking CXX executable tests\seedarc_core_tests.exe
+[68/85] Linking CXX executable fuzz\seedarc_fuzz_replay_path.exe
+[69/85] Linking CXX executable tests\seedarc_safe_output_tests.exe
+[70/85] Linking CXX executable cli\seedarc.exe
+[71/85] Linking CXX executable tests\seedarc_seed_file_override_tests.exe
+[72/85] Linking CXX executable fuzz\seedarc_fuzz_replay_header.exe
+[73/85] Linking CXX executable tests\seedarc_seed_path_override_tests.exe
+[74/85] Linking CXX executable tests\seedarc_store_memory_test.exe
+[75/85] Linking CXX executable tests\seedarc_archive_tests.exe
+[76/85] Linking CXX executable fuzz\seedarc_fuzz_replay_archive.exe
+[77/85] Linking CXX executable tests\seedarc_seed_archive_tests.exe
+[78/85] Linking CXX executable tests\seedarc_m3_compatibility_tests.exe
+[79/85] Linking CXX executable tests\seedarc_store_acceptance_tests.exe
+[80/85] Linking CXX executable tests\seedarc_path_tests.exe
+[81/85] Linking CXX executable tests\seedarc_index_tests.exe
+[82/85] Linking CXX executable tests\seedarc_seed_adaptive_tests.exe
+[83/85] Linking CXX executable tests\seedarc_store_archive_tests.exe
+[84/85] Linking CXX executable tests\seedarc_codec_tests.exe
