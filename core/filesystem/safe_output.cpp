@@ -144,6 +144,8 @@ std::expected<ObjectId, Error> object_id(HANDLE handle) {
 #endif
 } // namespace internal
 
+// The Linux implementation is in safe_output_posix.cpp; other platforms get the stubs below.
+#if defined(_WIN32) || !defined(__linux__)
 #ifdef _WIN32
 namespace {
 using internal::ascii_for_message;
@@ -1190,4 +1192,5 @@ std::expected<void, Error> SafeOutputFile::commit(std::uint64_t expected_size,
     return std::unexpected(unsupported());
 #endif
 }
+#endif // defined(_WIN32) || !defined(__linux__)
 } // namespace seedarc::experimental

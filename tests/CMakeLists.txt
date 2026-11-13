@@ -102,12 +102,19 @@ else()
     add_test(NAME codec.boundary COMMAND seedarc_codec_tests --boundary-only)
     set_tests_properties(codec.boundary PROPERTIES TIMEOUT 60)
 
-    # Tests that need Windows input enumeration (L2) or safe output (L3). They are registered
-    # as DISABLED so that CTest lists them as "Not Run" instead of silently omitting them.
+    # Linux L3 (ADR-0004): POSIX counterpart of safe_output_tests.cpp.
+    add_executable(seedarc_safe_output_tests safe_output_posix_tests.cpp)
+    target_link_libraries(seedarc_safe_output_tests PRIVATE SeedArc::core)
+    target_include_directories(seedarc_safe_output_tests PRIVATE "${PROJECT_SOURCE_DIR}/core/filesystem")
+    seedarc_target_defaults(seedarc_safe_output_tests)
+    add_test(NAME filesystem.safe_output COMMAND seedarc_safe_output_tests "${PROJECT_SOURCE_DIR}/.sandbox-test")
+    set_tests_properties(filesystem.safe_output PROPERTIES TIMEOUT 30)
+
+    # Tests not yet ported to Linux. They are registered as DISABLED so that CTest lists them
+    # as "Not Run" instead of silently omitting them.
     set(seedarc_skipped_tests
         "seed.archive_integration|compresses real directory trees (input enumeration, L2)"
         "seed.adaptive_file|reads real input files (input enumeration, L2)"
-        "filesystem.safe_output|NT safe output and fault injection (safe output, L3)"
         "archive.store_round_trip|compress + extract on disk (L2 + L3)"
         "archive.store_acceptance|compress + extract on disk (L2 + L3)"
         "codec.round_trip|archive half of codec_tests: compress + extract on disk (L2 + L3)"

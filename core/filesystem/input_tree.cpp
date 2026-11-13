@@ -9,6 +9,8 @@
 #include <cstring>
 #include <utility>
 
+// The Linux implementation is in input_tree_posix.cpp; other platforms get the stubs below.
+#if defined(_WIN32) || !defined(__linux__)
 namespace seedarc::experimental::internal {
 #ifdef _WIN32
 namespace {
@@ -502,3 +504,4 @@ InputFile::InputFile(InputFile &&) noexcept = default;
 InputFile &InputFile::operator=(InputFile &&) noexcept = default;
 InputFile::~InputFile() = default;
 } // namespace seedarc::experimental::internal
+#endif // defined(_WIN32) || !defined(__linux__)

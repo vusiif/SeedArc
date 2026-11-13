@@ -16,13 +16,19 @@
 
 namespace seedarc::experimental {
 // Candidate cumulative budgets for any object reachable through SafeOutputDirectory, counted from
-// the drive root ("C:\" is depth 0). Path units are UTF-16 code units of the equivalent DOS path
-// with one separator per component; they stay below the 32767-unit NT path ceiling so that the
-// output remains reachable by ordinary path-based tools.
+// the drive root ("C:\" is depth 0; on Linux "/" is depth 0). Path units are UTF-16 code units of
+// the equivalent DOS path with one separator per component; they stay below the 32767-unit NT
+// path ceiling so that the output remains reachable by ordinary path-based tools. On Linux they
+// are bytes of the equivalent "/a/b" path, below PATH_MAX (4096) for the same reason (ADR-0004).
 inline constexpr std::size_t max_output_depth = 128;
+#ifdef _WIN32
 inline constexpr std::size_t max_output_path_units = 32'000;
+#else
+inline constexpr std::size_t max_output_path_units = 4'095;
+#endif
 
-// Identity of a file system object: volume serial number plus 128-bit file identifier.
+// Identity of a file system object: volume serial number plus 128-bit file identifier (Linux:
+// device number plus inode number).
 struct ObjectId {
     std::uint64_t volume = 0;
     std::array<std::byte, 16> file{};
