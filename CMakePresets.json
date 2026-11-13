@@ -267,27 +267,42 @@
       "configuration": "Release"
     },
     {
+      "name": "linux-build",
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
       "name": "gcc-linux-debug",
+      "inherits": "linux-build",
       "configurePreset": "gcc-linux-debug"
     },
     {
       "name": "gcc-linux-release",
+      "inherits": "linux-build",
       "configurePreset": "gcc-linux-release"
     },
     {
       "name": "clang-linux-debug",
+      "inherits": "linux-build",
       "configurePreset": "clang-linux-debug"
     },
     {
       "name": "clang-linux-release",
+      "inherits": "linux-build",
       "configurePreset": "clang-linux-release"
     },
     {
       "name": "clang-linux-asan-ubsan",
+      "inherits": "linux-build",
       "configurePreset": "clang-linux-asan-ubsan"
     },
     {
       "name": "clang-linux-fuzz",
+      "inherits": "linux-build",
       "configurePreset": "clang-linux-fuzz",
       "targets": [
         "seedarc_fuzz_header",
@@ -366,6 +381,11 @@
     {
       "name": "linux-tests",
       "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
       "output": {
         "outputOnFailure": true
       },

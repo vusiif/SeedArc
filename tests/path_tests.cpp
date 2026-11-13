@@ -61,9 +61,9 @@ int main() {
     }
     // Malformed UTF-8 is an unsafe path on every platform (overlong, surrogate, > U+10FFFF,
     // truncated, stray continuation, invalid lead bytes).
-    for (const auto name : {"\xc0\xaf", "\xc1\xbf", "\xe0\x80\xaf", "\xed\xa0\x80", "\xf0\x80\x80\xaf",
-                            "\xf4\x90\x80\x80", "\xf5\x80\x80\x80", "\xe4\xb8", "a\x80", "\xff",
-                            "ok/\xc3"}) {
+    for (const auto name :
+         {"\xc0\xaf", "\xc1\xbf", "\xe0\x80\xaf", "\xed\xa0\x80", "\xf0\x80\x80\xaf",
+          "\xf4\x90\x80\x80", "\xf5\x80\x80\x80", "\xe4\xb8", "a\x80", "\xff", "ok/\xc3"}) {
         const auto result = validate_archive_path(name);
         check(!result && result.error().code == seedarc::ErrorCode::unsafe_path,
               "malformed UTF-8 rejected as unsafe path");

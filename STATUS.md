@@ -65,6 +65,7 @@
 | IDE-002 | CLion 默认 Debug 依赖配置修复 | 主 Agent | 本地 CLion Debug profile、开发说明、M3 记录、STATUS | 完成 | MCP 重新加载成功；确认 MSVC / C++23 模式与 vcpkg 依赖；IDE CLI 版本、codec 测试均 exitCode=0，CMake 文件完整诊断无问题，见 M3 记录末节 |
 | ACC-003 | M3 独立验收 | 本轮主 Agent；只读子审查 m3_review | STATUS、M3 验收记录；不改原实现 | 完成 | Release / ASan 各 30/30；format / diff 检查通过，IDE 13/14 文件完整无 ERROR；1 文件人工补查仅拼写提示；IDE 运行已在 IDE-002 补齐，详见 [M3 记录](docs/m3-validation.md#独立验收2026-11-12) |
 | DEV-004 | M3 Zstd / LZMA2 块编码 | 主 Agent | vcpkg manifest、CMakePresets、core/codec、archive / store_archive / safe_output、CLI、tests、fuzz 语料、ADR-0003、M3 记录、README、开发说明、STATUS | 完成（独立验收通过） | zstd 1.5.7 / liblzma 5.8.4 经 vcpkg 钉住；七套配置 + ASan 30/30，format / tidy 通过，archive Fuzz 180 s 无崩溃；CLion 诊断 13 个文件无 ERROR，修 2 条 WARN 后 MSVC Release / Clang Debug / GCC Release 复测 30/30；[M3 记录](docs/m3-validation.md) |
+| DEV-014 | Linux L1：WSL 构建、presets、可运行测试、ASan + UBSan、短时 Fuzz | DEV-014 子会话（协调会话委派） | WSL 克隆分支 `linux-l1`：CMakePresets、根 / tests / fuzz CMake、core/filesystem/archive_path.cpp、tests/{codec,path,seed_path_override}_tests.cpp、check_cli.cmake、docs/development.md §7、新 docs/linux-l1-validation.md、docs/posix-filesystem-design.md、STATUS | 待验收（未推送 / 未合并） | GCC / Clang Debug / Release 与 ASan+UBSan 各 27/27、0 警告，11 项 Windows-only 测试 DISABLED 并列原因；3 个 fuzz 目标各 180 s 0 崩溃；Linux / MSVC 内存编码 21 个哈希一致（一次观察）；MSVC Release 36/36；CLion 未查，见 [L1 记录](docs/linux-l1-validation.md) |
 | DEV-002 | M1 实验格式与安全 I/O 设计 | 主 Agent；两个已结束子任务 | 候选 ADR、archive / filesystem 模块、tests、验证记录 | 完成 | 用户 2026-11-11 验收。error 5（沙盒 ACL）定位、提交重命名修复；卷身份 / 深度预算 / 共享模式 / 故障注入 / Fuzz 完成；六套 + ASan 18/18，format / tidy 通过；CLion 诊断完成并修 1 个 ERROR；真实 SUBST 未测；[M1 交接](docs/m1-validation.md) |
 
 ## 验证与证据
@@ -105,6 +106,7 @@
 - **M2 独立验收历史**：首轮 Release 24/24，但新增回归在 Release / CLion Debug 复现两项缺陷而未通过；本轮修复后已通过上述独立复验。历史失败、修复、最新证据分别保留在 [验收记录](docs/m2-acceptance.md)，不删除负面证据。需要 IDE 前台时先提醒用户配合。
 - Git 仓库属主为沙盒账户，当前用户执行 git 报 dubious ownership；本轮仅以单次 `git -c safe.directory=…` 读取状态，未修改全局 Git 配置（是否添加 safe.directory 由用户决定）。
 - 2026-11-12 用户确认 CLion 改为阶段性集中检查：日常小步修改运行编译器 / 测试 / 格式检查，完整研究迭代、功能接入或里程碑验收前统一检查相关文件；IDE 独有问题、配置问题及用户指定提示按需提前检查，纯文档修改免检。所有 Agent 遵守，协调者可集成后统一检查；异常记录未覆盖范围并继续独立工作，不冒充通过。规则已同步 AGENTS.md 与开发说明。需要诊断时仍先确认前台，逐文件打开再查询。历史 REV-001 诊断证据保留于任务表。
+- DEV-014（2026-11-13，Linux L1，分支 `linux-l1` 未推送）：核心库、codec 与不碰文件系统的测试已在 WSL Ubuntu 26.04 实际通过（见 [L1 记录](docs/linux-l1-validation.md)）。Linux 上输入枚举（L2）与安全输出（L3）仍返回 `unsupported_feature`；路径校验只实现 ASCII 子集，非 ASCII 路径明确拒绝。合并前待办：协调者做 CLion 诊断，补跑 MSVC ASan / UCRT64；L2 / L3 按 [草案](docs/posix-filesystem-design.md) 另行立项，L3 需 ADR。
 
 ## 更新约定
 
