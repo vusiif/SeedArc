@@ -1,6 +1,6 @@
 # ADR-0004：POSIX（Linux）输入枚举与安全输出
 
-状态：**提议并实现中（DEV-014 L2 / L3，2026-11-13）**；experimental、未冻结。归档格式不变。
+状态：**已实现，待验收（DEV-014 L2 / L3，2026-11-13）**；experimental、未冻结。归档格式不变。验证见 [Linux L2 / L3 验证记录](../linux-l2l3-validation.md)。
 
 输入：[ADR-0001](0001-experimental-container-and-output.md)（Windows 安全输出）、[ADR-0002](0002-m2-store-archive-constraints.md) §8（事务、复核、取消、信任边界）、[memory-safety](../memory-safety.md)、[POSIX 草案](../posix-filesystem-design.md)、[Linux L1 记录](../linux-l1-validation.md)。
 
@@ -34,7 +34,7 @@
 | 发布后保留私有 DACL（用户 2026-11-11 已接受） | 发布后的树保留 0700 / 0600，不按 umask 放宽 | 与 Windows 行为一致：共享目录中其他用户不能读取解压结果 |
 | 临时文件独占、失败即按句柄删除 | `O_TMPFILE`：文件在发布前**没有名字**，任何人看不到、打不开；失败 / 析构只需关闭 fd，内核回收 | 比 Windows 的随机名临时文件更强；“显式清理”改为 `ftruncate(fd, 0)` 释放空间，关闭时回收 |
 | 无替换提交 | 文件 `linkat`（句柄式，`EEXIST` 失败）；目录 `renameat2(RENAME_NOREPLACE)`。改名前后 `fstatat(AT_SYMLINK_NOFOLLOW)` 核对源 / 目标名字指向暂存目录 fd 的 (dev, ino) | 目录改名是按名字的：受信主体在核对与改名之间替换暂存名不在保证范围（同 Windows §8.4.4） |
-| 提交前 flush + 整文件读回 | `fsync(fd)`、`fstat` 核对大小、`pread` 全量读回与增量 CRC32C / 前缀逐字节比较；发布后 `fsync` 所在目录 | — |
+| 提交前 flush + 整文件读回 | `fsync(fd)`、`fstat` 核对大小、`pread` 全量读回与增量 CRC32C / 前缀逐字节比较；发布后对所在目录 `fsync`，**尽力而为**（失败不改变结果：名字已发布，报告失败会让调用方误以为没有输出） | 与 Windows 相同，目录项的持久性不作保证（Windows 不刷新目录） |
 | 发布前复核：目录恰好包含创建的名字 | `openat(dir, ".")` + `fdopendir` / `readdir` 精确比对字节名（不多不少） | Linux 文件系统区分大小写，“仅大小写不同”的外来名字照样被视为多余条目 |
 | 发布前复核：无命名数据流 | 无对应概念。等价检查：对象上不得有 `user.*` 扩展属性（`flistxattr`；`ENOTSUP` 视为无）；`security.*` / `system.*`（SELinux 标签、ACL）由系统维护，允许存在，但权限位必须恰好为 0700 / 0600 | — |
 | 发布前复核：文件身份、链接数 1、大小、CRC32C，且排除写者 / 删除者 | `openat(O_RDONLY \| O_NOFOLLOW \| O_NONBLOCK \| O_NOCTTY)` 后 `fstat`：普通文件、(dev, ino) 相同、`st_nlink == 1`、属主 euid、权限 0600、大小相同，然后全文件 CRC32C | **POSIX 不能在打开时排除写者**。暂存树 0700 已排除其他用户；受信主体在复核期间的写入不在保证范围（同 Windows §8.4.4 的“复核后修改”） |
@@ -71,6 +71,23 @@
 - Linux 专有负面测试：任一路径组件为符号链接（输出根、输入树、暂存树中途被替换为链接）、目标已存在、只读目录、不接受的文件系统、组可写无粘滞位的目标目录、特殊文件输入、清理不误删他人对象、两条 `linkat` 发布路径。
 - GCC / Clang Debug / Release 与 ASan + UBSan 全量通过、0 警告；内存有界测试用 `getrusage(RUSAGE_SELF).ru_maxrss`（峰值常驻集，KiB），与 Windows 的峰值工作集口径不同，数值不可直接比较。
 
-## 8. 回滚
+## 8. CLI 取消
+
+Windows 用控制台处理程序把 Ctrl+C 变成取消（退出码 4，清理后退出）。Linux：CLI 在主线程屏蔽 `SIGINT` / `SIGTERM` / `SIGHUP`，由专用线程 `sigtimedwait` 接收后调用 `request_stop`，因此信号处理中不做任何非异步信号安全的工作；行为与 Windows 相同（退出码 4，不留归档、暂存目录或目标）。`SIGKILL` 无法拦截：未发布的文件是无名 `O_TMPFILE`，会被内核回收；已创建的 `.seedarc-*.tmp` 暂存目录会留下（Windows 被强制结束时同样可能留下）。
+
+## 9. 与 Windows 的剩余差异（实现后核对）
+
+| 项 | 差异 |
+| --- | --- |
+| 非 ASCII 文件名 | Linux 拒绝（`unsupported_feature`），Windows 支持。用户 2026-11-13 选择方案 A：暂不实现，另行立项 |
+| 并发写者 | Windows 以拒绝写共享打开输入，并发写者使压缩直接失败；Linux 只能事后检测（大小、mtime、inode、EOF） |
+| 固定的父目录 | Windows 持有句柄时目录不能被改名 / 删除；Linux 可以，但已打开的 fd 仍指向原目录，写入不会跟随新名字（有测试） |
+| 共享目标目录 | Linux 拒绝组 / 其他人可写且无粘滞位的目标目录，Windows 接受 |
+| 大小写 | Windows 的存在性检查不区分大小写（`FINAL` 与 `final` 冲突）；Linux 区分。归档清单本身的大小写冲突检查两边一致 |
+| 路径预算 | Windows 32000 UTF-16 单元，Linux 4095 字节 |
+| 复核期间排除写者 | Windows 以拒绝写 / 删共享重新打开；Linux 依赖暂存树 0700，受信主体不在保证范围（两边信任边界相同） |
+| 内存口径 | Windows 峰值工作集，Linux 峰值 RSS（`ru_maxrss`） |
+
+## 10. 回滚
 
 改动限于 `core/filesystem/*` 的非 Windows 分支、测试与 CMake。撤销本 ADR 的实现即恢复 L1 状态（Linux 上返回 `unsupported_feature`），不影响 Windows 与归档格式。

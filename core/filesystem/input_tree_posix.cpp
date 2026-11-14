@@ -77,7 +77,7 @@ std::expected<struct stat, Error> stat_fd(int fd) {
 
 // Names of one directory through a duplicate of its descriptor. At most `max_names`.
 std::expected<std::vector<std::string>, Error> list_directory(int directory,
-                                                               std::size_t max_names) {
+                                                              std::size_t max_names) {
     const int duplicate = ::openat(directory, ".", directory_flags);
     if (duplicate < 0) {
         return std::unexpected(posix_error("enumerate input directory"));

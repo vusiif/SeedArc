@@ -11,10 +11,12 @@
 #include <stdexcept>
 #include <string>
 
+#ifdef _WIN32
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
 #include <windows.h>
+#endif
 
 namespace fs = std::filesystem;
 namespace study = seedarc::experimental::seed_study;
@@ -109,7 +111,7 @@ int main(int argc, char *argv[]) {
     }
     const auto parent = fs::absolute(argv[1]);
     fs::create_directories(parent);
-    const auto work = parent / ("seed-adaptive-" + std::to_string(GetCurrentProcessId()));
+    const auto work = parent / ("seed-adaptive-" + test_fixture::unique_suffix());
     if (!fs::create_directory(work)) {
         std::cerr << "test directory already exists\n";
         return 1;
@@ -263,16 +265,9 @@ int main(int argc, char *argv[]) {
         std::cerr << e.what() << '\n';
         ++failures;
     }
-    bool safe = work.parent_path() == parent;
-    for (const auto &entry : fs::recursive_directory_iterator(work)) {
-        const auto attrs = GetFileAttributesW(entry.path().c_str());
-        // A name that vanished since enumeration (another component's short-lived entry) cannot
-        // be a reparse point that remove_all would follow; any other failure stays unsafe.
-        const auto error = attrs == INVALID_FILE_ATTRIBUTES ? GetLastError() : ERROR_SUCCESS;
-        const bool vanished = error == ERROR_FILE_NOT_FOUND || error == ERROR_PATH_NOT_FOUND;
-        safe = safe && (vanished || (attrs != INVALID_FILE_ATTRIBUTES &&
-                                     (attrs & FILE_ATTRIBUTE_REPARSE_POINT) == 0));
-    }
+    // A vanished name cannot be a link that the removal would follow; anything else must be a
+    // plain file or directory (test_fixture::reparse_free, Windows and Linux).
+    const bool safe = work.parent_path() == parent && test_fixture::reparse_free(work);
     std::error_code cleanup;
     if (safe && failures == 0) {
         cleanup = test_fixture::remove_tree(work); // not remove_all(): see test_fixture.hpp

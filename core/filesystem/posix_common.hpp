@@ -82,8 +82,7 @@ class Fd {
         return {};
     default:
         return std::unexpected(
-            Error{ErrorCode::unsupported_feature,
-                  "file system type 0x" + [&info] {
+            Error{ErrorCode::unsupported_feature, "file system type 0x" + [&info] {
                       constexpr std::string_view digits = "0123456789abcdef";
                       auto value = static_cast<unsigned long>(info.f_type);
                       std::string hex;

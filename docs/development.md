@@ -25,7 +25,7 @@ ctest --preset gcc-ucrt64-debug
 
 也可用 `gcc-ucrt64-release`、`clang-ucrt64-debug`、`clang-ucrt64-release`。presets 仅为各自命令进程优先设置 UCRT64 bin，不修改系统 PATH；直接运行 GNU ABI exe 时仍需在当前终端保证对应 DLL 的搜索路径。机器专用设置可放入不入库的 CMakeUserPresets.json。
 
-通用 CMake 最低版本为 3.28；使用 VS 2026 preset 还需 CMake 支持该生成器，本机实测 4.4.3。Linux（WSL）presets 与限制见[第 7 节](#7-wsl--linuxl1)。
+通用 CMake 最低版本为 3.28；使用 VS 2026 preset 还需 CMake 支持该生成器，本机实测 4.4.3。Linux（WSL）presets 与限制见[第 7 节](#7-wsl--linuxl1--l2--l3)。
 
 项目 `.clang-format` 固定源码格式，`.clang-tidy` 启用 Clang 静态分析器检查；不继承用户目录配置。当前未使用 `<print>`，不需要额外链接 stdc++exp。vcpkg manifest 已随 M3 建立（`vcpkg.json` / `vcpkg-configuration.json`，见 [ADR-0003](decisions/0003-m3-zstd-lzma2-codecs.md)）。
 
@@ -194,9 +194,9 @@ CMakeUserPresets.json
 
 如果只是无关的可选工具缺失，写进任务结果的建议即可，不必暂停局部实现。
 
-## 7. WSL / Linux（L1）
+## 7. WSL / Linux（L1 / L2 / L3）
 
-> 状态：L1（核心库与 codec 编译、不碰文件系统的测试、ASan + UBSan、短时 libFuzzer）已在 WSL 实测，见 [Linux L1 验证记录](linux-l1-validation.md)。**输入枚举（L2）与安全输出（L3）在 Linux 上仍明确返回 `unsupported_feature`**，设计草案见 [POSIX 文件系统草案](posix-filesystem-design.md)。
+> 状态：L1（核心库与 codec、ASan + UBSan、短时 libFuzzer）见 [Linux L1 验证记录](linux-l1-validation.md)；L2 输入枚举与 L3 安全输出按 [ADR-0004](decisions/0004-posix-filesystem.md) 实现，compress / verify / extract 在 Linux 上端到端可用，见 [Linux L2 / L3 验证记录](linux-l2l3-validation.md)。
 
 ### 7.1 工作方式
 
@@ -240,9 +240,12 @@ mkdir -p /tmp/fz/header && build/clang-linux-fuzz/fuzz/seedarc_fuzz_header /tmp/
 
 ### 7.4 Linux 上的功能边界
 
-- 归档路径规则（ADR-0001 的 Windows profile）在非 Windows 上只实现 **ASCII 子集**：规则不变，大小写冲突按 ASCII a–z / A–Z 判定（对 ASCII 与 `CompareStringOrdinal` 忽略大小写等价）；畸形 UTF-8 仍为 `unsafe_path`；**合法的非 ASCII 路径一律 `unsupported_feature`**，因为 NFC 检查和非 ASCII 大小写折叠需要与 Windows 一致的 Unicode 表，L1 不猜测。因此 Linux 只能解析 / 校验全 ASCII 路径的归档。
-- `compress` 需要输入枚举、`extract` 需要安全输出，都返回 `unsupported_feature`（CLI 退出码 5，不留任何输出）；`verify` 只读取归档文件，可用。
-- 依赖这两者的测试在 CTest 中注册为 DISABLED（显示为 “Not Run (Disabled)”，标签 `windows-only`），原因写在 `tests/CMakeLists.txt` 的清单中。
+- 归档路径规则（ADR-0001 的 Windows profile）在非 Windows 上只实现 **ASCII 子集**：规则不变，大小写冲突按 ASCII a–z / A–Z 判定（对 ASCII 与 `CompareStringOrdinal` 忽略大小写等价）；畸形 UTF-8 仍为 `unsafe_path`；**合法的非 ASCII 路径一律 `unsupported_feature`**，因为 NFC 检查和非 ASCII 大小写折叠需要与 Windows 一致的 Unicode 表。用户 2026-11-13 选定暂不实现（ADR-0004 §5 / §9）。因此 Linux 只能压缩、校验、解压全 ASCII 名字。
+- compress / extract 的输入根与输出目录必须位于 ext4 / xfs / btrfs / tmpfs；WSL 的 `/mnt/c`（9p）、NFS、FUSE、overlayfs 等被拒绝（`unsupported_feature`）。输出目录不得被其他用户修改：属主为本人或 root，且组 / 其他人不可写，除非有粘滞位（如 `/tmp`）。
+- 解压结果为私有权限（目录 0700、文件 0600），对应 Windows 的私有 DACL；归档文件按 umask 创建。时间戳、权限不保存。
+- 输入中的符号链接、设备、FIFO、socket 一律拒绝；跨挂载点拒绝。
+- CLI 在 `SIGINT` / `SIGTERM` / `SIGHUP` 时取消（退出码 4，清理后退出）。
+- 与 Windows 的全部差异见 ADR-0004 §9。
 
 ### 7.5 glibc 注意事项
 

@@ -152,9 +152,9 @@ std::expected<void, Error> require_no_user_xattrs(int fd) {
         names.resize(names.size() * 4);
     }
     for (std::size_t begin = 0; begin < names.size();) {
-        const auto end = std::find(names.begin() + static_cast<std::ptrdiff_t>(begin), names.end(),
-                                   '\0') -
-                         names.begin();
+        const auto end =
+            std::find(names.begin() + static_cast<std::ptrdiff_t>(begin), names.end(), '\0') -
+            names.begin();
         const std::string_view name{names.data() + begin, static_cast<std::size_t>(end) - begin};
         if (name.starts_with("user.")) {
             return std::unexpected(staged_changed("unexpected extended attribute"));
@@ -375,8 +375,8 @@ SafeOutputDirectory::open_existing(const std::filesystem::path &path) {
         const auto component =
             native.substr(begin, end == std::string::npos ? std::string::npos : end - begin);
         const bool trailing = end == native.size() - 1;
-        if (component.empty() || component == "." || component == ".." ||
-            component.size() > 255 || components.size() + 1 > 64) {
+        if (component.empty() || component == "." || component == ".." || component.size() > 255 ||
+            components.size() + 1 > 64) {
             return std::unexpected(Error{ErrorCode::unsafe_path, "unsafe output root component"});
         }
         components.push_back(component);
@@ -389,8 +389,7 @@ SafeOutputDirectory::open_existing(const std::filesystem::path &path) {
     std::size_t units = 0;
     for (std::size_t i = 0; i < components.size(); ++i) {
         const auto &component = components[i];
-        if (auto admitted =
-                internal::admit_output_component(depth, units, component.size(), true);
+        if (auto admitted = internal::admit_output_component(depth, units, component.size(), true);
             !admitted) {
             return std::unexpected(admitted.error());
         }
@@ -528,8 +527,8 @@ SafeOutputDirectory::begin_file(std::string_view basename) const {
     if (!file.valid()) {
         const auto code = errno;
         if (code == EOPNOTSUPP || code == EISDIR || code == EINVAL) {
-            return std::unexpected(Error{ErrorCode::unsupported_feature,
-                                         "file system does not support O_TMPFILE"});
+            return std::unexpected(
+                Error{ErrorCode::unsupported_feature, "file system does not support O_TMPFILE"});
         }
         return std::unexpected(posix_error("create temporary file", code));
     }
@@ -726,8 +725,8 @@ std::expected<void, Error> SafeOutputDirectory::verify_owned_file(std::string_vi
         if (stop.stop_requested()) {
             return std::unexpected(Error{ErrorCode::cancelled, "operation cancelled"});
         }
-        const auto count = static_cast<std::size_t>(std::min(size - position,
-                                                             std::uint64_t{buffer.size()}));
+        const auto count =
+            static_cast<std::size_t>(std::min(size - position, std::uint64_t{buffer.size()}));
         const auto got = ::pread(file.get(), buffer.data(), count, static_cast<off_t>(position));
         if (got < 0 && errno == EINTR) {
             continue;
@@ -756,8 +755,8 @@ SafeOutputDirectory::open_owned_child(std::string_view basename, const ObjectId 
     if (auto admitted = impl_->admit(name->size(), true); !admitted) {
         return std::unexpected(admitted.error());
     }
-    Fd fd{::openat(impl_->fd.get(), name->c_str(),
-                   O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC)};
+    Fd fd{
+        ::openat(impl_->fd.get(), name->c_str(), O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC)};
     if (!fd.valid()) {
         if (errno == ELOOP || errno == ENOTDIR) {
             return std::unexpected(
@@ -958,8 +957,8 @@ std::expected<void, Error> SafeOutputFile::commit(std::uint64_t expected_size,
     const auto linked = stat_fd(file);
     if (!linked || linked->st_nlink != 1) {
         impl_->finished = true;
-        return std::unexpected(Error{ErrorCode::integrity_error,
-                                     "published file has an unexpected link count"});
+        return std::unexpected(
+            Error{ErrorCode::integrity_error, "published file has an unexpected link count"});
     }
     impl_->finished = true;
     (void)::fsync(directory); // best effort, as on Windows (no directory flush there)

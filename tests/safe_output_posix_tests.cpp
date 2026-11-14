@@ -89,8 +89,7 @@ void budget_unit_tests() {
     check(admit_output_component(max_output_depth - 1, 2, 1, true).has_value(),
           "last allowed directory depth");
     const auto too_deep = admit_output_component(max_output_depth, 2, 1, true);
-    check(!too_deep && too_deep.error().code == ErrorCode::resource_limit,
-          "directory depth limit");
+    check(!too_deep && too_deep.error().code == ErrorCode::resource_limit, "directory depth limit");
     check(admit_output_component(max_output_depth, 2, 1, false).has_value(),
           "file allowed in deepest directory");
     check(admit_output_component(0, max_output_path_units - 256, 255, false).has_value(),
@@ -129,19 +128,18 @@ void fault_injection_tests(const SafeOutputDirectory &directory, const fs::path 
         check_code(directory.write_new_file("proc-linked", data, crc), ErrorCode::output_conflict,
                    "procfs publication does not replace an existing name");
     }
-    const auto expect_clean_failure = [&](const char *name, const WriteFaults &faults,
-                                          ErrorCode code, std::stop_token stop,
-                                          const std::string &description,
-                                          std::string *message = nullptr) {
-        const ScopedWriteFaults scope{faults};
-        const auto result = directory.write_new_file(name, data, crc, stop);
-        check_code(result, code, description);
-        check(!fs::exists(output / name), description + ": no final file");
-        check(temporaries(output).empty(), description + ": no temporary file");
-        if (message != nullptr && !result) {
-            *message = result.error().message;
-        }
-    };
+    const auto expect_clean_failure =
+        [&](const char *name, const WriteFaults &faults, ErrorCode code, std::stop_token stop,
+            const std::string &description, std::string *message = nullptr) {
+            const ScopedWriteFaults scope{faults};
+            const auto result = directory.write_new_file(name, data, crc, stop);
+            check_code(result, code, description);
+            check(!fs::exists(output / name), description + ": no final file");
+            check(temporaries(output).empty(), description + ": no temporary file");
+            if (message != nullptr && !result) {
+                *message = result.error().message;
+            }
+        };
     {
         WriteFaults faults;
         faults.fail_write_at = 70'000;
@@ -171,8 +169,8 @@ void fault_injection_tests(const SafeOutputDirectory &directory, const fs::path 
             }
         };
         std::string message;
-        expect_clean_failure("cancel-before-commit", faults, ErrorCode::cancelled,
-                             stop.get_token(), "cancellation before commit", &message);
+        expect_clean_failure("cancel-before-commit", faults, ErrorCode::cancelled, stop.get_token(),
+                             "cancellation before commit", &message);
         check(message.find("before commit") != std::string::npos,
               "cancellation reached the pre-commit check");
     }
@@ -524,8 +522,7 @@ int main(int argc, char *argv[]) {
             if (child) {
                 check(!child->write_new_file("bad", abc, crc ^ 1), "child checksum cleanup");
                 check(child->discard_empty().has_value(), "owned empty directory cleanup");
-                check(!child->write_new_file("after-discard", abc, crc),
-                      "reject discarded handle");
+                check(!child->write_new_file("after-discard", abc, crc), "reject discarded handle");
             }
         }
         {

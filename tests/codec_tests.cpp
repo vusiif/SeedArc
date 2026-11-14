@@ -5,8 +5,11 @@
 #include "codec/codec.hpp"
 #include "seedarc/archive_index.hpp"
 #include "seedarc/store_archive.hpp"
-#ifdef _WIN32
 #include "test_fixture.hpp"
+
+// The archive half needs input enumeration and safe output: Windows, and Linux since ADR-0004.
+#if defined(_WIN32) || defined(__linux__)
+#define SEEDARC_ARCHIVE_TESTS 1
 #endif
 
 #include <algorithm>
@@ -77,8 +80,8 @@ std::vector<std::byte> text_data(std::size_t size) {
     return bytes;
 }
 
-#ifdef _WIN32
-// Archive tests below need input enumeration and safe output, which are Windows-only (Linux L2/L3).
+#ifdef SEEDARC_ARCHIVE_TESTS
+// Archive tests below need input enumeration and safe output (Windows; Linux per ADR-0004).
 std::vector<std::byte> read_all(const fs::path &path) {
     std::ifstream stream(path, std::ios::binary);
     std::vector<char> chars{std::istreambuf_iterator<char>{stream}, {}};
@@ -109,7 +112,7 @@ Snapshot snapshot(const fs::path &root) {
 
 bool no_leftovers(const fs::path &directory) {
     for (const auto &child : fs::directory_iterator(directory)) {
-        if (child.path().filename().wstring().starts_with(L".seedarc-")) {
+        if (child.path().filename().string().starts_with(".seedarc-")) {
             return false;
         }
     }
@@ -270,7 +273,7 @@ void codec_boundary_tests() {
 
 // --- archives ----------------------------------------------------------------------------------
 
-#ifdef _WIN32
+#ifdef SEEDARC_ARCHIVE_TESTS
 struct Variant {
     std::string name;
     Codec codec;
@@ -290,7 +293,12 @@ void archive_tests(const fs::path &work) {
     mixed.insert(mixed.end(), noise.begin(), noise.end());
     write_file(input / "sub" / "mixed.bin", mixed);
     write_file(input / "sub" / "zero", {});
+#ifdef _WIN32
     write_file(input / fs::path{L"sub/été.txt"}, make_data(2000, 3, 4));
+#else
+    // ASCII stand-in: Linux refuses non-ASCII names (ADR-0004 section 5, store_archive_tests).
+    write_file(input / "sub" / "ete.txt", make_data(2000, 3, 4));
+#endif
     const auto expected = snapshot(input);
 
     const std::vector<Variant> variants{{"store", Codec::store, std::nullopt},
@@ -445,15 +453,14 @@ int main(int argc, char *argv[]) {
                   << '\n';
         return failures == 0 ? 0 : 1;
     }
-#ifndef _WIN32
-    std::cerr << "archive codec tests need input enumeration and safe output (Windows only); "
+#ifndef SEEDARC_ARCHIVE_TESTS
+    std::cerr << "archive codec tests need input enumeration and safe output (Windows / Linux); "
                  "use --boundary-only\n";
     return 2;
 #else
     const auto base = fs::absolute(argv[1]).lexically_normal();
     fs::create_directories(base);
-    const auto work = base / ("m3-codec-" + std::to_string(GetCurrentProcessId()) + "-" +
-                              std::to_string(GetTickCount64()));
+    const auto work = base / ("m3-codec-" + test_fixture::unique_suffix());
     if (!fs::create_directory(work)) {
         return 2;
     }

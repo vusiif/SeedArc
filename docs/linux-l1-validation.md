@@ -1,6 +1,6 @@
 # Linux L1 验证记录（DEV-014）
 
-日期：2026-11-13。执行：DEV-014 子会话（由协调会话委派）。分支：`linux-l1`（WSL 克隆 `~/SeedArc`，基于 `9284eae`；本地提交，未推送、未合并）。构建说明见[开发说明第 7 节](development.md#7-wsl--linuxl1)，L2 / L3 草案见 [POSIX 文件系统草案](posix-filesystem-design.md)。
+日期：2026-11-13。执行：DEV-014 子会话（由协调会话委派）。分支：`linux-l1`（WSL 克隆 `~/SeedArc`，基于 `9284eae`；本地提交，未推送、未合并）。构建说明见[开发说明第 7 节](development.md#7-wsl--linuxl1--l2--l3)，L2 / L3 草案见 [POSIX 文件系统草案](posix-filesystem-design.md)。
 
 ## 1. 范围与结论
 

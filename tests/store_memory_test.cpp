@@ -13,12 +13,26 @@
 #include <string>
 #include <vector>
 
+#include "test_fixture.hpp"
+
+#ifdef _WIN32
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
 #include <windows.h>
 
 #include <psapi.h>
+#else
+#include <sys/resource.h>
+#endif
+
+#if defined(__SANITIZE_ADDRESS__)
+#define SEEDARC_ASAN 1
+#elif defined(__has_feature)
+#if __has_feature(address_sanitizer)
+#define SEEDARC_ASAN 1
+#endif
+#endif
 
 namespace fs = std::filesystem;
 using namespace seedarc::experimental;
@@ -43,14 +57,31 @@ class Generator {
     int shift_;
 };
 
+// Windows: peak working set. Linux: peak resident set size (getrusage ru_maxrss, KiB). The two
+// are different measures and their values are not directly comparable (ADR-0004 section 7).
 std::uint64_t peak_working_set() {
+#ifdef _WIN32
     PROCESS_MEMORY_COUNTERS counters{};
     counters.cb = sizeof(counters);
     if (!GetProcessMemoryInfo(GetCurrentProcess(), &counters, sizeof(counters))) {
         return 0;
     }
     return counters.PeakWorkingSetSize;
+#else
+    struct rusage usage{};
+    if (::getrusage(RUSAGE_SELF, &usage) != 0 || usage.ru_maxrss < 0) {
+        return 0;
+    }
+    return static_cast<std::uint64_t>(usage.ru_maxrss) * 1024;
+#endif
 }
+
+constexpr const char *peak_measure =
+#ifdef _WIN32
+    "peak working set";
+#else
+    "peak RSS (ru_maxrss)";
+#endif
 
 double mib(std::uint64_t bytes) { return static_cast<double>(bytes) / (1024.0 * 1024.0); }
 } // namespace
@@ -74,8 +105,7 @@ int main(int argc, char *argv[]) {
     const auto size = std::strtoull(argv[2], nullptr, 10) * 1024 * 1024;
     const auto base = fs::absolute(argv[1]).lexically_normal();
     fs::create_directories(base);
-    const auto work = base / ("m2-memory-" + std::to_string(GetCurrentProcessId()) + "-" +
-                              std::to_string(GetTickCount64()));
+    const auto work = base / ("m2-memory-" + test_fixture::unique_suffix());
     if (size == 0 || !fs::create_directory(work)) {
         return 1;
     }
@@ -132,11 +162,11 @@ int main(int argc, char *argv[]) {
         }
     }
     std::cout << "codec " << codec << "; archive " << mib(fs::file_size(archive)) << " MiB\n";
-    std::cout << "input " << mib(size) << " MiB; peak working set before " << mib(baseline)
+    std::cout << "input " << mib(size) << " MiB; " << peak_measure << " before " << mib(baseline)
               << " MiB, after " << mib(peak) << " MiB\n";
-#if defined(__SANITIZE_ADDRESS__)
+#if defined(SEEDARC_ASAN)
     (void)allowed_growth;
-    std::cout << "AddressSanitizer build: working set bound not asserted\n";
+    std::cout << "AddressSanitizer build: memory bound not asserted\n";
 #else
     // Chunk buffers, codec contexts and small I/O buffers are expected; the bound stays below
     // half the input size, so loading the file (or the archive) into memory would be caught.

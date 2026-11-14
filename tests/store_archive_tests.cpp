@@ -6,7 +6,12 @@
 #include "seedarc/safe_output.hpp"
 #include "seedarc/store_archive.hpp"
 #include "test_fixture.hpp"
+#ifdef _WIN32
 #include "win_test_support.hpp"
+#else
+#include <sys/stat.h>
+#include <unistd.h>
+#endif
 
 #include <algorithm>
 #include <chrono>
@@ -97,6 +102,17 @@ void write_file(const fs::path &path, std::span<const std::byte> bytes) {
 
 fs::path u8(std::u8string_view name) { return fs::path{std::u8string{name}}; }
 
+// Off Windows only the ASCII subset of the archive path profile exists (ADR-0004 section 5): the
+// fixtures use an ASCII stand-in there, and non_ascii_refusal_tests() checks the refusal.
+fs::path native_name([[maybe_unused]] std::u8string_view windows,
+                     [[maybe_unused]] std::string_view posix) {
+#ifdef _WIN32
+    return u8(windows);
+#else
+    return fs::path{std::string{posix}};
+#endif
+}
+
 Snapshot snapshot(const fs::path &root) {
     Snapshot result;
     for (const auto &item : fs::recursive_directory_iterator(root)) {
@@ -128,14 +144,16 @@ double seconds_since(std::chrono::steady_clock::time_point start) {
 void build_tree(const fs::path &root) {
     fs::create_directories(root / "a" / "deep" / "er" / "still");
     fs::create_directories(root / "empty-dir" / "nested-empty");
-    fs::create_directories(root / u8(u8"中文目录"));
+    const auto named = root / native_name(u8"中文目录", "Mixed Dir");
+    fs::create_directories(named);
     write_file(root / "a.txt", text("sorts between a and a/..."));
     write_file(root / "a" / "b.bin", random_bytes(10'000, 1));
     write_file(root / "a" / "zero", {});
     write_file(root / "a" / "deep" / "er" / "still" / "leaf", text("x"));
-    write_file(root / u8(u8"中文目录") / u8(u8"文件 名.txt"), text("non-ASCII directory and file"));
-    write_file(root / u8(u8"café.txt"), text("NFC e-acute"));
-    write_file(root / u8(u8"\U0001f600.bin"), random_bytes(300, 2));
+    write_file(named / native_name(u8"文件 名.txt", "file name.txt"),
+               text("non-ASCII directory and file"));
+    write_file(root / native_name(u8"café.txt", "cafe.txt"), text("NFC e-acute"));
+    write_file(root / native_name(u8"\U0001f600.bin", "#smile.bin"), random_bytes(300, 2));
     write_file(root / "with space.txt", text("space"));
     write_file(root / "UPPER.TXT", text("upper"));
 }
@@ -186,7 +204,7 @@ void round_trip_tests(const fs::path &work) {
         round_trip(work, "empty-file", input);
     }
     {
-        const auto input = work / u8(u8"单文件.dat");
+        const auto input = work / native_name(u8"单文件.dat", "single-file.dat");
         write_file(input, random_bytes(70'000, 3));
         CompressOptions options;
         options.chunk_size_bytes = 4096;
@@ -481,10 +499,11 @@ void rejected_input_tests(const fs::path &work) {
     fs::create_directory(outside);
     write_file(input / "real" / "file", text("inside"));
     write_file(outside / "secret", text("outside"));
+    const auto archive = work / "links.sarc";
+#ifdef _WIN32
     fs::create_directory(input / "link");
     const bool junction = seedarc_test::set_junction(input / "link", outside);
     check(junction, "create junction fixture");
-    const auto archive = work / "links.sarc";
     if (junction) {
         check_code(compress_archive(input, archive), ErrorCode::unsupported_feature,
                    "junction inside the input is rejected, not followed");
@@ -493,7 +512,38 @@ void rejected_input_tests(const fs::path &work) {
         check(!fs::exists(archive) && no_leftovers(work), "rejected input leaves no archive");
     }
     check(RemoveDirectoryW((input / "link").c_str()) != 0, "remove junction fixture");
-    check(read_all(outside / "secret") == text("outside"), "junction target untouched");
+#else
+    // Symbolic links to a directory, to a file, dangling, and as the input root.
+    fs::create_directory_symlink(outside, input / "link");
+    check_code(compress_archive(input, archive), ErrorCode::unsupported_feature,
+               "directory symlink inside the input is rejected, not followed");
+    check_code(compress_archive(input / "link", archive), ErrorCode::unsupported_feature,
+               "symlink as the input root is rejected");
+    fs::remove(input / "link");
+    fs::create_symlink(outside / "secret", input / "real" / "file-link");
+    check_code(compress_archive(input, archive), ErrorCode::unsupported_feature,
+               "file symlink deep inside the input is rejected");
+    fs::remove(input / "real" / "file-link");
+    fs::create_symlink(outside / "missing", input / "dangling");
+    check_code(compress_archive(input, archive), ErrorCode::unsupported_feature,
+               "dangling symlink inside the input is rejected");
+    fs::remove(input / "dangling");
+    // Devices, FIFOs and sockets are rejected (a FIFO is the one a user can create).
+    check(::mkfifo((input / "fifo").c_str(), 0600) == 0, "create FIFO fixture");
+    check_code(compress_archive(input, archive), ErrorCode::unsupported_feature,
+               "FIFO inside the input is rejected (and the open does not block)");
+    check_code(compress_archive(input / "fifo", archive), ErrorCode::unsupported_feature,
+               "FIFO as the input root is rejected");
+    fs::remove(input / "fifo");
+    check(!fs::exists(archive) && no_leftovers(work), "rejected input leaves no archive");
+    check(compress_archive(input, archive).has_value(), "input accepted once links are gone");
+    fs::remove(archive);
+    // An input on a file system outside the whitelist (procfs) is refused.
+    check_code(compress_archive("/proc/self/status", archive), ErrorCode::unsupported_feature,
+               "input on an unsupported file system (procfs) is rejected");
+    check(!fs::exists(archive), "refused procfs input leaves no archive");
+#endif
+    check(read_all(outside / "secret") == text("outside"), "link target untouched");
 
     // A name the archive path profile cannot store is an explicit error, never a silent rename.
     const auto odd = work / "odd-input";
@@ -507,6 +557,7 @@ void rejected_input_tests(const fs::path &work) {
     const auto busy = work / "busy-input";
     fs::create_directory(busy);
     write_file(busy / "log", text("still being written"));
+#ifdef _WIN32
     const auto writer =
         CreateFileW((busy / "log").c_str(), GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE,
                     nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
@@ -518,7 +569,50 @@ void rejected_input_tests(const fs::path &work) {
         CloseHandle(writer);
     }
     check(compress_archive(busy, archive).has_value(), "input readable once the writer closed");
+#else
+    // POSIX cannot refuse other writers (ADR-0004 section 4): an idle writer does not prevent
+    // compression; actual modification is detected instead (fault_injection_tests).
+    {
+        std::ofstream writer{busy / "log", std::ios::binary | std::ios::app};
+        check(writer.good(), "open concurrent writer");
+        check(compress_archive(busy, archive).has_value(),
+              "input held open (unmodified) is compressed on POSIX");
+    }
+    fs::remove(archive);
+    check(compress_archive(busy, archive).has_value(), "input readable once the writer closed");
+#endif
 }
+
+#ifndef _WIN32
+// ADR-0004 section 5: non-ASCII names are refused explicitly on Linux, on both sides, and
+// nothing is written.
+void non_ascii_refusal_tests(const fs::path &work) {
+    const auto input = work / "non-ascii-input";
+    fs::create_directory(input);
+    write_file(input / "plain.txt", text("ascii"));
+    write_file(input / u8(u8"café.txt"), text("NFC e-acute"));
+    const auto archive = work / "non-ascii.sarc";
+    check_code(compress_archive(input, archive), ErrorCode::unsupported_feature,
+               "non-ASCII input name refused on Linux");
+    check_code(compress_archive(input / u8(u8"café.txt"), archive), ErrorCode::unsupported_feature,
+               "non-ASCII input root name refused on Linux");
+    check(!fs::exists(archive) && no_leftovers(work), "refused input leaves no archive");
+    const auto payload = text("x");
+    const BlockDescriptor block{0, 1, 1, 0, 0, crc32c(payload)};
+    for (const char *path : {"caf\xc3\xa9.txt", "\xe4\xb8\xad", "\xf0\x9f\x98\x80"}) {
+        expect_rejected(work, std::string{"non-ASCII archive path "} + path,
+                        make_archive({{{path, false, 1, 0, 1}}, {block}}, payload, 1024),
+                        ErrorCode::unsupported_feature);
+    }
+    // Malformed UTF-8 stays an unsafe path, as on Windows.
+    expect_rejected(work, "malformed UTF-8 archive path",
+                    make_archive({{{"bad\xc0\xaf", false, 1, 0, 1}}, {block}}, payload, 1024),
+                    ErrorCode::unsafe_path);
+    fs::remove(input / u8(u8"café.txt"));
+    check(compress_archive(input, archive).has_value(), "ASCII-only input accepted");
+    fs::remove(archive);
+}
+#endif
 
 fs::path find_staging_directory(const fs::path &work) {
     for (const auto &item : fs::directory_iterator(work)) {
@@ -704,8 +798,17 @@ void staging_primitive_tests(const fs::path &work) {
         }
         check_code(directory->create_staging_child("final"), ErrorCode::output_conflict,
                    "staging refuses an existing final name");
+#ifdef _WIN32
         check_code(directory->create_staging_child("FINAL"), ErrorCode::output_conflict,
                    "staging name check is case-insensitive");
+#else
+        {
+            // Linux file systems are case-sensitive: "FINAL" is a different, free name.
+            auto upper = directory->create_staging_child("FINAL");
+            check(upper && upper->discard_empty().has_value(),
+                  "staging name check is case-sensitive on Linux");
+        }
+#endif
         check_code(directory->begin_file("final"), ErrorCode::output_conflict,
                    "file session refuses an existing name");
         check(no_leftovers(base), "refused staging leaves nothing");
@@ -791,15 +894,20 @@ int main(int argc, char *argv[]) {
     }
     const auto base = fs::absolute(argv[1]).lexically_normal();
     fs::create_directories(base);
-    const auto work = base / ("m2-store-" + std::to_string(GetCurrentProcessId()) + "-" +
-                              std::to_string(GetTickCount64()));
+    const auto work = base / ("m2-store-" + test_fixture::unique_suffix());
     if (!fs::create_directory(work)) {
         return 1;
     }
+#ifndef _WIN32
+    fs::permissions(work, fs::perms::owner_all, fs::perm_options::replace);
+#endif
     round_trip_tests(work);
     hostile_archive_tests(work);
     limit_and_conflict_tests(work);
     rejected_input_tests(work);
+#ifndef _WIN32
+    non_ascii_refusal_tests(work);
+#endif
     fault_injection_tests(work);
     staging_primitive_tests(work);
 

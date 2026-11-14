@@ -38,7 +38,8 @@ foreach(suite IN ITEMS archive path index)
     set_tests_properties(${suite}.boundaries PROPERTIES TIMEOUT 10)
 endforeach()
 
-if(WIN32)
+if(WIN32 OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    # File system tests: Windows (NT safe output) and Linux (ADR-0004) run the same test names.
     add_executable(seedarc_seed_archive_tests seed_archive_tests.cpp)
     target_link_libraries(seedarc_seed_archive_tests PRIVATE seedarc_seed_study)
     seedarc_target_defaults(seedarc_seed_archive_tests)
@@ -51,7 +52,12 @@ if(WIN32)
     add_test(NAME seed.adaptive_file COMMAND seedarc_seed_adaptive_tests "${PROJECT_SOURCE_DIR}/.sandbox-test")
     set_tests_properties(seed.adaptive_file PROPERTIES TIMEOUT 120)
 
-    add_executable(seedarc_safe_output_tests safe_output_tests.cpp)
+    # The primitives are platform specific; Linux has its own counterpart of the Windows test.
+    if(WIN32)
+        add_executable(seedarc_safe_output_tests safe_output_tests.cpp)
+    else()
+        add_executable(seedarc_safe_output_tests safe_output_posix_tests.cpp)
+    endif()
     target_link_libraries(seedarc_safe_output_tests PRIVATE SeedArc::core)
     # Internal test seam (fault injection, volume-root predicate); not a public header.
     target_include_directories(seedarc_safe_output_tests PRIVATE "${PROJECT_SOURCE_DIR}/core/filesystem")
@@ -82,9 +88,13 @@ if(WIN32)
     add_test(NAME codec.round_trip COMMAND seedarc_codec_tests "${PROJECT_SOURCE_DIR}/.sandbox-test")
     set_tests_properties(codec.round_trip PROPERTIES TIMEOUT 300)
 
-    # One large file through compress / verify / extract with a bound on the peak working set.
+    # One large file through compress / verify / extract with a bound on the peak working set
+    # (Windows) or peak resident set size (Linux, ru_maxrss); the two measures differ.
     add_executable(seedarc_store_memory_test store_memory_test.cpp)
-    target_link_libraries(seedarc_store_memory_test PRIVATE SeedArc::core psapi)
+    target_link_libraries(seedarc_store_memory_test PRIVATE SeedArc::core)
+    if(WIN32)
+        target_link_libraries(seedarc_store_memory_test PRIVATE psapi)
+    endif()
     seedarc_target_defaults(seedarc_store_memory_test)
     add_test(NAME archive.store_bounded_memory COMMAND seedarc_store_memory_test "${PROJECT_SOURCE_DIR}/.sandbox-test" 64)
     set_tests_properties(archive.store_bounded_memory PROPERTIES TIMEOUT 600)
@@ -93,51 +103,30 @@ if(WIN32)
     add_test(NAME codec.lzma2_bounded_memory COMMAND seedarc_store_memory_test "${PROJECT_SOURCE_DIR}/.sandbox-test" 64 lzma2 32)
     set_tests_properties(codec.lzma2_bounded_memory PROPERTIES TIMEOUT 600)
 else()
-    # Linux L1: the in-memory codec boundary tests run everywhere; the archive half of
-    # codec_tests.cpp needs input enumeration and safe output (Windows only until L2 / L3).
+    # Other platforms: input enumeration and safe output return unsupported_feature. The codec
+    # boundary tests still run; the rest is listed as DISABLED ("Not Run"), not silently omitted.
     add_executable(seedarc_codec_tests codec_tests.cpp)
     target_link_libraries(seedarc_codec_tests PRIVATE SeedArc::core)
     target_include_directories(seedarc_codec_tests PRIVATE "${PROJECT_SOURCE_DIR}/core")
     seedarc_target_defaults(seedarc_codec_tests)
     add_test(NAME codec.boundary COMMAND seedarc_codec_tests --boundary-only)
     set_tests_properties(codec.boundary PROPERTIES TIMEOUT 60)
-
-    # Linux L3 (ADR-0004): POSIX counterpart of safe_output_tests.cpp.
-    add_executable(seedarc_safe_output_tests safe_output_posix_tests.cpp)
-    target_link_libraries(seedarc_safe_output_tests PRIVATE SeedArc::core)
-    target_include_directories(seedarc_safe_output_tests PRIVATE "${PROJECT_SOURCE_DIR}/core/filesystem")
-    seedarc_target_defaults(seedarc_safe_output_tests)
-    add_test(NAME filesystem.safe_output COMMAND seedarc_safe_output_tests "${PROJECT_SOURCE_DIR}/.sandbox-test")
-    set_tests_properties(filesystem.safe_output PROPERTIES TIMEOUT 30)
-
-    # Tests not yet ported to Linux. They are registered as DISABLED so that CTest lists them
-    # as "Not Run" instead of silently omitting them.
-    set(seedarc_skipped_tests
-        "seed.archive_integration|compresses real directory trees (input enumeration, L2)"
-        "seed.adaptive_file|reads real input files (input enumeration, L2)"
-        "archive.store_round_trip|compress + extract on disk (L2 + L3)"
-        "archive.store_acceptance|compress + extract on disk (L2 + L3)"
-        "codec.round_trip|archive half of codec_tests: compress + extract on disk (L2 + L3)"
-        "archive.store_bounded_memory|compress + extract on disk, Windows psapi (L2 + L3)"
-        "codec.zstd_bounded_memory|compress + extract on disk, Windows psapi (L2 + L3)"
-        "codec.lzma2_bounded_memory|compress + extract on disk, Windows psapi (L2 + L3)"
-        "cli.round_trip|CLI compress + extract on disk (L2 + L3)"
-        "cli.codec_round_trip|CLI compress + extract on disk (L2 + L3)")
-    foreach(entry IN LISTS seedarc_skipped_tests)
-        string(REPLACE "|" ";" fields "${entry}")
-        list(GET fields 0 name)
-        list(GET fields 1 reason)
-        add_test(NAME ${name} COMMAND "${CMAKE_COMMAND}" -E echo "skipped: ${reason}")
-        set_tests_properties(${name} PROPERTIES DISABLED TRUE LABELS "windows-only")
+    foreach(name IN ITEMS seed.archive_integration seed.adaptive_file filesystem.safe_output
+            archive.store_round_trip archive.store_acceptance codec.round_trip
+            archive.store_bounded_memory codec.zstd_bounded_memory codec.lzma2_bounded_memory
+            cli.round_trip cli.codec_round_trip)
+        add_test(NAME ${name} COMMAND "${CMAKE_COMMAND}" -E echo "skipped: no file system backend")
+        set_tests_properties(${name} PROPERTIES DISABLED TRUE LABELS "no-filesystem-backend")
     endforeach()
 endif()
 
 set(cli_cases help short_help help_command version missing unknown extra search benchmark
     compress_usage extract_usage verify_usage verify_missing codec_usage)
-if(WIN32)
+if(WIN32 OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
     list(APPEND cli_cases round_trip codec_round_trip)
-else()
-    list(APPEND cli_cases posix_unsupported)
+endif()
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    list(APPEND cli_cases posix_refusals)
 endif()
 foreach(case IN LISTS cli_cases)
     add_test(NAME cli.${case}

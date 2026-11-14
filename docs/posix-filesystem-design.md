@@ -1,6 +1,8 @@
 # POSIX 输入枚举（L2）与安全输出（L3）设计草案
 
-> 状态：**草案，未实现、未评审、未冻结**（2026-11-13，DEV-014 附带）。L1 中 Linux 上 `InputTree::open` 与 `SafeOutputDirectory` 一律返回 `unsupported_feature`；本文只记录候选方案，供后续 L2 / L3 立项。L3 实现前须先写 ADR，并按 [memory-safety](memory-safety.md) 与 [testing](testing.md) 做完整安全验收。
+> **已被 [ADR-0004](decisions/0004-posix-filesystem.md) 取代**（2026-11-13）：实现以 ADR 为准，本文只保留 L1 时的原始草案；其中与 ADR 不同的地方（例如不使用 `openat2`、增加目标目录权限门槛、非 ASCII 名字暂不支持）以 ADR 为准。
+>
+> 原状态：**草案，未实现、未评审、未冻结**（2026-11-13，DEV-014 附带）。L1 中 Linux 上 `InputTree::open` 与 `SafeOutputDirectory` 一律返回 `unsupported_feature`；本文只记录候选方案，供后续 L2 / L3 立项。L3 实现前须先写 ADR，并按 [memory-safety](memory-safety.md) 与 [testing](testing.md) 做完整安全验收。
 
 输入：[ADR-0001](decisions/0001-experimental-container-and-output.md)（Windows 安全输出）、[ADR-0002](decisions/0002-m2-store-archive-constraints.md)（事务语义、输入枚举规则）、[Linux L1 验证记录](linux-l1-validation.md)。
 
