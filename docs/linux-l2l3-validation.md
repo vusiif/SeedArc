@@ -111,10 +111,25 @@ Linux 专有负面测试：组 / 其他人可写且无粘滞位的目录被拒�
 - 拒绝：已存在的目标、输入中的符号链接与 FIFO、经符号链接的输出父目录、组可写父目录、`/mnt/c`（9p）均退出码 5；粘滞 1777 目录与 tmpfs 成功。
 - 取消：120 MB 输入 `--codec lzma2 --level 9` 压缩 2 s 后 `SIGINT` → 退出码 4、无归档；解压 0.3 s 后 `SIGTERM` → 退出码 4、无目标与暂存目录。
 
-## 7. 未运行 / 限制
+## 7. Windows 侧验证（3f8d84c）
+
+2026-11-14，由协调会话执行：把本分支取到 Windows 仓库，记为 `refs/remotes/wsl/linux-l2l3`，在分离的 worktree `C:\Users\IceLolly\Music\Clion\SeedArc-winverify` 中运行，没有动 Windows 主检出。环境：`VCPKG_ROOT` 为 VS Build Tools 自带的 vcpkg，`SEEDARC_UCRT64_ROOT=C:/msys64/ucrt64`。每个 preset 依次运行 `cmake --preset <p> --fresh`、`cmake --build --preset <p> --parallel --clean-first`、`ctest --preset <p> --output-on-failure`。
+
+| 配置 | 警告 | CTest |
+| --- | --- | --- |
+| msvc-vs2026-debug / msvc-vs2026-release | 0 | 各 36/36 |
+| gcc-ucrt64-debug / gcc-ucrt64-release | 0 | 各 36/36 |
+| clang-ucrt64-debug / clang-ucrt64-release | 0 | 各 36/36 |
+| MSVC ASan（Release，独立目录 `build/msvc-asan-wv`，vcpkg 工具链，`x64-windows-static-md`，CXX `/EHsc /fsanitize=address /Zi`，链接 `/DEBUG /INCREMENTAL:NO`，PATH 加 VC Tools `bin\Hostx64\x64`） | 0 | 36/36，无 AddressSanitizer 报告 |
+
+Windows 上是 36 项，因为 `cli.posix_refusals` 只在 Linux 注册，这符合预期。跑完后 `.sandbox-test` 为空，worktree 的 `git status` 干净。日志在 `C:\Users\IceLolly\Music\Clion\SeedArc-winverify\build\winverify-*.log`，汇总在 `winverify-summary.txt`。
+
+Windows 侧本轮**未运行**：msvc-fuzz、CLion 诊断（MCP 断开）、20 次重复测试。
+
+## 8. 未运行 / 限制
 
 - 只在 WSL（ext4 / tmpfs）上运行；xfs、btrfs 在白名单中但**未实测**；旧内核（< 6.10）上 `AT_EMPTY_PATH` 失败后走 `/proc` 回退这一真实分支未在旧内核上运行（只通过 `force_proc_link` 在新内核上测试回退本身）。
 - 测试以普通用户运行；以 root 运行时只读目录、受保护父目录等断言的含义不同（部分断言在 root 下跳过）。
-- Windows 侧本轮未构建、未测试（协调会话指示 Windows 验证与合并暂缓）；改动的共享测试文件与 CLI 在 Windows 上的编译需合并前确认。
-- CLion 诊断未运行（MCP 连接失败，且 IDE 打开的是 Windows 检出）；clang-tidy 未运行。
+- Windows 侧已在 `3f8d84c` 上验证通过（见 §7），但 msvc-fuzz 和 Windows 上的 20 次重复测试都没有运行。
+- CLion 诊断未运行，Linux 和 Windows 两侧都没有（MCP 连接失败）；clang-tidy 也未运行。
 - 服务器长测未做；归档格式未改。
