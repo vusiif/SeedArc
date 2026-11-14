@@ -1,6 +1,6 @@
 # SeedArc 当前状态与协作交接
 
-更新日期：2026-11-12。此文件是当前进度入口；[开发计划](docs/development-plan.md) 保存长期路线，[research](research/README.md) 保存研究证据。
+更新日期：2026-11-14。此文件是当前进度入口；[开发计划](docs/development-plan.md) 保存长期路线，[research](research/README.md) 保存研究证据。
 
 ## 当前基线
 
@@ -55,7 +55,7 @@
 | DEV-001 | M0 工程骨架 | 主 Agent | CMake 配置、core、cli、tests、构建说明与 STATUS | 完成 | 六套配置各 13/13，ASan 13/13、格式及静态检查通过；见 [M0 记录](docs/m0-validation.md) |
 | REV-001 | 外部审查阶段 1 修复 | 主 Agent | README、开发计划、验证记录、ADR、CLI 提示、error.hpp、archive.hpp、safe_output、相关测试、ADR-0002 | 待验收 | 审查原文 [docs/review_results/](docs/review_results/SeedArc_项目代码审查.md) 未改动。采纳：状态统一到 STATUS；CLI 提示去里程碑化；新增 `ErrorCode::cancelled`；`max_blocks` 1000000→262144 并加 `limits_are_coherent` 与边界测试；M2 约束写入 [ADR-0002](docs/decisions/0002-m2-store-archive-constraints.md)。延后：流式写出 / 事务 / 完整索引（M2）、CI（需用户决定，Linux 需先定 POSIX 路径规则）、CRC32C 加速（先测量）。六套 + ASan 18/18、format / tidy 通过；CLion（前台、逐个打开）复查 6 个改动文件无 ERROR，仅风格提示；safe_output.cpp 两条 `Clang-Tidy: Potential memory leak`（第 248 行 `new (storage.data()) FILE_RENAME_INFO{}` 及其在析构处的报告点）判为误报：placement new 不分配堆内存，对象可平凡析构，存储归 `std::vector` 所有；未压制检查 |
 | DEV-003 | M2 Store 归档端到端 | 原实现 / 修复会话；本轮主 Agent 独立验收 | core、cli、tests、fuzz、ADR-0002、M2 记录、README、STATUS | 完成 | P1 / P2 独立复验通过：Release / ASan 各 25/25，IDE Debug 定向回归成功，4 文件完整诊断无 ERROR；本轮未改实现、未提交推送；[验收记录](docs/m2-acceptance.md) |
-| DEV-013 | 跨文件共享字典可行性（阶段 D）、r2 分组语料、G5 设计 | 主 Agent（B2 协调会话委派） | core/codec/dictionary.*、core/CMakeLists.txt（一个研究目标）、tests/codec_dictionary_tests.cpp 与 tests/CMakeLists.txt、research/tools/dict_study.cpp 与 CMakeLists、research/scripts/b2_corpus_r2.py / b2_dictionary.py / README、research/datasets/b2r5-corpus-r1*（缺陷登记）/ r2*、research/ideas/shared-dictionary-r1.md / seed-ablation-r1.md、runs 20261113-dict-*、20261112-b2-independent-main-001/record.md（更正）、STATUS | 完成，待用户评估 | dev 252 次 + test 90 次往返全部一致，同组产物相同；5 种损坏或截断的容器都被拒绝；`codec.dictionary_research` 通过；MSVC Release / ASan、GCC Debug / Release、Clang Debug / Release 全量 CTest 各 37/37（新增 codec.dictionary_research），构建 0 警告，clang-format 通过，Clang Debug 下研究工具 `seedarc_dict_study` 也编译通过；**CLion 阶段诊断没有做**：CLion MCP 无法连接（ECONNREFUSED） |
+| DEV-013 | 跨文件共享字典可行性（阶段 D）、r2 分组语料、G5 设计 | 主 Agent（B2 协调会话委派） | core/codec/dictionary.*、core/CMakeLists.txt（一个研究目标）、tests/codec_dictionary_tests.cpp 与 tests/CMakeLists.txt、research/tools/dict_study.cpp 与 CMakeLists、research/scripts/b2_corpus_r2.py / b2_dictionary.py / README、research/datasets/b2r5-corpus-r1*（缺陷登记）/ r2*、research/ideas/shared-dictionary-r1.md / seed-ablation-r1.md、runs 20261113-dict-*、20261112-b2-independent-main-001/record.md（更正）、STATUS | 完成，待用户评估 | dev 252 次 + test 90 次往返全部一致，同组产物相同；5 种损坏或截断的容器都被拒绝；`codec.dictionary_research` 通过；MSVC Release / ASan、GCC Debug / Release、Clang Debug / Release 全量 CTest 各 37/37（新增 codec.dictionary_research），构建 0 警告，clang-format 通过，Clang Debug 下研究工具 `seedarc_dict_study` 也编译通过；CLion 阶段诊断（2026-11-14，`errorsOnly=false`）：没有 ERROR，删掉了 `dict_study.cpp` 中未使用的 `<map>`，保留的 WARN 及理由见 [L2 / L3 记录 §8.4](docs/linux-l2l3-validation.md)。合并后 `fbeffb4` 两个平台的全量矩阵见同一记录 §8 |
 | DEV-012 | 冻结 r1、独立语料、B2-r5 P1 评估、Seed 消融设计、夹具清理统一 | 主 Agent（B2 协调会话委派） | research/configs/adaptive-file-r1.frozen.json、research/datasets/b2r5-corpus-r1*、research/scripts/b2_corpus.py / b2_independent.py 与 README、research/ideas/seed-ablation-r1.md、seed-adaptive-file-r5.md、新 run 20261112-b2-independent-main-001、tests/test_fixture.hpp（由 seed_test_fixture.hpp 改名并扩充）、tests/{seed_adaptive,seed_archive,store_archive,codec,store_acceptance}_tests.cpp、STATUS | 完成，待用户评估 | 350/350 往返、同组哈希一致；MSVC Release / ASan、GCC Debug / Release、Clang Debug / Release 全量各 36/36，构建 0 警告；GCC Debug 与 Clang Debug 下改动的 5 个测试各重复 50 次，0 失败、0 超时、无残留夹具；CLion 6/6 文件 0 ERROR / 0 WARN（store_archive_tests.cpp 在前台补查） |
 | DEV-011 | `seed.archive_integration` 偶发失败排查 | 主 Agent（B2 协调会话委派，用户同意） | tests/seed_archive_tests.cpp、tests/seed_adaptive_tests.cpp、新 tests/seed_test_fixture.hpp、docs/b2-compression-validation.md、STATUS | 完成 | 根因：外部组件在删除后短暂列出的“原名大写 + .tmp”条目干扰了测试计数，另有 libstdc++ remove_all 死循环；实现无残留、无句柄泄漏。Release/ASan 全量 36/36；重复运行 Release 1000、ASan 200、Clang 1500 次 0 失败；见验证记录 DEV-011 节 |
 | DEV-010 | B2-r5 P0 可复现基线、Adaptive-file 与统一预算对照 | 主 Agent（B2 协调会话委派） | core/seed/adaptive_file.*、core/CMakeLists 一行、research/tools/seed_archive.cpp（r5 输出、adaptive-file / oracle-file）、tests/seed_adaptive_tests.cpp 与 tests/CMakeLists、research/scripts/b2_adaptive.py 与 README、research/ideas/seed-adaptive-file-r5.md、新 run 20261112-b2-adaptive-main-001、STATUS | 完成 P0，待用户评估 | Release 36/36；195/195 往返，P0-A 45 组同哈希；ASan 36/36，Clang 定向通过（修 1 条有效警告后 0 警告），最终二进制复核 35 例一致；CLion 6 文件 0 ERROR，2 条 WARN 已修；既有 seed.archive_integration 偶发失败已由 DEV-011 修复 |
@@ -68,7 +68,7 @@
 | IDE-002 | CLion 默认 Debug 依赖配置修复 | 主 Agent | 本地 CLion Debug profile、开发说明、M3 记录、STATUS | 完成 | MCP 重新加载成功；确认 MSVC / C++23 模式与 vcpkg 依赖；IDE CLI 版本、codec 测试均 exitCode=0，CMake 文件完整诊断无问题，见 M3 记录末节 |
 | ACC-003 | M3 独立验收 | 本轮主 Agent；只读子审查 m3_review | STATUS、M3 验收记录；不改原实现 | 完成 | Release / ASan 各 30/30；format / diff 检查通过，IDE 13/14 文件完整无 ERROR；1 文件人工补查仅拼写提示；IDE 运行已在 IDE-002 补齐，详见 [M3 记录](docs/m3-validation.md#独立验收2026-11-12) |
 | DEV-004 | M3 Zstd / LZMA2 块编码 | 主 Agent | vcpkg manifest、CMakePresets、core/codec、archive / store_archive / safe_output、CLI、tests、fuzz 语料、ADR-0003、M3 记录、README、开发说明、STATUS | 完成（独立验收通过） | zstd 1.5.7 / liblzma 5.8.4 经 vcpkg 钉住；七套配置 + ASan 30/30，format / tidy 通过，archive Fuzz 180 s 无崩溃；CLion 诊断 13 个文件无 ERROR，修 2 条 WARN 后 MSVC Release / Clang Debug / GCC Release 复测 30/30；[M3 记录](docs/m3-validation.md) |
-| DEV-014 | Linux L1 + L2 / L3：WSL 构建与 presets；POSIX 输入枚举与安全输出（ADR-0004）；测试移植到与 Windows 同广度 | DEV-014 子会话（协调会话委派） | WSL 克隆分支 `linux-l1`（L1）与 `linux-l2l3`（L2 / L3）：CMakePresets、根 / core / cli / tests / fuzz CMake、core/filesystem/{archive_path,safe_output,input_tree}.cpp 与新 *_posix.cpp / posix_common.hpp、safe_output.hpp、cli/main.cpp、tests 下 FS 测试与 test_fixture、新 safe_output_posix_tests.cpp、check_cli.cmake、ADR-0004、docs/development.md §7、linux-l1 / linux-l2l3 验证记录、posix 草案、STATUS | 待验收（未推送 / 未合并） | L2 / L3：GCC / Clang Debug / Release 与 ASan+UBSan 各 37/37（36 项与 Windows 同名 + `cli.posix_refusals`，无 DISABLED），全量重编 0 警告；FS 九项各重复 20 次 0 失败；fuzz 三目标各 300 s 0 崩溃；内存有界在上限内（RSS 口径）。Windows（3f8d84c，协调会话在独立 worktree 中验证）：MSVC / UCRT64 GCC / UCRT64 Clang 的 Debug / Release 与 MSVC ASan 各 36/36，0 警告，无 ASan 报告；Windows 上的 msvc-fuzz 和 20 次重复测试未跑。非 ASCII 名字按用户选择暂不支持；CLion 未查。见 [L2 / L3 记录](docs/linux-l2l3-validation.md)、[L1 记录](docs/linux-l1-validation.md) |
+| DEV-014 | Linux L1 + L2 / L3：WSL 构建与 presets；POSIX 输入枚举与安全输出（ADR-0004）；测试移植到与 Windows 同广度 | DEV-014 子会话（协调会话委派） | WSL 克隆分支 `linux-l1`（L1）与 `linux-l2l3`（L2 / L3）：CMakePresets、根 / core / cli / tests / fuzz CMake、core/filesystem/{archive_path,safe_output,input_tree}.cpp 与新 *_posix.cpp / posix_common.hpp、safe_output.hpp、cli/main.cpp、tests 下 FS 测试与 test_fixture、新 safe_output_posix_tests.cpp、check_cli.cmake、ADR-0004、docs/development.md §7、linux-l1 / linux-l2l3 验证记录、posix 草案、STATUS | 已合并到 main（`fbeffb4`，已推送），待用户验收 | L2 / L3：GCC / Clang Debug / Release 与 ASan+UBSan 各 37/37（36 项与 Windows 同名 + `cli.posix_refusals`，无 DISABLED），全量重编 0 警告；FS 九项各重复 20 次 0 失败；fuzz 三目标各 300 s 0 崩溃；内存有界在上限内（RSS 口径）。Windows（3f8d84c，协调会话在独立 worktree 中验证）：MSVC / UCRT64 GCC / UCRT64 Clang 的 Debug / Release 与 MSVC ASan 各 36/36，0 警告，无 ASan 报告；合并后 `fbeffb4`（2026-11-14）：全量矩阵 Windows 7 套各 37/37、Linux 5 套各 38/38，0 警告，没有 sanitizer 报告；msvc-fuzz 与 clang-linux-fuzz 三个目标各 300 s，0 崩溃；两个平台各 20 次重复测试，0 失败；xfs / btrfs / tmpfs / ext4 都是 12/12；印度服务器内核 6.8 上 12/12，strace 证实走了 `/proc/self/fd` 发布回退；CLion 诊断没有 ERROR（POSIX 源文件在 Windows IDE 中没有覆盖）。非 ASCII 名字按用户选择暂不支持。见 [L2 / L3 记录](docs/linux-l2l3-validation.md)、[L1 记录](docs/linux-l1-validation.md) |
 | DEV-002 | M1 实验格式与安全 I/O 设计 | 主 Agent；两个已结束子任务 | 候选 ADR、archive / filesystem 模块、tests、验证记录 | 完成 | 用户 2026-11-11 验收。error 5（沙盒 ACL）定位、提交重命名修复；卷身份 / 深度预算 / 共享模式 / 故障注入 / Fuzz 完成；六套 + ASan 18/18，format / tidy 通过；CLion 诊断完成并修 1 个 ERROR；真实 SUBST 未测；[M1 交接](docs/m1-validation.md) |
 
 ## 验证与证据
@@ -85,7 +85,7 @@
 
 ## 阻塞、限制与下一步
 
-- DEV-013 验证情况：已运行 dev 调参（run 001 因路径问题失败，记录保留；run 002 共 252 次）、test 正式评估一次（90 次），每次都逐字节往返，同组产物一致；5 种损坏或截断的容器都被拒绝；6 套配置全量 CTest 37/37。**没有验证的**：CLion 阶段诊断（MCP 断开，需要恢复连接后补做 `errorsOnly=false`）；Fuzz、UBSan、非 Windows 平台上的实验；冷缓存与多机复现；研究容器的流式写出和原子提交（本来就没有实现）。实验结论只适用于 r2 test 的三类文本数据（11.6 MB / 2,294 个文件），r2 test 已用过一次。
+- DEV-013 验证情况：已运行 dev 调参（run 001 因路径问题失败，记录保留；run 002 共 252 次）、test 正式评估一次（90 次），每次都逐字节往返，同组产物一致；5 种损坏或截断的容器都被拒绝；6 套配置全量 CTest 37/37。CLion 阶段诊断已于 2026-11-14 补做（见 [L2 / L3 记录 §8.4](docs/linux-l2l3-validation.md)）；合并后 `codec.dictionary_research` 在 Linux GCC / Clang / ASan+UBSan 下也通过。**没有验证的**：针对字典适配器的专门 Fuzz；字典实验在非 Windows 平台上的重跑；冷缓存与多机复现；研究容器的流式写出和原子提交（本来就没有实现）。实验结论只适用于 r2 test 的三类文本数据（11.6 MB / 2,294 个文件），r2 test 已用过一次。
 
 - DEV-013 后续（尚未实施）：(1) G5 按 seed-ablation r2 的设计实现时，只能在 r2 dev 上开发，评估需要新的留出集（r2 test 已用过一次）；(2) 固实压缩作为对照方向；(3) 若要让字典进入生产路径，需先做格式设计并写 ADR（C 级，涉及格式），并改为流式写出和原子提交；(4) 研究工具目前把整个输入读进内存，压缩内存数字不能代表流式实现。Linux 移植（DEV-014）由另一会话在 WSL 的 `linux-l1` 分支进行，`dictionary.cpp` 和 `dict_study.cpp` 都没有新增 Windows 专用代码（计时与内存在 `_WIN32` 之外改用 getrusage）。
 
@@ -113,7 +113,17 @@
 - **M2 独立验收历史**：首轮 Release 24/24，但新增回归在 Release / CLion Debug 复现两项缺陷而未通过；本轮修复后已通过上述独立复验。历史失败、修复、最新证据分别保留在 [验收记录](docs/m2-acceptance.md)，不删除负面证据。需要 IDE 前台时先提醒用户配合。
 - Git 仓库属主为沙盒账户，当前用户执行 git 报 dubious ownership；本轮仅以单次 `git -c safe.directory=…` 读取状态，未修改全局 Git 配置（是否添加 safe.directory 由用户决定）。
 - 2026-11-12 用户确认 CLion 改为阶段性集中检查：日常小步修改运行编译器 / 测试 / 格式检查，完整研究迭代、功能接入或里程碑验收前统一检查相关文件；IDE 独有问题、配置问题及用户指定提示按需提前检查，纯文档修改免检。所有 Agent 遵守，协调者可集成后统一检查；异常记录未覆盖范围并继续独立工作，不冒充通过。规则已同步 AGENTS.md 与开发说明。需要诊断时仍先确认前台，逐文件打开再查询。历史 REV-001 诊断证据保留于任务表。
-- DEV-014（2026-11-13，Linux，分支 `linux-l2l3` 未推送，包含 `linux-l1`）：用户决定先只推进 Linux。L2 / L3 按 [ADR-0004](docs/decisions/0004-posix-filesystem.md) 实现，compress / verify / extract 在 Linux 上端到端可用，测试广度与 Windows 相同（见 [L2 / L3 记录](docs/linux-l2l3-validation.md)）。用户选定方案 A：非 ASCII 文件名在 Linux 上明确拒绝，Unicode 路径规则另行立项。与 Windows 的剩余差异见 ADR-0004 §9。Windows 侧构建与全量测试已在 3f8d84c 上通过（见 L2 / L3 记录 §7）。合并前待办：CLion 诊断、Windows msvc-fuzz 与 20 次重复测试、xfs / btrfs 与旧内核（`/proc` 发布回退）实测、服务器长测（`in-long-task`）。
+- DEV-014（2026-11-13，Linux，分支 `linux-l2l3` 未推送，包含 `linux-l1`）：用户决定先只推进 Linux。L2 / L3 按 [ADR-0004](docs/decisions/0004-posix-filesystem.md) 实现，compress / verify / extract 在 Linux 上端到端可用，测试广度与 Windows 相同（见 [L2 / L3 记录](docs/linux-l2l3-validation.md)）。用户选定方案 A：非 ASCII 文件名在 Linux 上明确拒绝，Unicode 路径规则另行立项。与 Windows 的剩余差异见 ADR-0004 §9。Windows 侧构建与全量测试已在 3f8d84c 上通过（见 L2 / L3 记录 §7）。2026-11-14 用户同意后合并到 main（`fbeffb4`，合并前先提交了 DEV-013 `1b04a14`）并推送。合并后补做了这些项目，结果见 L2 / L3 记录 §8：
+- 两个平台的全量矩阵；
+- 两个平台的 fuzz 与 20 次重复测试；
+- xfs / btrfs 实测（WSL 回环镜像，由用户挂载）；
+- 旧内核实测（印度服务器，6.8.0）；
+- CLion 诊断。
+
+仍未做：
+- 服务器上的长时间压缩测试（性能 / 压力）；
+- POSIX 源文件的 IDE 检查与 clang-tidy；
+- Linux Unicode 路径支持（另行立项）。
 
 ## 更新约定
 
