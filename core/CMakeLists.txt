@@ -27,4 +27,12 @@ if((BUILD_TESTING AND NOT SEEDARC_BUILD_FUZZERS) OR SEEDARC_BUILD_RESEARCH_TOOLS
         "${CMAKE_CURRENT_SOURCE_DIR}/include")
     target_include_directories(seedarc_seed_study PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
     seedarc_target_defaults(seedarc_seed_study)
+
+    # DEV-013: research-only zstd dictionary adapter. Kept out of libseedarc; zstd headers stay
+    # inside codec/ (ADR-0003). The production archive format and decoder do not use it.
+    add_library(seedarc_codec_dictionary STATIC codec/dictionary.cpp)
+    target_link_libraries(seedarc_codec_dictionary PUBLIC SeedArc::core PRIVATE zstd::libzstd)
+    target_include_directories(seedarc_codec_dictionary PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    seedarc_target_defaults(seedarc_codec_dictionary)
 endif()

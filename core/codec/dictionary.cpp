@@ -61,14 +61,14 @@ std::expected<void, Error> check_dictionary(std::span<const std::byte> dictionar
 } // namespace
 
 std::uint32_t dictionary_id(std::span<const std::byte> dictionary) noexcept {
-    return dictionary.empty() ? 0U
-                              : static_cast<std::uint32_t>(
-                                    ZDICT_getDictID(dictionary.data(), dictionary.size()));
+    return dictionary.empty()
+               ? 0U
+               : static_cast<std::uint32_t>(ZDICT_getDictID(dictionary.data(), dictionary.size()));
 }
 
-std::expected<std::vector<std::byte>, Error>
-train_dictionary(std::span<const std::byte> samples, std::span<const std::size_t> sizes,
-                 std::size_t capacity) {
+std::expected<std::vector<std::byte>, Error> train_dictionary(std::span<const std::byte> samples,
+                                                              std::span<const std::size_t> sizes,
+                                                              std::size_t capacity) {
     if (capacity < min_dictionary_bytes || capacity > max_dictionary_bytes) {
         return std::unexpected(Error{ErrorCode::invalid_argument, "dictionary capacity"});
     }
@@ -79,13 +79,12 @@ train_dictionary(std::span<const std::byte> samples, std::span<const std::size_t
         return std::unexpected(Error{ErrorCode::invalid_argument, "sample sizes do not add up"});
     }
     std::vector<std::byte> dictionary(capacity);
-    const auto result =
-        ZDICT_trainFromBuffer(dictionary.data(), dictionary.size(), samples.data(), sizes.data(),
-                              static_cast<unsigned>(sizes.size()));
+    const auto result = ZDICT_trainFromBuffer(dictionary.data(), dictionary.size(), samples.data(),
+                                              sizes.data(), static_cast<unsigned>(sizes.size()));
     if (ZDICT_isError(result) != 0) {
-        return std::unexpected(Error{ErrorCode::unsupported_feature,
-                                     std::string{"dictionary training failed: "} +
-                                         ZDICT_getErrorName(result)});
+        return std::unexpected(
+            Error{ErrorCode::unsupported_feature,
+                  std::string{"dictionary training failed: "} + ZDICT_getErrorName(result)});
     }
     dictionary.resize(result);
     if (auto checked = check_dictionary(dictionary); !checked) {
@@ -118,7 +117,8 @@ DictionaryEncoder::create(std::uint32_t level, std::span<const std::byte> dictio
     impl->context.reset(ZSTD_createCCtx());
     if (!impl->dictionary || !impl->context) {
         return std::unexpected(
-            Error{ErrorCode::resource_limit, "cannot allocate zstd dictionary encoder"});
+            Error{ErrorCode::integrity_error,
+                  "cannot load zstd dictionary (invalid content or out of memory)"});
     }
     return DictionaryEncoder{std::move(impl)};
 }
@@ -174,7 +174,8 @@ DictionaryDecoder::create(std::span<const std::byte> dictionary) {
     impl->context.reset(ZSTD_createDCtx());
     if (!impl->dictionary || !impl->context) {
         return std::unexpected(
-            Error{ErrorCode::resource_limit, "cannot allocate zstd dictionary decoder"});
+            Error{ErrorCode::integrity_error,
+                  "cannot load zstd dictionary (invalid content or out of memory)"});
     }
     impl->id = dictionary_id(dictionary);
     impl->size = dictionary.size();
@@ -209,9 +210,8 @@ std::expected<void, Error> DictionaryDecoder::decode(std::span<const std::byte> 
     if (!zstd_ok(ZSTD_DCtx_reset(context, ZSTD_reset_session_and_parameters))) {
         return std::unexpected(Error{ErrorCode::io_error, "cannot reset zstd decoder"});
     }
-    const auto result = ZSTD_decompress_usingDDict(context, output.data(), output.size(),
-                                                   input.data(), input.size(),
-                                                   impl_->dictionary.get());
+    const auto result = ZSTD_decompress_usingDDict(
+        context, output.data(), output.size(), input.data(), input.size(), impl_->dictionary.get());
     if (!zstd_ok(result)) {
         if (ZSTD_getErrorCode(result) == ZSTD_error_frameParameter_windowTooLarge ||
             ZSTD_getErrorCode(result) == ZSTD_error_memory_allocation) {

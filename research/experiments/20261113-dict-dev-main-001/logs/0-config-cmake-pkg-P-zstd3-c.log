@@ -1,0 +1,3 @@
+
+--- stderr ---
+input name cannot be stored (archive path contains a prohibited character): msys2-etc/pacman.d/gnupg/pubring.gpg~

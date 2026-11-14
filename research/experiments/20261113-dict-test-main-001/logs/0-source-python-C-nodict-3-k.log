@@ -1,0 +1,3 @@
+{"schema":"seedarc.dict-study.r1","mode":"peek","byte_exact":true,"samples":30,"median_ms":1.3379,"p90_ms":1.8353,"max_ms":3.0097,"peak_memory_bytes":14086144,"peak_memory_metric":"PeakWorkingSetSize"}
+
+--- stderr ---

@@ -1,0 +1,1761 @@
+{
+  "phase": "test",
+  "summary": {
+    "test/config-cmake-pkg|C-dict-3-D64k-Tall": {
+      "dataset": "test/config-cmake-pkg",
+      "config": "C-dict-3-D64k-Tall",
+      "kind": "container",
+      "bytes": 586407,
+      "parts": {
+        "header": 32,
+        "dictionary": 65536,
+        "group_table": 336,
+        "index": 24194,
+        "data": 496309
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "trained",
+      "training_input_bytes": 1997277,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 263.1468,
+        "median": 254.427,
+        "p10": 185.918,
+        "p90": 404.615,
+        "min": 185.918,
+        "max": 404.615
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 250.0,
+        "median": 250,
+        "p10": 187.5,
+        "p90": 343.75,
+        "min": 187.5,
+        "max": 343.75
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 27.69212,
+        "median": 26.3682,
+        "p10": 24.8972,
+        "p90": 33.1144,
+        "min": 24.8972,
+        "max": 33.1144
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 31.25,
+        "median": 31.25,
+        "p10": 31.25,
+        "p90": 31.25,
+        "min": 31.25,
+        "max": 31.25
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 0.76424,
+        "median": 0.7494,
+        "p10": 0.5963,
+        "p90": 0.9566,
+        "min": 0.5963,
+        "max": 0.9566
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 0.96574,
+        "median": 0.915,
+        "p10": 0.8122,
+        "p90": 1.2007,
+        "min": 0.8122,
+        "max": 1.2007
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 160.6472,
+        "median": 159.367,
+        "p10": 106.682,
+        "p90": 244.818,
+        "min": 106.682,
+        "max": 244.818
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 33.90116,
+        "median": 30.7189,
+        "p10": 28.4511,
+        "p90": 45.3333,
+        "min": 28.4511,
+        "max": 45.3333
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 67.57545999999999,
+        "median": 58.4111,
+        "p10": 50.0694,
+        "p90": 113.037,
+        "min": 50.0694,
+        "max": 113.037
+      },
+      "peak_compress_bytes": 21762048,
+      "peak_extract_bytes": 10833920
+    },
+    "test/config-cmake-pkg|C-dict-9-D64k-Tall": {
+      "dataset": "test/config-cmake-pkg",
+      "config": "C-dict-9-D64k-Tall",
+      "kind": "container",
+      "bytes": 525792,
+      "parts": {
+        "header": 32,
+        "dictionary": 65536,
+        "group_table": 336,
+        "index": 24194,
+        "data": 435694
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "trained",
+      "training_input_bytes": 1997277,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 278.9724,
+        "median": 253.224,
+        "p10": 213.781,
+        "p90": 436.045,
+        "min": 213.781,
+        "max": 436.045
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 281.25,
+        "median": 250,
+        "p10": 218.75,
+        "p90": 437.5,
+        "min": 218.75,
+        "max": 437.5
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 26.43242,
+        "median": 25.5665,
+        "p10": 24.4426,
+        "p90": 30.4823,
+        "min": 24.4426,
+        "max": 30.4823
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 18.75,
+        "median": 15.625,
+        "p10": 15.625,
+        "p90": 31.25,
+        "min": 15.625,
+        "max": 31.25
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 0.6852400000000001,
+        "median": 0.581,
+        "p10": 0.5447,
+        "p90": 0.9624,
+        "min": 0.5447,
+        "max": 0.9624
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 0.84482,
+        "median": 0.7709,
+        "p10": 0.6602,
+        "p90": 1.2432,
+        "min": 0.6602,
+        "max": 1.2432
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 147.55900000000003,
+        "median": 135.561,
+        "p10": 94.646,
+        "p90": 266.545,
+        "min": 94.646,
+        "max": 266.545
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 76.91803999999999,
+        "median": 72.4412,
+        "p10": 66.4341,
+        "p90": 101.017,
+        "min": 66.4341,
+        "max": 101.017
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 53.293600000000005,
+        "median": 52.1804,
+        "p10": 46.1781,
+        "p90": 66.732,
+        "min": 46.1781,
+        "max": 66.732
+      },
+      "peak_compress_bytes": 21790720,
+      "peak_extract_bytes": 10829824
+    },
+    "test/config-cmake-pkg|C-nodict-3": {
+      "dataset": "test/config-cmake-pkg",
+      "config": "C-nodict-3",
+      "kind": "container",
+      "bytes": 685195,
+      "parts": {
+        "header": 32,
+        "dictionary": 0,
+        "group_table": 336,
+        "index": 24194,
+        "data": 660633
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "none",
+      "training_input_bytes": 0,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 114.50327999999999,
+        "median": 102.644,
+        "p10": 84.2283,
+        "p90": 179.231,
+        "min": 84.2283,
+        "max": 179.231
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 115.625,
+        "median": 109.375,
+        "p10": 78.125,
+        "p90": 171.875,
+        "min": 78.125,
+        "max": 171.875
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 28.239120000000003,
+        "median": 25.5467,
+        "p10": 24.4001,
+        "p90": 38.5874,
+        "min": 24.4001,
+        "max": 38.5874
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 28.125,
+        "median": 31.25,
+        "p10": 15.625,
+        "p90": 31.25,
+        "min": 15.625,
+        "max": 31.25
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 0.8720399999999999,
+        "median": 0.8909,
+        "p10": 0.6586,
+        "p90": 1.1856,
+        "min": 0.6586,
+        "max": 1.1856
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 1.10412,
+        "median": 1.0779,
+        "p10": 0.8393,
+        "p90": 1.34,
+        "min": 0.8393,
+        "max": 1.34
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 0.0,
+        "median": 0,
+        "p10": 0,
+        "p90": 0,
+        "min": 0,
+        "max": 0
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 36.11036,
+        "median": 32.1978,
+        "p10": 30.27,
+        "p90": 50.8747,
+        "min": 30.27,
+        "max": 50.8747
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 77.32274,
+        "median": 70.371,
+        "p10": 53.1719,
+        "p90": 127.136,
+        "min": 53.1719,
+        "max": 127.136
+      },
+      "peak_compress_bytes": 10354688,
+      "peak_extract_bytes": 10752000
+    },
+    "test/config-cmake-pkg|C-nodict-9": {
+      "dataset": "test/config-cmake-pkg",
+      "config": "C-nodict-9",
+      "kind": "container",
+      "bytes": 642612,
+      "parts": {
+        "header": 32,
+        "dictionary": 0,
+        "group_table": 336,
+        "index": 24194,
+        "data": 618050
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "none",
+      "training_input_bytes": 0,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 117.55340000000001,
+        "median": 114.808,
+        "p10": 104.232,
+        "p90": 140.193,
+        "min": 104.232,
+        "max": 140.193
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 115.625,
+        "median": 109.375,
+        "p10": 109.375,
+        "p90": 125,
+        "min": 109.375,
+        "max": 125
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 25.75772,
+        "median": 25.2463,
+        "p10": 24.7568,
+        "p90": 27.31,
+        "min": 24.7568,
+        "max": 27.31
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 21.875,
+        "median": 15.625,
+        "p10": 15.625,
+        "p90": 31.25,
+        "min": 15.625,
+        "max": 31.25
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 0.70716,
+        "median": 0.6817,
+        "p10": 0.55,
+        "p90": 0.9587,
+        "min": 0.55,
+        "max": 0.9587
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 0.9023999999999999,
+        "median": 0.9242,
+        "p10": 0.7402,
+        "p90": 1.1189,
+        "min": 0.7402,
+        "max": 1.1189
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 0.0,
+        "median": 0,
+        "p10": 0,
+        "p90": 0,
+        "min": 0,
+        "max": 0
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 59.187160000000006,
+        "median": 57.9189,
+        "p10": 55.8127,
+        "p90": 66.9244,
+        "min": 55.8127,
+        "max": 66.9244
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 57.50508,
+        "median": 56.252,
+        "p10": 47.5659,
+        "p90": 72.1791,
+        "min": 47.5659,
+        "max": 72.1791
+      },
+      "peak_compress_bytes": 10252288,
+      "peak_extract_bytes": 10706944
+    },
+    "test/config-cmake-pkg|P-lzma6": {
+      "dataset": "test/config-cmake-pkg",
+      "config": "P-lzma6",
+      "kind": "prod",
+      "bytes": 639089,
+      "parts": {
+        "header": 96,
+        "index": 44675,
+        "data": 594318
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": null,
+      "training_input_bytes": null,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 499.0586,
+        "median": 470.305,
+        "p10": 438.308,
+        "p90": 669.556,
+        "min": 438.308,
+        "max": 669.556
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 496.875,
+        "median": 468.75,
+        "p10": 437.5,
+        "p90": 671.875,
+        "min": 437.5,
+        "max": 671.875
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 525.3232,
+        "median": 410.649,
+        "p10": 397.088,
+        "p90": 996.702,
+        "min": 397.088,
+        "max": 996.702
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 384.375,
+        "median": 359.375,
+        "p10": 328.125,
+        "p90": 546.875,
+        "min": 328.125,
+        "max": 546.875
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 2.05358,
+        "median": 1.8943,
+        "p10": 1.6995,
+        "p90": 3.0145,
+        "min": 1.6995,
+        "max": 3.0145
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 2.3883400000000004,
+        "median": 2.2814,
+        "p10": 1.9387,
+        "p90": 3.3679,
+        "min": 1.9387,
+        "max": 3.3679
+      },
+      "peak_compress_bytes": 9035776,
+      "peak_extract_bytes": 7634944
+    },
+    "test/config-cmake-pkg|P-zstd3": {
+      "dataset": "test/config-cmake-pkg",
+      "config": "P-zstd3",
+      "kind": "prod",
+      "bytes": 705404,
+      "parts": {
+        "header": 96,
+        "index": 44675,
+        "data": 660633
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": null,
+      "training_input_bytes": null,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 105.0092,
+        "median": 99.0719,
+        "p10": 91.4956,
+        "p90": 135.834,
+        "min": 91.4956,
+        "max": 135.834
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 103.125,
+        "median": 93.75,
+        "p10": 93.75,
+        "p90": 140.625,
+        "min": 93.75,
+        "max": 140.625
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 405.4186,
+        "median": 402.987,
+        "p10": 365.883,
+        "p90": 457.675,
+        "min": 365.883,
+        "max": 457.675
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 321.875,
+        "median": 328.125,
+        "p10": 234.375,
+        "p90": 390.625,
+        "min": 234.375,
+        "max": 390.625
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 2.21134,
+        "median": 1.9607,
+        "p10": 1.731,
+        "p90": 3.1714,
+        "min": 1.731,
+        "max": 3.1714
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 2.88536,
+        "median": 2.3309,
+        "p10": 1.9762,
+        "p90": 5.1922,
+        "min": 1.9762,
+        "max": 5.1922
+      },
+      "peak_compress_bytes": 8683520,
+      "peak_extract_bytes": 7741440
+    },
+    "test/many-small-docs|C-dict-3-D64k-Tall": {
+      "dataset": "test/many-small-docs",
+      "config": "C-dict-3-D64k-Tall",
+      "kind": "container",
+      "bytes": 978730,
+      "parts": {
+        "header": 32,
+        "dictionary": 65536,
+        "group_table": 1621,
+        "index": 132406,
+        "data": 779135
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "trained",
+      "training_input_bytes": 2783088,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 583.321,
+        "median": 468.681,
+        "p10": 433.959,
+        "p90": 1013.82,
+        "min": 433.959,
+        "max": 1013.82
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 571.875,
+        "median": 468.75,
+        "p10": 437.5,
+        "p90": 953.125,
+        "min": 437.5,
+        "max": 953.125
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 36.500479999999996,
+        "median": 33.4037,
+        "p10": 32.8898,
+        "p90": 46.7328,
+        "min": 32.8898,
+        "max": 46.7328
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 34.375,
+        "median": 31.25,
+        "p10": 31.25,
+        "p90": 46.875,
+        "min": 31.25,
+        "max": 46.875
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 1.23594,
+        "median": 1.1261,
+        "p10": 1.0999,
+        "p90": 1.5329,
+        "min": 1.0999,
+        "max": 1.5329
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 1.47226,
+        "median": 1.2959,
+        "p10": 1.244,
+        "p90": 1.9169,
+        "min": 1.244,
+        "max": 1.9169
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 226.28360000000004,
+        "median": 166.746,
+        "p10": 153.589,
+        "p90": 433.935,
+        "min": 153.589,
+        "max": 433.935
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 47.176339999999996,
+        "median": 43.4859,
+        "p10": 39.1634,
+        "p90": 67.591,
+        "min": 39.1634,
+        "max": 67.591
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 308.5902,
+        "median": 257.265,
+        "p10": 240.129,
+        "p90": 510.393,
+        "min": 240.129,
+        "max": 510.393
+      },
+      "peak_compress_bytes": 23678976,
+      "peak_extract_bytes": 13475840
+    },
+    "test/many-small-docs|C-dict-9-D64k-Tall": {
+      "dataset": "test/many-small-docs",
+      "config": "C-dict-9-D64k-Tall",
+      "kind": "container",
+      "bytes": 901798,
+      "parts": {
+        "header": 32,
+        "dictionary": 65536,
+        "group_table": 1621,
+        "index": 132406,
+        "data": 702203
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "trained",
+      "training_input_bytes": 2783088,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 743.4172,
+        "median": 567.966,
+        "p10": 523.008,
+        "p90": 1489.86,
+        "min": 523.008,
+        "max": 1489.86
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 681.25,
+        "median": 578.125,
+        "p10": 515.625,
+        "p90": 1187.5,
+        "min": 515.625,
+        "max": 1187.5
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 37.71644,
+        "median": 34.3107,
+        "p10": 32.5811,
+        "p90": 52.4101,
+        "min": 32.5811,
+        "max": 52.4101
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 34.375,
+        "median": 31.25,
+        "p10": 31.25,
+        "p90": 46.875,
+        "min": 31.25,
+        "max": 46.875
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 1.54074,
+        "median": 1.0733,
+        "p10": 1.0307,
+        "p90": 3.3519,
+        "min": 1.0307,
+        "max": 3.3519
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 2.75828,
+        "median": 1.4149,
+        "p10": 1.2505,
+        "p90": 8.3914,
+        "min": 1.2505,
+        "max": 8.3914
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 243.33440000000002,
+        "median": 208.64,
+        "p10": 169.767,
+        "p90": 427.142,
+        "min": 169.767,
+        "max": 427.142
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 117.83219999999999,
+        "median": 107.472,
+        "p10": 103.515,
+        "p90": 163.123,
+        "min": 103.515,
+        "max": 163.123
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 380.8994,
+        "median": 254.527,
+        "p10": 247.633,
+        "p90": 897.801,
+        "min": 247.633,
+        "max": 897.801
+      },
+      "peak_compress_bytes": 23699456,
+      "peak_extract_bytes": 13361152
+    },
+    "test/many-small-docs|C-nodict-3": {
+      "dataset": "test/many-small-docs",
+      "config": "C-nodict-3",
+      "kind": "container",
+      "bytes": 1245302,
+      "parts": {
+        "header": 32,
+        "dictionary": 0,
+        "group_table": 1621,
+        "index": 132406,
+        "data": 1111243
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "none",
+      "training_input_bytes": 0,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 473.4072,
+        "median": 323.017,
+        "p10": 314.437,
+        "p90": 1081.08,
+        "min": 314.437,
+        "max": 1081.08
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 378.125,
+        "median": 328.125,
+        "p10": 312.5,
+        "p90": 609.375,
+        "min": 312.5,
+        "max": 609.375
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 37.97384,
+        "median": 35.0377,
+        "p10": 33.7971,
+        "p90": 49.6298,
+        "min": 33.7971,
+        "max": 49.6298
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 37.5,
+        "median": 31.25,
+        "p10": 31.25,
+        "p90": 46.875,
+        "min": 31.25,
+        "max": 46.875
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 1.3957799999999998,
+        "median": 1.333,
+        "p10": 1.1461,
+        "p90": 1.8512,
+        "min": 1.1461,
+        "max": 1.8512
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 1.8683799999999997,
+        "median": 1.64,
+        "p10": 1.4994,
+        "p90": 2.7338,
+        "min": 1.4994,
+        "max": 2.7338
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 0.0,
+        "median": 0,
+        "p10": 0,
+        "p90": 0,
+        "min": 0,
+        "max": 0
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 52.441779999999994,
+        "median": 44.8808,
+        "p10": 40.9621,
+        "p90": 86.3463,
+        "min": 40.9621,
+        "max": 86.3463
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 419.5276,
+        "median": 277.595,
+        "p10": 268.177,
+        "p90": 992.774,
+        "min": 268.177,
+        "max": 992.774
+      },
+      "peak_compress_bytes": 12079104,
+      "peak_extract_bytes": 13627392
+    },
+    "test/many-small-docs|C-nodict-9": {
+      "dataset": "test/many-small-docs",
+      "config": "C-nodict-9",
+      "kind": "container",
+      "bytes": 1198465,
+      "parts": {
+        "header": 32,
+        "dictionary": 0,
+        "group_table": 1621,
+        "index": 132406,
+        "data": 1064406
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "none",
+      "training_input_bytes": 0,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 329.0748,
+        "median": 329.384,
+        "p10": 315.658,
+        "p90": 344.164,
+        "min": 315.658,
+        "max": 344.164
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 331.25,
+        "median": 328.125,
+        "p10": 312.5,
+        "p90": 343.75,
+        "min": 312.5,
+        "max": 343.75
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 34.37018,
+        "median": 34.5917,
+        "p10": 33.6615,
+        "p90": 34.7431,
+        "min": 33.6615,
+        "max": 34.7431
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 31.25,
+        "median": 31.25,
+        "p10": 31.25,
+        "p90": 31.25,
+        "min": 31.25,
+        "max": 31.25
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 1.5046599999999999,
+        "median": 1.1337,
+        "p10": 0.9511,
+        "p90": 2.9625,
+        "min": 0.9511,
+        "max": 2.9625
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 2.53484,
+        "median": 1.3465,
+        "p10": 1.1115,
+        "p90": 7.3596,
+        "min": 1.1115,
+        "max": 7.3596
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 0.0,
+        "median": 0,
+        "p10": 0,
+        "p90": 0,
+        "min": 0,
+        "max": 0
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 81.58066,
+        "median": 81.1238,
+        "p10": 77.8195,
+        "p90": 86.7711,
+        "min": 77.8195,
+        "max": 86.7711
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 246.3556,
+        "median": 248.2,
+        "p10": 236.778,
+        "p90": 256.274,
+        "min": 236.778,
+        "max": 256.274
+      },
+      "peak_compress_bytes": 12099584,
+      "peak_extract_bytes": 13553664
+    },
+    "test/many-small-docs|P-lzma6": {
+      "dataset": "test/many-small-docs",
+      "config": "P-lzma6",
+      "kind": "prod",
+      "bytes": 1276811,
+      "parts": {
+        "header": 96,
+        "index": 226118,
+        "data": 1050597
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": null,
+      "training_input_bytes": null,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 949.0938,
+        "median": 940.734,
+        "p10": 868.762,
+        "p90": 1005.83,
+        "min": 868.762,
+        "max": 1005.83
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 943.75,
+        "median": 937.5,
+        "p10": 859.375,
+        "p90": 1000,
+        "min": 859.375,
+        "max": 1000
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 1823.5900000000001,
+        "median": 1860.47,
+        "p10": 1647,
+        "p90": 1929.12,
+        "min": 1647,
+        "max": 1929.12
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 1371.874,
+        "median": 1375,
+        "p10": 1234.38,
+        "p90": 1515.62,
+        "min": 1234.38,
+        "max": 1515.62
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 7.887219999999999,
+        "median": 7.8691,
+        "p10": 7.2092,
+        "p90": 8.5141,
+        "min": 7.2092,
+        "max": 8.5141
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 10.06622,
+        "median": 9.9087,
+        "p10": 8.352,
+        "p90": 11.6998,
+        "min": 8.352,
+        "max": 11.6998
+      },
+      "peak_compress_bytes": 10477568,
+      "peak_extract_bytes": 8286208
+    },
+    "test/many-small-docs|P-zstd3": {
+      "dataset": "test/many-small-docs",
+      "config": "P-zstd3",
+      "kind": "prod",
+      "bytes": 1337457,
+      "parts": {
+        "header": 96,
+        "index": 226118,
+        "data": 1111243
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": null,
+      "training_input_bytes": null,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 438.134,
+        "median": 321.183,
+        "p10": 313.01,
+        "p90": 906.262,
+        "min": 313.01,
+        "max": 906.262
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 390.625,
+        "median": 328.125,
+        "p10": 312.5,
+        "p90": 656.25,
+        "min": 312.5,
+        "max": 656.25
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 2057.96,
+        "median": 1697.14,
+        "p10": 1625.06,
+        "p90": 3593.51,
+        "min": 1625.06,
+        "max": 3593.51
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 1434.3780000000002,
+        "median": 1359.38,
+        "p10": 1187.5,
+        "p90": 1984.38,
+        "min": 1187.5,
+        "max": 1984.38
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 7.6771199999999995,
+        "median": 7.5039,
+        "p10": 7.1733,
+        "p90": 8.2638,
+        "min": 7.1733,
+        "max": 8.2638
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 9.276819999999999,
+        "median": 8.7667,
+        "p10": 7.672,
+        "p90": 11.0975,
+        "min": 7.672,
+        "max": 11.0975
+      },
+      "peak_compress_bytes": 10469376,
+      "peak_extract_bytes": 8458240
+    },
+    "test/source-python|C-dict-3-D64k-Tall": {
+      "dataset": "test/source-python",
+      "config": "C-dict-3-D64k-Tall",
+      "kind": "container",
+      "bytes": 1776202,
+      "parts": {
+        "header": 32,
+        "dictionary": 65536,
+        "group_table": 337,
+        "index": 17737,
+        "data": 1692560
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "trained",
+      "training_input_bytes": 5630660,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 510.10779999999994,
+        "median": 481.122,
+        "p10": 407.951,
+        "p90": 655.063,
+        "min": 407.951,
+        "max": 655.063
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 509.375,
+        "median": 484.375,
+        "p10": 406.25,
+        "p90": 656.25,
+        "min": 406.25,
+        "max": 656.25
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 72.92116,
+        "median": 73.9413,
+        "p10": 69.922,
+        "p90": 76.1066,
+        "min": 69.922,
+        "max": 76.1066
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 68.75,
+        "median": 62.5,
+        "p10": 62.5,
+        "p90": 78.125,
+        "min": 62.5,
+        "max": 78.125
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 1.37302,
+        "median": 1.2352,
+        "p10": 1.1519,
+        "p90": 1.748,
+        "min": 1.1519,
+        "max": 1.748
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 1.71048,
+        "median": 1.5328,
+        "p10": 1.4134,
+        "p90": 2.1471,
+        "min": 1.4134,
+        "max": 2.1471
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 354.9714,
+        "median": 317.115,
+        "p10": 265.769,
+        "p90": 496.465,
+        "min": 265.769,
+        "max": 496.465
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 90.16102,
+        "median": 88.4598,
+        "p10": 85.666,
+        "p90": 98.7269,
+        "min": 85.666,
+        "max": 98.7269
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 63.64602,
+        "median": 66.6376,
+        "p10": 53.6959,
+        "p90": 74.3494,
+        "min": 53.6959,
+        "max": 74.3494
+      },
+      "peak_compress_bytes": 30027776,
+      "peak_extract_bytes": 20647936
+    },
+    "test/source-python|C-dict-9-D64k-Tall": {
+      "dataset": "test/source-python",
+      "config": "C-dict-9-D64k-Tall",
+      "kind": "container",
+      "bytes": 1570303,
+      "parts": {
+        "header": 32,
+        "dictionary": 65536,
+        "group_table": 337,
+        "index": 17737,
+        "data": 1486661
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "trained",
+      "training_input_bytes": 5630660,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 736.9986,
+        "median": 677.446,
+        "p10": 537.241,
+        "p90": 1141.22,
+        "min": 537.241,
+        "max": 1141.22
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 715.626,
+        "median": 671.875,
+        "p10": 531.25,
+        "p90": 1046.88,
+        "min": 531.25,
+        "max": 1046.88
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 75.9008,
+        "median": 71.4526,
+        "p10": 69.41,
+        "p90": 96.3374,
+        "min": 69.41,
+        "max": 96.3374
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 71.875,
+        "median": 78.125,
+        "p10": 62.5,
+        "p90": 78.125,
+        "min": 62.5,
+        "max": 78.125
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 1.4224999999999999,
+        "median": 1.2769,
+        "p10": 1.1623,
+        "p90": 2.0984,
+        "min": 1.1623,
+        "max": 2.0984
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 1.8484200000000002,
+        "median": 1.7452,
+        "p10": 1.6157,
+        "p90": 2.4549,
+        "min": 1.6157,
+        "max": 2.4549
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 430.0849999999999,
+        "median": 407.183,
+        "p10": 263.808,
+        "p90": 722.641,
+        "min": 263.808,
+        "max": 722.641
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 242.061,
+        "median": 221.119,
+        "p10": 210.971,
+        "p90": 336.344,
+        "min": 210.971,
+        "max": 336.344
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 63.35806,
+        "median": 58.314,
+        "p10": 53.1697,
+        "p90": 80.2454,
+        "min": 53.1697,
+        "max": 80.2454
+      },
+      "peak_compress_bytes": 29990912,
+      "peak_extract_bytes": 20447232
+    },
+    "test/source-python|C-nodict-3": {
+      "dataset": "test/source-python",
+      "config": "C-nodict-3",
+      "kind": "container",
+      "bytes": 1853588,
+      "parts": {
+        "header": 32,
+        "dictionary": 0,
+        "group_table": 337,
+        "index": 17737,
+        "data": 1835482
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "none",
+      "training_input_bytes": 0,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 153.9228,
+        "median": 145.985,
+        "p10": 138.851,
+        "p90": 194.679,
+        "min": 138.851,
+        "max": 194.679
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 150.0,
+        "median": 140.625,
+        "p10": 125,
+        "p90": 187.5,
+        "min": 125,
+        "max": 187.5
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 73.29754,
+        "median": 72.097,
+        "p10": 70.6806,
+        "p90": 77.8238,
+        "min": 70.6806,
+        "max": 77.8238
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 68.75,
+        "median": 78.125,
+        "p10": 46.875,
+        "p90": 78.125,
+        "min": 46.875,
+        "max": 78.125
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 1.41836,
+        "median": 1.402,
+        "p10": 1.1614,
+        "p90": 1.6831,
+        "min": 1.1614,
+        "max": 1.6831
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 1.81202,
+        "median": 1.846,
+        "p10": 1.444,
+        "p90": 1.9782,
+        "min": 1.444,
+        "max": 1.9782
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 0.0,
+        "median": 0,
+        "p10": 0,
+        "p90": 0,
+        "min": 0,
+        "max": 0
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 85.94548,
+        "median": 81.9584,
+        "p10": 79.5661,
+        "p90": 101.312,
+        "min": 79.5661,
+        "max": 101.312
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 66.97442,
+        "median": 62.0107,
+        "p10": 56.9758,
+        "p90": 92.2735,
+        "min": 56.9758,
+        "max": 92.2735
+      },
+      "peak_compress_bytes": 16650240,
+      "peak_extract_bytes": 20557824
+    },
+    "test/source-python|C-nodict-9": {
+      "dataset": "test/source-python",
+      "config": "C-nodict-9",
+      "kind": "container",
+      "bytes": 1702927,
+      "parts": {
+        "header": 32,
+        "dictionary": 0,
+        "group_table": 337,
+        "index": 17737,
+        "data": 1684821
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": "none",
+      "training_input_bytes": 0,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 253.098,
+        "median": 257.98,
+        "p10": 236.441,
+        "p90": 267.278,
+        "min": 236.441,
+        "max": 267.278
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 256.25,
+        "median": 265.625,
+        "p10": 234.375,
+        "p90": 265.625,
+        "min": 234.375,
+        "max": 265.625
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 70.84508,
+        "median": 69.972,
+        "p10": 69.1953,
+        "p90": 74.6905,
+        "min": 69.1953,
+        "max": 74.6905
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 65.625,
+        "median": 62.5,
+        "p10": 62.5,
+        "p90": 78.125,
+        "min": 62.5,
+        "max": 78.125
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 1.3992799999999999,
+        "median": 1.4167,
+        "p10": 1.0935,
+        "p90": 1.6352,
+        "min": 1.0935,
+        "max": 1.6352
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 1.7689,
+        "median": 1.8378,
+        "p10": 1.4787,
+        "p90": 1.9263,
+        "min": 1.4787,
+        "max": 1.9263
+      },
+      "train_wall_ms": {
+        "n": 5,
+        "mean": 0.0,
+        "median": 0,
+        "p10": 0,
+        "p90": 0,
+        "min": 0,
+        "max": 0
+      },
+      "encode_wall_ms": {
+        "n": 5,
+        "mean": 186.426,
+        "median": 182.269,
+        "p10": 177.922,
+        "p90": 201.179,
+        "min": 177.922,
+        "max": 201.179
+      },
+      "read_wall_ms": {
+        "n": 5,
+        "mean": 65.42548000000001,
+        "median": 65.2291,
+        "p10": 52.6587,
+        "p90": 78.5053,
+        "min": 52.6587,
+        "max": 78.5053
+      },
+      "peak_compress_bytes": 16850944,
+      "peak_extract_bytes": 20410368
+    },
+    "test/source-python|P-lzma6": {
+      "dataset": "test/source-python",
+      "config": "P-lzma6",
+      "kind": "prod",
+      "bytes": 1648080,
+      "parts": {
+        "header": 96,
+        "index": 39742,
+        "data": 1608242
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": null,
+      "training_input_bytes": null,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 1203.0520000000001,
+        "median": 1193.89,
+        "p10": 1171.3,
+        "p90": 1263.36,
+        "min": 1171.3,
+        "max": 1263.36
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 1200.0,
+        "median": 1187.5,
+        "p10": 1171.88,
+        "p90": 1265.62,
+        "min": 1171.88,
+        "max": 1265.62
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 634.6308,
+        "median": 638.258,
+        "p10": 597.207,
+        "p90": 672.207,
+        "min": 597.207,
+        "max": 672.207
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 537.5,
+        "median": 531.25,
+        "p10": 515.625,
+        "p90": 562.5,
+        "min": 515.625,
+        "max": 562.5
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 2.43328,
+        "median": 2.3969,
+        "p10": 2.2098,
+        "p90": 2.8538,
+        "min": 2.2098,
+        "max": 2.8538
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 3.22376,
+        "median": 3.0934,
+        "p10": 2.9165,
+        "p90": 3.8659,
+        "min": 2.9165,
+        "max": 3.8659
+      },
+      "peak_compress_bytes": 9003008,
+      "peak_extract_bytes": 7651328
+    },
+    "test/source-python|P-zstd3": {
+      "dataset": "test/source-python",
+      "config": "P-zstd3",
+      "kind": "prod",
+      "bytes": 1875320,
+      "parts": {
+        "header": 96,
+        "index": 39742,
+        "data": 1835482
+      },
+      "repetitions": 5,
+      "byte_exact": true,
+      "dictionary": null,
+      "training_input_bytes": null,
+      "compress_wall_ms": {
+        "n": 5,
+        "mean": 205.85680000000002,
+        "median": 183.28,
+        "p10": 175.475,
+        "p90": 299.124,
+        "min": 175.475,
+        "max": 299.124
+      },
+      "compress_cpu_ms": {
+        "n": 5,
+        "mean": 196.875,
+        "median": 171.875,
+        "p10": 171.875,
+        "p90": 281.25,
+        "min": 171.875,
+        "max": 281.25
+      },
+      "extract_wall_ms": {
+        "n": 5,
+        "mean": 669.6464,
+        "median": 588.177,
+        "p10": 537.646,
+        "p90": 1043.62,
+        "min": 537.646,
+        "max": 1043.62
+      },
+      "extract_cpu_ms": {
+        "n": 5,
+        "mean": 546.875,
+        "median": 484.375,
+        "p10": 421.875,
+        "p90": 843.75,
+        "min": 421.875,
+        "max": 843.75
+      },
+      "peek_median_ms": {
+        "n": 5,
+        "mean": 2.58612,
+        "median": 2.4996,
+        "p10": 2.0985,
+        "p90": 3.3725,
+        "min": 2.0985,
+        "max": 3.3725
+      },
+      "peek_p90_ms": {
+        "n": 5,
+        "mean": 3.17498,
+        "median": 3.1261,
+        "p10": 2.3945,
+        "p90": 3.752,
+        "min": 2.3945,
+        "max": 3.752
+      },
+      "peak_compress_bytes": 8699904,
+      "peak_extract_bytes": 7741440
+    }
+  },
+  "per_file_vs_nodict": {
+    "test/many-small-docs|C-dict-3-D64k-Tall": {
+      "saving_bytes": {
+        "n": 1621,
+        "mean": 204.87847008019742,
+        "median": 140,
+        "p10": 20,
+        "p90": 374,
+        "min": 2,
+        "max": 2930
+      },
+      "positive": 1621,
+      "zero": 0,
+      "negative": 0,
+      "worst": []
+    },
+    "test/many-small-docs|C-dict-9-D64k-Tall": {
+      "saving_bytes": {
+        "n": 1621,
+        "mean": 223.44417026526835,
+        "median": 146,
+        "p10": 16,
+        "p90": 396,
+        "min": 0,
+        "max": 3565
+      },
+      "positive": 1620,
+      "zero": 1,
+      "negative": 0,
+      "worst": []
+    },
+    "test/source-python|C-dict-3-D64k-Tall": {
+      "saving_bytes": {
+        "n": 337,
+        "mean": 424.1008902077151,
+        "median": 339,
+        "p10": 87,
+        "p90": 890,
+        "min": -73,
+        "max": 2149
+      },
+      "positive": 327,
+      "zero": 2,
+      "negative": 8,
+      "worst": [
+        [
+          "python-lib/tkinter/constants.py",
+          -73
+        ],
+        [
+          "python-lib/curses/has_key.py",
+          -67
+        ],
+        [
+          "python-lib/ctypes/wintypes.py",
+          -65
+        ],
+        [
+          "python-lib/token.py",
+          -53
+        ],
+        [
+          "python-lib/_opcode_metadata.py",
+          -43
+        ],
+        [
+          "python-lib/html/entities.py",
+          -40
+        ],
+        [
+          "python-lib/curses/ascii.py",
+          -37
+        ],
+        [
+          "python-lib/this.py",
+          -23
+        ]
+      ]
+    },
+    "test/source-python|C-dict-9-D64k-Tall": {
+      "saving_bytes": {
+        "n": 337,
+        "mean": 588.0118694362018,
+        "median": 441,
+        "p10": 110,
+        "p90": 1235,
+        "min": 0,
+        "max": 3425
+      },
+      "positive": 335,
+      "zero": 2,
+      "negative": 0,
+      "worst": []
+    },
+    "test/config-cmake-pkg|C-dict-3-D64k-Tall": {
+      "saving_bytes": {
+        "n": 336,
+        "mean": 489.0595238095238,
+        "median": 322.0,
+        "p10": 43,
+        "p90": 1110,
+        "min": -3,
+        "max": 3418
+      },
+      "positive": 333,
+      "zero": 2,
+      "negative": 1,
+      "worst": [
+        [
+          "cmake-share/cmake-4.4/Modules/CheckTypeSize.c.in",
+          -3
+        ]
+      ]
+    },
+    "test/config-cmake-pkg|C-dict-9-D64k-Tall": {
+      "saving_bytes": {
+        "n": 336,
+        "mean": 542.7261904761905,
+        "median": 362.0,
+        "p10": 86,
+        "p90": 1316,
+        "min": 0,
+        "max": 4088
+      },
+      "positive": 334,
+      "zero": 2,
+      "negative": 0,
+      "worst": []
+    }
+  }
+}

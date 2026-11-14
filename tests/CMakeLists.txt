@@ -23,6 +23,13 @@ seedarc_target_defaults(seedarc_seed_path_override_tests)
 add_test(NAME seed.path_rank_overrides COMMAND seedarc_seed_path_override_tests)
 set_tests_properties(seed.path_rank_overrides PROPERTIES TIMEOUT 10)
 
+# DEV-013 research zstd dictionary adapter (portable, in-memory).
+add_executable(seedarc_codec_dictionary_tests codec_dictionary_tests.cpp)
+target_link_libraries(seedarc_codec_dictionary_tests PRIVATE seedarc_codec_dictionary)
+seedarc_target_defaults(seedarc_codec_dictionary_tests)
+add_test(NAME codec.dictionary_research COMMAND seedarc_codec_dictionary_tests)
+set_tests_properties(codec.dictionary_research PROPERTIES TIMEOUT 60)
+
 add_executable(seedarc_m3_compatibility_tests m3_compatibility_tests.cpp)
 target_link_libraries(seedarc_m3_compatibility_tests PRIVATE SeedArc::core)
 seedarc_target_defaults(seedarc_m3_compatibility_tests)

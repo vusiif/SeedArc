@@ -1376,7 +1376,6 @@ msys2-etc/pacman.d/gnupg/gpg.conf	130	588ce84f80e9b421fd01c4ea58d40adf5edafed0a2
 msys2-etc/pacman.d/gnupg/openpgp-revocs.d/9C0C667E22A243141A4480C8D7C37CE18F8827F7.rev	1797	e9e818034561a7b81ff69d6b565e7deee43eeb7112c68da355f96c5eb67ee7eb	config-cmake-pkg|msys2-etc|pacman.d
 msys2-etc/pacman.d/gnupg/private-keys-v1.d/A504F79A0B7DB0C77BC36919A982901407988DF0.key	3787	aea9fa175994b91b46f43fc300ff23599e2c1367b61fd1c8b8a7f2964b6e4cfd	config-cmake-pkg|msys2-etc|pacman.d
 msys2-etc/pacman.d/gnupg/pubring.gpg	46265	7fd3ea56c2bec9e66c142189d63214f9ccaa912dc5665fe6394ad9d73cca1bd2	config-cmake-pkg|msys2-etc|pacman.d
-msys2-etc/pacman.d/gnupg/pubring.gpg~	46265	7fd3ea56c2bec9e66c142189d63214f9ccaa912dc5665fe6394ad9d73cca1bd2	config-cmake-pkg|msys2-etc|pacman.d
 msys2-etc/pacman.d/gnupg/tofu.db	49152	1abe6f26ae338ee89b17f64910d09456ccbb47d160822f0ea6821129418206b3	config-cmake-pkg|msys2-etc|pacman.d
 msys2-etc/pacman.d/gnupg/trustdb.gpg	2240	8cc57650bbcf001a13ef172d087d571ccd0896514b68db3beef5d51eb12eb328	config-cmake-pkg|msys2-etc|pacman.d
 msys2-etc/pacman.d/mirrorlist.mingw	1867	0ba99a1ca7a8c1499daff0f70281a90abf034dbfdbffac7a68f2c4538d74a8e3	config-cmake-pkg|msys2-etc|pacman.d

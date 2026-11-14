@@ -29,3 +29,9 @@
 `b2_corpus.py [--corpus-id b2r5-corpus-r1]` 从本机已安装的软件和系统文件构建 10 类数据池，在压缩之前按相对路径哈希分成 dev / test。内容复制到被忽略的 `research/local/<corpus>/`；元数据（相对路径、字节、SHA256、许可证、块数）写入 `research/datasets/`。不下载任何数据，清单不写绝对路径。
 
 `b2_independent.py --tool <Release seedarc_seed_archive.exe> --run-id <new-id> --repetitions 5` 只评估 test 划分：Fixed Zstd-3、Fixed LZMA2-6、冻结的 Adaptive-file-r1 三档预算、Oracle-file、B-r1 seed0（消融 G4）。运行前先按清单核对 test 划分；方案顺序每次轮换；测量前做热缓存。输出 summary.json（均值、中位数、分位数、逐文件节省分布、每 KiB 的额外 CPU）与 preview.md。`--analyze-only` 只读 raw.json 与 per_file.csv 重新生成分析。依赖同目录的 `b2_adaptive.py` / `b2_diagnose.py`；仅使用 Python 标准库。
+
+## DEV-013 分组语料与共享字典
+
+`b2_corpus_r2.py` 构建 b2r5-corpus-r2：按项目分组，共享内容的分组合并成连通分量，分量整体划入 dev 或 test；空文件和生产归档拒绝的路径会被排除。`--check` 根据已提交的清单验证 test 与 dev 的内容哈希交集为 0。
+
+`b2_dictionary.py --phase dev|test` 调用研究工具 `seedarc_dict_study`（研究容器）和 `seedarc_seed_archive`（生产参照），完成打包、内存校验、冷启动单文件提取，并给出分位数与逐文件分布。dev 阶段写出 `selection.json`；test 阶段必须读入它。test 只能运行一次，再次运行需要 `--rerun-reason`。只依赖 Python 标准库。

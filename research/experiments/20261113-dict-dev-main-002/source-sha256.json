@@ -1,0 +1,18 @@
+{
+  "note": "sources at the time of the DEV-013 commit; all were last modified before this run started (latest 2026-11-13 08:17 local; test run 08:23-08:26); base commit 9284eae plus the DEV-013 working-tree changes committed together with this run",
+  "files": {
+    "core/codec/dictionary.cpp": "c923e2a85c549035cba745d1ac650fc55633ea0c8743ca222a404a42e86794ee",
+    "core/codec/dictionary.hpp": "55159c694f9e8b81822645bfdd4b4f0303016995fa3a410b743312874695709f",
+    "core/codec/codec.cpp": "a6c8c387803643fad6eaf541196b092ed5b453c87e769fdf4cfd528a781929a7",
+    "core/codec/codec.hpp": "0cc4674b6bc805ec2c78217729203d52173002beb66fa14bbe66cc8eac461912",
+    "core/CMakeLists.txt": "e807c9f1a91819aab0acdd0c6559e2503aeb07d34ed6d19ba0441178147b2957",
+    "research/tools/dict_study.cpp": "6a30cf5c3d788c61ba9a787d5f0ef6a7c9e811b72755d1a30f146ce6449ccb36",
+    "research/tools/seed_archive.cpp": "205689a507b7430402866900d4a556fd703542a6757a22d8bab0ac89856aa7f8",
+    "research/tools/CMakeLists.txt": "868a550a27b78493f81831cc44361b4a775e89e24fe704cb1d49311f84a59f7e",
+    "research/scripts/b2_dictionary.py": "855811be4159e0f0b7bd0ac7d41f3d72b5bf0ddc3a90a321a4bc7cf89cf1e58a",
+    "research/scripts/b2_corpus_r2.py": "5cb094bc0ed949b6374cc981712cb24279525c7a0c76e1ad6734d00bffca2de6",
+    "research/scripts/b2_diagnose.py": "5b87385fb2496e5a685a72f9a2fe595d7f477cb6925d93d59f6ffc4c8334f536",
+    "tests/codec_dictionary_tests.cpp": "a8ad9368dc306dcab3fdd1deb5a6b530214bc21c1017d91dc101e5898cea3be6",
+    "vcpkg.json": "d2b23b818fea1b030226f2a47facb376cb83b26255bd82e8040b13eec8986641"
+  }
+}

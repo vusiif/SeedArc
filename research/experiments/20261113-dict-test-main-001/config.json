@@ -1,0 +1,66 @@
+{
+  "status": "completed",
+  "run_id": "20261113-dict-test-main-001",
+  "phase": "test",
+  "corpus": "b2r5-corpus-r2",
+  "disjointness": {
+    "dev_hashes": 2434,
+    "test_hashes": 2290,
+    "shared": 0,
+    "components": 717
+  },
+  "repetitions": 5,
+  "configs": [
+    "P-zstd3",
+    "P-lzma6",
+    "C-nodict-3",
+    "C-dict-3-D64k-Tall",
+    "C-nodict-9",
+    "C-dict-9-D64k-Tall"
+  ],
+  "peek_samples": 30,
+  "chunk_bytes": 65536,
+  "selection_input": "research\\experiments\\20261113-dict-dev-main-002\\selection.json",
+  "selection": {
+    "3": {
+      "config": "C-dict-3-D64k-Tall",
+      "dict": 65536,
+      "train": 0,
+      "dev_total_bytes": 3442393
+    },
+    "9": {
+      "config": "C-dict-9-D64k-Tall",
+      "dict": 65536,
+      "train": 0,
+      "dev_total_bytes": 3141686
+    }
+  },
+  "rerun_reason": null,
+  "registered_in": "research/ideas/shared-dictionary-r1.md",
+  "cache": "warm: each dataset read once before measurement",
+  "order": "config order rotated per repetition",
+  "tools_sha256": {
+    "seedarc_dict_study.exe": "cea0449698a123b7910e87b30a86ad5f476a2c569bc4d1c45361c53f0e75c805",
+    "seedarc_seed_archive.exe": "7a37a5d6d67b9b209d40fc2805837221c5efd7484d5e5d2c27b1e2cd934db7ff"
+  },
+  "script_sha256": "855811be4159e0f0b7bd0ac7d41f3d72b5bf0ddc3a90a321a4bc7cf89cf1e58a",
+  "git_commit": "9284eae9280b498223717e2ef0db8fc1106eb5d5",
+  "dirty": true,
+  "started_at": "2026-11-13T08:23:31.961934-08:00",
+  "os": "Windows-10-10.0.19045-SP0",
+  "cpu": "AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD",
+  "logical_cpus": 16,
+  "python": "3.15.0 (tags/v3.15.0:d220409, Oct  9 2026, 11:55:56) [MSC v.1951 64 bit (AMD64)]",
+  "invocation": [
+    "C:\\Users\\IceLolly\\AppData\\Local\\Programs\\Python\\Python315\\python.exe",
+    "research/scripts/b2_dictionary.py",
+    "--phase",
+    "test",
+    "--run-id",
+    "20261113-dict-test-main-001",
+    "--selection",
+    "research/experiments/20261113-dict-dev-main-002/selection.json"
+  ],
+  "codec_versions": "SeedArc B2-r5 study; zstd 1.5.7, liblzma 5.8.4",
+  "finished_at": "2026-11-13T08:26:28.037604-08:00"
+}

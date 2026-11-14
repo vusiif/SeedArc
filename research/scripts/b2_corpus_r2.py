@@ -23,6 +23,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import unicodedata
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -72,6 +73,27 @@ POOLS = {
 }
 
 
+RESERVED = {"CON", "PRN", "AUX", "NUL", "CLOCK$", "CONIN$", "CONOUT$",
+            *(f"{p}{d}" for p in ("COM", "LPT") for d in "123456789¹²³")}
+
+
+def archive_path_ok(rel):
+    """Mirror of the production Windows path profile (core/filesystem/archive_path.cpp), so every
+    corpus file can also be stored by the production reference archives."""
+    if not rel or len(rel.encode("utf-8")) > 4096 or not unicodedata.is_normalized("NFC", rel):
+        return False
+    if any(ord(c) < 32 or ord(c) == 127 or c in '\\:<>"|?*~' for c in rel):
+        return False
+    parts = rel.split("/")
+    if len(parts) > 64:
+        return False
+    for part in parts:
+        base = part.split(".")[0].rstrip(" ").upper()
+        if not part or part in (".", "..") or part[-1] in ". " or len(part) > 255 or base in RESERVED:
+            return False
+    return True
+
+
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
@@ -79,6 +101,7 @@ def digest(data):
 def scan():
     files = []  # (pool, rel_in_corpus, size, sha, node, src_path)
     skipped = defaultdict(int)
+    rejected = []
     for pool, spec in POOLS.items():
         for label, root, keep, group in spec["sources"]:
             if root is None or not root.is_dir():
@@ -91,6 +114,10 @@ def scan():
                     rel = p.relative_to(root).as_posix()
                     if p.is_symlink() or not keep(rel):
                         continue
+                    if not archive_path_ok(f"{label}/{rel}"):
+                        skipped[f"{pool}:path_rejected_by_archive"] += 1
+                        rejected.append(f"{label}/{rel}")
+                        continue
                     try:
                         data = p.read_bytes()
                     except OSError:
@@ -100,7 +127,7 @@ def scan():
                         skipped[f"{pool}:empty"] += 1
                         continue
                     files.append((pool, f"{label}/{rel}", len(data), digest(data), f"{pool}|{label}|{group(rel)}", p))
-    return files, dict(skipped)
+    return files, dict(skipped), sorted(rejected)
 
 
 def components(files):
@@ -167,7 +194,7 @@ def main():
     local, meta = ROOT / "research/local" / CORPUS, ROOT / "research/datasets" / CORPUS
     if local.exists() or meta.exists():
         parser.error("corpus exists; use a new corpus ID")
-    files, skipped = scan()
+    files, skipped, rejected = scan()
     comp = components(files)
     meta.mkdir(parents=True)
     manifest = {"corpus_id": CORPUS, "created_at": datetime.now(ZoneInfo("America/Los_Angeles")).isoformat(),
@@ -179,7 +206,10 @@ def main():
                                  f"component -> sha256('{CORPUS}:<component key>')[0] even: dev, odd: test; "
                                  "fixed before any compression; test never used for tuning; empty files excluded"),
                 "selection": "per pool and split: sorted corpus paths until the byte / file caps (whole components never move sides)",
-                "chunk_bytes": CHUNK, "skipped": skipped, "fixes": "b2r5-corpus-r1 known defect r1-dev-test-content-overlap",
+                "chunk_bytes": CHUNK, "skipped": skipped, "path_rejected_by_archive": rejected,
+                "revision": 2, "revision_note": ("2026-11-13: rebuilt with the production archive path filter after "
+                    "the first dev sweep failed on 'msys2-etc/pacman.d/gnupg/pubring.gpg~'; no test-split measurement "
+                    "had been made; revision 1 listings remain in git history (commit 9284eae)"), "fixes": "b2r5-corpus-r1 known defect r1-dev-test-content-overlap",
                 "datasets": {}}
     sizes = defaultdict(int)
     for pool, rel, size, sha, node, _ in files:

@@ -1,6 +1,6 @@
 {
   "corpus_id": "b2r5-corpus-r2",
-  "created_at": "2026-11-12T22:03:25.295230-08:00",
+  "created_at": "2026-11-13T08:17:46.709878-08:00",
   "source": "data already installed on the evaluation machine; no download",
   "machine": {
     "os": "Windows-10-10.0.19045-SP0",
@@ -12,8 +12,14 @@
   "chunk_bytes": 65536,
   "skipped": {
     "source-python:empty": 7,
-    "config-cmake-pkg:empty": 3
+    "config-cmake-pkg:empty": 3,
+    "config-cmake-pkg:path_rejected_by_archive": 1
   },
+  "path_rejected_by_archive": [
+    "msys2-etc/pacman.d/gnupg/pubring.gpg~"
+  ],
+  "revision": 2,
+  "revision_note": "2026-11-13: rebuilt with the production archive path filter after the first dev sweep failed on 'msys2-etc/pacman.d/gnupg/pubring.gpg~'; no test-split measurement had been made; revision 1 listings remain in git history (commit 9284eae)",
   "fixes": "b2r5-corpus-r1 known defect r1-dev-test-content-overlap",
   "datasets": {
     "many-small-docs": {
@@ -108,14 +114,14 @@
       "splits": {
         "dev": {
           "dataset_id": "dev/config-cmake-pkg",
-          "file_count": 1432,
-          "bytes": 4568151,
-          "blocks": 1447,
+          "file_count": 1431,
+          "bytes": 4521886,
+          "blocks": 1446,
           "components": 263,
           "distinct_content": 1339,
-          "median_file_bytes": 329,
+          "median_file_bytes": 328,
           "listing": "b2r5-corpus-r2/dev-config-cmake-pkg.tsv",
-          "listing_sha256": "eee4f66e5a2a5f5faa748e85b9e0c44804b60f964f6379278510f5f87c3dbdc8"
+          "listing_sha256": "b3074244c6c28a86ab9e4188de98e3a4a55512160a21ff7de2f343ccb2f67d62"
         },
         "test": {
           "dataset_id": "test/config-cmake-pkg",

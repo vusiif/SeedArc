@@ -1,0 +1,17 @@
+{
+  "rule": "per level: minimum sum of dev container bytes; ties: smaller D, then T",
+  "selection": {
+    "3": {
+      "config": "C-dict-3-D64k-Tall",
+      "dict": 65536,
+      "train": 0,
+      "dev_total_bytes": 3442393
+    },
+    "9": {
+      "config": "C-dict-9-D64k-Tall",
+      "dict": 65536,
+      "train": 0,
+      "dev_total_bytes": 3141686
+    }
+  }
+}
