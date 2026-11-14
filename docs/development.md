@@ -25,7 +25,7 @@ ctest --preset gcc-ucrt64-debug
 
 也可用 `gcc-ucrt64-release`、`clang-ucrt64-debug`、`clang-ucrt64-release`。presets 仅为各自命令进程优先设置 UCRT64 bin，不修改系统 PATH；直接运行 GNU ABI exe 时仍需在当前终端保证对应 DLL 的搜索路径。机器专用设置可放入不入库的 CMakeUserPresets.json。
 
-通用 CMake 最低版本为 3.28；使用 VS 2026 preset 还需 CMake 支持该生成器，本机实测 4.4.3。没有适用 preset 的平台可用 `cmake -S . -B build/<name>` 并明确工具链，本次未验证 Windows 之外平台。
+通用 CMake 最低版本为 3.28；使用 VS 2026 preset 还需 CMake 支持该生成器，本机实测 4.4.3。Linux（WSL）presets 与限制见[第 7 节](#7-wsl--linuxl1--l2--l3)。
 
 项目 `.clang-format` 固定源码格式，`.clang-tidy` 启用 Clang 静态分析器检查；不继承用户目录配置。当前未使用 `<print>`，不需要额外链接 stdc++exp。vcpkg manifest 已随 M3 建立（`vcpkg.json` / `vcpkg-configuration.json`，见 [ADR-0003](decisions/0003-m3-zstd-lzma2-codecs.md)）。
 
@@ -193,3 +193,62 @@ CMakeUserPresets.json
 ```
 
 如果只是无关的可选工具缺失，写进任务结果的建议即可，不必暂停局部实现。
+
+## 7. WSL / Linux（L1 / L2 / L3）
+
+> 状态：L1（核心库与 codec、ASan + UBSan、短时 libFuzzer）见 [Linux L1 验证记录](linux-l1-validation.md)；L2 输入枚举与 L3 安全输出按 [ADR-0004](decisions/0004-posix-filesystem.md) 实现，compress / verify / extract 在 Linux 上端到端可用，见 [Linux L2 / L3 验证记录](linux-l2l3-validation.md)。
+
+### 7.1 工作方式
+
+- 用 WSL 自己文件系统里的克隆（例如 `~/SeedArc`），**不在 `/mnt/c/...` 下编辑或构建**；与 Windows 检出只通过 git 同步（push / fetch 或在 Windows 侧 `git fetch \\wsl.localhost\<发行版>\home\<用户>\SeedArc <分支>`）。
+- 从 Windows 调用时用 `wsl -d <发行版> -- bash <脚本>`；直接在 PowerShell 里写 `bash -lc '...$x...'` 时变量可能被吞，复杂命令写成脚本文件再运行。
+- 缺少系统工具 / 库时报告并由用户安装，Agent 不用 sudo / apt，也不改用 apt 版 zstd / liblzma。
+- 长时间压缩测试计划在用户的远端服务器上做（不在 L1 范围）。
+
+### 7.2 环境快照（2026-11-13，WSL `Ubuntu-26.04`，实际检查）
+
+| 项 | 版本 |
+| --- | --- |
+| GCC / libstdc++ | 15.2.0（`g++`） |
+| Clang | 21.1.8（`clang++`，使用 libstdc++；compiler-rt 含 ASan / UBSan / libFuzzer） |
+| CMake / Ninja | 4.2.3 / 1.13.2 |
+| glibc | 2.43 |
+| vcpkg | `~/vcpkg`（microsoft/vcpkg 克隆，工具 2026-10-29），未设全局 `VCPKG_ROOT` |
+| 其他 | git、curl、zip / unzip、pkg-config、tar、python3、llvm-symbolizer 已有；**clang-format 未安装**（格式检查改在 Windows UCRT64 clang-format 22.1.8 上做） |
+
+### 7.3 vcpkg 与构建
+
+依赖与 Windows 相同：`vcpkg-configuration.json` 的 git registry baseline + `vcpkg.json` overrides，triplet `x64-linux`（静态库），得到 zstd 1.5.7、liblzma 5.8.4；不使用 apt 的 libzstd / liblzma。
+
+```bash
+git clone https://github.com/microsoft/vcpkg.git ~/vcpkg
+~/vcpkg/bootstrap-vcpkg.sh -disableMetrics
+export VCPKG_ROOT=~/vcpkg
+cmake --preset gcc-linux-debug
+cmake --build --preset gcc-linux-debug --parallel
+ctest --preset gcc-linux-debug
+```
+
+presets：`gcc-linux-debug` / `gcc-linux-release` / `clang-linux-debug` / `clang-linux-release`、`clang-linux-asan-ubsan`（`-fsanitize=address,undefined -fno-sanitize-recover=undefined`，test preset 设置 `ASAN_OPTIONS` / `UBSAN_OPTIONS`）、`clang-linux-fuzz`（build preset 只构建三个 fuzz 目标，与 `msvc-fuzz` 相同模式）。都继承隐藏的 `vcpkg-linux`（Ninja、`build/<preset>`、仅 Linux 主机可见），Windows presets 未改。编译器名用 `g++` / `clang++`，在其他发行版上若名字不同，用不入库的 `CMakeUserPresets.json` 覆盖 `CMAKE_CXX_COMPILER`。
+
+libFuzzer 短跑（新输入写到临时语料目录，仓库语料只读）：
+
+```bash
+cmake --preset clang-linux-fuzz && cmake --build --preset clang-linux-fuzz
+mkdir -p /tmp/fz/header && build/clang-linux-fuzz/fuzz/seedarc_fuzz_header /tmp/fz/header fuzz/corpus/header -max_total_time=180
+```
+
+### 7.4 Linux 上的功能边界
+
+- 归档路径规则（ADR-0001 的 Windows profile）在非 Windows 上只实现 **ASCII 子集**：规则不变，大小写冲突按 ASCII a–z / A–Z 判定（对 ASCII 与 `CompareStringOrdinal` 忽略大小写等价）；畸形 UTF-8 仍为 `unsafe_path`；**合法的非 ASCII 路径一律 `unsupported_feature`**，因为 NFC 检查和非 ASCII 大小写折叠需要与 Windows 一致的 Unicode 表。用户 2026-11-13 选定暂不实现（ADR-0004 §5 / §9）。因此 Linux 只能压缩、校验、解压全 ASCII 名字。
+- compress / extract 的输入根与输出目录必须位于 ext4 / xfs / btrfs / tmpfs；WSL 的 `/mnt/c`（9p）、NFS、FUSE、overlayfs 等被拒绝（`unsupported_feature`）。输出目录不得被其他用户修改：属主为本人或 root，且组 / 其他人不可写，除非有粘滞位（如 `/tmp`）。
+- 解压结果为私有权限（目录 0700、文件 0600），对应 Windows 的私有 DACL；归档文件按 umask 创建。时间戳、权限不保存。
+- 输入中的符号链接、设备、FIFO、socket 一律拒绝；跨挂载点拒绝。
+- CLI 在 `SIGINT` / `SIGTERM` / `SIGHUP` 时取消（退出码 4，清理后退出）。
+- 与 Windows 的全部差异见 ADR-0004 §9。
+
+### 7.5 glibc 注意事项
+
+- WSL 是 glibc 2.43，计划中的远端服务器（Ubuntu 24.04）是 glibc 2.39。在新 glibc 上链接的可执行文件通常不能在旧 glibc 上运行（符号版本 `GLIBC_2.4x`）。
+- 用户已说明会自行在服务器上安装所需的 glibc / 工具链；Agent 不处理系统 glibc。较稳妥的做法是在服务器（或同版本容器）上用同一 baseline 重新配置构建，而不是拷贝 WSL 二进制。
+- vcpkg 依赖是静态库，但 C++ 运行时与 libc 仍动态链接；跨机器比较压缩输出时记录 glibc、编译器与依赖版本。

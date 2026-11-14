@@ -166,14 +166,22 @@ int main() {
     reject(case_collision, {}, {}, ErrorCode::unsafe_path);
     const std::array duplicate_path{study::PlanFile{0, "a"}, study::PlanFile{1, "a"}};
     reject(duplicate_path, {}, {}, ErrorCode::unsafe_path);
-    for (const auto path : {"../bad", "a\\b", "/absolute", "CON", "e\xcc\x81.txt"}) {
+    for (const auto path : {"../bad", "a\\b", "/absolute", "CON", "\xc0\xaf"}) {
         const std::array bad{study::PlanFile{0, path}};
         reject(bad, {}, {}, ErrorCode::unsafe_path);
     }
     const std::array unicode{study::PlanFile{0, "\xc3\xa9.txt"}};
     const std::array unicode_edit{study::PathRankOverride{"\xc3\xa9.txt", 5, std::nullopt}};
+    const std::array not_nfc{study::PlanFile{0, "e\xcc\x81.txt"}};
+#ifdef _WIN32
+    reject(not_nfc, {}, {}, ErrorCode::unsafe_path);
     check(study::make_path_file_plans({0, 2, 6}, unicode, {}, unicode_edit).has_value(),
           "exact NFC Unicode path works for empty file");
+#else
+    // Off Windows only the ASCII subset of the path profile exists yet (Linux L1).
+    reject(not_nfc, {}, {}, ErrorCode::unsupported_feature);
+    reject(unicode, {}, unicode_edit, ErrorCode::unsupported_feature);
+#endif
     std::vector<study::PlanFile> many;
     for (std::size_t i = 0; i <= study::max_scope_files; ++i) {
         many.push_back({i, "f" + std::to_string(i)});

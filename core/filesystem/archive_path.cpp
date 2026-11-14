@@ -15,7 +15,6 @@ namespace seedarc::experimental {
 namespace {
 Error unsafe(std::string message) { return {ErrorCode::unsafe_path, std::move(message)}; }
 
-#ifdef _WIN32
 bool reserved_name(std::wstring_view component) {
     auto base = component.substr(0, component.find(L'.'));
     while (!base.empty() && base.back() == L' ') {
@@ -36,23 +35,74 @@ bool reserved_name(std::wstring_view component) {
             upper[3] == L'\u00b2' || upper[3] == L'\u00b3');
 }
 
+#ifdef _WIN32
 struct CaseInsensitiveLess {
     bool operator()(const std::wstring &a, const std::wstring &b) const {
         return CompareStringOrdinal(a.c_str(), static_cast<int>(a.size()), b.c_str(),
                                     static_cast<int>(b.size()), TRUE) == CSTR_LESS_THAN;
     }
 };
-#endif
-} // namespace
+#else
+// Only ASCII paths reach the manifest check off Windows (see decode_path), and for ASCII the
+// ordinal ignore-case rule of CompareStringOrdinal is exactly a-z -> A-Z.
+struct CaseInsensitiveLess {
+    static wchar_t upper(wchar_t c) {
+        return c >= L'a' && c <= L'z' ? static_cast<wchar_t>(c - L'a' + L'A') : c;
+    }
+    bool operator()(const std::wstring &a, const std::wstring &b) const {
+        return std::ranges::lexicographical_compare(
+            a, b, [](wchar_t x, wchar_t y) { return upper(x) < upper(y); });
+    }
+};
 
-std::expected<std::vector<std::wstring>, Error> validate_archive_path(std::string_view path,
-                                                                      const PathLimits &limits) {
-    if (path.empty()) {
-        return std::unexpected(unsafe("empty archive path"));
+// Well-formed UTF-8 as in Unicode table 3-7 (what MB_ERR_INVALID_CHARS accepts): no overlong
+// forms, surrogates, code points above U+10FFFF, stray or missing continuation bytes. Used so
+// that malformed paths keep the same error (unsafe_path) as on Windows.
+bool strict_utf8(std::string_view text) {
+    std::size_t i = 0;
+    while (i < text.size()) {
+        const auto lead = static_cast<unsigned char>(text[i]);
+        if (lead < 0x80) {
+            ++i;
+            continue;
+        }
+        std::size_t length = 0;
+        unsigned char low = 0x80;
+        unsigned char high = 0xbf;
+        if (lead >= 0xc2 && lead <= 0xdf) {
+            length = 2;
+        } else if (lead >= 0xe0 && lead <= 0xef) {
+            length = 3;
+            low = lead == 0xe0 ? 0xa0 : 0x80;
+            high = lead == 0xed ? 0x9f : 0xbf;
+        } else if (lead >= 0xf0 && lead <= 0xf4) {
+            length = 4;
+            low = lead == 0xf0 ? 0x90 : 0x80;
+            high = lead == 0xf4 ? 0x8f : 0xbf;
+        } else {
+            return false;
+        }
+        if (text.size() - i < length) {
+            return false;
+        }
+        for (std::size_t k = 1; k < length; ++k) {
+            const auto byte = static_cast<unsigned char>(text[i + k]);
+            const auto min = k == 1 ? low : static_cast<unsigned char>(0x80);
+            const auto max = k == 1 ? high : static_cast<unsigned char>(0xbf);
+            if (byte < min || byte > max) {
+                return false;
+            }
+        }
+        i += length;
     }
-    if (path.size() > limits.max_path_bytes || path.size() > 4096) {
-        return std::unexpected(Error{ErrorCode::resource_limit, "archive path exceeds byte limit"});
-    }
+    return true;
+}
+#endif
+
+// Strict UTF-8 -> UTF-16 code units, already NFC. Off Windows only the ASCII subset of the
+// (Windows) archive path profile is implemented: NFC and ordinal case folding of non-ASCII text
+// need the host's Unicode tables, so any non-ASCII byte is refused instead of guessed (L1).
+std::expected<std::wstring, Error> decode_path(std::string_view path) {
 #ifdef _WIN32
     const int count = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, path.data(),
                                           static_cast<int>(path.size()), nullptr, 0);
@@ -68,6 +118,40 @@ std::expected<std::vector<std::wstring>, Error> validate_archive_path(std::strin
     if (!IsNormalizedString(NormalizationC, wide.c_str(), -1)) {
         return std::unexpected(unsafe("archive path must already be NFC normalized"));
     }
+    return wide;
+#else
+    if (!strict_utf8(path)) {
+        return std::unexpected(unsafe("archive path is not valid UTF-8"));
+    }
+    std::wstring wide;
+    wide.reserve(path.size());
+    for (const char c : path) {
+        const auto byte = static_cast<unsigned char>(c);
+        if (byte >= 0x80) {
+            return std::unexpected(Error{ErrorCode::unsupported_feature,
+                                         "non-ASCII archive paths are not supported on this "
+                                         "platform yet"});
+        }
+        wide.push_back(static_cast<wchar_t>(byte));
+    }
+    return wide;
+#endif
+}
+} // namespace
+
+std::expected<std::vector<std::wstring>, Error> validate_archive_path(std::string_view path,
+                                                                      const PathLimits &limits) {
+    if (path.empty()) {
+        return std::unexpected(unsafe("empty archive path"));
+    }
+    if (path.size() > limits.max_path_bytes || path.size() > 4096) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "archive path exceeds byte limit"});
+    }
+    const auto decoded = decode_path(path);
+    if (!decoded) {
+        return std::unexpected(decoded.error());
+    }
+    const std::wstring &wide = *decoded;
     for (const auto c : wide) {
         if (c < 32 || c == 127 ||
             std::wstring_view{L"\\:<>\"|?*~"}.find(c) != std::wstring_view::npos) {
@@ -95,10 +179,6 @@ std::expected<std::vector<std::wstring>, Error> validate_archive_path(std::strin
         begin = slash + 1;
     }
     return parts;
-#else
-    return std::unexpected(
-        Error{ErrorCode::unsupported_feature, "Windows path profile unavailable"});
-#endif
 }
 
 std::expected<void, Error> validate_manifest_paths(std::span<const PathEntry> entries,
@@ -106,7 +186,6 @@ std::expected<void, Error> validate_manifest_paths(std::span<const PathEntry> en
     if (entries.size() > limits.max_entries || entries.size() > 100000) {
         return std::unexpected(Error{ErrorCode::resource_limit, "manifest entry limit"});
     }
-#ifdef _WIN32
     std::map<std::wstring, bool, CaseInsensitiveLess> names;
     std::size_t used = 0;
     const auto budget = (std::min)(limits.max_metadata_bytes, std::size_t{16 * 1024 * 1024});
@@ -141,9 +220,5 @@ std::expected<void, Error> validate_manifest_paths(std::span<const PathEntry> en
         }
     }
     return {};
-#else
-    return std::unexpected(
-        Error{ErrorCode::unsupported_feature, "Windows path profile unavailable"});
-#endif
 }
 } // namespace seedarc::experimental

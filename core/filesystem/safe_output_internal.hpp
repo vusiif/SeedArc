@@ -38,6 +38,9 @@ struct WriteFaults {
     bool fail_explicit_cleanup = false;
     // Called after each successful write call with the total bytes written so far.
     std::function<void(std::uint64_t)> after_write;
+    // Linux only: publish O_TMPFILE files through /proc/self/fd instead of AT_EMPTY_PATH, so that
+    // the fallback used before Linux 6.10 (without CAP_DAC_READ_SEARCH) is tested too.
+    bool force_proc_link = false;
 };
 
 class ScopedWriteFaults {

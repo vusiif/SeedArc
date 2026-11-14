@@ -5,4 +5,8 @@ target_link_libraries(seedarc_cli PRIVATE SeedArc::core)
 seedarc_target_defaults(seedarc_cli)
 if(WIN32)
     target_link_libraries(seedarc_cli PRIVATE shell32)
+else()
+    # Signal-waiting thread for cancellation (main.cpp, CancelOnSignal).
+    find_package(Threads REQUIRED)
+    target_link_libraries(seedarc_cli PRIVATE Threads::Threads)
 endif()

@@ -3,6 +3,11 @@ configure_file(version_config.hpp.in generated/seedarc/version_config.hpp @ONLY)
 add_library(libseedarc STATIC version.cpp checked_arithmetic.cpp archive.cpp archive_index.cpp
     store_archive.cpp filesystem/archive_path.cpp filesystem/safe_output.cpp
     filesystem/input_tree.cpp codec/codec.cpp)
+# Linux safe output / input enumeration (ADR-0004); the files are empty on other platforms.
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    target_sources(libseedarc PRIVATE filesystem/safe_output_posix.cpp
+        filesystem/input_tree_posix.cpp)
+endif()
 add_library(SeedArc::core ALIAS libseedarc)
 target_include_directories(libseedarc PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 target_include_directories(libseedarc PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated"

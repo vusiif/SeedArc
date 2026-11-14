@@ -20,8 +20,9 @@
 
 namespace seedarc::experimental::internal {
 struct InputEntry {
-    std::string path;                     // canonical archive path (UTF-8, '/' separated)
-    std::vector<std::wstring> components; // native names below the input root; empty: file root
+    std::string path; // canonical archive path (UTF-8, '/' separated)
+    // Native names below the input root (UTF-16 on Windows, bytes on Linux); empty: file root.
+    std::vector<std::filesystem::path::string_type> components;
     bool directory = false;
     std::uint64_t size = 0;
     std::int64_t last_write = 0;

@@ -20,6 +20,12 @@
 #include <windows.h>
 
 #include <shellapi.h>
+#else
+#include <csignal>
+#include <ctime>
+#include <thread>
+
+#include <signal.h>
 #endif
 
 namespace {
@@ -107,6 +113,37 @@ BOOL WINAPI on_console_event(DWORD) {
     cancellation().request_stop(); // the running operation cleans up and exits with code 4
     return TRUE;
 }
+#else
+// SIGINT / SIGTERM / SIGHUP request cancellation (the operation cleans up and exits with code
+// 4), as Ctrl+C does on Windows. The signals are blocked and received by a dedicated thread with
+// sigtimedwait, so no work happens in a signal handler (request_stop is not async-signal-safe).
+class CancelOnSignal {
+  public:
+    CancelOnSignal() {
+        sigemptyset(&signals_);
+        sigaddset(&signals_, SIGINT);
+        sigaddset(&signals_, SIGTERM);
+        sigaddset(&signals_, SIGHUP);
+        if (pthread_sigmask(SIG_BLOCK, &signals_, nullptr) != 0) {
+            return; // signals keep their default action
+        }
+        waiter_ = std::jthread{[this](std::stop_token done) {
+            const timespec interval{0, 100'000'000};
+            while (!done.stop_requested()) {
+                if (sigtimedwait(&signals_, nullptr, &interval) > 0) {
+                    cancellation().request_stop();
+                }
+            }
+        }};
+    }
+    CancelOnSignal(const CancelOnSignal &) = delete;
+    CancelOnSignal &operator=(const CancelOnSignal &) = delete;
+    ~CancelOnSignal() = default; // joins the waiter; the process exits right after
+
+  private:
+    sigset_t signals_{};
+    std::jthread waiter_;
+};
 #endif
 
 struct Operands {
@@ -228,6 +265,8 @@ int run(const std::vector<Argument> &arguments) {
     options.level = operands->level;
 #ifdef _WIN32
     SetConsoleCtrlHandler(on_console_event, TRUE);
+#else
+    const CancelOnSignal cancel_on_signal;
 #endif
     const auto stop = cancellation().get_token();
     const auto &input = operands->positional.front();

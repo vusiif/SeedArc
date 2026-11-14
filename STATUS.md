@@ -68,6 +68,7 @@
 | IDE-002 | CLion 默认 Debug 依赖配置修复 | 主 Agent | 本地 CLion Debug profile、开发说明、M3 记录、STATUS | 完成 | MCP 重新加载成功；确认 MSVC / C++23 模式与 vcpkg 依赖；IDE CLI 版本、codec 测试均 exitCode=0，CMake 文件完整诊断无问题，见 M3 记录末节 |
 | ACC-003 | M3 独立验收 | 本轮主 Agent；只读子审查 m3_review | STATUS、M3 验收记录；不改原实现 | 完成 | Release / ASan 各 30/30；format / diff 检查通过，IDE 13/14 文件完整无 ERROR；1 文件人工补查仅拼写提示；IDE 运行已在 IDE-002 补齐，详见 [M3 记录](docs/m3-validation.md#独立验收2026-11-12) |
 | DEV-004 | M3 Zstd / LZMA2 块编码 | 主 Agent | vcpkg manifest、CMakePresets、core/codec、archive / store_archive / safe_output、CLI、tests、fuzz 语料、ADR-0003、M3 记录、README、开发说明、STATUS | 完成（独立验收通过） | zstd 1.5.7 / liblzma 5.8.4 经 vcpkg 钉住；七套配置 + ASan 30/30，format / tidy 通过，archive Fuzz 180 s 无崩溃；CLion 诊断 13 个文件无 ERROR，修 2 条 WARN 后 MSVC Release / Clang Debug / GCC Release 复测 30/30；[M3 记录](docs/m3-validation.md) |
+| DEV-014 | Linux L1 + L2 / L3：WSL 构建与 presets；POSIX 输入枚举与安全输出（ADR-0004）；测试移植到与 Windows 同广度 | DEV-014 子会话（协调会话委派） | WSL 克隆分支 `linux-l1`（L1）与 `linux-l2l3`（L2 / L3）：CMakePresets、根 / core / cli / tests / fuzz CMake、core/filesystem/{archive_path,safe_output,input_tree}.cpp 与新 *_posix.cpp / posix_common.hpp、safe_output.hpp、cli/main.cpp、tests 下 FS 测试与 test_fixture、新 safe_output_posix_tests.cpp、check_cli.cmake、ADR-0004、docs/development.md §7、linux-l1 / linux-l2l3 验证记录、posix 草案、STATUS | 待验收（未推送 / 未合并） | L2 / L3：GCC / Clang Debug / Release 与 ASan+UBSan 各 37/37（36 项与 Windows 同名 + `cli.posix_refusals`，无 DISABLED），全量重编 0 警告；FS 九项各重复 20 次 0 失败；fuzz 三目标各 300 s 0 崩溃；内存有界在上限内（RSS 口径）。Windows（3f8d84c，协调会话在独立 worktree 中验证）：MSVC / UCRT64 GCC / UCRT64 Clang 的 Debug / Release 与 MSVC ASan 各 36/36，0 警告，无 ASan 报告；Windows 上的 msvc-fuzz 和 20 次重复测试未跑。非 ASCII 名字按用户选择暂不支持；CLion 未查。见 [L2 / L3 记录](docs/linux-l2l3-validation.md)、[L1 记录](docs/linux-l1-validation.md) |
 | DEV-002 | M1 实验格式与安全 I/O 设计 | 主 Agent；两个已结束子任务 | 候选 ADR、archive / filesystem 模块、tests、验证记录 | 完成 | 用户 2026-11-11 验收。error 5（沙盒 ACL）定位、提交重命名修复；卷身份 / 深度预算 / 共享模式 / 故障注入 / Fuzz 完成；六套 + ASan 18/18，format / tidy 通过；CLion 诊断完成并修 1 个 ERROR；真实 SUBST 未测；[M1 交接](docs/m1-validation.md) |
 
 ## 验证与证据
@@ -112,6 +113,7 @@
 - **M2 独立验收历史**：首轮 Release 24/24，但新增回归在 Release / CLion Debug 复现两项缺陷而未通过；本轮修复后已通过上述独立复验。历史失败、修复、最新证据分别保留在 [验收记录](docs/m2-acceptance.md)，不删除负面证据。需要 IDE 前台时先提醒用户配合。
 - Git 仓库属主为沙盒账户，当前用户执行 git 报 dubious ownership；本轮仅以单次 `git -c safe.directory=…` 读取状态，未修改全局 Git 配置（是否添加 safe.directory 由用户决定）。
 - 2026-11-12 用户确认 CLion 改为阶段性集中检查：日常小步修改运行编译器 / 测试 / 格式检查，完整研究迭代、功能接入或里程碑验收前统一检查相关文件；IDE 独有问题、配置问题及用户指定提示按需提前检查，纯文档修改免检。所有 Agent 遵守，协调者可集成后统一检查；异常记录未覆盖范围并继续独立工作，不冒充通过。规则已同步 AGENTS.md 与开发说明。需要诊断时仍先确认前台，逐文件打开再查询。历史 REV-001 诊断证据保留于任务表。
+- DEV-014（2026-11-13，Linux，分支 `linux-l2l3` 未推送，包含 `linux-l1`）：用户决定先只推进 Linux。L2 / L3 按 [ADR-0004](docs/decisions/0004-posix-filesystem.md) 实现，compress / verify / extract 在 Linux 上端到端可用，测试广度与 Windows 相同（见 [L2 / L3 记录](docs/linux-l2l3-validation.md)）。用户选定方案 A：非 ASCII 文件名在 Linux 上明确拒绝，Unicode 路径规则另行立项。与 Windows 的剩余差异见 ADR-0004 §9。Windows 侧构建与全量测试已在 3f8d84c 上通过（见 L2 / L3 记录 §7）。合并前待办：CLion 诊断、Windows msvc-fuzz 与 20 次重复测试、xfs / btrfs 与旧内核（`/proc` 发布回退）实测、服务器长测（`in-long-task`）。
 
 ## 更新约定
 

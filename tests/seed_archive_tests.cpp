@@ -11,10 +11,12 @@
 #include <stdexcept>
 #include <string>
 
+#ifdef _WIN32
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
 #include <windows.h>
+#endif
 
 namespace fs = std::filesystem;
 namespace study = seedarc::experimental::seed_study;
@@ -73,7 +75,7 @@ int main(int argc, char *argv[]) {
     }
     const auto parent = fs::absolute(argv[1]);
     fs::create_directories(parent);
-    const auto work = parent / ("seed-archive-" + std::to_string(GetCurrentProcessId()));
+    const auto work = parent / ("seed-archive-" + test_fixture::unique_suffix());
     if (!fs::create_directory(work)) {
         std::cerr << "test directory already exists\n";
         return 1;
@@ -181,6 +183,18 @@ int main(int argc, char *argv[]) {
         // unopenable "<NAME>.tmp" entry, which confounded the old count. See STATUS DEV-011.
         const auto failed_writes = work / "failed-writes";
         fs::create_directory(failed_writes);
+#ifndef _WIN32
+        {
+            // POSIX has no delete-pending state: a present file is a leftover, a removed one is
+            // reported as vanished.
+            const auto probe = failed_writes / "pending.probe";
+            constexpr std::array<std::byte, 1> one{std::byte{1}};
+            write(probe, one);
+            check(!test_fixture::vanished(probe), "an existing object is a leftover");
+            fs::remove(probe);
+            check(test_fixture::vanished(probe), "a deleted object is reported as vanished");
+        }
+#else
         {
             // The leftover check below must still catch a delete-pending object.
             const auto pending = failed_writes / "pending.probe";
@@ -199,6 +213,7 @@ int main(int argc, char *argv[]) {
             }
             check(test_fixture::vanished(pending), "a deleted object is reported as vanished");
         }
+#endif
         const auto bad = failed_writes / "bad.sarc";
         const std::array stale{study::PathRankOverride{"missing", 5, std::nullopt}};
         rejected(study::compress_b2_archive(input, bad, options, {0, 3, 6}, stale),
@@ -288,16 +303,9 @@ int main(int argc, char *argv[]) {
         std::cerr << e.what() << '\n';
         ++failures;
     }
-    bool safe = work.parent_path() == parent;
-    for (const auto &entry : fs::recursive_directory_iterator(work)) {
-        const auto attrs = GetFileAttributesW(entry.path().c_str());
-        // A name that vanished since enumeration (another component's short-lived entry) cannot
-        // be a reparse point that remove_all would follow; any other failure stays unsafe.
-        const auto error = attrs == INVALID_FILE_ATTRIBUTES ? GetLastError() : ERROR_SUCCESS;
-        const bool vanished = error == ERROR_FILE_NOT_FOUND || error == ERROR_PATH_NOT_FOUND;
-        safe = safe && (vanished || (attrs != INVALID_FILE_ATTRIBUTES &&
-                                     (attrs & FILE_ATTRIBUTE_REPARSE_POINT) == 0));
-    }
+    // A vanished name cannot be a link that the removal would follow; anything else must be a
+    // plain file or directory (test_fixture::reparse_free, Windows and Linux).
+    const bool safe = work.parent_path() == parent && test_fixture::reparse_free(work);
     std::error_code cleanup;
     if (safe && failures == 0) {
         cleanup = test_fixture::remove_tree(work); // not remove_all(): see test_fixture.hpp

@@ -15,12 +15,18 @@
 #include <string>
 #include <vector>
 
+#ifdef _WIN32
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
 #include <windows.h>
 
 #include <aclapi.h>
+#else
+#include <sys/stat.h>
+#include <sys/xattr.h>
+#include <unistd.h>
+#endif
 
 namespace fs = std::filesystem;
 using namespace seedarc::experimental;
@@ -51,7 +57,7 @@ void write(const fs::path &path, const std::string &data) {
 
 fs::path find_staging(const fs::path &directory) {
     for (const auto &child : fs::directory_iterator(directory)) {
-        if (child.is_directory() && child.path().filename().wstring().starts_with(L".seedarc-")) {
+        if (child.is_directory() && child.path().filename().string().starts_with(".seedarc-")) {
             return child.path();
         }
     }
@@ -86,6 +92,7 @@ void tamper_case(const fs::path &root, const fs::path &archive, const std::strin
     check(!fs::exists(root / "restored"), label + ": target never appears");
 }
 
+#ifdef _WIN32
 // The published tree must carry the staging DACL: only the token user, SYSTEM and Administrators
 // may appear. The root's DACL is protected; objects below it inherit from it.
 bool private_dacl(const fs::path &path, bool root) {
@@ -126,6 +133,19 @@ bool private_dacl(const fs::path &path, bool root) {
     LocalFree(descriptor);
     return ok;
 }
+#else
+// POSIX counterpart of the private staging DACL (ADR-0004): owned by this user, directories
+// exactly 0700 and files exactly 0600, no user extended attributes.
+bool private_mode(const fs::path &path, bool) {
+    struct stat status{};
+    if (::lstat(path.c_str(), &status) != 0 || status.st_uid != ::geteuid()) {
+        return false;
+    }
+    const auto expected = S_ISDIR(status.st_mode) ? 0700 : 0600;
+    return (status.st_mode & 07777) == static_cast<mode_t>(expected) &&
+           (S_ISDIR(status.st_mode) || S_ISREG(status.st_mode));
+}
+#endif
 } // namespace
 
 int main(int argc, char *argv[]) {
@@ -134,8 +154,7 @@ int main(int argc, char *argv[]) {
     }
     const auto base = fs::absolute(argv[1]).lexically_normal();
     fs::create_directories(base);
-    const auto work = base / ("m2-acceptance-" + std::to_string(GetCurrentProcessId()) + "-" +
-                              std::to_string(GetTickCount64()));
+    const auto work = base / ("m2-acceptance-" + test_fixture::unique_suffix());
     if (!fs::create_directory(work)) {
         return 2;
     }
@@ -164,9 +183,42 @@ int main(int argc, char *argv[]) {
                     [](const fs::path &staging) { write(staging / "a", "tampered"); });
         tamper_case(work / "p1-foreign", archive, "P1 foreign entry in the staging root",
                     [](const fs::path &staging) { write(staging / "foreign.txt", "x"); });
+#ifdef _WIN32
         tamper_case(
             work / "p1-stream", archive, "P1 named stream on a committed file",
             [](const fs::path &staging) { write(fs::path{staging / "a"}.concat(":hidden"), "x"); });
+#else
+        // POSIX counterparts of a named stream, and Linux-only ways to keep a hold on content.
+        if (::setxattr(work.c_str(), "user.seedarc-probe", "x", 1, 0) == 0) {
+            ::removexattr(work.c_str(), "user.seedarc-probe");
+            tamper_case(work / "p1-xattr", archive, "P1 user xattr on a committed file",
+                        [](const fs::path &staging) {
+                            ::setxattr((staging / "a").c_str(), "user.hidden", "x", 1, 0);
+                        });
+        } else {
+            std::cout << "skip P1 user xattr: not supported by this file system\n";
+        }
+        tamper_case(work / "p1-hardlink", archive, "P1 extra hard link to a committed file",
+                    [&work](const fs::path &staging) {
+                        fs::create_hard_link(staging / "a", work / "p1-hardlink-kept");
+                    });
+        tamper_case(work / "p1-mode", archive, "P1 permissions widened on a committed file",
+                    [](const fs::path &staging) {
+                        fs::permissions(staging / "a", fs::perms::others_read,
+                                        fs::perm_options::add);
+                    });
+        tamper_case(work / "p1-replace", archive, "P1 committed file replaced (same content)",
+                    [](const fs::path &staging) {
+                        fs::rename(staging / "a", staging / "a.orig");
+                        write(staging / "a", "original");
+                        fs::permissions(staging / "a",
+                                        fs::perms::owner_read | fs::perms::owner_write,
+                                        fs::perm_options::replace);
+                        fs::remove(staging / "a.orig");
+                    });
+        // A symbolic link substituted for a staged file is covered by filesystem.safe_output
+        // (rollback correctly keeps the link, which this fixture's cleanup would then refuse).
+#endif
         tamper_case(work / "p1-both", archive, "P1 acceptance scenario (content + foreign)",
                     [](const fs::path &staging) {
                         write(staging / "a", "tampered");
@@ -180,10 +232,17 @@ int main(int argc, char *argv[]) {
                   read(restored / "b") == std::string(8192, 'b') &&
                   read(restored / "d" / "c") == "nested",
               "untampered extraction is byte-exact");
+#ifdef _WIN32
         check(clean.has_value() && private_dacl(restored, true) &&
                   private_dacl(restored / "a", false) && private_dacl(restored / "d", false) &&
                   private_dacl(restored / "d" / "c", false),
               "published tree carries only the private staging DACL");
+#else
+        check(clean.has_value() && private_mode(restored, true) &&
+                  private_mode(restored / "a", false) && private_mode(restored / "d", false) &&
+                  private_mode(restored / "d" / "c", false),
+              "published tree is private (owner only: 0700 / 0600)");
+#endif
         check(extract_archive(empty_archive, work / "empty-out").has_value() &&
                   fs::is_empty(work / "empty-out"),
               "empty archive extracts to an empty directory");

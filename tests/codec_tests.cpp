@@ -7,6 +7,11 @@
 #include "seedarc/store_archive.hpp"
 #include "test_fixture.hpp"
 
+// The archive half needs input enumeration and safe output: Windows, and Linux since ADR-0004.
+#if defined(_WIN32) || defined(__linux__)
+#define SEEDARC_ARCHIVE_TESTS 1
+#endif
+
 #include <algorithm>
 #include <array>
 #include <cstdint>
@@ -20,10 +25,12 @@
 #include <utility>
 #include <vector>
 
+#ifdef _WIN32
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
 #include <windows.h>
+#endif
 
 namespace fs = std::filesystem;
 using seedarc::ErrorCode;
@@ -73,6 +80,8 @@ std::vector<std::byte> text_data(std::size_t size) {
     return bytes;
 }
 
+#ifdef SEEDARC_ARCHIVE_TESTS
+// Archive tests below need input enumeration and safe output (Windows; Linux per ADR-0004).
 std::vector<std::byte> read_all(const fs::path &path) {
     std::ifstream stream(path, std::ios::binary);
     std::vector<char> chars{std::istreambuf_iterator<char>{stream}, {}};
@@ -103,7 +112,7 @@ Snapshot snapshot(const fs::path &root) {
 
 bool no_leftovers(const fs::path &directory) {
     for (const auto &child : fs::directory_iterator(directory)) {
-        if (child.path().filename().wstring().starts_with(L".seedarc-")) {
+        if (child.path().filename().string().starts_with(".seedarc-")) {
             return false;
         }
     }
@@ -127,6 +136,7 @@ std::optional<std::vector<BlockDescriptor>> blocks_of(const fs::path &archive) {
     }
     return index->blocks;
 }
+#endif
 
 // --- the codec boundary ------------------------------------------------------------------------
 
@@ -263,6 +273,7 @@ void codec_boundary_tests() {
 
 // --- archives ----------------------------------------------------------------------------------
 
+#ifdef SEEDARC_ARCHIVE_TESTS
 struct Variant {
     std::string name;
     Codec codec;
@@ -282,7 +293,12 @@ void archive_tests(const fs::path &work) {
     mixed.insert(mixed.end(), noise.begin(), noise.end());
     write_file(input / "sub" / "mixed.bin", mixed);
     write_file(input / "sub" / "zero", {});
+#ifdef _WIN32
     write_file(input / fs::path{L"sub/été.txt"}, make_data(2000, 3, 4));
+#else
+    // ASCII stand-in: Linux refuses non-ASCII names (ADR-0004 section 5, store_archive_tests).
+    write_file(input / "sub" / "ete.txt", make_data(2000, 3, 4));
+#endif
     const auto expected = snapshot(input);
 
     const std::vector<Variant> variants{{"store", Codec::store, std::nullopt},
@@ -416,16 +432,35 @@ void archive_tests(const fs::path &work) {
         }
     }
 }
+#endif
 } // namespace
 
+// Usage: <sandbox directory> (Windows: boundary and archive tests) or --boundary-only (any
+// platform: the in-memory codec boundary tests alone, no file system access).
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         return 2;
     }
+    if (std::string_view{argv[1]} == "--boundary-only") {
+        try {
+            codec_boundary_tests();
+        } catch (const std::exception &error) {
+            std::cerr << "FAIL: " << error.what() << '\n';
+            ++failures;
+        }
+        std::cout << (failures == 0 ? "all codec boundary checks passed"
+                                    : "codec boundary checks failed")
+                  << '\n';
+        return failures == 0 ? 0 : 1;
+    }
+#ifndef SEEDARC_ARCHIVE_TESTS
+    std::cerr << "archive codec tests need input enumeration and safe output (Windows / Linux); "
+                 "use --boundary-only\n";
+    return 2;
+#else
     const auto base = fs::absolute(argv[1]).lexically_normal();
     fs::create_directories(base);
-    const auto work = base / ("m3-codec-" + std::to_string(GetCurrentProcessId()) + "-" +
-                              std::to_string(GetTickCount64()));
+    const auto work = base / ("m3-codec-" + test_fixture::unique_suffix());
     if (!fs::create_directory(work)) {
         return 2;
     }
@@ -447,4 +482,5 @@ int main(int argc, char *argv[]) {
     }
     std::cout << (failures == 0 ? "all codec checks passed" : "codec checks failed") << '\n';
     return failures == 0 ? 0 : 1;
+#endif
 }
