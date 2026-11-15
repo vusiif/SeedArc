@@ -61,6 +61,12 @@ inline constexpr std::size_t max_solid_bytes = std::size_t{1} << 30;
 compress_solid(std::span<const std::byte> input, std::uint32_t level);
 [[nodiscard]] std::expected<void, Error> decompress_solid(std::span<const std::byte> frame,
                                                           std::span<std::byte> output);
+// DEV-017 partial recovery: streams a possibly truncated solid frame (`prefix` is its first
+// bytes) into `output` and returns how many leading bytes were produced. Same window limit and
+// no dictionary; never writes past output.size(). The produced bytes carry no checksum of their
+// own: callers verify every file they cut out of them.
+[[nodiscard]] std::expected<std::size_t, Error>
+decompress_solid_prefix(std::span<const std::byte> prefix, std::span<std::byte> output);
 
 // Decodes exactly one frame made with the same dictionary into exactly output.size() bytes.
 // Rejects a missing / different dictionary ID, trailing input, a wrong content size and a

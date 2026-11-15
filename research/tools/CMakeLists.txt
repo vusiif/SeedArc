@@ -40,7 +40,7 @@ endif()
 
 # DEV-017: append study (portable; research container v3 only).
 add_executable(seedarc_append_study append_study.cpp)
-target_link_libraries(seedarc_append_study PRIVATE seedarc_codec_dictionary)
+target_link_libraries(seedarc_append_study PRIVATE seedarc_codec_dictionary SeedArc::core)
 if(WIN32)
     target_link_libraries(seedarc_append_study PRIVATE psapi)
 endif()
@@ -50,6 +50,20 @@ if(BUILD_TESTING)
         "-DTOOL=$<TARGET_FILE:seedarc_append_study>" "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/append-check-$<CONFIG>"
         -P "${CMAKE_CURRENT_SOURCE_DIR}/check_append.cmake")
     set_tests_properties(research.append_study PROPERTIES TIMEOUT 300)
+endif()
+
+# DEV-017: append study, research container v4 (generation records, redundancy levels, recovery).
+add_executable(seedarc_append4_study append4_study.cpp)
+target_link_libraries(seedarc_append4_study PRIVATE seedarc_codec_dictionary SeedArc::core)
+if(WIN32)
+    target_link_libraries(seedarc_append4_study PRIVATE psapi)
+endif()
+seedarc_target_defaults(seedarc_append4_study)
+if(BUILD_TESTING)
+    add_test(NAME research.append4_study COMMAND "${CMAKE_COMMAND}"
+        "-DTOOL=$<TARGET_FILE:seedarc_append4_study>" "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/append4-check-$<CONFIG>"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_append4.cmake")
+    set_tests_properties(research.append4_study PROPERTIES TIMEOUT 600)
 endif()
 
 # DEV-016: production path-profile check for corpus builders (portable).

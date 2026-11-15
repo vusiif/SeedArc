@@ -221,6 +221,36 @@ std::expected<void, Error> decompress_solid(std::span<const std::byte> frame,
     return {};
 }
 
+std::expected<std::size_t, Error> decompress_solid_prefix(std::span<const std::byte> prefix,
+                                                          std::span<std::byte> output) {
+    if (prefix.empty() || output.empty() || output.size() > max_solid_bytes) {
+        return std::unexpected(corrupt("empty or oversized solid frame"));
+    }
+    const std::unique_ptr<ZSTD_DCtx, DCtxDeleter> context{ZSTD_createDCtx()};
+    if (!context || !zstd_ok(ZSTD_DCtx_setParameter(context.get(), ZSTD_d_windowLogMax,
+                                                    static_cast<int>(max_solid_window_log)))) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "cannot create zstd decoder"});
+    }
+    ZSTD_inBuffer in{prefix.data(), prefix.size(), 0};
+    ZSTD_outBuffer out{output.data(), output.size(), 0};
+    while (in.pos < in.size && out.pos < out.size) {
+        const auto before_in = in.pos, before_out = out.pos;
+        const auto result = ZSTD_decompressStream(context.get(), &out, &in);
+        if (!zstd_ok(result)) {
+            if (ZSTD_getErrorCode(result) == ZSTD_error_frameParameter_windowTooLarge ||
+                ZSTD_getErrorCode(result) == ZSTD_error_memory_allocation) {
+                return std::unexpected(
+                    Error{ErrorCode::resource_limit, "zstd solid frame needs too much memory"});
+            }
+            return std::unexpected(corrupt(ZSTD_getErrorName(result)));
+        }
+        if (result == 0 || (in.pos == before_in && out.pos == before_out)) {
+            break; // frame complete, or no progress possible with this input
+        }
+    }
+    return out.pos;
+}
+
 struct DictionaryDecoder::Impl {
     std::unique_ptr<ZSTD_DDict, DDictDeleter> dictionary;
     std::unique_ptr<ZSTD_DCtx, DCtxDeleter> context;

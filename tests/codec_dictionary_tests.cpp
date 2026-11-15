@@ -196,6 +196,22 @@ int main() {
         check(!research::decompress_solid(extra, back), "trailing bytes after the frame rejected");
         check(!research::compress_solid({}, 9) && !research::compress_solid(twice, 0),
               "empty input and bad level rejected");
+        // Truncated frames (partial recovery): every produced byte is a correct prefix.
+        std::vector<std::byte> part(twice.size());
+        const auto all = research::decompress_solid_prefix(*solid, part);
+        check(all && *all == twice.size() && part == twice, "whole frame decodes as a prefix");
+        const auto half = research::decompress_solid_prefix(
+            std::span{*solid}.first(solid->size() / 2), part);
+        check(half && *half > 0 && *half < twice.size() &&
+                  std::equal(part.begin(), part.begin() + static_cast<std::ptrdiff_t>(*half),
+                             twice.begin()),
+              "half a frame yields a correct leading part");
+        std::vector<std::byte> small(1000);
+        const auto capped = research::decompress_solid_prefix(*solid, small);
+        check(capped && *capped == small.size() &&
+                  std::equal(small.begin(), small.end(), twice.begin()),
+              "prefix decoding stops at the output size");
+        check(!research::decompress_solid_prefix({}, part), "empty prefix rejected");
         std::vector<std::byte> block(4096);
         std::vector<std::byte> packed(4095);
         const auto dict_size = encoder->encode(std::span{block}.first(4096), packed);
