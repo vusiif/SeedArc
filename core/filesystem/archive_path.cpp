@@ -1,146 +1,79 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "seedarc/archive_path.hpp"
 
+#include "filesystem/unicode_profile.hpp"
+
 #include <algorithm>
 #include <map>
-
-#ifdef _WIN32
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
-#include <windows.h>
-#endif
+#include <ranges>
 
 namespace seedarc::experimental {
 namespace {
+namespace unicode = internal::unicode;
+
 Error unsafe(std::string message) { return {ErrorCode::unsafe_path, std::move(message)}; }
 
-bool reserved_name(std::wstring_view component) {
-    auto base = component.substr(0, component.find(L'.'));
-    while (!base.empty() && base.back() == L' ') {
+// Windows device names (ADR-0001), compared after ASCII uppercasing of the part before the
+// first dot, with trailing spaces removed.
+bool reserved_name(std::u32string_view component) {
+    auto base = component.substr(0, component.find(U'.'));
+    while (!base.empty() && base.back() == U' ') {
         base.remove_suffix(1);
     }
-    std::wstring upper{base};
+    std::u32string upper{base};
     for (auto &c : upper) {
-        if (c >= L'a' && c <= L'z') {
-            c = static_cast<wchar_t>(c - L'a' + L'A');
+        if (c >= U'a' && c <= U'z') {
+            c = c - U'a' + U'A';
         }
     }
-    if (upper == L"CON" || upper == L"PRN" || upper == L"AUX" || upper == L"NUL" ||
-        upper == L"CLOCK$" || upper == L"CONIN$" || upper == L"CONOUT$") {
+    if (upper == U"CON" || upper == U"PRN" || upper == U"AUX" || upper == U"NUL" ||
+        upper == U"CLOCK$" || upper == U"CONIN$" || upper == U"CONOUT$") {
         return true;
     }
-    return upper.size() == 4 && (upper.starts_with(L"COM") || upper.starts_with(L"LPT")) &&
-           ((upper[3] >= L'1' && upper[3] <= L'9') || upper[3] == L'\u00b9' ||
-            upper[3] == L'\u00b2' || upper[3] == L'\u00b3');
+    return upper.size() == 4 && (upper.starts_with(U"COM") || upper.starts_with(U"LPT")) &&
+           ((upper[3] >= U'1' && upper[3] <= U'9') || upper[3] == U'\u00b9' ||
+            upper[3] == U'\u00b2' || upper[3] == U'\u00b3');
 }
 
-#ifdef _WIN32
-struct CaseInsensitiveLess {
-    bool operator()(const std::wstring &a, const std::wstring &b) const {
-        return CompareStringOrdinal(a.c_str(), static_cast<int>(a.size()), b.c_str(),
-                                    static_cast<int>(b.size()), TRUE) == CSTR_LESS_THAN;
-    }
-};
-#else
-// Only ASCII paths reach the manifest check off Windows (see decode_path), and for ASCII the
-// ordinal ignore-case rule of CompareStringOrdinal is exactly a-z -> A-Z.
-struct CaseInsensitiveLess {
-    static wchar_t upper(wchar_t c) {
-        return c >= L'a' && c <= L'z' ? static_cast<wchar_t>(c - L'a' + L'A') : c;
-    }
-    bool operator()(const std::wstring &a, const std::wstring &b) const {
-        return std::ranges::lexicographical_compare(
-            a, b, [](wchar_t x, wchar_t y) { return upper(x) < upper(y); });
-    }
-};
-
-// Well-formed UTF-8 as in Unicode table 3-7 (what MB_ERR_INVALID_CHARS accepts): no overlong
-// forms, surrogates, code points above U+10FFFF, stray or missing continuation bytes. Used so
-// that malformed paths keep the same error (unsafe_path) as on Windows.
-bool strict_utf8(std::string_view text) {
-    std::size_t i = 0;
-    while (i < text.size()) {
-        const auto lead = static_cast<unsigned char>(text[i]);
-        if (lead < 0x80) {
-            ++i;
-            continue;
-        }
-        std::size_t length = 0;
-        unsigned char low = 0x80;
-        unsigned char high = 0xbf;
-        if (lead >= 0xc2 && lead <= 0xdf) {
-            length = 2;
-        } else if (lead >= 0xe0 && lead <= 0xef) {
-            length = 3;
-            low = lead == 0xe0 ? 0xa0 : 0x80;
-            high = lead == 0xed ? 0x9f : 0xbf;
-        } else if (lead >= 0xf0 && lead <= 0xf4) {
-            length = 4;
-            low = lead == 0xf0 ? 0x90 : 0x80;
-            high = lead == 0xf4 ? 0x8f : 0xbf;
-        } else {
-            return false;
-        }
-        if (text.size() - i < length) {
-            return false;
-        }
-        for (std::size_t k = 1; k < length; ++k) {
-            const auto byte = static_cast<unsigned char>(text[i + k]);
-            const auto min = k == 1 ? low : static_cast<unsigned char>(0x80);
-            const auto max = k == 1 ? high : static_cast<unsigned char>(0xbf);
-            if (byte < min || byte > max) {
-                return false;
+// The platform's wide form of a validated component: UTF-16 on Windows (NT names), UTF-32
+// where wchar_t holds a full scalar value (Linux; callers there use the original UTF-8 bytes).
+std::wstring to_wide(std::u32string_view component) {
+    std::wstring wide;
+    wide.reserve(component.size());
+    for (const auto c : component) {
+        if constexpr (sizeof(wchar_t) == 2) {
+            if (c >= 0x10000) {
+                const auto v = c - 0x10000;
+                wide.push_back(static_cast<wchar_t>(0xd800 + (v >> 10)));
+                wide.push_back(static_cast<wchar_t>(0xdc00 + (v & 0x3ff)));
+                continue;
             }
         }
-        i += length;
+        wide.push_back(static_cast<wchar_t>(c));
     }
-    return true;
+    return wide;
 }
-#endif
 
-// Strict UTF-8 -> UTF-16 code units, already NFC. Off Windows only the ASCII subset of the
-// (Windows) archive path profile is implemented: NFC and ordinal case folding of non-ASCII text
-// need the host's Unicode tables, so any non-ASCII byte is refused instead of guessed (L1).
-std::expected<std::wstring, Error> decode_path(std::string_view path) {
-#ifdef _WIN32
-    const int count = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, path.data(),
-                                          static_cast<int>(path.size()), nullptr, 0);
-    if (count == 0) {
+// Archive path profile (ADR-0005): strict UTF-8, every code point assigned in the pinned
+// Unicode version, and already in NFC. Paths are never silently renamed.
+std::expected<std::u32string, Error> decode_path(std::string_view path) {
+    auto decoded = unicode::decode_utf8(path);
+    if (!decoded) {
         return std::unexpected(unsafe("archive path is not valid UTF-8"));
     }
-    std::wstring wide(static_cast<std::size_t>(count), L'\0');
-    if (MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, path.data(),
-                            static_cast<int>(path.size()), wide.data(), count) != count) {
-        return std::unexpected(unsafe("archive path UTF-8 conversion failed"));
+    if (!std::ranges::all_of(*decoded, unicode::is_assigned)) {
+        return std::unexpected(unsafe("archive path contains a code point unassigned in Unicode " +
+                                      std::string{unicode::ucd_version()}));
     }
-    SetLastError(ERROR_SUCCESS);
-    if (!IsNormalizedString(NormalizationC, wide.c_str(), -1)) {
+    if (!unicode::is_nfc(*decoded)) {
         return std::unexpected(unsafe("archive path must already be NFC normalized"));
     }
-    return wide;
-#else
-    if (!strict_utf8(path)) {
-        return std::unexpected(unsafe("archive path is not valid UTF-8"));
-    }
-    std::wstring wide;
-    wide.reserve(path.size());
-    for (const char c : path) {
-        const auto byte = static_cast<unsigned char>(c);
-        if (byte >= 0x80) {
-            return std::unexpected(Error{ErrorCode::unsupported_feature,
-                                         "non-ASCII archive paths are not supported on this "
-                                         "platform yet"});
-        }
-        wide.push_back(static_cast<wchar_t>(byte));
-    }
-    return wide;
-#endif
+    return std::move(*decoded);
 }
-} // namespace
 
-std::expected<std::vector<std::wstring>, Error> validate_archive_path(std::string_view path,
-                                                                      const PathLimits &limits) {
+// Splits a decoded path into checked components.
+std::expected<std::vector<std::u32string>, Error> components_of(std::string_view path,
+                                                                const PathLimits &limits) {
     if (path.empty()) {
         return std::unexpected(unsafe("empty archive path"));
     }
@@ -151,34 +84,51 @@ std::expected<std::vector<std::wstring>, Error> validate_archive_path(std::strin
     if (!decoded) {
         return std::unexpected(decoded.error());
     }
-    const std::wstring &wide = *decoded;
-    for (const auto c : wide) {
+    const std::u32string &text = *decoded;
+    for (const auto c : text) {
         if (c < 32 || c == 127 ||
-            std::wstring_view{L"\\:<>\"|?*~"}.find(c) != std::wstring_view::npos) {
+            std::u32string_view{U"\\:<>\"|?*~"}.find(c) != std::u32string_view::npos) {
             return std::unexpected(unsafe("archive path contains a prohibited character"));
         }
     }
-    std::vector<std::wstring> parts;
+    std::vector<std::u32string> parts;
     std::size_t begin = 0;
-    while (begin <= wide.size()) {
-        const auto slash = wide.find(L'/', begin);
-        const auto end = slash == std::wstring::npos ? wide.size() : slash;
-        const auto part = std::wstring_view{wide}.substr(begin, end - begin);
-        if (part.empty() || part == L"." || part == L".." || part.back() == L'.' ||
-            part.back() == L' ' || reserved_name(part)) {
+    while (begin <= text.size()) {
+        const auto slash = text.find(U'/', begin);
+        const auto end = slash == std::u32string::npos ? text.size() : slash;
+        const auto part = std::u32string_view{text}.substr(begin, end - begin);
+        if (part.empty() || part == U"." || part == U".." || part.back() == U'.' ||
+            part.back() == U' ' || reserved_name(part)) {
             return std::unexpected(unsafe("archive path contains an unsafe component"));
         }
-        if (part.size() > 255 || parts.size() >= limits.max_components || parts.size() >= 64) {
+        // 255 UTF-8 bytes: the Linux NAME_MAX, and at most 255 UTF-16 units on Windows.
+        if (unicode::encode_utf8(part).size() > 255 || parts.size() >= limits.max_components ||
+            parts.size() >= 64) {
             return std::unexpected(
                 Error{ErrorCode::resource_limit, "archive path component limit"});
         }
         parts.emplace_back(part);
-        if (slash == std::wstring::npos) {
+        if (slash == std::u32string::npos) {
             break;
         }
         begin = slash + 1;
     }
     return parts;
+}
+} // namespace
+
+std::expected<std::vector<std::wstring>, Error> validate_archive_path(std::string_view path,
+                                                                      const PathLimits &limits) {
+    auto parts = components_of(path, limits);
+    if (!parts) {
+        return std::unexpected(parts.error());
+    }
+    std::vector<std::wstring> wide;
+    wide.reserve(parts->size());
+    for (const auto &part : *parts) {
+        wide.push_back(to_wide(part));
+    }
+    return wide;
 }
 
 std::expected<void, Error> validate_manifest_paths(std::span<const PathEntry> entries,
@@ -186,7 +136,9 @@ std::expected<void, Error> validate_manifest_paths(std::span<const PathEntry> en
     if (entries.size() > limits.max_entries || entries.size() > 100000) {
         return std::unexpected(Error{ErrorCode::resource_limit, "manifest entry limit"});
     }
-    std::map<std::wstring, bool, CaseInsensitiveLess> names;
+    // Keyed by the simple case folding of every code point (ADR-0005), so that names differing
+    // only in case collide on every platform; '/' folds to itself.
+    std::map<std::u32string, bool> names;
     std::size_t used = 0;
     const auto budget = (std::min)(limits.max_metadata_bytes, std::size_t{16 * 1024 * 1024});
     for (const auto &entry : entries) {
@@ -194,25 +146,26 @@ std::expected<void, Error> validate_manifest_paths(std::span<const PathEntry> en
             return std::unexpected(Error{ErrorCode::resource_limit, "manifest metadata limit"});
         }
         used += 32 + entry.path.size();
-        const auto parsed = validate_archive_path(entry.path, limits);
+        const auto parsed = components_of(entry.path, limits);
         if (!parsed) {
             return std::unexpected(parsed.error());
         }
-        std::wstring name;
+        std::u32string key;
         for (const auto &component : *parsed) {
-            if (!name.empty()) {
-                name += L'/';
+            if (!key.empty()) {
+                key += U'/';
             }
-            name += component;
+            for (const auto c : component) {
+                key += unicode::simple_fold(c);
+            }
         }
-        if (!names.emplace(std::move(name), entry.directory).second) {
+        if (!names.emplace(std::move(key), entry.directory).second) {
             return std::unexpected(unsafe("duplicate or case-colliding archive path"));
         }
     }
-    for (const auto &item : names) {
-        const auto &name = item.first;
-        for (auto slash = name.find(L'/'); slash != std::wstring::npos;
-             slash = name.find(L'/', slash + 1)) {
+    for (const auto &name : std::views::keys(names)) {
+        for (auto slash = name.find(U'/'); slash != std::u32string::npos;
+             slash = name.find(U'/', slash + 1)) {
             const auto ancestor = names.find(name.substr(0, slash));
             if (ancestor != names.end() && !ancestor->second) {
                 return std::unexpected(unsafe("file is also used as an archive directory"));

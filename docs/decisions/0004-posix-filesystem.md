@@ -58,7 +58,7 @@
 ## 5. 文件名编码
 
 - Linux 文件名是字节串。输入名与输出名都必须满足归档路径规则；L1 起非 Windows 只实现该规则的 **ASCII 子集**：畸形 UTF-8 → `unsafe_path`，合法的非 ASCII → `unsupported_feature`。因此**本 ADR 下 Linux 只能压缩 / 解压全 ASCII 名字**。
-- 完整支持需要与 Windows `IsNormalizedString(NFC)`、`CompareStringOrdinal(忽略大小写)` 一致的 Unicode 表。候选：从固定版本的 Unicode 数据生成表放入 `third_party/`，并在 Windows 与 Linux 上用同一组差分向量验证。由于无法保证与 Windows 所用 Unicode 版本逐字符一致，这是协议层面的取舍，**另行决定**，本 ADR 不实现。
+- 完整支持需要与 Windows `IsNormalizedString(NFC)`、`CompareStringOrdinal(忽略大小写)` 一致的 Unicode 表。候选：从固定版本的 Unicode 数据生成表放入 `third_party/`，并在 Windows 与 Linux 上用同一组差分向量验证。由于无法保证与 Windows 所用 Unicode 版本逐字符一致，这是协议层面的取舍，**另行决定**，本 ADR 不实现。（2026-11-14：已按 [ADR-0005](0005-portable-unicode-path-profile.md) 实现，两个平台改用同一套固定的 Unicode 17.0.0 表，不再依赖 Windows API。）
 - 内部的原生名字类型：Windows 为 `std::wstring`，POSIX 为字节 `std::string`（`std::filesystem::path::string_type`）。
 
 ## 6. 元数据保留
@@ -79,7 +79,7 @@ Windows 用控制台处理程序把 Ctrl+C 变成取消（退出码 4，清理�
 
 | 项 | 差异 |
 | --- | --- |
-| 非 ASCII 文件名 | Linux 拒绝（`unsupported_feature`），Windows 支持。用户 2026-11-13 选择方案 A：暂不实现，另行立项 |
+| 非 ASCII 文件名 | ~~Linux 拒绝（`unsupported_feature`），Windows 支持。用户 2026-11-13 选择方案 A：暂不实现，另行立项~~ **已由 [ADR-0005](0005-portable-unicode-path-profile.md)（2026-11-14）取代**：两个平台使用同一套固定版本的 Unicode 规则，结果相同 |
 | 并发写者 | Windows 以拒绝写共享打开输入，并发写者使压缩直接失败；Linux 只能事后检测（大小、mtime、inode、EOF） |
 | 固定的父目录 | Windows 持有句柄时目录不能被改名 / 删除；Linux 可以，但已打开的 fd 仍指向原目录，写入不会跟随新名字（有测试） |
 | 共享目标目录 | Linux 拒绝组 / 其他人可写且无粘滞位的目标目录，Windows 接受 |

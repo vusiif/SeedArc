@@ -137,8 +137,9 @@ elseif(CASE STREQUAL "codec_round_trip")
     endif()
     file(REMOVE_RECURSE "${work}")
 elseif(CASE STREQUAL "posix_refusals")
-    # Linux (ADR-0004): links in the input, shared output directories and non-ASCII names are
-    # refused with exit code 5 and leave nothing behind; the M3 fixtures extract.
+    # Linux (ADR-0004): links in the input and shared output directories are refused with exit
+    # code 5 and leave nothing behind; the M3 fixtures extract. Unicode names (ADR-0005) are
+    # covered by the C++ store / codec tests on every platform.
     set(work "${WORK}/posix-refusals")
     file(REMOVE_RECURSE "${work}")
     file(MAKE_DIRECTORY "${work}/in" "${work}/shared")
@@ -150,9 +151,6 @@ elseif(CASE STREQUAL "posix_refusals")
         GROUP_READ GROUP_WRITE GROUP_EXECUTE)
     expect_cli(5 "" "other users" compress "${work}/in" -o "${work}/shared/a.sarc")
     expect_cli(5 "" "other users" extract "${SEEDARC_FIXTURES}/zstd-text.sarc" -o "${work}/shared/out")
-    file(WRITE "${work}/in/café.txt" "non-ASCII")
-    expect_cli(5 "" "non-ASCII" compress "${work}/in" -o "${work}/u.sarc")
-    file(REMOVE "${work}/in/café.txt")
     foreach(fixture IN ITEMS store-empty zstd-text lzma2-text)
         expect_cli(0 "extracted:" "" extract "${SEEDARC_FIXTURES}/${fixture}.sarc" -o "${work}/${fixture}")
     endforeach()

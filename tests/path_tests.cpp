@@ -17,15 +17,47 @@ int main() {
     for (const auto name : {"file.txt", ".config", "folder/sub/file"}) {
         check(validate_archive_path(name).has_value(), "valid ASCII relative path");
     }
-    for (const auto name : {"\xe4\xb8\xad\xe6\x96\x87.txt", "caf\xc3\xa9"}) {
-#ifdef _WIN32
+    // ADR-0005: the same answers on every platform.
+    // CJK, NFC e-acute, the Hangul syllable GA, an emoji directory with an Arabic name.
+    for (const auto name : {"\xe4\xb8\xad\xe6\x96\x87.txt", "caf\xc3\xa9", "\xea\xb0\x80",
+                            "\xf0\x9f\x98\x80/\xd8\xb9\xd8\xb1\xd8\xa8\xd9\x8a"}) {
         check(validate_archive_path(name).has_value(), "valid NFC relative path");
-#else
-        // Only the ASCII subset of the path profile exists off Windows (Linux L1).
+    }
+    const auto unsafe = [&](const char *name, const char *description) {
         const auto result = validate_archive_path(name);
-        check(!result && result.error().code == seedarc::ErrorCode::unsupported_feature,
-              "non-ASCII path explicitly unsupported off Windows");
-#endif
+        check(!result && result.error().code == seedarc::ErrorCode::unsafe_path, description);
+    };
+    unsafe("cafe\xcc\x81", "NFD (e + U+0301) is not NFC");
+    unsafe("\xe1\x84\x80\xe1\x85\xa1", "conjoining jamo L+V compose to a syllable: not NFC");
+    unsafe("\xe2\x84\xab", "U+212B ANGSTROM SIGN is a singleton: not NFC");
+    unsafe("a\xcc\xa3\xcc\x82", "a + U+0323 + U+0302 composes to U+1EAD: not NFC");
+    unsafe("x\xcd\xb8", "U+0378 is unassigned");
+    unsafe("\xef\xb7\x90", "U+FDD0 is a noncharacter");
+    unsafe("\xef\xa4\x80", "U+F900 CJK compatibility ideograph is a singleton: not NFC");
+    check(validate_archive_path("\xf3\xb0\x80\x80x").has_value(), "plane 15 private use accepted");
+    {
+        std::string longest;
+        for (int i = 0; i < 85; ++i) {
+            longest += "\xe4\xb8\xad";
+        }
+        check(validate_archive_path(longest).has_value(), "255 UTF-8 bytes per component");
+        const auto result = validate_archive_path(longest + "a");
+        check(!result && result.error().code == seedarc::ErrorCode::resource_limit,
+              "256 UTF-8 bytes per component is the limit");
+    }
+    {
+        const std::array<PathEntry, 2> umlaut{{{"\xc3\x84", false}, {"\xc3\xa4", false}}};
+        check(!validate_manifest_paths(umlaut), "U+00C4 / U+00E4 collide");
+        const std::array<PathEntry, 2> sigma{{{"\xcf\x83", false}, {"\xcf\x82", false}}};
+        check(!validate_manifest_paths(sigma), "sigma / final sigma collide");
+        const std::array<PathEntry, 2> deseret{
+            {{"\xf0\x90\x90\x80", false}, {"\xf0\x90\x90\xa8", false}}};
+        check(!validate_manifest_paths(deseret), "supplementary U+10400 / U+10428 collide");
+        const std::array<PathEntry, 2> sharp{{{"\xc3\x9f", false}, {"ss", false}}};
+        check(validate_manifest_paths(sharp).has_value(),
+              "simple folding keeps sharp s and ss apart");
+        const std::array<PathEntry, 2> ancestor{{{"\xc3\x84/x", false}, {"\xc3\xa4", false}}};
+        check(!validate_manifest_paths(ancestor), "case-folded file used as an ancestor");
     }
     for (const auto name : {"",
                             ".",

@@ -22,7 +22,9 @@ struct PathEntry {
     bool directory = false;
 };
 
-// Windows NFC UTF-8 profile. Unsupported platforms fail closed.
+// Archive path profile (ADR-0001, Unicode rules per ADR-0005): strict UTF-8 whose code points are
+// all assigned in the pinned Unicode version and already NFC; same result on every platform.
+// Components are UTF-16 on Windows and UTF-32 elsewhere.
 [[nodiscard]] std::expected<std::vector<std::wstring>, Error>
 validate_archive_path(std::string_view path, const PathLimits &limits = {});
 

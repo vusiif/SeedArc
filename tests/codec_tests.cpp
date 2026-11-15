@@ -293,12 +293,7 @@ void archive_tests(const fs::path &work) {
     mixed.insert(mixed.end(), noise.begin(), noise.end());
     write_file(input / "sub" / "mixed.bin", mixed);
     write_file(input / "sub" / "zero", {});
-#ifdef _WIN32
-    write_file(input / fs::path{L"sub/été.txt"}, make_data(2000, 3, 4));
-#else
-    // ASCII stand-in: Linux refuses non-ASCII names (ADR-0004 section 5, store_archive_tests).
-    write_file(input / "sub" / "ete.txt", make_data(2000, 3, 4));
-#endif
+    write_file(input / "sub" / fs::path{std::u8string{u8"été.txt"}}, make_data(2000, 3, 4));
     const auto expected = snapshot(input);
 
     const std::vector<Variant> variants{{"store", Codec::store, std::nullopt},

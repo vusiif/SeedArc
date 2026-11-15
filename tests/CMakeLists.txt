@@ -37,6 +37,28 @@ add_test(NAME archive.m3_compatibility COMMAND seedarc_m3_compatibility_tests
     "${PROJECT_SOURCE_DIR}/tests/fixtures/m3")
 set_tests_properties(archive.m3_compatibility PROPERTIES TIMEOUT 10)
 
+# ADR-0005: the path profile's Unicode tables against the pinned UCD conformance data.
+set(SEEDARC_UCD_DIR "${PROJECT_SOURCE_DIR}/third_party/unicode-ucd/17.0.0")
+add_executable(seedarc_unicode_tests unicode_tests.cpp)
+target_link_libraries(seedarc_unicode_tests PRIVATE SeedArc::core)
+target_include_directories(seedarc_unicode_tests PRIVATE "${PROJECT_SOURCE_DIR}/core")
+seedarc_target_defaults(seedarc_unicode_tests)
+add_test(NAME unicode.conformance COMMAND seedarc_unicode_tests
+    "${SEEDARC_UCD_DIR}/NormalizationTest.txt")
+set_tests_properties(unicode.conformance PROPERTIES TIMEOUT 120)
+# The committed tables must be what the generator makes from the pinned data (needs Python 3).
+find_package(Python3 COMPONENTS Interpreter QUIET)
+if(Python3_Interpreter_FOUND)
+    add_test(NAME unicode.tables_current COMMAND "${Python3_EXECUTABLE}" -I
+        "${PROJECT_SOURCE_DIR}/core/filesystem/unicode_tables_gen.py" "${SEEDARC_UCD_DIR}"
+        "${PROJECT_SOURCE_DIR}/core/filesystem/unicode_tables.inc" --check)
+    set_tests_properties(unicode.tables_current PROPERTIES TIMEOUT 60)
+else()
+    # Listed as "Not Run" rather than silently omitted.
+    add_test(NAME unicode.tables_current COMMAND "${CMAKE_COMMAND}" -E echo "skipped: no Python 3")
+    set_tests_properties(unicode.tables_current PROPERTIES DISABLED TRUE)
+endif()
+
 foreach(suite IN ITEMS archive path index)
     add_executable(seedarc_${suite}_tests ${suite}_tests.cpp)
     target_link_libraries(seedarc_${suite}_tests PRIVATE SeedArc::core)

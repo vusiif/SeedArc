@@ -44,8 +44,8 @@ Error staged_changed(std::string what) {
             "staged output changed before publication: " + std::move(what)};
 }
 
-// One validated basename, returned with its exact bytes (the path profile only admits ASCII off
-// Windows, so the bytes and the validated components are the same text).
+// One validated basename, returned with its exact bytes. The path profile only admits text that
+// is already NFC (ADR-0005), so these bytes are exactly the name stored in the archive.
 std::expected<std::string, Error> leaf(std::string_view name) {
     auto components = validate_archive_path(name);
     if (!components) {

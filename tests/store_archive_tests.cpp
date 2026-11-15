@@ -102,17 +102,6 @@ void write_file(const fs::path &path, std::span<const std::byte> bytes) {
 
 fs::path u8(std::u8string_view name) { return fs::path{std::u8string{name}}; }
 
-// Off Windows only the ASCII subset of the archive path profile exists (ADR-0004 section 5): the
-// fixtures use an ASCII stand-in there, and non_ascii_refusal_tests() checks the refusal.
-fs::path native_name([[maybe_unused]] std::u8string_view windows,
-                     [[maybe_unused]] std::string_view posix) {
-#ifdef _WIN32
-    return u8(windows);
-#else
-    return fs::path{std::string{posix}};
-#endif
-}
-
 Snapshot snapshot(const fs::path &root) {
     Snapshot result;
     for (const auto &item : fs::recursive_directory_iterator(root)) {
@@ -144,16 +133,15 @@ double seconds_since(std::chrono::steady_clock::time_point start) {
 void build_tree(const fs::path &root) {
     fs::create_directories(root / "a" / "deep" / "er" / "still");
     fs::create_directories(root / "empty-dir" / "nested-empty");
-    const auto named = root / native_name(u8"中文目录", "Mixed Dir");
+    const auto named = root / u8(u8"中文目录");
     fs::create_directories(named);
     write_file(root / "a.txt", text("sorts between a and a/..."));
     write_file(root / "a" / "b.bin", random_bytes(10'000, 1));
     write_file(root / "a" / "zero", {});
     write_file(root / "a" / "deep" / "er" / "still" / "leaf", text("x"));
-    write_file(named / native_name(u8"文件 名.txt", "file name.txt"),
-               text("non-ASCII directory and file"));
-    write_file(root / native_name(u8"café.txt", "cafe.txt"), text("NFC e-acute"));
-    write_file(root / native_name(u8"\U0001f600.bin", "#smile.bin"), random_bytes(300, 2));
+    write_file(named / u8(u8"文件 名.txt"), text("non-ASCII directory and file"));
+    write_file(root / u8(u8"café.txt"), text("NFC e-acute"));
+    write_file(root / u8(u8"\U0001f600.bin"), random_bytes(300, 2));
     write_file(root / "with space.txt", text("space"));
     write_file(root / "UPPER.TXT", text("upper"));
 }
@@ -204,7 +192,7 @@ void round_trip_tests(const fs::path &work) {
         round_trip(work, "empty-file", input);
     }
     {
-        const auto input = work / native_name(u8"单文件.dat", "single-file.dat");
+        const auto input = work / u8(u8"单文件.dat");
         write_file(input, random_bytes(70'000, 3));
         CompressOptions options;
         options.chunk_size_bytes = 4096;
@@ -583,36 +571,80 @@ void rejected_input_tests(const fs::path &work) {
 #endif
 }
 
-#ifndef _WIN32
-// ADR-0004 section 5: non-ASCII names are refused explicitly on Linux, on both sides, and
-// nothing is written.
-void non_ascii_refusal_tests(const fs::path &work) {
-    const auto input = work / "non-ascii-input";
-    fs::create_directory(input);
-    write_file(input / "plain.txt", text("ascii"));
-    write_file(input / u8(u8"café.txt"), text("NFC e-acute"));
-    const auto archive = work / "non-ascii.sarc";
-    check_code(compress_archive(input, archive), ErrorCode::unsupported_feature,
-               "non-ASCII input name refused on Linux");
-    check_code(compress_archive(input / u8(u8"café.txt"), archive), ErrorCode::unsupported_feature,
-               "non-ASCII input root name refused on Linux");
-    check(!fs::exists(archive) && no_leftovers(work), "refused input leaves no archive");
+// ADR-0005: the Unicode rules of the path profile give the same answer on every platform, on
+// both the input and the archive side, and a refusal writes nothing.
+void unicode_profile_tests(const fs::path &work) {
+    const auto archive = work / "unicode.sarc";
+    const auto input = work / "unicode-input";
+    const auto clear = [&](const fs::path &path) {
+        check(!test_fixture::remove_tree(path), "unicode fixture removed");
+    };
+    const auto refused = [&](ErrorCode code, const std::string &label) {
+        check_code(compress_archive(input, archive), code, label);
+        check(!fs::exists(archive) && no_leftovers(work), label + " leaves no archive");
+        clear(input);
+    };
+    // Names are UTF-8 byte strings so that the source shows exactly which code points they hold.
+    const auto with_files = [&](std::initializer_list<std::string_view> names) {
+        fs::create_directory(input);
+        for (const auto name : names) {
+            write_file(input / u8(std::u8string{name.begin(), name.end()}), text("x"));
+        }
+    };
+    // Not NFC (e + U+0301): refused, never renamed.
+    with_files({"cafe\xcc\x81.txt"});
+    refused(ErrorCode::unsafe_path, "NFD input name refused");
+    // U+0378 is unassigned in Unicode 17.0.0.
+    with_files({"x\xcd\xb8.txt"});
+    refused(ErrorCode::unsafe_path, "unassigned code point refused");
+    // 85 x U+4E2D is 255 UTF-8 bytes (accepted); one more is the component limit.
+    std::string longest;
+    for (int i = 0; i < 85; ++i) {
+        longest += "\xe4\xb8\xad";
+    }
+    const auto longest_path = u8(std::u8string{longest.begin(), longest.end()});
+    with_files({longest});
+    check(compress_archive(input, archive).has_value(), "255-byte UTF-8 component accepted");
+    const auto out = work / "unicode-out";
+    check(extract_archive(archive, out).has_value() && fs::exists(out / longest_path),
+          "255-byte UTF-8 component extracted");
+    fs::remove(archive);
+    clear(out);
+    clear(input);
+#ifdef _WIN32
+    // NTFS holds 86 x U+4E2D (86 UTF-16 units); the profile refuses it (258 UTF-8 bytes). Linux
+    // cannot even create such a name (NAME_MAX is 255 bytes); the archive side is tested below.
+    with_files({longest + "\xe4\xb8\xad"});
+    refused(ErrorCode::resource_limit, "256+ byte UTF-8 input component refused");
+#else
+    // Names that differ only by case collide by simple case folding: U+00C4 / U+00E4, and
+    // Greek sigma U+03C3 / final sigma U+03C2. A case-insensitive file system cannot hold both.
+    with_files({"\xc3\x84.txt", "\xc3\xa4.txt"});
+    refused(ErrorCode::unsafe_path, "case-colliding Latin names refused");
+    with_files({"\xcf\x83.txt", "\xcf\x82.txt"});
+    refused(ErrorCode::unsafe_path, "case-colliding Greek sigma names refused");
+#endif
     const auto payload = text("x");
     const BlockDescriptor block{0, 1, 1, 0, 0, crc32c(payload)};
-    for (const char *path : {"caf\xc3\xa9.txt", "\xe4\xb8\xad", "\xf0\x9f\x98\x80"}) {
-        expect_rejected(work, std::string{"non-ASCII archive path "} + path,
+    for (const char *path : {"cafe\xcc\x81", "x\xcd\xb8", "\xef\xb7\x90"}) {
+        expect_rejected(work, std::string{"non-NFC / unassigned archive path "} + path,
                         make_archive({{{path, false, 1, 0, 1}}, {block}}, payload, 1024),
-                        ErrorCode::unsupported_feature);
+                        ErrorCode::unsafe_path);
     }
-    // Malformed UTF-8 stays an unsafe path, as on Windows.
+    // A 258-byte component inside an archive is refused on every platform.
+    const auto too_long = longest + "\xe4\xb8\xad";
+    expect_rejected(work, "256+ byte UTF-8 archive component",
+                    make_archive({{{too_long, false, 1, 0, 1}}, {block}}, payload, 1024),
+                    ErrorCode::resource_limit);
+    // Case collision inside an archive (U+00C4 / U+00E4).
+    expect_rejected(
+        work, "case-colliding Unicode archive paths",
+        make_archive({{{"\xc3\x84", true, 0, 0, 0}, {"\xc3\xa4", true, 0, 0, 0}}, {}}, {}, 1024),
+        ErrorCode::unsafe_path);
     expect_rejected(work, "malformed UTF-8 archive path",
                     make_archive({{{"bad\xc0\xaf", false, 1, 0, 1}}, {block}}, payload, 1024),
                     ErrorCode::unsafe_path);
-    fs::remove(input / u8(u8"café.txt"));
-    check(compress_archive(input, archive).has_value(), "ASCII-only input accepted");
-    fs::remove(archive);
 }
-#endif
 
 fs::path find_staging_directory(const fs::path &work) {
     for (const auto &item : fs::directory_iterator(work)) {
@@ -905,9 +937,7 @@ int main(int argc, char *argv[]) {
     hostile_archive_tests(work);
     limit_and_conflict_tests(work);
     rejected_input_tests(work);
-#ifndef _WIN32
-    non_ascii_refusal_tests(work);
-#endif
+    unicode_profile_tests(work);
     fault_injection_tests(work);
     staging_primitive_tests(work);
 

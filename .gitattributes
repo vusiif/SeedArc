@@ -2,3 +2,5 @@
 /research/experiments/** -text
 # Dataset manifests hash the exact listing bytes.
 /research/datasets/b2r5-corpus-r2/*.tsv -text
+# Pinned Unicode data: the generated tables record the SHA256 of these exact upstream bytes.
+/third_party/unicode-ucd/** -text

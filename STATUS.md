@@ -69,6 +69,7 @@
 | ACC-003 | M3 独立验收 | 本轮主 Agent；只读子审查 m3_review | STATUS、M3 验收记录；不改原实现 | 完成 | Release / ASan 各 30/30；format / diff 检查通过，IDE 13/14 文件完整无 ERROR；1 文件人工补查仅拼写提示；IDE 运行已在 IDE-002 补齐，详见 [M3 记录](docs/m3-validation.md#独立验收2026-11-12) |
 | DEV-004 | M3 Zstd / LZMA2 块编码 | 主 Agent | vcpkg manifest、CMakePresets、core/codec、archive / store_archive / safe_output、CLI、tests、fuzz 语料、ADR-0003、M3 记录、README、开发说明、STATUS | 完成（独立验收通过） | zstd 1.5.7 / liblzma 5.8.4 经 vcpkg 钉住；七套配置 + ASan 30/30，format / tidy 通过，archive Fuzz 180 s 无崩溃；CLion 诊断 13 个文件无 ERROR，修 2 条 WARN 后 MSVC Release / Clang Debug / GCC Release 复测 30/30；[M3 记录](docs/m3-validation.md) |
 | DEV-014 | Linux L1 + L2 / L3：WSL 构建与 presets；POSIX 输入枚举与安全输出（ADR-0004）；测试移植到与 Windows 同广度 | DEV-014 子会话（协调会话委派） | WSL 克隆分支 `linux-l1`（L1）与 `linux-l2l3`（L2 / L3）：CMakePresets、根 / core / cli / tests / fuzz CMake、core/filesystem/{archive_path,safe_output,input_tree}.cpp 与新 *_posix.cpp / posix_common.hpp、safe_output.hpp、cli/main.cpp、tests 下 FS 测试与 test_fixture、新 safe_output_posix_tests.cpp、check_cli.cmake、ADR-0004、docs/development.md §7、linux-l1 / linux-l2l3 验证记录、posix 草案、STATUS | 已合并到 main（`fbeffb4`，已推送），待用户验收 | L2 / L3：GCC / Clang Debug / Release 与 ASan+UBSan 各 37/37（36 项与 Windows 同名 + `cli.posix_refusals`，无 DISABLED），全量重编 0 警告；FS 九项各重复 20 次 0 失败；fuzz 三目标各 300 s 0 崩溃；内存有界在上限内（RSS 口径）。Windows（3f8d84c，协调会话在独立 worktree 中验证）：MSVC / UCRT64 GCC / UCRT64 Clang 的 Debug / Release 与 MSVC ASan 各 36/36，0 警告，无 ASan 报告；合并后 `fbeffb4`（2026-11-14）：全量矩阵 Windows 7 套各 37/37、Linux 5 套各 38/38，0 警告，没有 sanitizer 报告；msvc-fuzz 与 clang-linux-fuzz 三个目标各 300 s，0 崩溃；两个平台各 20 次重复测试，0 失败；xfs / btrfs / tmpfs / ext4 都是 12/12；印度服务器内核 6.8 上 12/12，strace 证实走了 `/proc/self/fd` 发布回退；CLion 诊断没有 ERROR（POSIX 源文件在 Windows IDE 中没有覆盖）。非 ASCII 名字按用户选择暂不支持。见 [L2 / L3 记录](docs/linux-l2l3-validation.md)、[L1 记录](docs/linux-l1-validation.md) |
+| DEV-015 | 跨平台 Unicode 路径规则（[ADR-0005](docs/decisions/0005-portable-unicode-path-profile.md)）：Linux 支持 Unicode 名字；Windows 不再调用 IsNormalizedString / CompareStringOrdinal | 协调会话 | core/filesystem/{unicode_profile.*,unicode_tables_gen.py,unicode_tables.inc,archive_path.cpp,safe_output_posix.cpp}、archive_path.hpp、core/CMakeLists.txt、tests（unicode_tests.cpp 及路径 / store / codec / seed_path / check_cli 用例）、research/tools/unicode_win_diff.cpp、third_party/unicode-ucd/、.gitattributes、ADR-0001 / 0004 / 0005、[验证记录](docs/unicode-path-validation.md)、STATUS | 完成，待用户验收（未提交）。中途曾按用户要求暂停，当天恢复 | 最终代码：Windows 7 套各 39/39、Linux 5 套各 40/40，0 警告，没有 sanitizer 报告；NormalizationTest 全量一致；`unicode.tables_current` 为最新；msvc-fuzz 三个目标各 300 s、Linux path / archive fuzz 各 300 s，0 崩溃；两个平台各 12 项 × 20 轮重复测试，全部通过；Win32 差分显示新规则只更严。CLion 补查四个文件，没有 ERROR，WARN 及理由见验证记录 §3。**未解决**：暂停前出现过一次 Linux `.sandbox-test` 残留，之后未再出现，原因不明。见[验证记录](docs/unicode-path-validation.md) |
 | DEV-002 | M1 实验格式与安全 I/O 设计 | 主 Agent；两个已结束子任务 | 候选 ADR、archive / filesystem 模块、tests、验证记录 | 完成 | 用户 2026-11-11 验收。error 5（沙盒 ACL）定位、提交重命名修复；卷身份 / 深度预算 / 共享模式 / 故障注入 / Fuzz 完成；六套 + ASan 18/18，format / tidy 通过；CLion 诊断完成并修 1 个 ERROR；真实 SUBST 未测；[M1 交接](docs/m1-validation.md) |
 
 ## 验证与证据
@@ -123,7 +124,9 @@
 仍未做：
 - 服务器上的长时间压缩测试（性能 / 压力）；
 - POSIX 源文件的 IDE 检查与 clang-tidy；
-- Linux Unicode 路径支持（另行立项）。
+- Linux Unicode 路径支持：已作为 DEV-015 完成（[ADR-0005](docs/decisions/0005-portable-unicode-path-profile.md)），待用户验收，状态见下一条。
+
+- DEV-015（2026-11-14，**完成，待验收，未提交**）：用户选定两个平台共用固定版本的 Unicode 规则（简单大小写折叠，Unicode 17.0.0），数据下载已获同意。中途按用户要求暂停过，当天恢复后在最终代码上补齐了全部构建、测试、fuzz 和 20 次重复，结果见 [Unicode 路径验证记录](docs/unicode-path-validation.md) §2.1。改动在 Windows 主检出的工作区里（基于 `3ddc66e`）。临时引用：Windows 仓库的 `refs/wip/unicode`（快照 `457a2d4`，不在任何分支上）、WSL 的 `refs/remotes/win/wip-unicode`，以及 WSL 工作树 `~/SeedArc-unicode`，提交后删除。CLion 诊断已于同日补做。提交和推送须由用户决定。
 
 ## 更新约定
 
