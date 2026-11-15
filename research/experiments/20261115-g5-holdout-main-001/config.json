@@ -1,0 +1,71 @@
+{
+  "run_id": "20261115-g5-holdout-main-001",
+  "phase": "holdout",
+  "started_at": "2026-11-15T06:21:31.924235-08:00",
+  "command": [
+    "C:\\Users\\IceLolly\\AppData\\Local\\Programs\\Python\\Python315\\python.exe",
+    "-I",
+    "research/scripts/g5_run.py",
+    "--tool",
+    "build/dictstudy-check/research/tools/Release/seedarc_g5_study.exe",
+    "--cli",
+    "build/msvc-vs2026-release/cli/Release/seedarc.exe",
+    "--run-id",
+    "20261115-g5-holdout-main-001",
+    "--phase",
+    "holdout",
+    "--frozen-config",
+    "research/configs/g5-r1.frozen.json",
+    "--budgets",
+    "2",
+    "4",
+    "8",
+    "16",
+    "--seeds",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "--stall",
+    "20"
+  ],
+  "tool": "seedarc_g5_study.exe",
+  "tool_sha256": "16600a04b075bd853e0708feca62ee3c6a02c030167c2d52d8aa5e3e79ff7785",
+  "git_commit": "362fb81bab320eded40bc32b0ec7b97b640ac564",
+  "git_dirty": true,
+  "machine": {
+    "os": "Windows-10-10.0.19045-SP0",
+    "processor": "AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD",
+    "python": "3.15.0"
+  },
+  "pools": [
+    "many-small-docs",
+    "source-python",
+    "config-cmake-pkg"
+  ],
+  "methods": [
+    "random",
+    "coord",
+    "seed"
+  ],
+  "budgets": [
+    2,
+    4,
+    8,
+    16
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "stall": 20,
+  "budget_unit": "multiples of the pool's input bytes; counts training + trial-encoding input bytes of uncached groups",
+  "level": 9,
+  "chunk_bytes": 65536,
+  "corpus": "g5-holdout-r1",
+  "finished_at": "2026-11-15T06:34:00.121992-08:00"
+}

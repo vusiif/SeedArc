@@ -1,0 +1,110 @@
+[
+ {
+  "pool": "many-small-docs",
+  "subset": "all",
+  "input_bytes": 3239571,
+  "lzma2_6": {
+   "archive_bytes": 1213350,
+   "compress_process_ms": 842.1444000050542,
+   "extract_process_ms": 1191.764699993655,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 721 entries, 3239571 content bytes, 683 blocks, archive 1213350 bytes"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "subset": "local",
+  "input_bytes": 1189588,
+  "lzma2_6": {
+   "archive_bytes": 380304,
+   "compress_process_ms": 301.31270000129007,
+   "extract_process_ms": 290.39429999829736,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 193 entries, 1189588 content bytes, 178 blocks, archive 380304 bytes"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "subset": "public",
+  "input_bytes": 2049983,
+  "lzma2_6": {
+   "archive_bytes": 833146,
+   "compress_process_ms": 588.0163999972865,
+   "extract_process_ms": 798.0336000036914,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 528 entries, 2049983 content bytes, 505 blocks, archive 833146 bytes"
+  }
+ },
+ {
+  "pool": "source-python",
+  "subset": "all",
+  "input_bytes": 5872095,
+  "lzma2_6": {
+   "archive_bytes": 1620668,
+   "compress_process_ms": 1762.8199000027962,
+   "extract_process_ms": 1129.8483999999007,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 855 entries, 5872095 content bytes, 755 blocks, archive 1620668 bytes"
+  }
+ },
+ {
+  "pool": "source-python",
+  "subset": "local",
+  "input_bytes": 2729612,
+  "lzma2_6": {
+   "archive_bytes": 750918,
+   "compress_process_ms": 619.1185999996378,
+   "extract_process_ms": 562.798400002066,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 377 entries, 2729612 content bytes, 345 blocks, archive 750918 bytes"
+  }
+ },
+ {
+  "pool": "source-python",
+  "subset": "public",
+  "input_bytes": 3142483,
+  "lzma2_6": {
+   "archive_bytes": 869850,
+   "compress_process_ms": 767.3895999978413,
+   "extract_process_ms": 615.9333999967203,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 478 entries, 3142483 content bytes, 410 blocks, archive 869850 bytes"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "subset": "all",
+  "input_bytes": 2296238,
+  "lzma2_6": {
+   "archive_bytes": 910676,
+   "compress_process_ms": 838.2299999939278,
+   "extract_process_ms": 1565.5703999946127,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 1680 entries, 2296238 content bytes, 1241 blocks, archive 910676 bytes"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "subset": "local",
+  "input_bytes": 1244467,
+  "lzma2_6": {
+   "archive_bytes": 304321,
+   "compress_process_ms": 270.40710000437684,
+   "extract_process_ms": 317.3097000035341,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 256 entries, 1244467 content bytes, 241 blocks, archive 304321 bytes"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "subset": "public",
+  "input_bytes": 1051771,
+  "lzma2_6": {
+   "archive_bytes": 606455,
+   "compress_process_ms": 491.1110999964876,
+   "extract_process_ms": 1260.097099999257,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 1424 entries, 1051771 content bytes, 1000 blocks, archive 606455 bytes"
+  }
+ }
+]
