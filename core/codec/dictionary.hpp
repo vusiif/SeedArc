@@ -52,6 +52,16 @@ class DictionaryEncoder {
     std::unique_ptr<Impl> impl_;
 };
 
+// DEV-017 solid baseline: one zstd frame over a whole input (no dictionary), window
+// min(27, ceil(log2(size))) and content size recorded; decoding refuses larger windows,
+// several frames, trailing bytes and a content size that differs from output.size().
+inline constexpr unsigned max_solid_window_log = 27;
+inline constexpr std::size_t max_solid_bytes = std::size_t{1} << 30;
+[[nodiscard]] std::expected<std::vector<std::byte>, Error>
+compress_solid(std::span<const std::byte> input, std::uint32_t level);
+[[nodiscard]] std::expected<void, Error> decompress_solid(std::span<const std::byte> frame,
+                                                          std::span<std::byte> output);
+
 // Decodes exactly one frame made with the same dictionary into exactly output.size() bytes.
 // Rejects a missing / different dictionary ID, trailing input, a wrong content size and a
 // declared window larger than the dictionary plus the block needs.

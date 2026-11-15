@@ -38,6 +38,20 @@ if(BUILD_TESTING)
     set_tests_properties(research.g5_study PROPERTIES TIMEOUT 300)
 endif()
 
+# DEV-017: append study (portable; research container v3 only).
+add_executable(seedarc_append_study append_study.cpp)
+target_link_libraries(seedarc_append_study PRIVATE seedarc_codec_dictionary)
+if(WIN32)
+    target_link_libraries(seedarc_append_study PRIVATE psapi)
+endif()
+seedarc_target_defaults(seedarc_append_study)
+if(BUILD_TESTING)
+    add_test(NAME research.append_study COMMAND "${CMAKE_COMMAND}"
+        "-DTOOL=$<TARGET_FILE:seedarc_append_study>" "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/append-check-$<CONFIG>"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_append.cmake")
+    set_tests_properties(research.append_study PROPERTIES TIMEOUT 300)
+endif()
+
 # DEV-016: production path-profile check for corpus builders (portable).
 add_executable(seedarc_path_check path_check.cpp)
 target_link_libraries(seedarc_path_check PRIVATE SeedArc::core)

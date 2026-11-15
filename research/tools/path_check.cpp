@@ -6,7 +6,10 @@
 #include "seedarc/archive_path.hpp"
 
 #include <iostream>
+#include <set>
 #include <string>
+#include <string_view>
+#include <vector>
 
 namespace {
 const char *code_name(seedarc::ErrorCode code) {
@@ -26,9 +29,46 @@ const char *code_name(seedarc::ErrorCode code) {
 }
 } // namespace
 
-int main() {
+int main(int argc, char *argv[]) {
     std::ios::sync_with_stdio(false);
+    const bool manifest = argc == 2 && std::string_view{argv[1]} == "--manifest";
+    if (argc > 1 && !manifest) {
+        std::cerr << "usage: seedarc_path_check [--manifest] < paths\n";
+        return 2;
+    }
     std::string line;
+    if (manifest) {
+        // The whole list as one archive manifest (files only): the production duplicate,
+        // case-collision and file-as-ancestor checks. Prints "ok" or "<code>\t<message>".
+        std::vector<seedarc::experimental::PathEntry> entries;
+        while (std::getline(std::cin, line)) {
+            if (!line.empty() && line.back() == '\r') {
+                line.pop_back();
+            }
+            entries.push_back({line, false});
+        }
+        // A real archive also lists every parent directory, and "a" / "A" directories collide.
+        std::set<std::string> directories;
+        for (const auto &e : entries) {
+            for (auto slash = e.path.find('/'); slash != std::string::npos;
+                 slash = e.path.find('/', slash + 1)) {
+                directories.insert(e.path.substr(0, slash));
+            }
+        }
+        for (const auto &d : directories) {
+            entries.push_back({d, true});
+        }
+        seedarc::experimental::PathLimits limits;
+        limits.max_entries = entries.size();
+        limits.max_metadata_bytes = 16 * 1024 * 1024;
+        const auto result = seedarc::experimental::validate_manifest_paths(entries, limits);
+        if (result) {
+            std::cout << "ok\t" << entries.size() << '\n';
+        } else {
+            std::cout << code_name(result.error().code) << '\t' << result.error().message << '\n';
+        }
+        return std::cin.bad() ? 1 : 0;
+    }
     while (std::getline(std::cin, line)) {
         if (!line.empty() && line.back() == '\r') {
             line.pop_back();

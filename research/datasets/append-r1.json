@@ -1,0 +1,314 @@
+{
+  "corpus_id": "append-r1",
+  "created_at": "2026-11-15T07:38:06.574038-08:00",
+  "plan": "research/ideas/seed-append-r1.md (section 7.1)",
+  "machine": {
+    "os": "Windows-10-10.0.19045-SP0"
+  },
+  "path_profile": "ADR-0005 via seedarc_path_check (per path and --manifest per split)",
+  "batches": "initial = first 70 % of bytes, then append1 / append2 / append3 about 10 % each",
+  "pools": {
+    "linux-src": {
+      "dev": {
+        "files": 3625,
+        "bytes": 50331389,
+        "groups": 71,
+        "manifest_check": "ok\t3871",
+        "batches": {
+          "append1": {
+            "files": 353,
+            "bytes": 5050124
+          },
+          "append2": {
+            "files": 368,
+            "bytes": 5017492
+          },
+          "append3": {
+            "files": 384,
+            "bytes": 5030489
+          },
+          "initial": {
+            "files": 2520,
+            "bytes": 35233284
+          }
+        },
+        "order": "sha256('append-r1:<path>')",
+        "listing": "append-r1/dev-linux-src.tsv",
+        "listing_sha256": "dc28c9792016c8c68421b3a0da4704e2b91b240f82810e9604052e724068d783"
+      },
+      "holdout": {
+        "files": 4836,
+        "bytes": 50331607,
+        "groups": 103,
+        "manifest_check": "ok\t5385",
+        "batches": {
+          "append1": {
+            "files": 527,
+            "bytes": 5049926
+          },
+          "append2": {
+            "files": 524,
+            "bytes": 5022197
+          },
+          "append3": {
+            "files": 524,
+            "bytes": 5026395
+          },
+          "initial": {
+            "files": 3261,
+            "bytes": 35233089
+          }
+        },
+        "order": "sha256('append-r1:<path>')",
+        "listing": "append-r1/holdout-linux-src.tsv",
+        "listing_sha256": "1d17e0ef79529b6ac6ff563ee2dd0bb15878cc416c13cdca5e1a72f179ca4fc7"
+      }
+    },
+    "native-bin": {
+      "dev": {
+        "files": 63,
+        "bytes": 67072886,
+        "groups": 42,
+        "manifest_check": "ok\t66",
+        "batches": {
+          "append1": {
+            "files": 9,
+            "bytes": 7837521
+          },
+          "append2": {
+            "files": 7,
+            "bytes": 8468844
+          },
+          "append3": {
+            "files": 4,
+            "bytes": 3814036
+          },
+          "initial": {
+            "files": 43,
+            "bytes": 46952485
+          }
+        },
+        "order": "sha256('append-r1:<path>')",
+        "listing": "append-r1/dev-native-bin.tsv",
+        "listing_sha256": "532d2faf927f332a606acc7b5365765c017e8f732d43522e8f9395a0990e6248"
+      },
+      "holdout": {
+        "files": 47,
+        "bytes": 67103033,
+        "groups": 46,
+        "manifest_check": "ok\t50",
+        "batches": {
+          "append1": {
+            "files": 4,
+            "bytes": 6321224
+          },
+          "append2": {
+            "files": 8,
+            "bytes": 3210048
+          },
+          "append3": {
+            "files": 11,
+            "bytes": 6169910
+          },
+          "initial": {
+            "files": 24,
+            "bytes": 51401851
+          }
+        },
+        "order": "sha256('append-r1:<path>')",
+        "listing": "append-r1/holdout-native-bin.tsv",
+        "listing_sha256": "0a74298b7b82d28b6f98df96153fdff7c2712662808261f45e76a7f5feb3f81a"
+      }
+    },
+    "silesia": {
+      "dev": {
+        "files": 5,
+        "bytes": 74384271,
+        "groups": 5,
+        "manifest_check": "ok\t6",
+        "batches": {
+          "append1": {
+            "files": 1,
+            "bytes": 33553445
+          },
+          "append2": {
+            "files": 1,
+            "bytes": 7251944
+          },
+          "append3": {
+            "files": 1,
+            "bytes": 21606400
+          },
+          "initial": {
+            "files": 2,
+            "bytes": 11972482
+          }
+        },
+        "order": "sha256('append-r1:<path>')",
+        "listing": "append-r1/dev-silesia.tsv",
+        "listing_sha256": "981733e365cb9ebc20e3964160909554382ae1663b8306c73f19b84dc387633a"
+      },
+      "holdout": {
+        "files": 7,
+        "bytes": 137554309,
+        "groups": 7,
+        "manifest_check": "ok\t8",
+        "batches": {
+          "append1": {
+            "files": 1,
+            "bytes": 41458703
+          },
+          "append2": {
+            "files": 1,
+            "bytes": 6152192
+          },
+          "append3": {
+            "files": 1,
+            "bytes": 10085684
+          },
+          "initial": {
+            "files": 4,
+            "bytes": 79857730
+          }
+        },
+        "order": "sha256('append-r1:<path>')",
+        "listing": "append-r1/holdout-silesia.tsv",
+        "listing_sha256": "42a6e054c43f28537173c6aa9834f80706f69c057e9bd2e8ac2f93f71c766ad4"
+      }
+    },
+    "wiki-text": {
+      "dev": {
+        "files": 50,
+        "bytes": 50000000,
+        "groups": 50,
+        "manifest_check": "ok\t51",
+        "batches": {
+          "append1": {
+            "files": 5,
+            "bytes": 5000000
+          },
+          "append2": {
+            "files": 5,
+            "bytes": 5000000
+          },
+          "append3": {
+            "files": 5,
+            "bytes": 5000000
+          },
+          "initial": {
+            "files": 35,
+            "bytes": 35000000
+          }
+        },
+        "order": "natural (part index)",
+        "listing": "append-r1/dev-wiki-text.tsv",
+        "listing_sha256": "899839acfa9a1b566e668cbeff844b2ec0f9cbf726ee568f45bace465a3ac35a"
+      },
+      "holdout": {
+        "files": 50,
+        "bytes": 50000000,
+        "groups": 50,
+        "manifest_check": "ok\t51",
+        "batches": {
+          "append1": {
+            "files": 5,
+            "bytes": 5000000
+          },
+          "append2": {
+            "files": 5,
+            "bytes": 5000000
+          },
+          "append3": {
+            "files": 5,
+            "bytes": 5000000
+          },
+          "initial": {
+            "files": 35,
+            "bytes": 35000000
+          }
+        },
+        "order": "natural (part index)",
+        "listing": "append-r1/holdout-wiki-text.tsv",
+        "listing_sha256": "5f72e24de3fcc44b30d034944e03ce573e3ecc248e39508cbb502845a544e68e"
+      }
+    }
+  },
+  "path_rejected": [
+    [
+      "linux/drivers/gpu/drm/nouveau/nvkm/subdev/i2c/aux.c",
+      "unsafe_path"
+    ],
+    [
+      "linux/drivers/gpu/drm/nouveau/nvkm/subdev/i2c/aux.h",
+      "unsafe_path"
+    ],
+    [
+      "linux/include/soc/arc/aux.h",
+      "unsafe_path"
+    ]
+  ],
+  "casefold_dropped": [
+    "linux/include/uapi/linux/netfilter/xt_CONNMARK.h",
+    "linux/include/uapi/linux/netfilter/xt_DSCP.h",
+    "linux/include/uapi/linux/netfilter/xt_MARK.h",
+    "linux/include/uapi/linux/netfilter/xt_RATEEST.h",
+    "linux/include/uapi/linux/netfilter/xt_TCPMSS.h",
+    "linux/include/uapi/linux/netfilter/xt_connmark.h",
+    "linux/include/uapi/linux/netfilter/xt_dscp.h",
+    "linux/include/uapi/linux/netfilter/xt_mark.h",
+    "linux/include/uapi/linux/netfilter/xt_rateest.h",
+    "linux/include/uapi/linux/netfilter/xt_tcpmss.h",
+    "linux/include/uapi/linux/netfilter_ipv4/ipt_ECN.h",
+    "linux/include/uapi/linux/netfilter_ipv4/ipt_TTL.h",
+    "linux/include/uapi/linux/netfilter_ipv4/ipt_ecn.h",
+    "linux/include/uapi/linux/netfilter_ipv4/ipt_ttl.h",
+    "linux/include/uapi/linux/netfilter_ipv6/ip6t_HL.h",
+    "linux/include/uapi/linux/netfilter_ipv6/ip6t_hl.h",
+    "linux/net/netfilter/xt_DSCP.c",
+    "linux/net/netfilter/xt_HL.c",
+    "linux/net/netfilter/xt_RATEEST.c",
+    "linux/net/netfilter/xt_TCPMSS.c",
+    "linux/net/netfilter/xt_dscp.c",
+    "linux/net/netfilter/xt_hl.c",
+    "linux/net/netfilter/xt_rateest.c",
+    "linux/net/netfilter/xt_tcpmss.c",
+    "linux/tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus",
+    "linux/tools/memory-model/litmus-tests/Z6.0+pooncelock+pooncelock+pombonce.litmus"
+  ],
+  "skipped": {
+    "linux-src:empty": 27,
+    "native-bin:empty": 0,
+    "silesia:empty": 0
+  },
+  "sources": {
+    "linux-src": {
+      "source": "linux-6.12.tar.xz, cdn.kernel.org",
+      "sha256": "b1a2562be56e42afb3f8489d4c2a7ac472ac23098f1ef1c1e40da601f54625eb",
+      "license": "GPL-2.0 (with exceptions per file)",
+      "redistribution": "listing only in this repository"
+    },
+    "native-bin": {
+      "source": "MSVC 14.51.36231 lib/x64; MSYS2 UCRT64 bin and lib on this machine",
+      "license": "Microsoft / per package",
+      "redistribution": "local evaluation only; not redistributed"
+    },
+    "silesia": {
+      "source": "silesia.zip, sun.aei.polsl.pl",
+      "sha256": "0626e25f45c0ffb5dc801f13b7c82a3b75743ba07e3a71835a41e3d9f63c77af",
+      "license": "mixed per file",
+      "redistribution": "local evaluation only; not redistributed"
+    },
+    "wiki-text": {
+      "source": "enwik8 (enwik8.zip, mattmahoney.net)",
+      "sha256_enwik8": "2b49720ec4d78c3c9fabaee6e4179a5e997302b3a70029f30f2d582218c024a8",
+      "license": "CC BY-SA (Wikipedia text)",
+      "note": "cut into 100 consecutive parts of 1,000,000 bytes; constructed to model appended data"
+    }
+  },
+  "disjointness_check": {
+    "files": 8683,
+    "dev_hashes": 3724,
+    "holdout_hashes": 4938,
+    "shared": 0
+  }
+}

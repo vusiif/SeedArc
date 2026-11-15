@@ -7,6 +7,7 @@
 #include <zstd.h>
 #include <zstd_errors.h>
 
+#include <algorithm>
 #include <numeric>
 #include <string>
 #include <utility>
@@ -150,6 +151,74 @@ std::expected<std::size_t, Error> DictionaryEncoder::encode(std::span<const std:
     }
     return std::unexpected(Error{ErrorCode::io_error, std::string{"zstd compression failed: "} +
                                                           ZSTD_getErrorName(result)});
+}
+
+std::expected<std::vector<std::byte>, Error> compress_solid(std::span<const std::byte> input,
+                                                            std::uint32_t level) {
+    if (input.empty() || input.size() > max_solid_bytes || !valid_block_codec(zstd_id, level)) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid solid input or level"});
+    }
+    const std::unique_ptr<ZSTD_CCtx, CCtxDeleter> context{ZSTD_createCCtx()};
+    if (!context) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "cannot create zstd context"});
+    }
+    const auto window =
+        std::min<int>(static_cast<int>(max_solid_window_log), window_log_for(input.size()));
+    if (!zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_compressionLevel,
+                                        static_cast<int>(level))) ||
+        !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_windowLog, window)) ||
+        !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_checksumFlag, 0)) ||
+        !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_contentSizeFlag, 1)) ||
+        !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_nbWorkers, 0))) {
+        return std::unexpected(Error{ErrorCode::io_error, "cannot configure zstd encoder"});
+    }
+    std::vector<std::byte> out(ZSTD_compressBound(input.size()));
+    const auto result =
+        ZSTD_compress2(context.get(), out.data(), out.size(), input.data(), input.size());
+    if (!zstd_ok(result)) {
+        return std::unexpected(Error{ErrorCode::io_error, std::string{"zstd compression failed: "} +
+                                                              ZSTD_getErrorName(result)});
+    }
+    out.resize(result);
+    return out;
+}
+
+std::expected<void, Error> decompress_solid(std::span<const std::byte> frame,
+                                            std::span<std::byte> output) {
+    if (frame.empty() || output.empty() || output.size() > max_solid_bytes) {
+        return std::unexpected(corrupt("empty or oversized solid frame"));
+    }
+    const auto size = ZSTD_findFrameCompressedSize(frame.data(), frame.size());
+    if (!zstd_ok(size) || size != frame.size()) {
+        return std::unexpected(corrupt("not exactly one zstd frame"));
+    }
+    const auto content = ZSTD_getFrameContentSize(frame.data(), frame.size());
+    if (content == ZSTD_CONTENTSIZE_UNKNOWN || content == ZSTD_CONTENTSIZE_ERROR ||
+        content != output.size()) {
+        return std::unexpected(corrupt("zstd frame content size mismatch"));
+    }
+    if (ZSTD_getDictID_fromFrame(frame.data(), frame.size()) != 0) {
+        return std::unexpected(corrupt("solid frame must not use a dictionary"));
+    }
+    const std::unique_ptr<ZSTD_DCtx, DCtxDeleter> context{ZSTD_createDCtx()};
+    if (!context || !zstd_ok(ZSTD_DCtx_setParameter(context.get(), ZSTD_d_windowLogMax,
+                                                    static_cast<int>(max_solid_window_log)))) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "cannot create zstd decoder"});
+    }
+    const auto result = ZSTD_decompressDCtx(context.get(), output.data(), output.size(),
+                                            frame.data(), frame.size());
+    if (!zstd_ok(result)) {
+        if (ZSTD_getErrorCode(result) == ZSTD_error_frameParameter_windowTooLarge ||
+            ZSTD_getErrorCode(result) == ZSTD_error_memory_allocation) {
+            return std::unexpected(
+                Error{ErrorCode::resource_limit, "zstd solid frame needs too much memory"});
+        }
+        return std::unexpected(corrupt(ZSTD_getErrorName(result)));
+    }
+    if (result != output.size()) {
+        return std::unexpected(corrupt("zstd output size mismatch"));
+    }
+    return {};
 }
 
 struct DictionaryDecoder::Impl {

@@ -165,6 +165,46 @@ int main() {
               !research::DictionaryEncoder::create(20, dict),
           "out-of-range zstd level rejected");
 
+    // DEV-017 solid frames: round trip; a repeat 200 KiB back is found (beyond one 64 KiB
+    // block, inside the window); damaged, truncated, mismatched and dictionary frames rejected.
+    {
+        std::vector<std::byte> unit(200 * 1024);
+        std::uint64_t x = 12345;
+        for (auto &b : unit) {
+            x = x * 6364136223846793005ULL + 1442695040888963407ULL;
+            b = static_cast<std::byte>(x >> 56);
+        }
+        std::vector<std::byte> twice = unit;
+        twice.insert(twice.end(), unit.begin(), unit.end());
+        const auto solid = research::compress_solid(twice, 9);
+        check(solid.has_value(), "solid frame encodes");
+        check(solid->size() < unit.size() + unit.size() / 10,
+              "solid frame finds a repeat 200 KiB back");
+        std::vector<std::byte> back(twice.size());
+        check(research::decompress_solid(*solid, back).has_value() && back == twice,
+              "solid frame round trips");
+        std::vector<std::byte> wrong(twice.size() - 1);
+        check(!research::decompress_solid(*solid, wrong), "solid content size mismatch rejected");
+        check(!research::decompress_solid(std::span{*solid}.first(solid->size() - 1), back),
+              "truncated solid frame rejected");
+        auto damaged = *solid;
+        damaged[damaged.size() / 2] ^= std::byte{0x40};
+        check(!research::decompress_solid(damaged, back) || back != twice,
+              "damaged solid frame does not restore silently");
+        auto extra = *solid;
+        extra.push_back(std::byte{0});
+        check(!research::decompress_solid(extra, back), "trailing bytes after the frame rejected");
+        check(!research::compress_solid({}, 9) && !research::compress_solid(twice, 0),
+              "empty input and bad level rejected");
+        std::vector<std::byte> block(4096);
+        std::vector<std::byte> packed(4095);
+        const auto dict_size = encoder->encode(std::span{block}.first(4096), packed);
+        if (dict_size && *dict_size != 0) {
+            check(!research::decompress_solid(std::span{packed}.first(*dict_size), block),
+                  "dictionary frame is not accepted as a solid frame");
+        }
+    }
+
     std::cout << (failures == 0 ? "all dictionary checks passed" : "dictionary checks failed")
               << '\n';
     return failures == 0 ? 0 : 1;
