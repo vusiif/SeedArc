@@ -1,0 +1,404 @@
+[
+ {
+  "pool": "many-small-docs",
+  "subset": "all",
+  "input_bytes": 781749,
+  "method": "start",
+  "budget_x": 0,
+  "seed": null,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "pack",
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 309916,
+   "container_bytes_seed16": 309916,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 65536,
+    "index": 61891,
+    "data": 181695
+   },
+   "groups": 1,
+   "build_wall_ms": 123.1894,
+   "build_cpu_ms": 109.375,
+   "decode_wall_ms": 10.6881,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 251.583,
+   "call_cpu_ms": 250,
+   "peak_memory_bytes": 19210240,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.63,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8888320,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "subset": "all",
+  "input_bytes": 781749,
+  "method": "coord",
+  "budget_x": 2,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 2,
+   "restarts": 0,
+   "plan_evaluations": 1,
+   "plan_cache_hits": 0,
+   "group_evaluations": 1,
+   "group_cache_hits": 0,
+   "budget_bytes": 1563498,
+   "budget_spent_bytes": 1563498,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ]
+   ],
+   "search_wall_ms": 114.186,
+   "search_cpu_ms": 109.375,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 309916,
+   "container_bytes_seed16": 309916,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 65536,
+    "index": 61891,
+    "data": 181695
+   },
+   "groups": 1,
+   "build_wall_ms": 116.7732,
+   "build_cpu_ms": 125.0,
+   "decode_wall_ms": 9.4148,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 357.16,
+   "call_cpu_ms": 359.375,
+   "peak_memory_bytes": 19374080,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.6763,
+   "decode_cpu_ms": 0,
+   "peak_memory_bytes": 8847360,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "subset": "all",
+  "input_bytes": 6209082,
+  "method": "start",
+  "budget_x": 0,
+  "seed": null,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "pack",
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 430.8045,
+   "build_cpu_ms": 437.5,
+   "decode_wall_ms": 63.5891,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 553.6,
+   "call_cpu_ms": 546.875,
+   "peak_memory_bytes": 28823552,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 66.7814,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25800704,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "subset": "all",
+  "input_bytes": 6209082,
+  "method": "coord",
+  "budget_x": 2,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 2,
+   "restarts": 0,
+   "plan_evaluations": 1,
+   "plan_cache_hits": 0,
+   "group_evaluations": 1,
+   "group_cache_hits": 0,
+   "budget_bytes": 12418164,
+   "budget_spent_bytes": 11353366,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 392.481,
+   "search_cpu_ms": 390.625,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 418.6121,
+   "build_cpu_ms": 406.25,
+   "decode_wall_ms": 64.2639,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 927.975,
+   "call_cpu_ms": 906.25,
+   "peak_memory_bytes": 29106176,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 65.8242,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25804800,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "subset": "all",
+  "input_bytes": 4521886,
+  "method": "start",
+  "budget_x": 0,
+  "seed": null,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "pack",
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1455028,
+   "container_bytes_seed16": 1455028,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1439,
+    "dictionaries": 55808,
+    "index": 118201,
+    "data": 1279540
+   },
+   "groups": 1,
+   "build_wall_ms": 299.056,
+   "build_cpu_ms": 296.875,
+   "decode_wall_ms": 49.7451,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 549.177,
+   "call_cpu_ms": 546.875,
+   "peak_memory_bytes": 26370048,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 49.0234,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21450752,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "subset": "all",
+  "input_bytes": 4521886,
+  "method": "coord",
+  "budget_x": 2,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 2,
+   "restarts": 0,
+   "plan_evaluations": 1,
+   "plan_cache_hits": 0,
+   "group_evaluations": 1,
+   "group_cache_hits": 0,
+   "budget_bytes": 9043772,
+   "budget_spent_bytes": 8357880,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ]
+   ],
+   "search_wall_ms": 265.414,
+   "search_cpu_ms": 265.625,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1455028,
+   "container_bytes_seed16": 1455028,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1439,
+    "dictionaries": 55808,
+    "index": 118201,
+    "data": 1279540
+   },
+   "groups": 1,
+   "build_wall_ms": 294.6444,
+   "build_cpu_ms": 281.25,
+   "decode_wall_ms": 48.5111,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 820.558,
+   "call_cpu_ms": 796.875,
+   "peak_memory_bytes": 26091520,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 48.8994,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21446656,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ }
+]

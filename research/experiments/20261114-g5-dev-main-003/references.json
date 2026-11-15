@@ -1,0 +1,38 @@
+[
+ {
+  "pool": "many-small-docs",
+  "subset": "all",
+  "input_bytes": 781749,
+  "lzma2_6": {
+   "archive_bytes": 470126,
+   "compress_process_ms": 409.5356999996511,
+   "extract_process_ms": 772.3760999997467,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 764 entries, 781749 content bytes, 746 blocks, archive 470126 bytes"
+  }
+ },
+ {
+  "pool": "source-python",
+  "subset": "all",
+  "input_bytes": 6209082,
+  "lzma2_6": {
+   "archive_bytes": 1412185,
+   "compress_process_ms": 1176.8812000000253,
+   "extract_process_ms": 664.421499999662,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 374 entries, 6209082 content bytes, 349 blocks, archive 1412185 bytes"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "subset": "all",
+  "input_bytes": 4521886,
+  "lzma2_6": {
+   "archive_bytes": 1754853,
+   "compress_process_ms": 1114.923799999815,
+   "extract_process_ms": 1589.680999999473,
+   "byte_exact": true,
+   "cli_stdout": "compressed: 1475 entries, 4521886 content bytes, 1431 blocks, archive 1754853 bytes"
+  }
+ }
+]

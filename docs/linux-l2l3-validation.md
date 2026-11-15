@@ -205,5 +205,5 @@ linkat(6, "5", 3, "a.sarc", AT_SYMLINK_FOLLOW) = 0
 - 测试以普通用户运行；以 root 运行时，只读目录、受保护父目录等断言的含义不同（部分断言在 root 下会跳过）。
 - 静态链接构建只用于跨环境的文件系统测试，不是发行方式。
 - xfs / btrfs 只在 WSL 内核的回环镜像上、按默认 mkfs 参数测过，没有在真实磁盘或其他挂载选项下测。
-- POSIX 源文件没有 IDE 诊断，clang-tidy 也没有运行。
+- POSIX 源文件没有 IDE 诊断。clang-tidy 已于 2026-11-14 补做：WSL clang-tidy 21.1.8，项目 `.clang-tidy`（`clang-analyzer-*`，警告即错误），`-p build/clang-linux-debug`，在 `01cce38` 的代码上检查 `safe_output_posix.cpp`、`input_tree_posix.cpp`、`safe_output_posix_tests.cpp`、`archive_path.cpp`、`unicode_profile.cpp`、`cli/main.cpp`，0 条诊断。用同一配置检查故意埋了泄漏、空指针解引用和死存储的探针文件，三处都报了出来，说明检查确实生效。
 - 服务器上的长时间压缩测试（性能 / 压力）还没做，本轮只在服务器上做了功能验证。归档格式未改。

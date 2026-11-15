@@ -1,0 +1,31 @@
+{
+  "config_id": "g5-r1",
+  "frozen_at": "2026-11-14",
+  "frozen_from": ["research/experiments/20261114-g5-dev-main-001", "research/experiments/20261114-g5-dev-main-002"],
+  "plan": "research/ideas/seed-g5-r1.md",
+  "tool": "research/tools/g5_study.cpp (research container v2, schema seedarc.g5-study.r1)",
+  "evaluation_corpus": "g5-holdout-r1 (evaluate once; never tune on it)",
+  "methods": ["random", "coord", "seed"],
+  "budgets": [2, 4, 8, 16],
+  "budget_unit": "multiples of the evaluated input's bytes; counts training + trial-encoding input bytes of uncached groups",
+  "seeds": [1, 2, 3, 4, 5],
+  "stall": 20,
+  "max_proposals": 20000,
+  "start_plan": "0x40 (G-dict-r1: one group, 64 KiB dictionary, first 64 KiB of each file, Zstd level 9)",
+  "candidate_space": {
+    "rules": ["dir1", "dir2", "ext", "size (<=1 KiB / <=16 KiB / larger)"],
+    "k": [1, 2, 3, 4, 5, 6, 7, 8],
+    "dictionary_bytes": [0, 16384, 65536, 114688],
+    "training_prefix_bytes": [65536, 4096]
+  },
+  "level": 9,
+  "chunk_bytes": 65536,
+  "seed_field_bytes": 4,
+  "reference": "production seedarc CLI, --codec lzma2 --level 6, compress -> verify -> extract -> byte compare",
+  "hypotheses": {
+    "H0": "every artefact round-trips byte for byte; the same configuration and seed give identical bytes",
+    "H1": "at 4x, coord median at least 1 % smaller than the start plan in at least two pools",
+    "H2": "at the same budget the seed median (Seed bytes included) is smaller than the coord median, or reaches coord's best with less budget; must hold in at least two pools, otherwise no independent Seed value is claimed"
+  },
+  "reporting": "per pool and per half (local / public) plus the whole pool; direct sizes and, against LZMA2-6, the production-index-adjusted comparison"
+}

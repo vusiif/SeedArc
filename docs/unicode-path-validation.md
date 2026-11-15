@@ -51,7 +51,8 @@ Linux 的 path / archive fuzz（§2）是在 `ab87767` 上跑的。到最终代�
 - 之后在最终代码上又跑了两套全矩阵和两边的 20 次重复，`.sandbox-test` 都为空，上面那处 Linux 残留没有再出现。
 - 没有做 xfs / btrfs 和旧内核的复测。规则只改了名字校验，没有改文件系统代码。
 - CLion 补查（2026-11-14，用户重新打开 CLion 之后，`errorsOnly=false`，每个文件先打开再查）：最终版的 `unicode_profile.cpp`、`archive_path.cpp`，以及 `store_archive_tests.cpp`、`research/tools/unicode_win_diff.cpp`。四个文件都没有 ERROR。匿名命名空间和 `views::keys` 两条 WARN 已经消失。剩下的 WARN 只有 `decode_utf8` 中 `length` / `value`“须先重新赋值”两条，理由见 §2；其余都是 INFO。至此本任务涉及的 C++ 文件都已做过 IDE 检查，`*_posix.cpp` 除外（Windows IDE 的配置里看不到它们的代码）。
-- 没有在 Linux 上做 clang-tidy，也没有在服务器上跑长时间测试。
+- Linux clang-tidy 已补做：`archive_path.cpp` 和 `unicode_profile.cpp` 0 条诊断，有探针对照，详见 [L2 / L3 记录 §9](linux-l2l3-validation.md)。没有在服务器上跑长时间测试。
+- 那处 Linux 残留做过一次限时排查（2026-11-14）：WSL 虚拟机已经重启，目录名里的单调时钟值无法再换算成墙钟时间，原来的进程信息也没有了，**无法确定原因**。之后所有运行都是干净的。在服务器和后续运行中会继续留意。
 
 ## 4. 与 Win32 的差分（本机 Windows 10 19045，只作参考，不作断言）
 

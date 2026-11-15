@@ -1,0 +1,57 @@
+{
+  "run_id": "20261114-g5-dev-main-001",
+  "phase": "dev",
+  "started_at": "2026-11-14T20:09:20.720212-08:00",
+  "command": [
+    "C:\\Users\\IceLolly\\AppData\\Local\\Programs\\Python\\Python315\\python.exe",
+    "-I",
+    "research/scripts/g5_run.py",
+    "--tool",
+    "build/dictstudy-check/research/tools/Release/seedarc_g5_study.exe",
+    "--run-id",
+    "20261114-g5-dev-main-001",
+    "--phase",
+    "dev",
+    "--budgets",
+    "8",
+    "32",
+    "128",
+    "--seeds",
+    "1",
+    "2"
+  ],
+  "tool": "seedarc_g5_study.exe",
+  "tool_sha256": "6119b749372a0bcb9df4658dd3c6521dcd871c8e58ec2be0d753106de70cb3a8",
+  "git_commit": "01cce388b8be7bae1b02890930d1793098d02eff",
+  "git_dirty": true,
+  "machine": {
+    "os": "Windows-10-10.0.19045-SP0",
+    "processor": "AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD",
+    "python": "3.15.0"
+  },
+  "pools": [
+    "many-small-docs",
+    "source-python",
+    "config-cmake-pkg"
+  ],
+  "methods": [
+    "random",
+    "coord",
+    "seed"
+  ],
+  "budgets": [
+    8,
+    32,
+    128
+  ],
+  "seeds": [
+    1,
+    2
+  ],
+  "stall": 20,
+  "budget_unit": "multiples of the pool's input bytes; counts training + trial-encoding input bytes of uncached groups",
+  "level": 9,
+  "chunk_bytes": 65536,
+  "corpus": "b2r5-corpus-r2 dev",
+  "finished_at": "2026-11-14T20:14:56.845673-08:00"
+}

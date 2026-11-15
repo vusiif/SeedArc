@@ -1,0 +1,50 @@
+[
+ {
+  "pool": "many-small-docs",
+  "subset": "all",
+  "method": "coord",
+  "budget_x": 2,
+  "runs": 1,
+  "lzma2_6_bytes": 470126,
+  "start_bytes": 309916,
+  "min": 309916,
+  "median": 309916,
+  "max": 309916,
+  "median_vs_start_pct": 0.0,
+  "median_plan_evaluations": 1,
+  "median_search_wall_ms": 114,
+  "all_byte_exact": true
+ },
+ {
+  "pool": "source-python",
+  "subset": "all",
+  "method": "coord",
+  "budget_x": 2,
+  "runs": 1,
+  "lzma2_6_bytes": 1412185,
+  "start_bytes": 1376790,
+  "min": 1376790,
+  "median": 1376790,
+  "max": 1376790,
+  "median_vs_start_pct": 0.0,
+  "median_plan_evaluations": 1,
+  "median_search_wall_ms": 392,
+  "all_byte_exact": true
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "subset": "all",
+  "method": "coord",
+  "budget_x": 2,
+  "runs": 1,
+  "lzma2_6_bytes": 1754853,
+  "start_bytes": 1455028,
+  "min": 1455028,
+  "median": 1455028,
+  "max": 1455028,
+  "median_vs_start_pct": 0.0,
+  "median_plan_evaluations": 1,
+  "median_search_wall_ms": 265,
+  "all_byte_exact": true
+ }
+]

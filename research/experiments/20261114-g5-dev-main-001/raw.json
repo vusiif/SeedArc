@@ -1,0 +1,4843 @@
+[
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "start",
+  "budget_x": 0,
+  "seed": null,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "pack",
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 309916,
+   "container_bytes_seed16": 309916,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 65536,
+    "index": 61891,
+    "data": 181695
+   },
+   "groups": 1,
+   "build_wall_ms": 102.4746,
+   "build_cpu_ms": 109.375,
+   "decode_wall_ms": 9.1731,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 218.88,
+   "call_cpu_ms": 218.75,
+   "peak_memory_bytes": 19202048,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.0746,
+   "decode_cpu_ms": 0,
+   "peak_memory_bytes": 8871936,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "random",
+  "budget_x": 8,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 9,
+   "restarts": 0,
+   "plan_evaluations": 7,
+   "plan_cache_hits": 1,
+   "group_evaluations": 6,
+   "group_cache_hits": 3,
+   "budget_bytes": 6253992,
+   "budget_spent_bytes": 5242762,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     2,
+     2977441,
+     306140
+    ]
+   ],
+   "search_wall_ms": 293.3,
+   "search_cpu_ms": 296.875,
+   "plan": {
+    "seed": 469903837,
+    "rule": "dir2",
+    "k": 8,
+    "groups": [
+     [
+      65536,
+      4096
+     ],
+     [
+      16384,
+      65536
+     ],
+     [
+      16384,
+      4096
+     ],
+     [
+      0,
+      65536
+     ],
+     [
+      16384,
+      65536
+     ],
+     [
+      0,
+      65536
+     ],
+     [
+      0,
+      65536
+     ],
+     [
+      114688,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 306140,
+   "container_bytes_seed16": 306140,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 65536,
+    "index": 61891,
+    "data": 177919
+   },
+   "groups": 1,
+   "build_wall_ms": 86.2045,
+   "build_cpu_ms": 78.125,
+   "decode_wall_ms": 9.2373,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 490.309,
+   "call_cpu_ms": 500,
+   "peak_memory_bytes": 19156992,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.4607,
+   "decode_cpu_ms": 0,
+   "peak_memory_bytes": 8871936,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "random",
+  "budget_x": 8,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 5,
+   "restarts": 0,
+   "plan_evaluations": 4,
+   "plan_cache_hits": 0,
+   "group_evaluations": 4,
+   "group_cache_hits": 0,
+   "budget_bytes": 6253992,
+   "budget_spent_bytes": 5954882,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     3,
+     4540939,
+     301886
+    ]
+   ],
+   "search_wall_ms": 374.563,
+   "search_cpu_ms": 375,
+   "plan": {
+    "seed": 5407158,
+    "rule": "ext",
+    "k": 6,
+    "groups": [
+     [
+      16384,
+      4096
+     ],
+     [
+      16384,
+      65536
+     ],
+     [
+      0,
+      65536
+     ],
+     [
+      65536,
+      65536
+     ],
+     [
+      16384,
+      65536
+     ],
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301886,
+   "container_bytes_seed16": 301886,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 77.627,
+   "build_cpu_ms": 78.125,
+   "decode_wall_ms": 9.4075,
+   "decode_cpu_ms": 0.0,
+   "byte_exact": true,
+   "call_wall_ms": 572.498,
+   "call_cpu_ms": 562.5,
+   "peak_memory_bytes": 19693568,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.2263,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8777728,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "random",
+  "budget_x": 32,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 0,
+   "plan_evaluations": 13283,
+   "plan_cache_hits": 6717,
+   "group_evaluations": 35,
+   "group_cache_hits": 19973,
+   "budget_bytes": 25015968,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     2,
+     2977441,
+     306140
+    ],
+    [
+     9,
+     6806260,
+     303068
+    ],
+    [
+     10,
+     8220203,
+     301886
+    ]
+   ],
+   "search_wall_ms": 2752.67,
+   "search_cpu_ms": 2703.12,
+   "plan": {
+    "seed": 47281,
+    "rule": "dir2",
+    "k": 5,
+    "groups": [
+     [
+      16384,
+      4096
+     ],
+     [
+      0,
+      65536
+     ],
+     [
+      114688,
+      4096
+     ],
+     [
+      65536,
+      65536
+     ],
+     [
+      0,
+      65536
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301886,
+   "container_bytes_seed16": 301886,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 93.7542,
+   "build_cpu_ms": 93.75,
+   "decode_wall_ms": 9.0402,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 2987.75,
+   "call_cpu_ms": 2937.5,
+   "peak_memory_bytes": 20590592,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.0233,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8773632,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "random",
+  "budget_x": 32,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 0,
+   "plan_evaluations": 13315,
+   "plan_cache_hits": 6685,
+   "group_evaluations": 35,
+   "group_cache_hits": 19819,
+   "budget_bytes": 25015968,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     3,
+     4540939,
+     301886
+    ]
+   ],
+   "search_wall_ms": 2757.41,
+   "search_cpu_ms": 2734.38,
+   "plan": {
+    "seed": 5407158,
+    "rule": "ext",
+    "k": 6,
+    "groups": [
+     [
+      16384,
+      4096
+     ],
+     [
+      16384,
+      65536
+     ],
+     [
+      0,
+      65536
+     ],
+     [
+      65536,
+      65536
+     ],
+     [
+      16384,
+      65536
+     ],
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301886,
+   "container_bytes_seed16": 301886,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 79.946,
+   "build_cpu_ms": 78.125,
+   "decode_wall_ms": 9.732,
+   "decode_cpu_ms": 0.0,
+   "byte_exact": true,
+   "call_wall_ms": 2967.55,
+   "call_cpu_ms": 2937.5,
+   "peak_memory_bytes": 20496384,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.1442,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8777728,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "random",
+  "budget_x": 128,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 0,
+   "plan_evaluations": 13283,
+   "plan_cache_hits": 6717,
+   "group_evaluations": 35,
+   "group_cache_hits": 19973,
+   "budget_bytes": 100063872,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     2,
+     2977441,
+     306140
+    ],
+    [
+     9,
+     6806260,
+     303068
+    ],
+    [
+     10,
+     8220203,
+     301886
+    ]
+   ],
+   "search_wall_ms": 3314.16,
+   "search_cpu_ms": 3218.75,
+   "plan": {
+    "seed": 47281,
+    "rule": "dir2",
+    "k": 5,
+    "groups": [
+     [
+      16384,
+      4096
+     ],
+     [
+      0,
+      65536
+     ],
+     [
+      114688,
+      4096
+     ],
+     [
+      65536,
+      65536
+     ],
+     [
+      0,
+      65536
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301886,
+   "container_bytes_seed16": 301886,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 106.4081,
+   "build_cpu_ms": 109.375,
+   "decode_wall_ms": 9.5377,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 3538.77,
+   "call_cpu_ms": 3453.12,
+   "peak_memory_bytes": 20918272,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.8944,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8757248,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "random",
+  "budget_x": 128,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 0,
+   "plan_evaluations": 13315,
+   "plan_cache_hits": 6685,
+   "group_evaluations": 35,
+   "group_cache_hits": 19819,
+   "budget_bytes": 100063872,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     3,
+     4540939,
+     301886
+    ]
+   ],
+   "search_wall_ms": 3213.97,
+   "search_cpu_ms": 3140.62,
+   "plan": {
+    "seed": 5407158,
+    "rule": "ext",
+    "k": 6,
+    "groups": [
+     [
+      16384,
+      4096
+     ],
+     [
+      16384,
+      65536
+     ],
+     [
+      0,
+      65536
+     ],
+     [
+      65536,
+      65536
+     ],
+     [
+      16384,
+      65536
+     ],
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301886,
+   "container_bytes_seed16": 301886,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 86.038,
+   "build_cpu_ms": 78.125,
+   "decode_wall_ms": 9.5607,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 3439.92,
+   "call_cpu_ms": 3328.12,
+   "peak_memory_bytes": 20639744,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.5931,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8757248,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "coord",
+  "budget_x": 8,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 5,
+   "restarts": 0,
+   "plan_evaluations": 4,
+   "plan_cache_hits": 0,
+   "group_evaluations": 4,
+   "group_cache_hits": 0,
+   "budget_bytes": 6253992,
+   "budget_spent_bytes": 5472243,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     3,
+     3908745,
+     303068
+    ]
+   ],
+   "search_wall_ms": 314.582,
+   "search_cpu_ms": 312.5,
+   "plan": {
+    "seed": 32,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      16384,
+      65536
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 303068,
+   "container_bytes_seed16": 303068,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 223999
+   },
+   "groups": 1,
+   "build_wall_ms": 104.5753,
+   "build_cpu_ms": 109.375,
+   "decode_wall_ms": 10.166,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 542.925,
+   "call_cpu_ms": 546.875,
+   "peak_memory_bytes": 19595264,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 12.009,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8785920,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "coord",
+  "budget_x": 8,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 12,
+   "restarts": 0,
+   "plan_evaluations": 11,
+   "plan_cache_hits": 0,
+   "group_evaluations": 4,
+   "group_cache_hits": 7,
+   "budget_bytes": 6253992,
+   "budget_spent_bytes": 5173133,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     9,
+     2977441,
+     306140
+    ],
+    [
+     11,
+     5173133,
+     301886
+    ]
+   ],
+   "search_wall_ms": 271.276,
+   "search_cpu_ms": 265.625,
+   "plan": {
+    "seed": 160,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301886,
+   "container_bytes_seed16": 301886,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 79.7891,
+   "build_cpu_ms": 78.125,
+   "decode_wall_ms": 8.7531,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 472.613,
+   "call_cpu_ms": 468.75,
+   "peak_memory_bytes": 19009536,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.3305,
+   "decode_cpu_ms": 0,
+   "peak_memory_bytes": 8765440,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "coord",
+  "budget_x": 32,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 400,
+   "plan_evaluations": 11542,
+   "plan_cache_hits": 8458,
+   "group_evaluations": 35,
+   "group_cache_hits": 14819,
+   "budget_bytes": 25015968,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     3,
+     3908745,
+     303068
+    ],
+    [
+     5,
+     6886186,
+     301886
+    ]
+   ],
+   "search_wall_ms": 3031.23,
+   "search_cpu_ms": 3000,
+   "plan": {
+    "seed": 160,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301886,
+   "container_bytes_seed16": 301886,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 86.3712,
+   "build_cpu_ms": 46.875,
+   "decode_wall_ms": 9.55,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 3239.83,
+   "call_cpu_ms": 3171.88,
+   "peak_memory_bytes": 20459520,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.7067,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8777728,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "coord",
+  "budget_x": 32,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 398,
+   "plan_evaluations": 11374,
+   "plan_cache_hits": 8626,
+   "group_evaluations": 35,
+   "group_cache_hits": 14460,
+   "budget_bytes": 25015968,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     9,
+     2977441,
+     306140
+    ],
+    [
+     11,
+     5173133,
+     301886
+    ]
+   ],
+   "search_wall_ms": 2764.55,
+   "search_cpu_ms": 2750,
+   "plan": {
+    "seed": 160,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301886,
+   "container_bytes_seed16": 301886,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 85.5786,
+   "build_cpu_ms": 93.75,
+   "decode_wall_ms": 8.945,
+   "decode_cpu_ms": 0.0,
+   "byte_exact": true,
+   "call_wall_ms": 2965.52,
+   "call_cpu_ms": 2953.12,
+   "peak_memory_bytes": 20369408,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 12.012,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8765440,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "coord",
+  "budget_x": 128,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 400,
+   "plan_evaluations": 11542,
+   "plan_cache_hits": 8458,
+   "group_evaluations": 35,
+   "group_cache_hits": 14819,
+   "budget_bytes": 100063872,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     3,
+     3908745,
+     303068
+    ],
+    [
+     5,
+     6886186,
+     301886
+    ]
+   ],
+   "search_wall_ms": 2800.75,
+   "search_cpu_ms": 2750,
+   "plan": {
+    "seed": 160,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301886,
+   "container_bytes_seed16": 301886,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 91.8462,
+   "build_cpu_ms": 93.75,
+   "decode_wall_ms": 10.2625,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 3014.78,
+   "call_cpu_ms": 2968.75,
+   "peak_memory_bytes": 20516864,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 10.9067,
+   "decode_cpu_ms": 0,
+   "peak_memory_bytes": 8773632,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "coord",
+  "budget_x": 128,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 398,
+   "plan_evaluations": 11374,
+   "plan_cache_hits": 8626,
+   "group_evaluations": 35,
+   "group_cache_hits": 14460,
+   "budget_bytes": 100063872,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     9,
+     2977441,
+     306140
+    ],
+    [
+     11,
+     5173133,
+     301886
+    ]
+   ],
+   "search_wall_ms": 2367.47,
+   "search_cpu_ms": 2359.38,
+   "plan": {
+    "seed": 160,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301886,
+   "container_bytes_seed16": 301886,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 83.3957,
+   "build_cpu_ms": 78.125,
+   "decode_wall_ms": 9.4962,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 2591.01,
+   "call_cpu_ms": 2578.12,
+   "peak_memory_bytes": 20959232,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 11.0108,
+   "decode_cpu_ms": 0,
+   "peak_memory_bytes": 8769536,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "seed",
+  "budget_x": 8,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20,
+   "restarts": 0,
+   "plan_evaluations": 10,
+   "plan_cache_hits": 9,
+   "group_evaluations": 4,
+   "group_cache_hits": 6,
+   "budget_bytes": 6253992,
+   "budget_spent_bytes": 5322688,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     7,
+     4540939,
+     306140
+    ]
+   ],
+   "search_wall_ms": 282.059,
+   "search_cpu_ms": 281.25,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 306144,
+   "container_bytes_seed16": 306156,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 754,
+    "dictionaries": 65536,
+    "index": 61891,
+    "data": 177919
+   },
+   "groups": 1,
+   "build_wall_ms": 83.3854,
+   "build_cpu_ms": 62.5,
+   "decode_wall_ms": 9.4805,
+   "decode_cpu_ms": 0.0,
+   "byte_exact": true,
+   "call_wall_ms": 491.23,
+   "call_cpu_ms": 453.125,
+   "peak_memory_bytes": 19329024,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": 192,
+   "decode_wall_ms": 11.2226,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8876032,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "seed",
+  "budget_x": 8,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 10,
+   "restarts": 0,
+   "plan_evaluations": 7,
+   "plan_cache_hits": 2,
+   "group_evaluations": 4,
+   "group_cache_hits": 3,
+   "budget_bytes": 6253992,
+   "budget_spent_bytes": 5954882,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     3,
+     4540939,
+     306140
+    ]
+   ],
+   "search_wall_ms": 340.253,
+   "search_cpu_ms": 312.5,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 306144,
+   "container_bytes_seed16": 306156,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 754,
+    "dictionaries": 65536,
+    "index": 61891,
+    "data": 177919
+   },
+   "groups": 1,
+   "build_wall_ms": 105.2888,
+   "build_cpu_ms": 93.75,
+   "decode_wall_ms": 9.3787,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 558.826,
+   "call_cpu_ms": 531.25,
+   "peak_memory_bytes": 19587072,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": 192,
+   "decode_wall_ms": 11.0255,
+   "decode_cpu_ms": 0,
+   "peak_memory_bytes": 8880128,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "seed",
+  "budget_x": 32,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 729,
+   "plan_evaluations": 9840,
+   "plan_cache_hits": 10160,
+   "group_evaluations": 35,
+   "group_cache_hits": 13253,
+   "budget_bytes": 25015968,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     7,
+     4540939,
+     306140
+    ],
+    [
+     31,
+     8300129,
+     303068
+    ],
+    [
+     36,
+     9714072,
+     301886
+    ]
+   ],
+   "search_wall_ms": 2355.16,
+   "search_cpu_ms": 2328.12,
+   "plan": {
+    "seed": 4266,
+    "rule": "ext",
+    "k": 3,
+    "groups": [
+     [
+      16384,
+      4096
+     ],
+     [
+      0,
+      65536
+     ],
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301890,
+   "container_bytes_seed16": 301902,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 77.3289,
+   "build_cpu_ms": 62.5,
+   "decode_wall_ms": 9.1167,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 2548.84,
+   "call_cpu_ms": 2515.62,
+   "peak_memory_bytes": 20357120,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": 4266,
+   "decode_wall_ms": 11.0163,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8773632,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "seed",
+  "budget_x": 32,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 705,
+   "plan_evaluations": 9729,
+   "plan_cache_hits": 10271,
+   "group_evaluations": 35,
+   "group_cache_hits": 12769,
+   "budget_bytes": 25015968,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     3,
+     4540939,
+     306140
+    ],
+    [
+     22,
+     8300129,
+     303068
+    ],
+    [
+     28,
+     9714072,
+     301886
+    ]
+   ],
+   "search_wall_ms": 2469.52,
+   "search_cpu_ms": 2453.12,
+   "plan": {
+    "seed": 11944,
+    "rule": "dir1",
+    "k": 3,
+    "groups": [
+     [
+      16384,
+      4096
+     ],
+     [
+      65536,
+      4096
+     ],
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301890,
+   "container_bytes_seed16": 301902,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 72.3921,
+   "build_cpu_ms": 62.5,
+   "decode_wall_ms": 8.9868,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 2681.78,
+   "call_cpu_ms": 2656.25,
+   "peak_memory_bytes": 20103168,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": 11944,
+   "decode_wall_ms": 10.9015,
+   "decode_cpu_ms": 0,
+   "peak_memory_bytes": 8769536,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "seed",
+  "budget_x": 128,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 729,
+   "plan_evaluations": 9840,
+   "plan_cache_hits": 10160,
+   "group_evaluations": 35,
+   "group_cache_hits": 13253,
+   "budget_bytes": 100063872,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     7,
+     4540939,
+     306140
+    ],
+    [
+     31,
+     8300129,
+     303068
+    ],
+    [
+     36,
+     9714072,
+     301886
+    ]
+   ],
+   "search_wall_ms": 2402.06,
+   "search_cpu_ms": 2390.62,
+   "plan": {
+    "seed": 4266,
+    "rule": "ext",
+    "k": 3,
+    "groups": [
+     [
+      16384,
+      4096
+     ],
+     [
+      0,
+      65536
+     ],
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301890,
+   "container_bytes_seed16": 301902,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 73.5902,
+   "build_cpu_ms": 78.125,
+   "decode_wall_ms": 9.5676,
+   "decode_cpu_ms": 0.0,
+   "byte_exact": true,
+   "call_wall_ms": 2606.04,
+   "call_cpu_ms": 2562.5,
+   "peak_memory_bytes": 20205568,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": 4266,
+   "decode_wall_ms": 10.5967,
+   "decode_cpu_ms": 15.625,
+   "peak_memory_bytes": 8769536,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "many-small-docs",
+  "input_bytes": 781749,
+  "method": "seed",
+  "budget_x": 128,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 705,
+   "plan_evaluations": 9729,
+   "plan_cache_hits": 10271,
+   "group_evaluations": 35,
+   "group_cache_hits": 12769,
+   "budget_bytes": 100063872,
+   "budget_spent_bytes": 24044291,
+   "trajectory": [
+    [
+     1,
+     1563498,
+     309916
+    ],
+    [
+     3,
+     4540939,
+     306140
+    ],
+    [
+     22,
+     8300129,
+     303068
+    ],
+    [
+     28,
+     9714072,
+     301886
+    ]
+   ],
+   "search_wall_ms": 2855.92,
+   "search_cpu_ms": 2843.75,
+   "plan": {
+    "seed": 11944,
+    "rule": "dir1",
+    "k": 3,
+    "groups": [
+     [
+      16384,
+      4096
+     ],
+     [
+      65536,
+      4096
+     ],
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 746,
+   "input_bytes": 781749,
+   "container_bytes": 301890,
+   "container_bytes_seed16": 301902,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 754,
+    "dictionaries": 16384,
+    "index": 61891,
+    "data": 222817
+   },
+   "groups": 1,
+   "build_wall_ms": 78.9928,
+   "build_cpu_ms": 78.125,
+   "decode_wall_ms": 9.1058,
+   "decode_cpu_ms": 15.625,
+   "byte_exact": true,
+   "call_wall_ms": 3045.1,
+   "call_cpu_ms": 3031.25,
+   "peak_memory_bytes": 20262912,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 746,
+   "groups": 1,
+   "seed": 11944,
+   "decode_wall_ms": 11.2303,
+   "decode_cpu_ms": 0,
+   "peak_memory_bytes": 8777728,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "start",
+  "budget_x": 0,
+  "seed": null,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "pack",
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 516.0137,
+   "build_cpu_ms": 515.625,
+   "decode_wall_ms": 68.1564,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 1213.51,
+   "call_cpu_ms": 671.875,
+   "peak_memory_bytes": 28839936,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 72.702,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25751552,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "random",
+  "budget_x": 8,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 7,
+   "restarts": 0,
+   "plan_evaluations": 5,
+   "plan_cache_hits": 1,
+   "group_evaluations": 16,
+   "group_cache_hits": 2,
+   "budget_bytes": 49672656,
+   "budget_spent_bytes": 43385265,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 1491.19,
+   "search_cpu_ms": 1500,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 454.93,
+   "build_cpu_ms": 453.125,
+   "decode_wall_ms": 68.0192,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 2070.43,
+   "call_cpu_ms": 2062.5,
+   "peak_memory_bytes": 28946432,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 69.5127,
+   "decode_cpu_ms": 78.125,
+   "peak_memory_bytes": 25739264,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "random",
+  "budget_x": 8,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 6,
+   "restarts": 0,
+   "plan_evaluations": 5,
+   "plan_cache_hits": 0,
+   "group_evaluations": 6,
+   "group_cache_hits": 0,
+   "budget_bytes": 49672656,
+   "budget_spent_bytes": 47159258,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 1591.44,
+   "search_cpu_ms": 1593.75,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 430.3679,
+   "build_cpu_ms": 421.875,
+   "decode_wall_ms": 66.3935,
+   "decode_cpu_ms": 78.125,
+   "byte_exact": true,
+   "call_wall_ms": 2140.49,
+   "call_cpu_ms": 2140.62,
+   "peak_memory_bytes": 29413376,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 66.9824,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25743360,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "random",
+  "budget_x": 32,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 74,
+   "restarts": 0,
+   "plan_evaluations": 72,
+   "plan_cache_hits": 1,
+   "group_evaluations": 73,
+   "group_cache_hits": 101,
+   "budget_bytes": 198690624,
+   "budget_spent_bytes": 197733087,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 6820.63,
+   "search_cpu_ms": 6687.5,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 548.7824,
+   "build_cpu_ms": 546.875,
+   "decode_wall_ms": 67.1983,
+   "decode_cpu_ms": 78.125,
+   "byte_exact": true,
+   "call_wall_ms": 7491.7,
+   "call_cpu_ms": 7375,
+   "peak_memory_bytes": 29491200,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 65.473,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25755648,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "random",
+  "budget_x": 32,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 98,
+   "restarts": 0,
+   "plan_evaluations": 94,
+   "plan_cache_hits": 3,
+   "group_evaluations": 76,
+   "group_cache_hits": 133,
+   "budget_bytes": 198690624,
+   "budget_spent_bytes": 196855527,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 6802.89,
+   "search_cpu_ms": 6734.38,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 422.0042,
+   "build_cpu_ms": 421.875,
+   "decode_wall_ms": 65.3491,
+   "decode_cpu_ms": 78.125,
+   "byte_exact": true,
+   "call_wall_ms": 7345.39,
+   "call_cpu_ms": 7281.25,
+   "peak_memory_bytes": 29569024,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 67.132,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25743360,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "random",
+  "budget_x": 128,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 0,
+   "plan_evaluations": 13283,
+   "plan_cache_hits": 6717,
+   "group_evaluations": 133,
+   "group_cache_hits": 35355,
+   "budget_bytes": 794762496,
+   "budget_spent_bytes": 323803991,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 12643.5,
+   "search_cpu_ms": 12562.5,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 440.9096,
+   "build_cpu_ms": 437.5,
+   "decode_wall_ms": 64.2191,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 13200.9,
+   "call_cpu_ms": 13125,
+   "peak_memory_bytes": 31240192,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 65.5534,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25804800,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "random",
+  "budget_x": 128,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 0,
+   "plan_evaluations": 13315,
+   "plan_cache_hits": 6685,
+   "group_evaluations": 133,
+   "group_cache_hits": 35276,
+   "budget_bytes": 794762496,
+   "budget_spent_bytes": 323803991,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 13365.1,
+   "search_cpu_ms": 13218.8,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 414.4086,
+   "build_cpu_ms": 406.25,
+   "decode_wall_ms": 67.8487,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 13903.1,
+   "call_cpu_ms": 13734.4,
+   "peak_memory_bytes": 30867456,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 70.0516,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25800704,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "coord",
+  "budget_x": 8,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 13,
+   "restarts": 1,
+   "plan_evaluations": 12,
+   "plan_cache_hits": 0,
+   "group_evaluations": 5,
+   "group_cache_hits": 7,
+   "budget_bytes": 49672656,
+   "budget_spent_bytes": 47593601,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 1608.7,
+   "search_cpu_ms": 1578.12,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 412.3578,
+   "build_cpu_ms": 421.875,
+   "decode_wall_ms": 65.5463,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 2148.12,
+   "call_cpu_ms": 2125,
+   "peak_memory_bytes": 29286400,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 65.5415,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25800704,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "coord",
+  "budget_x": 8,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 14,
+   "restarts": 1,
+   "plan_evaluations": 13,
+   "plan_cache_hits": 0,
+   "group_evaluations": 5,
+   "group_cache_hits": 8,
+   "budget_bytes": 49672656,
+   "budget_spent_bytes": 47593601,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 1315.29,
+   "search_cpu_ms": 1312.5,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 427.6843,
+   "build_cpu_ms": 406.25,
+   "decode_wall_ms": 66.4094,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 1862.48,
+   "call_cpu_ms": 1843.75,
+   "peak_memory_bytes": 29253632,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 69.2186,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25747456,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "coord",
+  "budget_x": 32,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 222,
+   "restarts": 6,
+   "plan_evaluations": 129,
+   "plan_cache_hits": 92,
+   "group_evaluations": 49,
+   "group_cache_hits": 180,
+   "budget_bytes": 198690624,
+   "budget_spent_bytes": 196438743,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 6260.7,
+   "search_cpu_ms": 6203.12,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 402.7053,
+   "build_cpu_ms": 406.25,
+   "decode_wall_ms": 63.8189,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 6780.19,
+   "call_cpu_ms": 6718.75,
+   "peak_memory_bytes": 29483008,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 68.0542,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25755648,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "coord",
+  "budget_x": 32,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 588,
+   "restarts": 13,
+   "plan_evaluations": 382,
+   "plan_cache_hits": 205,
+   "group_evaluations": 67,
+   "group_cache_hits": 553,
+   "budget_bytes": 198690624,
+   "budget_spent_bytes": 194422894,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 7051.89,
+   "search_cpu_ms": 7031.25,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 461.4325,
+   "build_cpu_ms": 453.125,
+   "decode_wall_ms": 65.3874,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 7651.47,
+   "call_cpu_ms": 7593.75,
+   "peak_memory_bytes": 29462528,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 65.7375,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25800704,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "coord",
+  "budget_x": 128,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 406,
+   "plan_evaluations": 10152,
+   "plan_cache_hits": 9848,
+   "group_evaluations": 133,
+   "group_cache_hits": 19625,
+   "budget_bytes": 794762496,
+   "budget_spent_bytes": 323803991,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 15111,
+   "search_cpu_ms": 14843.8,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 500.1089,
+   "build_cpu_ms": 484.375,
+   "decode_wall_ms": 64.2876,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 15731.6,
+   "call_cpu_ms": 15453.1,
+   "peak_memory_bytes": 30769152,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 66.7989,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25739264,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "coord",
+  "budget_x": 128,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 412,
+   "plan_evaluations": 10121,
+   "plan_cache_hits": 9879,
+   "group_evaluations": 133,
+   "group_cache_hits": 19626,
+   "budget_bytes": 794762496,
+   "budget_spent_bytes": 323803991,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 14790.1,
+   "search_cpu_ms": 14546.9,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376790,
+   "container_bytes_seed16": 1376790,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 495.2685,
+   "build_cpu_ms": 500.0,
+   "decode_wall_ms": 66.9561,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 15411.8,
+   "call_cpu_ms": 15171.9,
+   "peak_memory_bytes": 30687232,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 68.3659,
+   "decode_cpu_ms": 78.125,
+   "peak_memory_bytes": 25743360,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "seed",
+  "budget_x": 8,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 37,
+   "restarts": 2,
+   "plan_evaluations": 25,
+   "plan_cache_hits": 11,
+   "group_evaluations": 7,
+   "group_cache_hits": 20,
+   "budget_bytes": 49672656,
+   "budget_spent_bytes": 47593601,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 1633.93,
+   "search_cpu_ms": 1609.38,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376794,
+   "container_bytes_seed16": 1376806,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 558.9666,
+   "build_cpu_ms": 562.5,
+   "decode_wall_ms": 67.0996,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 2321.48,
+   "call_cpu_ms": 2296.88,
+   "peak_memory_bytes": 29401088,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": 64,
+   "decode_wall_ms": 69.0493,
+   "decode_cpu_ms": 78.125,
+   "peak_memory_bytes": 25804800,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "seed",
+  "budget_x": 8,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 24,
+   "restarts": 1,
+   "plan_evaluations": 12,
+   "plan_cache_hits": 11,
+   "group_evaluations": 5,
+   "group_cache_hits": 7,
+   "budget_bytes": 49672656,
+   "budget_spent_bytes": 43564656,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 1720.42,
+   "search_cpu_ms": 1718.75,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376794,
+   "container_bytes_seed16": 1376806,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 593.9024,
+   "build_cpu_ms": 562.5,
+   "decode_wall_ms": 69.0995,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 2442.94,
+   "call_cpu_ms": 2406.25,
+   "peak_memory_bytes": 29614080,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": 64,
+   "decode_wall_ms": 67.1581,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25755648,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "seed",
+  "budget_x": 32,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 188,
+   "restarts": 7,
+   "plan_evaluations": 105,
+   "plan_cache_hits": 82,
+   "group_evaluations": 55,
+   "group_cache_hits": 154,
+   "budget_bytes": 198690624,
+   "budget_spent_bytes": 196566866,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 7189.95,
+   "search_cpu_ms": 7109.38,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376794,
+   "container_bytes_seed16": 1376806,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 475.1566,
+   "build_cpu_ms": 484.375,
+   "decode_wall_ms": 65.7859,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 7784.1,
+   "call_cpu_ms": 7703.12,
+   "peak_memory_bytes": 29376512,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": 64,
+   "decode_wall_ms": 68.2796,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25817088,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "seed",
+  "budget_x": 32,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 280,
+   "restarts": 11,
+   "plan_evaluations": 152,
+   "plan_cache_hits": 127,
+   "group_evaluations": 55,
+   "group_cache_hits": 205,
+   "budget_bytes": 198690624,
+   "budget_spent_bytes": 197325900,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 7255.88,
+   "search_cpu_ms": 7140.62,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376794,
+   "container_bytes_seed16": 1376806,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 508.0303,
+   "build_cpu_ms": 484.375,
+   "decode_wall_ms": 72.2338,
+   "decode_cpu_ms": 78.125,
+   "byte_exact": true,
+   "call_wall_ms": 7890.72,
+   "call_cpu_ms": 7750,
+   "peak_memory_bytes": 29433856,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": 64,
+   "decode_wall_ms": 70.1789,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25743360,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "seed",
+  "budget_x": 128,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 675,
+   "plan_evaluations": 8880,
+   "plan_cache_hits": 11120,
+   "group_evaluations": 133,
+   "group_cache_hits": 18850,
+   "budget_bytes": 794762496,
+   "budget_spent_bytes": 323803991,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 15007.3,
+   "search_cpu_ms": 14843.8,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376794,
+   "container_bytes_seed16": 1376806,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 572.0447,
+   "build_cpu_ms": 578.125,
+   "decode_wall_ms": 67.8893,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 15704.2,
+   "call_cpu_ms": 15546.9,
+   "peak_memory_bytes": 30388224,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": 64,
+   "decode_wall_ms": 68.4439,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25755648,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "source-python",
+  "input_bytes": 6209082,
+  "method": "seed",
+  "budget_x": 128,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 666,
+   "plan_evaluations": 8846,
+   "plan_cache_hits": 11154,
+   "group_evaluations": 133,
+   "group_cache_hits": 19898,
+   "budget_bytes": 794762496,
+   "budget_spent_bytes": 323803991,
+   "trajectory": [
+    [
+     1,
+     11353366,
+     1376790
+    ]
+   ],
+   "search_wall_ms": 14707.2,
+   "search_cpu_ms": 14562.5,
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 349,
+   "input_bytes": 6209082,
+   "container_bytes": 1376794,
+   "container_bytes_seed16": 1376806,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 357,
+    "dictionaries": 65536,
+    "index": 19218,
+    "data": 1291639
+   },
+   "groups": 1,
+   "build_wall_ms": 630.5454,
+   "build_cpu_ms": 625.0,
+   "decode_wall_ms": 65.9278,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 15467.1,
+   "call_cpu_ms": 15312.5,
+   "peak_memory_bytes": 30564352,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 349,
+   "groups": 1,
+   "seed": 64,
+   "decode_wall_ms": 66.4805,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 25751552,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "start",
+  "budget_x": 0,
+  "seed": null,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "pack",
+   "plan": {
+    "seed": 64,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1455028,
+   "container_bytes_seed16": 1455028,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1439,
+    "dictionaries": 55808,
+    "index": 118201,
+    "data": 1279540
+   },
+   "groups": 1,
+   "build_wall_ms": 317.5543,
+   "build_cpu_ms": 312.5,
+   "decode_wall_ms": 48.714,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 569.902,
+   "call_cpu_ms": 578.125,
+   "peak_memory_bytes": 26095616,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 51.6038,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21475328,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "random",
+  "budget_x": 8,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 8,
+   "restarts": 0,
+   "plan_evaluations": 6,
+   "plan_cache_hits": 1,
+   "group_evaluations": 19,
+   "group_cache_hits": 3,
+   "budget_bytes": 36175088,
+   "budget_spent_bytes": 30304700,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     2,
+     14703278,
+     1455001
+    ],
+    [
+     6,
+     28705716,
+     1444237
+    ]
+   ],
+   "search_wall_ms": 1193.03,
+   "search_cpu_ms": 1203.12,
+   "plan": {
+    "seed": 93133,
+    "rule": "dir2",
+    "k": 4,
+    "groups": [
+     [
+      65536,
+      4096
+     ],
+     [
+      114688,
+      65536
+     ],
+     [
+      16384,
+      4096
+     ],
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1444237,
+   "container_bytes_seed16": 1444237,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1463,
+    "dictionaries": 81920,
+    "index": 118201,
+    "data": 1242613
+   },
+   "groups": 4,
+   "build_wall_ms": 257.9407,
+   "build_cpu_ms": 250.0,
+   "decode_wall_ms": 48.8539,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 1738.42,
+   "call_cpu_ms": 1750,
+   "peak_memory_bytes": 26136576,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 4,
+   "seed": null,
+   "decode_wall_ms": 52.1665,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 21626880,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "random",
+  "budget_x": 8,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 6,
+   "restarts": 0,
+   "plan_evaluations": 5,
+   "plan_cache_hits": 0,
+   "group_evaluations": 14,
+   "group_cache_hits": 0,
+   "budget_bytes": 36175088,
+   "budget_spent_bytes": 35816693,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     4,
+     29245009,
+     1453705
+    ],
+    [
+     5,
+     35816693,
+     1436623
+    ]
+   ],
+   "search_wall_ms": 1351.48,
+   "search_cpu_ms": 1343.75,
+   "plan": {
+    "seed": 453,
+    "rule": "dir2",
+    "k": 2,
+    "groups": [
+     [
+      65536,
+      4096
+     ],
+     [
+      16384,
+      65536
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1436623,
+   "container_bytes_seed16": 1436623,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1447,
+    "dictionaries": 78683,
+    "index": 118201,
+    "data": 1238252
+   },
+   "groups": 2,
+   "build_wall_ms": 287.2415,
+   "build_cpu_ms": 281.25,
+   "decode_wall_ms": 49.7147,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 1923.73,
+   "call_cpu_ms": 1921.88,
+   "peak_memory_bytes": 26062848,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 2,
+   "seed": null,
+   "decode_wall_ms": 49.5534,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21532672,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "random",
+  "budget_x": 32,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 43,
+   "restarts": 0,
+   "plan_evaluations": 41,
+   "plan_cache_hits": 1,
+   "group_evaluations": 110,
+   "group_cache_hits": 64,
+   "budget_bytes": 144700352,
+   "budget_spent_bytes": 143069190,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     2,
+     14703278,
+     1455001
+    ],
+    [
+     6,
+     28705716,
+     1444237
+    ],
+    [
+     39,
+     141289471,
+     1440011
+    ]
+   ],
+   "search_wall_ms": 7344.67,
+   "search_cpu_ms": 7218.75,
+   "plan": {
+    "seed": 1476,
+    "rule": "dir1",
+    "k": 2,
+    "groups": [
+     [
+      65536,
+      4096
+     ],
+     [
+      16384,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1440011,
+   "container_bytes_seed16": 1440011,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1447,
+    "dictionaries": 81920,
+    "index": 118201,
+    "data": 1238403
+   },
+   "groups": 2,
+   "build_wall_ms": 293.5178,
+   "build_cpu_ms": 281.25,
+   "decode_wall_ms": 53.6827,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 7941.16,
+   "call_cpu_ms": 7812.5,
+   "peak_memory_bytes": 26406912,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 2,
+   "seed": null,
+   "decode_wall_ms": 52.0097,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21585920,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "random",
+  "budget_x": 32,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 39,
+   "restarts": 0,
+   "plan_evaluations": 37,
+   "plan_cache_hits": 1,
+   "group_evaluations": 81,
+   "group_cache_hits": 40,
+   "budget_bytes": 144700352,
+   "budget_spent_bytes": 139449575,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     4,
+     29245009,
+     1453705
+    ],
+    [
+     5,
+     35816693,
+     1436623
+    ],
+    [
+     33,
+     122290956,
+     1436060
+    ]
+   ],
+   "search_wall_ms": 5817.33,
+   "search_cpu_ms": 5765.62,
+   "plan": {
+    "seed": 708,
+    "rule": "dir1",
+    "k": 2,
+    "groups": [
+     [
+      65536,
+      4096
+     ],
+     [
+      65536,
+      65536
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1436060,
+   "container_bytes_seed16": 1436060,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1447,
+    "dictionaries": 98233,
+    "index": 118201,
+    "data": 1218139
+   },
+   "groups": 2,
+   "build_wall_ms": 380.5716,
+   "build_cpu_ms": 359.375,
+   "decode_wall_ms": 54.8258,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 6526.5,
+   "call_cpu_ms": 6453.12,
+   "peak_memory_bytes": 26365952,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 2,
+   "seed": null,
+   "decode_wall_ms": 55.6287,
+   "decode_cpu_ms": 62.5,
+   "peak_memory_bytes": 21565440,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "random",
+  "budget_x": 128,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 0,
+   "plan_evaluations": 13283,
+   "plan_cache_hits": 6717,
+   "group_evaluations": 259,
+   "group_cache_hits": 60670,
+   "budget_bytes": 578801408,
+   "budget_spent_bytes": 274060764,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     2,
+     14703278,
+     1455001
+    ],
+    [
+     6,
+     28705716,
+     1444237
+    ],
+    [
+     39,
+     141289471,
+     1440011
+    ],
+    [
+     66,
+     172768986,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 16409.3,
+   "search_cpu_ms": 16156.2,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434001,
+   "container_bytes_seed16": 1434001,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 236.1636,
+   "build_cpu_ms": 234.375,
+   "decode_wall_ms": 50.7256,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 16951.4,
+   "call_cpu_ms": 16703.1,
+   "peak_memory_bytes": 26714112,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 54.0637,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21520384,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "random",
+  "budget_x": 128,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "random",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 0,
+   "plan_evaluations": 13315,
+   "plan_cache_hits": 6685,
+   "group_evaluations": 259,
+   "group_cache_hits": 61046,
+   "budget_bytes": 578801408,
+   "budget_spent_bytes": 274060764,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     4,
+     29245009,
+     1453705
+    ],
+    [
+     5,
+     35816693,
+     1436623
+    ],
+    [
+     33,
+     122290956,
+     1436060
+    ],
+    [
+     58,
+     165266923,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 17347.7,
+   "search_cpu_ms": 16843.8,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434001,
+   "container_bytes_seed16": 1434001,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 234.2895,
+   "build_cpu_ms": 234.375,
+   "decode_wall_ms": 49.5637,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 17844.7,
+   "call_cpu_ms": 17328.1,
+   "peak_memory_bytes": 27275264,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 50.6201,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21458944,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "coord",
+  "budget_x": 8,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 6,
+   "restarts": 0,
+   "plan_evaluations": 5,
+   "plan_cache_hits": 0,
+   "group_evaluations": 5,
+   "group_cache_hits": 0,
+   "budget_bytes": 36175088,
+   "budget_spent_bytes": 35718530,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     5,
+     35718530,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 1005.11,
+   "search_cpu_ms": 1000,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434001,
+   "container_bytes_seed16": 1434001,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 217.075,
+   "build_cpu_ms": 218.75,
+   "decode_wall_ms": 49.7414,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 1546.91,
+   "call_cpu_ms": 1546.88,
+   "peak_memory_bytes": 26443776,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 50.3134,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21430272,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "coord",
+  "budget_x": 8,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 13,
+   "restarts": 0,
+   "plan_evaluations": 12,
+   "plan_cache_hits": 0,
+   "group_evaluations": 11,
+   "group_cache_hits": 23,
+   "budget_bytes": 36175088,
+   "budget_spent_bytes": 35721825,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     2,
+     16155422,
+     1450092
+    ],
+    [
+     9,
+     22293185,
+     1443337
+    ]
+   ],
+   "search_wall_ms": 1282.39,
+   "search_cpu_ms": 1281.25,
+   "plan": {
+    "seed": 196,
+    "rule": "dir1",
+    "k": 2,
+    "groups": [
+     [
+      65536,
+      4096
+     ],
+     [
+      0,
+      65536
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1443337,
+   "container_bytes_seed16": 1443337,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1447,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1258113
+   },
+   "groups": 2,
+   "build_wall_ms": 209.9513,
+   "build_cpu_ms": 203.125,
+   "decode_wall_ms": 47.8813,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 1745.94,
+   "call_cpu_ms": 1734.38,
+   "peak_memory_bytes": 26112000,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 2,
+   "seed": null,
+   "decode_wall_ms": 49.5916,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21471232,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "coord",
+  "budget_x": 32,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 89,
+   "restarts": 2,
+   "plan_evaluations": 75,
+   "plan_cache_hits": 13,
+   "group_evaluations": 66,
+   "group_cache_hits": 157,
+   "budget_bytes": 144700352,
+   "budget_spent_bytes": 140846183,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     5,
+     35718530,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 5589.59,
+   "search_cpu_ms": 5500,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434001,
+   "container_bytes_seed16": 1434001,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 248.1555,
+   "build_cpu_ms": 250.0,
+   "decode_wall_ms": 52.1828,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 6088.59,
+   "call_cpu_ms": 5984.38,
+   "peak_memory_bytes": 26402816,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 48.8904,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21438464,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "coord",
+  "budget_x": 32,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 94,
+   "restarts": 2,
+   "plan_evaluations": 65,
+   "plan_cache_hits": 28,
+   "group_evaluations": 55,
+   "group_cache_hits": 136,
+   "budget_bytes": 144700352,
+   "budget_spent_bytes": 136627799,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     2,
+     16155422,
+     1450092
+    ],
+    [
+     9,
+     22293185,
+     1443337
+    ],
+    [
+     13,
+     41844829,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 5067.56,
+   "search_cpu_ms": 5046.88,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434001,
+   "container_bytes_seed16": 1434001,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 212.6492,
+   "build_cpu_ms": 203.125,
+   "decode_wall_ms": 50.4193,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 5542.98,
+   "call_cpu_ms": 5515.62,
+   "peak_memory_bytes": 26177536,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 49.8871,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21442560,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "coord",
+  "budget_x": 128,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 508,
+   "plan_evaluations": 7502,
+   "plan_cache_hits": 12498,
+   "group_evaluations": 259,
+   "group_cache_hits": 33380,
+   "budget_bytes": 578801408,
+   "budget_spent_bytes": 274060764,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     5,
+     35718530,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 13099.2,
+   "search_cpu_ms": 12968.8,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434001,
+   "container_bytes_seed16": 1434001,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 283.537,
+   "build_cpu_ms": 296.875,
+   "decode_wall_ms": 52.6083,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 13671.6,
+   "call_cpu_ms": 13546.9,
+   "peak_memory_bytes": 26423296,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 52.4209,
+   "decode_cpu_ms": 31.25,
+   "peak_memory_bytes": 21458944,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "coord",
+  "budget_x": 128,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "coord",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 510,
+   "plan_evaluations": 6875,
+   "plan_cache_hits": 13125,
+   "group_evaluations": 259,
+   "group_cache_hits": 30022,
+   "budget_bytes": 578801408,
+   "budget_spent_bytes": 274060764,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     2,
+     16155422,
+     1450092
+    ],
+    [
+     9,
+     22293185,
+     1443337
+    ],
+    [
+     13,
+     41844829,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 12203.4,
+   "search_cpu_ms": 12109.4,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434001,
+   "container_bytes_seed16": 1434001,
+   "parts": {
+    "header": 40,
+    "seed": 0,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 218.4335,
+   "build_cpu_ms": 218.75,
+   "decode_wall_ms": 48.4775,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 12691.4,
+   "call_cpu_ms": 12593.8,
+   "peak_memory_bytes": 26894336,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": null,
+   "decode_wall_ms": 49.9512,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21454848,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "seed",
+  "budget_x": 8,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 8,
+   "restarts": 0,
+   "plan_evaluations": 5,
+   "plan_cache_hits": 2,
+   "group_evaluations": 8,
+   "group_cache_hits": 1,
+   "budget_bytes": 36175088,
+   "budget_spent_bytes": 33447455,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     2,
+     16155422,
+     1450092
+    ],
+    [
+     4,
+     27527097,
+     1443337
+    ]
+   ],
+   "search_wall_ms": 1140.59,
+   "search_cpu_ms": 1140.62,
+   "plan": {
+    "seed": 196,
+    "rule": "dir1",
+    "k": 2,
+    "groups": [
+     [
+      65536,
+      4096
+     ],
+     [
+      0,
+      65536
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1443341,
+   "container_bytes_seed16": 1443353,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 1447,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1258113
+   },
+   "groups": 2,
+   "build_wall_ms": 217.7528,
+   "build_cpu_ms": 218.75,
+   "decode_wall_ms": 49.373,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 1671.18,
+   "call_cpu_ms": 1671.88,
+   "peak_memory_bytes": 26124288,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 2,
+   "seed": 196,
+   "decode_wall_ms": 50.9583,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21495808,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "seed",
+  "budget_x": 8,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 10,
+   "restarts": 0,
+   "plan_evaluations": 7,
+   "plan_cache_hits": 2,
+   "group_evaluations": 9,
+   "group_cache_hits": 6,
+   "budget_bytes": 36175088,
+   "budget_spent_bytes": 35099531,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     3,
+     22838764,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 1095.27,
+   "search_cpu_ms": 1093.75,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434005,
+   "container_bytes_seed16": 1434017,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 229.9715,
+   "build_cpu_ms": 218.75,
+   "decode_wall_ms": 48.7143,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 1567.53,
+   "call_cpu_ms": 1578.12,
+   "peak_memory_bytes": 26398720,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": 192,
+   "decode_wall_ms": 48.6444,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21454848,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "seed",
+  "budget_x": 32,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 123,
+   "restarts": 2,
+   "plan_evaluations": 61,
+   "plan_cache_hits": 61,
+   "group_evaluations": 67,
+   "group_cache_hits": 114,
+   "budget_bytes": 144700352,
+   "budget_spent_bytes": 143182178,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     2,
+     16155422,
+     1450092
+    ],
+    [
+     4,
+     27527097,
+     1443337
+    ],
+    [
+     9,
+     40019139,
+     1436060
+    ],
+    [
+     15,
+     49625383,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 4569.24,
+   "search_cpu_ms": 4500,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434005,
+   "container_bytes_seed16": 1434017,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 217.3831,
+   "build_cpu_ms": 218.75,
+   "decode_wall_ms": 47.6104,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 5037.78,
+   "call_cpu_ms": 4968.75,
+   "peak_memory_bytes": 26857472,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": 192,
+   "decode_wall_ms": 48.7573,
+   "decode_cpu_ms": 31.25,
+   "peak_memory_bytes": 21426176,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "seed",
+  "budget_x": 32,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 147,
+   "restarts": 4,
+   "plan_evaluations": 78,
+   "plan_cache_hits": 68,
+   "group_evaluations": 74,
+   "group_cache_hits": 188,
+   "budget_bytes": 144700352,
+   "budget_spent_bytes": 142692490,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     3,
+     22838764,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 4582.27,
+   "search_cpu_ms": 4546.88,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434005,
+   "container_bytes_seed16": 1434017,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 267.8194,
+   "build_cpu_ms": 265.625,
+   "decode_wall_ms": 49.833,
+   "decode_cpu_ms": 62.5,
+   "byte_exact": true,
+   "call_wall_ms": 5130.89,
+   "call_cpu_ms": 5109.38,
+   "peak_memory_bytes": 26345472,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": 192,
+   "decode_wall_ms": 49.3592,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21442560,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "seed",
+  "budget_x": 128,
+  "seed": 1,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 1,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 532,
+   "plan_evaluations": 7503,
+   "plan_cache_hits": 12497,
+   "group_evaluations": 259,
+   "group_cache_hits": 33696,
+   "budget_bytes": 578801408,
+   "budget_spent_bytes": 274060764,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     2,
+     16155422,
+     1450092
+    ],
+    [
+     4,
+     27527097,
+     1443337
+    ],
+    [
+     9,
+     40019139,
+     1436060
+    ],
+    [
+     15,
+     49625383,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 12715.5,
+   "search_cpu_ms": 12531.2,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434005,
+   "container_bytes_seed16": 1434017,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 214.9593,
+   "build_cpu_ms": 203.125,
+   "decode_wall_ms": 48.2001,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 13172.3,
+   "call_cpu_ms": 12968.8,
+   "peak_memory_bytes": 26918912,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": 192,
+   "decode_wall_ms": 50.146,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21467136,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ },
+ {
+  "pool": "config-cmake-pkg",
+  "input_bytes": 4521886,
+  "method": "seed",
+  "budget_x": 128,
+  "seed": 2,
+  "result": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "search",
+   "method": "seed",
+   "search_seed": 2,
+   "stall": 20,
+   "proposals": 20000,
+   "restarts": 536,
+   "plan_evaluations": 7336,
+   "plan_cache_hits": 12664,
+   "group_evaluations": 259,
+   "group_cache_hits": 32951,
+   "budget_bytes": 578801408,
+   "budget_spent_bytes": 274060764,
+   "trajectory": [
+    [
+     1,
+     8357880,
+     1455028
+    ],
+    [
+     3,
+     22838764,
+     1434001
+    ]
+   ],
+   "search_wall_ms": 12202.5,
+   "search_cpu_ms": 12109.4,
+   "plan": {
+    "seed": 192,
+    "rule": "dir1",
+    "k": 1,
+    "groups": [
+     [
+      65536,
+      4096
+     ]
+    ]
+   },
+   "files": 1431,
+   "input_bytes": 4521886,
+   "container_bytes": 1434005,
+   "container_bytes_seed16": 1434017,
+   "parts": {
+    "header": 40,
+    "seed": 4,
+    "group_table": 1439,
+    "dictionaries": 65536,
+    "index": 118201,
+    "data": 1248785
+   },
+   "groups": 1,
+   "build_wall_ms": 221.8695,
+   "build_cpu_ms": 218.75,
+   "decode_wall_ms": 54.4145,
+   "decode_cpu_ms": 46.875,
+   "byte_exact": true,
+   "call_wall_ms": 12668,
+   "call_cpu_ms": 12562.5,
+   "peak_memory_bytes": 26456064,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  },
+  "verify": {
+   "schema": "seedarc.g5-study.r1",
+   "mode": "verify",
+   "byte_exact": true,
+   "files": 1431,
+   "groups": 1,
+   "seed": 192,
+   "decode_wall_ms": 51.6138,
+   "decode_cpu_ms": 46.875,
+   "peak_memory_bytes": 21467136,
+   "peak_memory_metric": "PeakWorkingSetSize"
+  }
+ }
+]

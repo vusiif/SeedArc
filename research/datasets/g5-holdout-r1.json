@@ -1,0 +1,201 @@
+{
+  "corpus_id": "g5-holdout-r1",
+  "created_at": "2026-11-14T19:54:41.353316-08:00",
+  "purpose": "one-time G5 evaluation (DEV-016); never used for tuning",
+  "plan": "research/ideas/seed-g5-r1.md",
+  "machine": {
+    "os": "Windows-10-10.0.19045-SP0"
+  },
+  "exclusion": {
+    "r2_content_hashes": 4724,
+    "rule": "content SHA256 present in any b2r5-corpus-r2 listing (dev or test)"
+  },
+  "path_profile": "ADR-0005 via seedarc_path_check (libseedarc validate_archive_path)",
+  "selection": "per pool and half: project groups in sha256('g5-holdout-r1:<group>') order, whole groups only, until the byte / file cap; empty files and symlinks excluded",
+  "public_inputs": {
+    "django_sdist": {
+      "file": "django-6.1.3.tar.gz",
+      "bytes": 11306257,
+      "sha256": "b5d2d9e35295065d13b1927b3f19a59bd119f737aa6299def14ccca1ae3c8c0d",
+      "source": "https://files.pythonhosted.org (PyPI), downloaded 2026-11-14",
+      "license": "BSD-3-Clause"
+    },
+    "vcpkg": {
+      "repository": "microsoft/vcpkg",
+      "commit": "fe8e78fa",
+      "path": "ports/",
+      "license": "MIT"
+    }
+  },
+  "chunk_bytes": 65536,
+  "datasets": {
+    "many-small-docs": {
+      "type": "many small files (documentation text, at most 32 KiB each)",
+      "max_file_bytes": 32768,
+      "halves": {
+        "local": {
+          "dataset_id": "local/many-small-docs",
+          "sources": [
+            "msys2-ucrt64-doc"
+          ],
+          "licenses": {
+            "msys2-ucrt64-doc": "per package (MSYS2 UCRT64 documentation); local evaluation only"
+          },
+          "caps": {
+            "bytes": 2097152,
+            "files": 1000
+          },
+          "file_count": 178,
+          "bytes": 1189588,
+          "blocks": 178,
+          "groups": 7,
+          "groups_available": 8,
+          "distinct_content": 178,
+          "median_file_bytes": 3506,
+          "listing": "g5-holdout-r1/local-many-small-docs.tsv",
+          "listing_sha256": "97c64436bc92b37359cda93fa2f635b1e211cdd1b59d2a7fea80892e94db4f8a"
+        },
+        "public": {
+          "dataset_id": "public/many-small-docs",
+          "sources": [
+            "django-docs"
+          ],
+          "licenses": {
+            "django-docs": "BSD-3-Clause (Django 6.1.3 documentation)"
+          },
+          "caps": {
+            "bytes": 2097152,
+            "files": 1000
+          },
+          "file_count": 505,
+          "bytes": 2049983,
+          "blocks": 505,
+          "groups": 11,
+          "groups_available": 13,
+          "distinct_content": 505,
+          "median_file_bytes": 1524,
+          "listing": "g5-holdout-r1/public-many-small-docs.tsv",
+          "listing_sha256": "689f834bb608548fef6bb6b59dd08f7696319acc5525bf4448ea1831402b5560"
+        }
+      }
+    },
+    "source-python": {
+      "type": "source code (Python, third-party, not the standard library)",
+      "max_file_bytes": null,
+      "halves": {
+        "local": {
+          "dataset_id": "local/source-python",
+          "sources": [
+            "py315-site-packages"
+          ],
+          "licenses": {
+            "py315-site-packages": "per package (third-party site-packages); local evaluation only"
+          },
+          "caps": {
+            "bytes": 3145728,
+            "files": 1000
+          },
+          "file_count": 345,
+          "bytes": 2729612,
+          "blocks": 351,
+          "groups": 8,
+          "groups_available": 11,
+          "distinct_content": 342,
+          "median_file_bytes": 3863,
+          "listing": "g5-holdout-r1/local-source-python.tsv",
+          "listing_sha256": "9b348430e181e7c39a84898b525d89bf22bdda363a848de6b82b9ca059675582"
+        },
+        "public": {
+          "dataset_id": "public/source-python",
+          "sources": [
+            "django-src"
+          ],
+          "licenses": {
+            "django-src": "BSD-3-Clause (Django 6.1.3)"
+          },
+          "caps": {
+            "bytes": 3145728,
+            "files": 1000
+          },
+          "file_count": 410,
+          "bytes": 3142483,
+          "blocks": 413,
+          "groups": 26,
+          "groups_available": 51,
+          "distinct_content": 410,
+          "median_file_bytes": 3695,
+          "listing": "g5-holdout-r1/public-source-python.tsv",
+          "listing_sha256": "a0578560710e28154b687cd02a7cede1f03f152231a5182f12438332164206c4"
+        }
+      }
+    },
+    "config-cmake-pkg": {
+      "type": "configuration (MSBuild props / targets, CMake package configs, pkg-config)",
+      "max_file_bytes": null,
+      "halves": {
+        "local": {
+          "dataset_id": "local/config-cmake-pkg",
+          "sources": [
+            "msbuild-vc-v180",
+            "wsl-lib-cmake",
+            "wsl-lib-pkgconfig",
+            "wsl-share-pkgconfig"
+          ],
+          "licenses": {
+            "wsl-share-pkgconfig": "per Ubuntu package; local evaluation only",
+            "msbuild-vc-v180": "Microsoft (Visual Studio Build Tools); local evaluation only",
+            "wsl-lib-pkgconfig": "per Ubuntu package; local evaluation only",
+            "wsl-lib-cmake": "per Ubuntu package; local evaluation only"
+          },
+          "caps": {
+            "bytes": 2097152,
+            "files": 1000
+          },
+          "file_count": 241,
+          "bytes": 1244467,
+          "blocks": 245,
+          "groups": 163,
+          "groups_available": 163,
+          "distinct_content": 240,
+          "median_file_bytes": 1435,
+          "listing": "g5-holdout-r1/local-config-cmake-pkg.tsv",
+          "listing_sha256": "05fb2bf59071892e1631eef2f6f7a643e792c51de7465a4216f5d258d3c5dc9c"
+        },
+        "public": {
+          "dataset_id": "public/config-cmake-pkg",
+          "sources": [
+            "vcpkg-ports"
+          ],
+          "licenses": {
+            "vcpkg-ports": "MIT (microsoft/vcpkg at fe8e78fa)"
+          },
+          "caps": {
+            "bytes": 2097152,
+            "files": 1000
+          },
+          "file_count": 1000,
+          "bytes": 1051771,
+          "blocks": 1000,
+          "groups": 423,
+          "groups_available": 2919,
+          "distinct_content": 998,
+          "median_file_bytes": 620,
+          "listing": "g5-holdout-r1/public-config-cmake-pkg.tsv",
+          "listing_sha256": "55b99e0948f9cf56ca3cbb3aa322113724d6eb0ef623267bef1a07ccb7a7fee0"
+        }
+      }
+    }
+  },
+  "skipped": {
+    "config-cmake-pkg:empty": 1,
+    "many-small-docs:larger_than_pool_limit": 92,
+    "source-python:empty": 196
+  },
+  "path_rejected": [],
+  "r2_exclusion_check": {
+    "holdout_files": 2679,
+    "holdout_hashes": 2673,
+    "r2_hashes": 4724,
+    "shared": 0
+  }
+}

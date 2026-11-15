@@ -23,6 +23,26 @@ if(WIN32)
     seedarc_target_defaults(seedarc_unicode_win_diff)
 endif()
 
+# DEV-016: G5 budgeted grouping / dictionary search (portable; research container v2 only).
+add_executable(seedarc_g5_study g5_study.cpp)
+target_link_libraries(seedarc_g5_study PRIVATE seedarc_codec_dictionary)
+target_include_directories(seedarc_g5_study PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
+if(WIN32)
+    target_link_libraries(seedarc_g5_study PRIVATE psapi)
+endif()
+seedarc_target_defaults(seedarc_g5_study)
+if(BUILD_TESTING)
+    add_test(NAME research.g5_study COMMAND "${CMAKE_COMMAND}" "-DTOOL=$<TARGET_FILE:seedarc_g5_study>"
+        "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/g5-check-$<CONFIG>"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_g5.cmake")
+    set_tests_properties(research.g5_study PROPERTIES TIMEOUT 300)
+endif()
+
+# DEV-016: production path-profile check for corpus builders (portable).
+add_executable(seedarc_path_check path_check.cpp)
+target_link_libraries(seedarc_path_check PRIVATE SeedArc::core)
+seedarc_target_defaults(seedarc_path_check)
+
 # DEV-013 shared-dictionary feasibility study (portable; research container only).
 add_executable(seedarc_dict_study dict_study.cpp)
 target_link_libraries(seedarc_dict_study PRIVATE seedarc_codec_dictionary)
