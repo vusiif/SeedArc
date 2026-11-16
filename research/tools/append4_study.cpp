@@ -43,6 +43,10 @@ constexpr std::string_view usage =
     "  append4_study verify CONTAINER INPUT_DIR      (every file, byte for byte)\n"
     "  append4_study peek CONTAINER INPUT_DIR N      (N cold single-file extractions)\n"
     "  append4_study partial CONTAINER INPUT_DIR     (recovery from truncated prefixes)\n"
+    "  append4_study split CONTAINER VOLUME_BYTES NEW_DIR [none|gen|dicts]   (carry; default gen)\n"
+    "  append4_study vappend VOLUME_DIR NEW_DIR [--plan PLAN_HEX]   (writes new volumes only)\n"
+    "  append4_study vverify VOLUME_DIR INPUT_DIR\n"
+    "  append4_study vpartial VOLUME_DIR INPUT_DIR   (recovery with each volume missing)\n"
     "  append4_study selftest INPUT_DIR\n";
 using Tag = std::array<char, 8>;
 constexpr Tag magic{'S', 'A', 'D', 'X', 'R', '0', '0', '4'};
@@ -418,6 +422,42 @@ std::expected<Entry, Error> read_file_info(Reader &r, const Gen &g, const Header
 }
 
 // ---- scanning the records (front to back, no trailer needed) ------------------------------------
+// Which logical bytes are really there (a volume set with missing volumes has zero-filled holes).
+// Without one, every byte is present.
+struct Presence {
+    std::vector<std::pair<std::uint64_t, std::uint64_t>> runs; // sorted, merged [begin, end)
+    void add(std::uint64_t begin, std::uint64_t end) {
+        runs.emplace_back(begin, end);
+        std::ranges::sort(runs);
+        std::vector<std::pair<std::uint64_t, std::uint64_t>> merged;
+        for (const auto &r : runs) {
+            if (!merged.empty() && r.first <= merged.back().second) {
+                merged.back().second = std::max(merged.back().second, r.second);
+            } else {
+                merged.push_back(r);
+            }
+        }
+        runs = std::move(merged);
+    }
+    // How many bytes from `at` are present without a hole.
+    std::uint64_t run(std::uint64_t at) const {
+        for (const auto &[b, e] : runs) {
+            if (at >= b && at < e) {
+                return e - at;
+            }
+        }
+        return 0;
+    }
+    bool covers(std::uint64_t at, std::uint64_t len) const { return len == 0 || run(at) >= len; }
+};
+bool covered(const Presence *p, std::uint64_t at, std::uint64_t len) {
+    return p == nullptr || p->covers(at, len);
+}
+bool blocks_present(const Presence *p, const std::vector<Block> &blocks) {
+    return std::ranges::all_of(blocks,
+                               [&](const Block &b) { return covered(p, b.offset, b.stored); });
+}
+
 struct Scan {
     std::map<std::uint32_t, Gen> gens;
     std::map<std::uint32_t, std::uint64_t> data_start;
@@ -443,7 +483,8 @@ std::expected<void, Error> add_entry(Scan &s, std::uint64_t index, Entry e) {
 // Walks `bytes` from the header, accepting every valid record and skipping anything else (data
 // in off / checkpoint mode, superseded trailers, damage). With `decode`, solid frames are
 // decoded as far as they are present.
-std::expected<Scan, Error> scan(std::span<const std::byte> bytes, const Header &h, bool decode) {
+std::expected<Scan, Error> scan(std::span<const std::byte> bytes, const Header &h, bool decode,
+                                const Presence *presence = nullptr) {
     Scan s;
     std::size_t p = header_bytes;
     std::uint64_t region_start = p; // where the data covered by the next CKP may start
@@ -565,7 +606,10 @@ std::expected<Scan, Error> scan(std::span<const std::byte> bytes, const Header &
             if (es.size() != *nfiles || b.at != r->body.size()) {
                 continue;
             }
-            const auto avail = std::min<std::uint64_t>(*stored, bytes.size() - r->end);
+            auto avail = std::min<std::uint64_t>(*stored, bytes.size() - r->end);
+            if (presence != nullptr) {
+                avail = std::min(avail, presence->run(r->end)); // decode only up to a hole
+            }
             s.frames.push_back({r->end, *stored, *raw, g.index, static_cast<std::uint8_t>(*grp)});
             s.frame_raw.emplace_back();
             s.frame_produced.push_back(0);
@@ -988,7 +1032,8 @@ struct Recovery {
     std::map<std::string, std::vector<std::byte>> files;
     std::uint64_t from_trailer = 0, from_records = 0, unreadable = 0;
 };
-std::expected<Recovery, Error> recover(std::span<const std::byte> bytes) {
+std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
+                                       const Presence *presence = nullptr) {
     Recovery out;
     auto header = parse_header(bytes);
     if (!header) {
@@ -1033,8 +1078,13 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes) {
             if (m->header.solid()) {
                 auto &raw = frames[e.frame];
                 if (!raw) {
-                    auto r = decode_frame(m->frames[e.frame], bytes);
-                    raw = r ? std::move(*r) : std::vector<std::byte>{};
+                    const auto &fr = m->frames[e.frame];
+                    raw = std::vector<std::byte>{};
+                    if (covered(presence, fr.offset, fr.stored)) {
+                        if (auto r = decode_frame(fr, bytes)) {
+                            raw = std::move(*r);
+                        }
+                    }
                 }
                 const auto view = std::span{*raw};
                 if (view.size() >= e.frame_offset + e.size) {
@@ -1044,7 +1094,7 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes) {
                         data = std::vector<std::byte>{cut.begin(), cut.end()};
                     }
                 }
-            } else {
+            } else if (blocks_present(presence, e.blocks)) {
                 data = decode_blocks(e, m->gens[e.gen].groups[e.group], bytes, cache);
             }
             if (!data) {
@@ -1060,7 +1110,7 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes) {
         break;
     }
     // 2. Every valid record, front to back.
-    auto s = scan(bytes, *header, true);
+    auto s = scan(bytes, *header, true, presence);
     if (!s) {
         return std::unexpected(s.error());
     }
@@ -1076,7 +1126,7 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes) {
                     data = std::vector<std::byte>{cut.begin(), cut.end()};
                 }
             }
-        } else {
+        } else if (blocks_present(presence, e.blocks)) {
             data = decode_blocks(e, s->gens.at(e.gen).groups[e.group], bytes, cache);
         }
         if (!data) {
@@ -1598,6 +1648,337 @@ std::uint64_t input_bytes_of(const std::vector<InputFile> &files) {
     return n;
 }
 
+// ---- volumes (seed-append-r1 7.6) ---------------------------------------------------------------
+// A volume set cuts the logical v4 byte stream into files vol-NNNNN.sadv. Each volume:
+//   fixed header (60) | carry | CRC32C(fixed header + carry) (4) | data
+// fixed header: magic, version, volume index, archive id, logical start, data length, nominal
+// volume size, CRC32C of the whole previous volume file (0 for volume 0), carry mode, carry
+// length. The carry repeats logical byte ranges from before the volume (the GEN record of the
+// generation in effect, and with "dicts" its dictionaries) so the volume can be used when the
+// earlier volumes are missing. Records keep their logical offsets, so nothing else changes.
+// An append writes new volumes only; existing volume files are never opened for writing.
+constexpr Tag volume_magic{'S', 'A', 'D', 'X', 'V', 'O', 'L', '4'};
+constexpr std::uint32_t volume_version = 1;
+constexpr std::size_t volume_fixed = 60;
+constexpr std::uint64_t min_volume_bytes = 4096;
+constexpr std::uint32_t max_volumes = 10000;
+constexpr std::uint64_t max_logical = 2ULL << 30;
+constexpr std::size_t max_carry = std::size_t{1} << 24;
+enum : std::uint32_t { carry_none = 0, carry_gen = 1, carry_dicts = 2 };
+constexpr std::array<const char *, 3> carry_names{"none", "gen", "dicts"};
+
+// Deterministic archive identity: FNV-1a 64 over the header, the GEN record of generation 0 and
+// its dictionaries (bytes an append never changes). Distinguishes unrelated archives; not a
+// security property.
+std::uint64_t archive_id(std::span<const std::byte> logical, const Model &m) {
+    std::uint64_t h = 1469598103934665603ULL;
+    const auto n = std::min<std::uint64_t>(logical.size(), m.data_start.front());
+    for (const auto b : logical.first(static_cast<std::size_t>(n))) {
+        h = (h ^ std::to_integer<std::uint64_t>(b)) * 1099511628211ULL;
+    }
+    return h;
+}
+std::string volume_name(std::uint32_t index) {
+    auto digits = std::to_string(index);
+    return "vol-" + std::string(5 - std::min<std::size_t>(5, digits.size()), '0') + digits + ".sadv";
+}
+std::optional<std::uint32_t> volume_index_of(std::string_view name) {
+    if (name.size() != 14 || !name.starts_with("vol-") || !name.ends_with(".sadv")) {
+        return std::nullopt;
+    }
+    const auto n = number(name.substr(4, 5));
+    return n && *n < max_volumes ? std::optional{static_cast<std::uint32_t>(*n)} : std::nullopt;
+}
+
+struct Volume {
+    std::uint32_t index = 0;
+    std::uint64_t id = 0, start = 0, nominal = 0;
+    std::uint32_t prev_crc = 0, carry_mode = carry_none;
+    std::vector<std::pair<std::uint64_t, std::vector<std::byte>>> carry;
+    std::vector<std::byte> data;
+    std::uint32_t file_crc = 0; // CRC32C of the whole volume file
+    std::uint64_t end() const { return start + data.size(); }
+};
+
+std::vector<std::byte> volume_file(const Volume &v) {
+    std::vector<std::byte> carry;
+    put(carry, v.carry.size(), 4);
+    for (const auto &[off, bytes] : v.carry) {
+        put(carry, off, 8);
+        put(carry, bytes.size(), 4);
+        carry.insert(carry.end(), bytes.begin(), bytes.end());
+    }
+    std::vector<std::byte> out(volume_magic.size());
+    std::memcpy(out.data(), volume_magic.data(), volume_magic.size());
+    put(out, volume_version, 4);
+    put(out, v.index, 4);
+    put(out, v.id, 8);
+    put(out, v.start, 8);
+    put(out, v.data.size(), 8);
+    put(out, v.nominal, 8);
+    put(out, v.prev_crc, 4);
+    put(out, v.carry_mode, 4);
+    put(out, carry.size(), 4);
+    out.insert(out.end(), carry.begin(), carry.end());
+    put(out, seedarc::experimental::crc32c(out), 4);
+    out.insert(out.end(), v.data.begin(), v.data.end());
+    return out;
+}
+
+std::expected<Volume, Error> parse_volume(std::span<const std::byte> file) {
+    const auto vbad = [](const char *what) {
+        return std::unexpected(
+            Error{ErrorCode::integrity_error, std::string{"research volume v4: "} + what});
+    };
+    if (file.size() < volume_fixed + 8 ||
+        std::memcmp(file.data(), volume_magic.data(), volume_magic.size()) != 0) {
+        return vbad("bad magic");
+    }
+    Reader r{file, volume_magic.size()};
+    const auto ver = r.get(4), index = r.get(4), id = r.get(8), start = r.get(8), len = r.get(8),
+               nominal = r.get(8), prev = r.get(4), mode = r.get(4), carry_len = r.get(4);
+    if (!carry_len || *ver != volume_version || *index >= max_volumes || *mode > carry_dicts ||
+        *carry_len > max_carry || *nominal < min_volume_bytes || *nominal > max_logical ||
+        *len == 0 || *len > *nominal || *start > max_logical || max_logical - *start < *len ||
+        file.size() - volume_fixed - 4 < *carry_len ||
+        file.size() - volume_fixed - 4 - *carry_len != *len) {
+        return vbad("bad header");
+    }
+    const auto head = file.first(volume_fixed + static_cast<std::size_t>(*carry_len));
+    Reader c{file, head.size()};
+    if (c.get(4) != seedarc::experimental::crc32c(head)) {
+        return vbad("header checksum mismatch");
+    }
+    Volume v;
+    v.index = static_cast<std::uint32_t>(*index);
+    v.id = *id;
+    v.start = *start;
+    v.nominal = *nominal;
+    v.prev_crc = static_cast<std::uint32_t>(*prev);
+    v.carry_mode = static_cast<std::uint32_t>(*mode);
+    Reader k{head, volume_fixed};
+    const auto count = k.get(4);
+    if (!count || *count > 64) {
+        return vbad("bad carry");
+    }
+    for (std::uint64_t i = 0; i < *count; ++i) {
+        const auto off = k.get(8), n = k.get(4);
+        if (!n || *n == 0 || head.size() - k.at < *n || *off >= *start || *off > max_logical) {
+            return vbad("bad carry range");
+        }
+        v.carry.emplace_back(*off, std::vector<std::byte>{head.begin() + static_cast<std::ptrdiff_t>(k.at),
+                                                          head.begin() + static_cast<std::ptrdiff_t>(k.at + *n)});
+        k.at += static_cast<std::size_t>(*n);
+    }
+    if (k.at != head.size() || (v.carry_mode == carry_none && !v.carry.empty())) {
+        return vbad("bad carry");
+    }
+    const auto data = file.subspan(head.size() + 4);
+    v.data.assign(data.begin(), data.end());
+    v.file_crc = seedarc::experimental::crc32c(file);
+    return v;
+}
+
+// The logical ranges a volume starting at `s` carries: the container header, the GEN record of
+// the last generation that starts before `s`, plus (mode "dicts") every dictionary it uses.
+std::vector<std::pair<std::uint64_t, std::uint64_t>> carry_ranges(const Model &m, std::uint64_t s,
+                                                                  std::uint32_t mode) {
+    std::vector<std::pair<std::uint64_t, std::uint64_t>> ranges;
+    const Gen *in_effect = nullptr;
+    for (const auto &g : m.gens) {
+        if (g.record_offset < s) {
+            in_effect = &g;
+        }
+    }
+    if (mode == carry_none || in_effect == nullptr) {
+        return ranges;
+    }
+    ranges.emplace_back(0, header_bytes); // the container header (flags, redundancy level)
+    ranges.emplace_back(in_effect->record_offset,
+                        in_effect->record_offset + record_overhead + in_effect->body.size());
+    if (mode == carry_dicts) {
+        for (const auto &grp : in_effect->groups) {
+            const auto range = std::pair{grp.dict_offset, grp.dict_offset + grp.dict_size};
+            if (grp.dict_size != 0 && std::ranges::find(ranges, range) == ranges.end()) {
+                ranges.push_back(range);
+            }
+        }
+    }
+    std::erase_if(ranges, [&](const auto &r) { return r.first >= s; });
+    return ranges;
+}
+
+// Volumes covering logical bytes [from, end) of `logical`, numbered from `first_index`.
+std::expected<std::vector<Volume>, Error> make_volumes(std::span<const std::byte> logical,
+                                                       const Model &m, std::uint64_t from,
+                                                       std::uint32_t first_index,
+                                                       std::uint64_t nominal, std::uint32_t mode,
+                                                       std::uint32_t prev_crc) {
+    if (logical.size() > max_logical) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "archive too large for volumes"});
+    }
+    const auto id = archive_id(logical, m);
+    std::vector<Volume> out;
+    auto index = first_index;
+    for (auto s = from; s < logical.size(); s += nominal, ++index) {
+        if (index >= max_volumes) {
+            return std::unexpected(Error{ErrorCode::resource_limit, "too many volumes"});
+        }
+        Volume v;
+        v.index = index;
+        v.id = id;
+        v.start = s;
+        v.nominal = nominal;
+        v.prev_crc = prev_crc;
+        v.carry_mode = mode;
+        const auto len = std::min<std::uint64_t>(nominal, logical.size() - s);
+        const auto data = logical.subspan(static_cast<std::size_t>(s), static_cast<std::size_t>(len));
+        v.data.assign(data.begin(), data.end());
+        for (const auto &[b, e] : carry_ranges(m, s, mode)) {
+            const auto r = logical.subspan(static_cast<std::size_t>(b), static_cast<std::size_t>(e - b));
+            v.carry.emplace_back(b, std::vector<std::byte>{r.begin(), r.end()});
+        }
+        auto file = volume_file(v);
+        prev_crc = seedarc::experimental::crc32c(file);
+        v.file_crc = prev_crc;
+        out.push_back(std::move(v));
+    }
+    return out;
+}
+
+// A volume directory as found: present volumes by index, checked for consistency where
+// neighbours are both present (same archive, chained CRCs, contiguous logical ranges).
+struct VolumeSet {
+    std::map<std::uint32_t, Volume> volumes;
+    std::uint64_t id = 0, nominal = 0;
+    std::uint32_t carry_mode = carry_none;
+};
+std::expected<VolumeSet, Error> read_volumes(const fs::path &dir,
+                                             std::optional<std::uint32_t> skip = std::nullopt) {
+    VolumeSet set;
+    std::error_code ec;
+    std::uint64_t total = 0;
+    for (fs::directory_iterator it(dir, ec), end; it != end; it.increment(ec)) {
+        if (ec) {
+            return std::unexpected(Error{ErrorCode::io_error, "cannot list the volume directory"});
+        }
+        const auto index = volume_index_of(utf8(it->path().filename()));
+        if (!index || it->is_symlink() || !it->is_regular_file() || index == skip) {
+            continue;
+        }
+        auto file = read_file(it->path());
+        if (!file) {
+            return std::unexpected(file.error());
+        }
+        total += file->size();
+        if (total > max_logical + max_volumes * (max_carry + volume_fixed)) {
+            return std::unexpected(Error{ErrorCode::resource_limit, "volumes too large"});
+        }
+        auto v = parse_volume(*file);
+        if (!v) {
+            return std::unexpected(v.error());
+        }
+        if (v->index != *index) {
+            return std::unexpected(bad("volume number differs from its file name"));
+        }
+        set.volumes.emplace(*index, std::move(*v));
+    }
+    if (set.volumes.empty()) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "no volumes found"});
+    }
+    const auto &any = set.volumes.begin()->second;
+    set.id = any.id;
+    set.nominal = any.nominal;
+    set.carry_mode = any.carry_mode;
+    const Volume *prev = nullptr;
+    for (const auto &[index, v] : set.volumes) {
+        if (v.id != set.id || v.nominal != set.nominal || v.carry_mode != set.carry_mode) {
+            return std::unexpected(bad("volumes belong to different archives or settings"));
+        }
+        if (index == 0 && (v.start != 0 || v.prev_crc != 0)) {
+            return std::unexpected(bad("bad first volume"));
+        }
+        if (prev != nullptr &&
+            (v.start < prev->end() ||
+             (prev->index + 1 == index && (v.start != prev->end() || v.prev_crc != prev->file_crc)))) {
+            return std::unexpected(bad("volumes out of order or not chained"));
+        }
+        prev = &v;
+    }
+    return set;
+}
+bool complete(const VolumeSet &set) {
+    return set.volumes.size() == set.volumes.rbegin()->first + 1;
+}
+// The logical stream with what is present (volume data and carried ranges); holes are zero.
+std::expected<std::pair<std::vector<std::byte>, Presence>, Error>
+assemble(const VolumeSet &set) {
+    std::uint64_t size = 0;
+    for (const auto &[index, v] : set.volumes) {
+        size = std::max(size, v.end());
+    }
+    if (size > max_logical) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "archive too large"});
+    }
+    std::vector<std::byte> logical(static_cast<std::size_t>(size));
+    Presence present;
+    for (const auto &[index, v] : set.volumes) {
+        std::ranges::copy(v.data, logical.begin() + static_cast<std::ptrdiff_t>(v.start));
+        present.add(v.start, v.end());
+    }
+    for (const auto &[index, v] : set.volumes) {
+        for (const auto &[off, bytes] : v.carry) {
+            if (off > size || size - off < bytes.size()) {
+                continue; // refers past what we have: of no use here
+            }
+            // Where the range is already present, the copy must agree; then fill the rest.
+            const auto end = off + bytes.size();
+            for (const auto &[b, e] : present.runs) {
+                const auto lo = std::max(b, off), hi = std::min(e, end);
+                if (lo < hi && !std::equal(bytes.begin() + static_cast<std::ptrdiff_t>(lo - off),
+                                           bytes.begin() + static_cast<std::ptrdiff_t>(hi - off),
+                                           logical.begin() + static_cast<std::ptrdiff_t>(lo))) {
+                    return std::unexpected(bad("carried copy differs from the volume data"));
+                }
+            }
+            std::ranges::copy(bytes, logical.begin() + static_cast<std::ptrdiff_t>(off));
+            present.add(off, end);
+        }
+    }
+    return std::pair{std::move(logical), std::move(present)};
+}
+std::expected<std::vector<std::byte>, Error> join(const VolumeSet &set) {
+    if (!complete(set)) {
+        return std::unexpected(Error{ErrorCode::integrity_error, "volume set is incomplete"});
+    }
+    auto a = assemble(set);
+    if (!a) {
+        return std::unexpected(a.error());
+    }
+    // The joined stream must be a valid container whose identity is the one in the volumes.
+    auto m = parse(a->first);
+    if (!m) {
+        return std::unexpected(m.error());
+    }
+    if (archive_id(a->first, *m) != set.id) {
+        return std::unexpected(bad("volumes do not match their archive id"));
+    }
+    return std::move(a->first);
+}
+std::expected<void, Error> write_volumes(const fs::path &dir, const std::vector<Volume> &vols) {
+    for (const auto &v : vols) {
+        if (fs::exists(dir / volume_name(v.index))) {
+            return std::unexpected(Error{ErrorCode::output_conflict, "volume exists"});
+        }
+    }
+    for (const auto &v : vols) {
+        if (auto r = write_new(dir / volume_name(v.index), volume_file(v)); !r) {
+            return std::unexpected(r.error());
+        }
+    }
+    return {};
+}
+
 // ---- commands -----------------------------------------------------------------------------------
 int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path &input,
              const fs::path &out_path, std::optional<std::uint32_t> wanted, std::uint32_t cpb) {
@@ -1798,8 +2179,9 @@ struct CutResult {
 };
 std::expected<CutResult, Error> recover_checked(std::span<const std::byte> bytes,
                                                 const std::map<std::string_view,
-                                                               const InputFile *> &by_path) {
-    auto r = recover(bytes);
+                                                               const InputFile *> &by_path,
+                                                const Presence *presence = nullptr) {
+    auto r = recover(bytes, presence);
     if (!r) {
         return std::unexpected(r.error());
     }
@@ -1857,6 +2239,186 @@ int cmd_partial(const fs::path &container, const fs::path &input) {
                   << ",\"recover_wall_ms\":" << wall_ms() - w << "}";
     }
     std::cout << "]," << peak_memory_json() << "}\n";
+    return std::cout ? 0 : 1;
+}
+
+std::string volumes_json(const std::vector<Volume> &vols) {
+    std::uint64_t files = 0, carry = 0;
+    for (const auto &v : vols) {
+        files += volume_file(v).size();
+        for (const auto &[off, bytes] : v.carry) {
+            carry += bytes.size();
+        }
+    }
+    return "\"volumes_written\":" + std::to_string(vols.size()) +
+           ",\"volume_file_bytes\":" + std::to_string(files) +
+           ",\"carried_bytes\":" + std::to_string(carry);
+}
+
+int cmd_split(const fs::path &container, std::uint64_t nominal, const fs::path &dir,
+              std::uint32_t mode) {
+    auto bytes = read_file(container);
+    if (!bytes) {
+        return fail(bytes.error());
+    }
+    auto m = parse(*bytes);
+    if (!m) {
+        return fail(m.error());
+    }
+    auto vols = make_volumes(*bytes, *m, 0, 0, nominal, mode, 0);
+    if (!vols) {
+        return fail(vols.error());
+    }
+    std::error_code ec;
+    if (fs::exists(dir) || !fs::create_directory(dir, ec) || ec) {
+        return fail(Error{ErrorCode::output_conflict, "volume directory exists or cannot be made"});
+    }
+    if (auto r = write_volumes(dir, *vols); !r) {
+        return fail(r.error());
+    }
+    std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"split\",\"container_bytes\":"
+              << bytes->size() << ",\"volume_bytes\":" << nominal << ",\"carry\":\""
+              << carry_names[mode] << "\"," << volumes_json(*vols) << "}\n";
+    return std::cout ? 0 : 1;
+}
+
+int cmd_vappend(const fs::path &dir, const fs::path &new_dir, const std::optional<Plan> &plan) {
+    const auto w = wall_ms(), c = cpu_ms();
+    auto set = read_volumes(dir);
+    if (!set) {
+        return fail(set.error());
+    }
+    auto old = join(*set);
+    if (!old) {
+        return fail(old.error());
+    }
+    auto added = read_tree(new_dir);
+    if (!added) {
+        return fail(added.error());
+    }
+    auto bytes = append_bytes(*old, *added, "segment", plan);
+    if (!bytes) {
+        return fail(bytes.error());
+    }
+    auto m = parse(*bytes);
+    if (!m) {
+        return fail(m.error());
+    }
+    auto decoded = decode_all(*m, *bytes);
+    if (!decoded) {
+        return fail(decoded.error());
+    }
+    for (const auto &f : *added) {
+        const auto it = decoded->find(f.path);
+        if (it == decoded->end() || it->second != f.data) {
+            return fail(bad("appended file does not round trip"));
+        }
+    }
+    const auto &last = set->volumes.rbegin()->second;
+    auto vols = make_volumes(*bytes, *m, old->size(), last.index + 1, set->nominal,
+                             set->carry_mode, last.file_crc);
+    if (!vols) {
+        return fail(vols.error());
+    }
+    if (auto r = write_volumes(dir, *vols); !r) {
+        return fail(r.error());
+    }
+    std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"vappend\",\"old_volumes\":"
+              << set->volumes.size() << ",\"old_volumes_rewritten\":0,\"first_new_volume\":"
+              << last.index + 1 << "," << volumes_json(*vols) << ",\"appended_files\":"
+              << added->size() << ",\"call_wall_ms\":" << wall_ms() - w
+              << ",\"call_cpu_ms\":" << cpu_ms() - c << ",\"appended_byte_exact\":true}\n";
+    return std::cout ? 0 : 1;
+}
+
+int cmd_vverify(const fs::path &dir, const fs::path &input) {
+    auto set = read_volumes(dir);
+    if (!set) {
+        return fail(set.error());
+    }
+    auto bytes = join(*set);
+    if (!bytes) {
+        return fail(bytes.error());
+    }
+    auto m = parse(*bytes);
+    if (!m) {
+        return fail(m.error());
+    }
+    auto files = read_tree(input);
+    if (!files) {
+        return fail(files.error());
+    }
+    if (auto r = byte_exact(*files, *m, *bytes); !r) {
+        return fail(r.error());
+    }
+    std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"vverify\",\"byte_exact\":"
+                 "true,\"volumes\":"
+              << set->volumes.size() << ",\"files\":" << files->size()
+              << ",\"generations\":" << m->gens.size() << "}\n";
+    return std::cout ? 0 : 1;
+}
+
+// Recovery with each single volume missing, against the input. Also reports how many files
+// have data inside the missing volume (they cannot come back without a recovery record).
+int cmd_vpartial(const fs::path &dir, const fs::path &input) {
+    auto set = read_volumes(dir);
+    if (!set) {
+        return fail(set.error());
+    }
+    auto whole = join(*set);
+    if (!whole) {
+        return fail(whole.error());
+    }
+    auto m = parse(*whole);
+    if (!m) {
+        return fail(m.error());
+    }
+    auto files = read_tree(input);
+    if (!files) {
+        return fail(files.error());
+    }
+    const auto by_path = index_files(*files);
+    std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"vpartial\",\"volumes\":"
+              << set->volumes.size() << ",\"carry\":\"" << carry_names[set->carry_mode]
+              << "\",\"redundancy\":\"" << redundancy_names[m->header.redundancy]
+              << "\",\"input_files\":" << files->size() << ",\"missing\":[";
+    bool first = true;
+    for (const auto &[index, v] : set->volumes) {
+        VolumeSet without = *set;
+        without.volumes.erase(index);
+        if (without.volumes.empty()) {
+            continue;
+        }
+        auto a = assemble(without);
+        if (!a) {
+            std::cout << "]}\n";
+            return fail(a.error());
+        }
+        auto r = recover_checked(a->first, by_path, &a->second);
+        if (!r) {
+            std::cout << "]}\n";
+            return fail(r.error());
+        }
+        std::uint64_t touching = 0;
+        const auto hits = [&](std::uint64_t off, std::uint64_t len) {
+            return len != 0 && off < v.end() && off + len > v.start;
+        };
+        for (const auto &e : m->entries) {
+            const bool hit = m->header.solid()
+                                 ? hits(m->frames[e.frame].offset, m->frames[e.frame].stored)
+                                 : std::ranges::any_of(e.blocks, [&](const Block &b) {
+                                       return hits(b.offset, b.stored);
+                                   });
+            touching += hit ? 1 : 0;
+        }
+        std::cout << (first ? "" : ",") << "{\"volume\":" << index
+                  << ",\"recovered_files\":" << r->files << ",\"recovered_bytes\":" << r->bytes
+                  << ",\"files_with_data_in_volume\":" << touching
+                  << ",\"from_trailer\":" << r->from_trailer
+                  << ",\"from_records\":" << r->from_records << "}";
+        first = false;
+    }
+    std::cout << "]}\n";
     return std::cout ? 0 : 1;
 }
 
@@ -1995,8 +2557,56 @@ int cmd_selftest(const fs::path &input) {
             }
         }
     }
+    // Volumes: any damaged header or carry byte is refused; damaged data is caught when the
+    // joined container is read; a set round trips and joins back to the same bytes.
+    std::uint64_t volume_tried = 0, volume_rejected = 0;
+    {
+        auto packed = pack_bytes("seed", plan, *files, red_file, cpb);
+        if (!packed) {
+            return fail(packed.error());
+        }
+        auto m = parse(packed->bytes);
+        auto vols = m ? make_volumes(packed->bytes, *m, 0, 0, min_volume_bytes, carry_dicts, 0)
+                      : std::unexpected(m.error());
+        if (!vols || vols->size() < 2) {
+            return fail(bad("selftest: expected several volumes"));
+        }
+        VolumeSet set;
+        set.id = vols->front().id;
+        set.nominal = min_volume_bytes;
+        set.carry_mode = carry_dicts;
+        for (auto &v : *vols) {
+            auto file = volume_file(v);
+            auto again = parse_volume(file);
+            if (!again || volume_file(*again) != file) {
+                return fail(bad("selftest: volume does not round trip"));
+            }
+            const auto head = file.size() - v.data.size();
+            for (const auto at : {std::size_t{0}, std::size_t{9}, std::size_t{20}, std::size_t{30},
+                                  std::size_t{50}, volume_fixed, head / 2, head - 1}) {
+                auto copy = file;
+                copy[at] ^= std::byte{0x5a};
+                ++volume_tried;
+                volume_rejected += parse_volume(copy) ? 0 : 1;
+            }
+            set.volumes.emplace(v.index, std::move(*again));
+        }
+        auto joined = join(set);
+        if (!joined || *joined != packed->bytes) {
+            return fail(bad("selftest: volumes do not join back"));
+        }
+        auto bent = set;
+        bent.volumes.begin()->second.data.back() ^= std::byte{0x5a};
+        ++volume_tried;
+        auto bj = join(bent);
+        auto bm = bj ? parse(*bj) : std::unexpected(bj.error());
+        volume_rejected += bm && byte_exact(*files, *bm, *bj) ? 0 : 1;
+    }
+    tried += volume_tried;
+    rejected += volume_rejected;
     std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"selftest\",\"checks\":"
-              << checks << ",\"damaged_tried\":" << tried << ",\"damaged_rejected\":" << rejected
+              << checks << ",\"volume_damage_tried\":" << volume_tried
+              << ",\"damaged_tried\":" << tried << ",\"damaged_rejected\":" << rejected
               << ",\"superseded_trailer_bytes_checked_inert\":" << stale_checked
               << ",\"recovery_checks\":" << cut_checks << "}\n";
     return rejected == tried ? 0 : 1;
@@ -2064,6 +2674,34 @@ int main(int argc, char *argv[]) {
     }
     if (a.size() == 3 && a[1] == "selftest") {
         return cmd_selftest(native(a[2]));
+    }
+    if ((a.size() == 5 || a.size() == 6) && a[1] == "split") {
+        const auto n = number(a[3]);
+        std::uint32_t mode = carry_gen;
+        if (a.size() == 6) {
+            const auto it = std::ranges::find(carry_names, a[5]);
+            mode = it == carry_names.end() ? 99U
+                                           : static_cast<std::uint32_t>(it - carry_names.begin());
+        }
+        if (!n || *n < min_volume_bytes || *n > max_logical || mode > carry_dicts) {
+            std::cerr << usage;
+            return 2;
+        }
+        return cmd_split(native(a[2]), *n, native(a[4]), mode);
+    }
+    if ((a.size() == 4 || a.size() == 6) && a[1] == "vappend") {
+        std::optional<Plan> plan;
+        if (a.size() == 6 && (a[4] != "--plan" || !(plan = plan_arg(a[5])))) {
+            std::cerr << usage;
+            return 2;
+        }
+        return cmd_vappend(native(a[2]), native(a[3]), plan);
+    }
+    if (a.size() == 4 && a[1] == "vverify") {
+        return cmd_vverify(native(a[2]), native(a[3]));
+    }
+    if (a.size() == 4 && a[1] == "vpartial") {
+        return cmd_vpartial(native(a[2]), native(a[3]));
     }
     std::cerr << usage;
     return 2;
