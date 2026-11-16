@@ -61,8 +61,8 @@ int main(int argc, char *argv[]) {
         seedarc::experimental::PathLimits limits;
         limits.max_entries = entries.size();
         limits.max_metadata_bytes = 16 * 1024 * 1024;
-        const auto result = seedarc::experimental::validate_manifest_paths(entries, limits);
-        if (result) {
+        if (const auto result = seedarc::experimental::validate_manifest_paths(entries, limits);
+            result) {
             std::cout << "ok\t" << entries.size() << '\n';
         } else {
             std::cout << code_name(result.error().code) << '\t' << result.error().message << '\n';
@@ -73,8 +73,7 @@ int main(int argc, char *argv[]) {
         if (!line.empty() && line.back() == '\r') {
             line.pop_back();
         }
-        const auto result = seedarc::experimental::validate_archive_path(line);
-        if (result) {
+        if (const auto result = seedarc::experimental::validate_archive_path(line); result) {
             std::cout << "ok\t" << line << '\n';
         } else {
             std::cout << code_name(result.error().code) << '\t' << line << '\t'

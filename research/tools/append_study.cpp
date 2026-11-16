@@ -18,6 +18,7 @@
 
 #include <cstring>
 #include <iostream>
+#include <ranges>
 
 namespace {
 using namespace seedarc::research_tools;
@@ -84,7 +85,7 @@ struct Model {
 // Group metadata bytes (what H-meta compares): key table plus Seed record, or per-file bytes.
 std::uint64_t key_table_bytes(const Grouping &g) {
     std::uint64_t n = 4;
-    for (const auto &[key, id] : g.keys) {
+    for (const auto &key : g.keys | std::views::keys) {
         n += 2 + key.size() + 1;
     }
     return n;
@@ -365,7 +366,7 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
 
 // One solid frame over `members` (in order), appended to `out`; fills the entries' positions.
 std::expected<void, Error> encode_solid(const std::vector<const InputFile *> &members,
-                                        std::uint8_t group, std::vector<Entry *> entries, Model &m,
+                                        std::uint8_t group, const std::vector<Entry *> &entries, Model &m,
                                         std::vector<std::byte> &out) {
     std::vector<std::byte> joined;
     for (std::size_t i = 0; i < members.size(); ++i) {

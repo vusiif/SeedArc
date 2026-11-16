@@ -27,9 +27,12 @@
 // the newest intact trailer in the prefix plus every valid record, verifies every file by CRC,
 // refuses conflicting copies and applies the production manifest checks (ADR-0005).
 #include "append_common.hpp"
+#include "splitmix64/splitmix64.hpp"
 
 #include <cstring>
 #include <iostream>
+#include <ranges>
+#include <tuple>
 
 namespace {
 using namespace seedarc::research_tools;
@@ -47,6 +50,10 @@ constexpr std::string_view usage =
     "  append4_study vappend VOLUME_DIR NEW_DIR [--plan PLAN_HEX]   (writes new volumes only)\n"
     "  append4_study vverify VOLUME_DIR INPUT_DIR\n"
     "  append4_study vpartial VOLUME_DIR INPUT_DIR   (recovery with each volume missing)\n"
+    "  append4_study search seed|coord START INPUT_DIR BUDGET_BYTES PRNG_SEED [restart|local]"
+    " [STALL]\n"
+    "      START: default (G5 start plan) or PLAN_HEX; restart = cold (G5), local = stop when"
+    " stuck; STALL default 20\n"
     "  append4_study selftest INPUT_DIR\n";
 using Tag = std::array<char, 8>;
 constexpr Tag magic{'S', 'A', 'D', 'X', 'R', '0', '0', '4'};
@@ -1115,7 +1122,7 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
         return std::unexpected(s.error());
     }
     DecoderCache cache;
-    for (const auto &[index, e] : s->entries) {
+    for (const auto &e : s->entries | std::views::values) {
         std::expected<std::vector<std::byte>, Error> data = std::unexpected(bad("unread"));
         if (header->solid()) {
             const auto &raw = s->frame_raw[e.frame];
@@ -1140,7 +1147,7 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
         out.from_records += *added ? 1 : 0;
     }
     std::vector<std::string> paths;
-    for (const auto &[path, data] : out.files) {
+    for (const auto &path : out.files | std::views::keys) {
         paths.push_back(path);
     }
     if (auto ok = check_manifest(paths); !ok) {
@@ -1479,7 +1486,7 @@ std::uint8_t nearest_group(const Model &m, const Gen &ref, std::string_view path
     std::uint8_t best = ref.grouping.other;
     for (const auto &e : m.entries) {
         const auto &g = m.gens[e.gen];
-        if (g.groups != ref.groups || !(g.grouping == ref.grouping)) {
+        if (g.groups != ref.groups || g.grouping != ref.grouping) {
             continue;
         }
         std::size_t n = 0;
@@ -1526,7 +1533,7 @@ std::expected<std::vector<std::byte>, Error> append_bytes(std::span<const std::b
                 Error{ErrorCode::invalid_argument, "regroup is for solid containers, no plan"});
         }
         for (const auto &g : m.gens) {
-            if (!(g.grouping == m.gens[0].grouping)) {
+            if (g.grouping != m.gens[0].grouping) {
                 return std::unexpected(
                     Error{ErrorCode::invalid_argument, "regroup needs one grouping"});
             }
@@ -1594,7 +1601,7 @@ std::string parts_json(const Model &m, std::span<const std::byte> bytes) {
             dicts += grp.dict_offset >= record_end ? grp.dict_size : 0;
         }
         key_tables += 4;
-        for (const auto &[key, id] : g.grouping.keys) {
+        for (const auto &key : g.grouping.keys | std::views::keys) {
             key_tables += 2 + key.size() + 1;
         }
     }
@@ -1914,7 +1921,7 @@ bool complete(const VolumeSet &set) {
 std::expected<std::pair<std::vector<std::byte>, Presence>, Error>
 assemble(const VolumeSet &set) {
     std::uint64_t size = 0;
-    for (const auto &[index, v] : set.volumes) {
+    for (const auto &v : set.volumes | std::views::values) {
         size = std::max(size, v.end());
     }
     if (size > max_logical) {
@@ -1922,11 +1929,11 @@ assemble(const VolumeSet &set) {
     }
     std::vector<std::byte> logical(static_cast<std::size_t>(size));
     Presence present;
-    for (const auto &[index, v] : set.volumes) {
+    for (const auto &v : set.volumes | std::views::values) {
         std::ranges::copy(v.data, logical.begin() + static_cast<std::ptrdiff_t>(v.start));
         present.add(v.start, v.end());
     }
-    for (const auto &[index, v] : set.volumes) {
+    for (const auto &v : set.volumes | std::views::values) {
         for (const auto &[off, bytes] : v.carry) {
             if (off > size || size - off < bytes.size()) {
                 continue; // refers past what we have: of no use here
@@ -1977,6 +1984,398 @@ std::expected<void, Error> write_volumes(const fs::path &dir, const std::vector<
         }
     }
     return {};
+}
+
+// ---- plan search: cold and warm start (seed-append-r1 7.5.1) ------------------------------------
+// The G5 r1 search algorithms ("seed": random single-field hill climbing with a stall limit;
+// "coord": coordinate descent over every value of every active field), re-implemented on this
+// tool's insertion-stable grouping so the plan found is the plan packed. The budget is counted as
+// in G5: input bytes read by training and trial encoding, cache hits free. The objective is the
+// part of the container a plan changes: dictionaries + data + key table + Seed record (per-file
+// metadata is the same for every plan and left out). "restart" re-starts from a random plan when
+// stuck (G5 behaviour, a cold search); "local" stops instead (a warm search that stays near its
+// start). The start plan is always the first candidate, so the result is never worse than it.
+Plan default_start() { // G-dict-r1, the G5 start plan: one group, 64 KiB dictionary
+    Plan p;
+    p.d[0] = 2;
+    return canonical(p);
+}
+struct Field {
+    int id;
+    int values;
+};
+std::vector<Field> active_fields(const Plan &p) {
+    std::vector<Field> f{{0, 4}, {1, static_cast<int>(max_groups)}};
+    for (int i = 0; i < p.k; ++i) {
+        f.push_back({2 + 2 * i, 4});
+        f.push_back({3 + 2 * i, 2});
+    }
+    return f;
+}
+int field_value(const Plan &p, int id) {
+    if (id == 0) {
+        return p.rule;
+    }
+    if (id == 1) {
+        return p.k - 1;
+    }
+    const auto g = static_cast<std::size_t>((id - 2) / 2);
+    return id % 2 == 0 ? p.d[g] : p.t[g];
+}
+Plan with_field(Plan p, int id, int value) {
+    if (id == 0) {
+        p.rule = static_cast<std::uint8_t>(value);
+    } else if (id == 1) {
+        p.k = static_cast<std::uint8_t>(value + 1);
+    } else {
+        const auto g = static_cast<std::size_t>((id - 2) / 2);
+        (id % 2 == 0 ? p.d[g] : p.t[g]) = static_cast<std::uint8_t>(value);
+    }
+    return canonical(p);
+}
+struct Rng {
+    std::uint64_t state;
+    std::uint64_t next() {
+        const auto out = seedarc::third_party::splitmix64_step(state);
+        state += 0x9e3779b97f4a7c15ULL;
+        return out;
+    }
+    std::uint64_t below(std::uint64_t n) { // uniform in [0, n) without modulo bias
+        const auto limit = UINT64_MAX - UINT64_MAX % n;
+        for (;;) {
+            if (const auto v = next(); v < limit) {
+                return v % n;
+            }
+        }
+    }
+};
+Plan random_plan(Rng &rng) {
+    Plan p;
+    p.rule = static_cast<std::uint8_t>(rng.below(4));
+    p.k = static_cast<std::uint8_t>(rng.below(max_groups) + 1);
+    for (std::size_t i = 0; i < max_groups; ++i) {
+        p.d[i] = static_cast<std::uint8_t>(rng.below(4));
+        p.t[i] = static_cast<std::uint8_t>(rng.below(2));
+    }
+    return canonical(p);
+}
+std::uint64_t key_table_bytes(const Grouping &g) {
+    std::uint64_t n = 4;
+    for (const auto &key : g.keys | std::views::keys) {
+        n += 2 + key.size() + 1;
+    }
+    return n;
+}
+
+class PlanEvaluator {
+  public:
+    PlanEvaluator(const std::vector<InputFile> &files, std::uint64_t budget)
+        : files_(files), budget_(budget) {}
+    // nullopt: the uncached part would exceed the remaining budget (nothing is spent).
+    std::expected<std::optional<std::uint64_t>, Error> evaluate(const Plan &plan) {
+        if (const auto it = plans_.find(plan); it != plans_.end()) {
+            ++plan_cache_hits_;
+            return std::optional{it->second};
+        }
+        const auto grouping = initial_grouping(plan, files_);
+        std::vector<std::vector<std::uint32_t>> members(grouping.groups());
+        for (std::size_t i = 0; i < files_.size(); ++i) {
+            members[grouping.of(plan.rule, files_[i].path, files_[i].data.size())].push_back(
+                static_cast<std::uint32_t>(i));
+        }
+        std::uint64_t cost = 0;
+        for (std::size_t g = 0; g < members.size(); ++g) {
+            if (!members[g].empty() && !groups_.contains({members[g], plan.d[g], plan.t[g]})) {
+                cost += group_cost(members[g], plan.d[g], plan.t[g]);
+            }
+        }
+        if (spent_ + cost > budget_) {
+            return std::optional<std::uint64_t>{};
+        }
+        std::uint64_t bytes = key_table_bytes(grouping) + 8;
+        for (std::size_t g = 0; g < members.size(); ++g) {
+            if (members[g].empty()) {
+                continue;
+            }
+            const Key key{members[g], plan.d[g], plan.t[g]};
+            auto it = groups_.find(key);
+            if (it == groups_.end()) {
+                auto n = encode_group(members[g], plan.d[g], plan.t[g]);
+                if (!n) {
+                    return std::unexpected(n.error());
+                }
+                ++group_evaluations_;
+                it = groups_.emplace(key, *n).first;
+            } else {
+                ++group_cache_hits_;
+            }
+            bytes += it->second;
+        }
+        spent_ += cost;
+        ++plan_evaluations_;
+        plans_.emplace(plan, bytes);
+        return std::optional{bytes};
+    }
+    std::uint64_t spent() const { return spent_; }
+    std::string stats_json() const {
+        return "\"plan_evaluations\":" + std::to_string(plan_evaluations_) +
+               ",\"plan_cache_hits\":" + std::to_string(plan_cache_hits_) +
+               ",\"group_evaluations\":" + std::to_string(group_evaluations_) +
+               ",\"group_cache_hits\":" + std::to_string(group_cache_hits_) +
+               ",\"budget_bytes\":" + std::to_string(budget_) +
+               ",\"budget_spent_bytes\":" + std::to_string(spent_);
+    }
+
+  private:
+    using Key = std::tuple<std::vector<std::uint32_t>, std::uint8_t, std::uint8_t>;
+    std::uint64_t group_cost(const std::vector<std::uint32_t> &members, std::uint8_t d,
+                             std::uint8_t t) const {
+        std::uint64_t cost = 0;
+        for (const auto m : members) {
+            cost += files_[m].data.size();
+            if (dict_sizes[d] != 0) {
+                cost += std::min<std::uint64_t>(files_[m].data.size(), train_prefix[t]);
+            }
+        }
+        return cost;
+    }
+    // Dictionary plus data bytes of one group (exactly what packing writes for it).
+    std::expected<std::uint64_t, Error> encode_group(const std::vector<std::uint32_t> &members,
+                                                     std::uint8_t d, std::uint8_t t) const {
+        std::vector<const InputFile *> ptrs;
+        for (const auto m : members) {
+            ptrs.push_back(&files_[m]);
+        }
+        std::vector<std::byte> dict;
+        if (dict_sizes[d] != 0) {
+            auto trained = train(ptrs, d, t);
+            if (!trained) {
+                return std::unexpected(trained.error());
+            }
+            dict = std::move(*trained);
+        }
+        std::uint64_t bytes = dict.size();
+        std::vector<std::byte> scratch;
+        for (const auto *f : ptrs) {
+            scratch.clear();
+            auto blocks = encode_blocks(*f, dict, scratch);
+            if (!blocks) {
+                return std::unexpected(blocks.error());
+            }
+            bytes += scratch.size();
+        }
+        return bytes;
+    }
+    const std::vector<InputFile> &files_;
+    std::uint64_t budget_;
+    std::uint64_t spent_ = 0;
+    std::map<Plan, std::uint64_t> plans_;
+    std::map<Key, std::uint64_t> groups_;
+    std::uint64_t plan_evaluations_ = 0, plan_cache_hits_ = 0;
+    std::uint64_t group_evaluations_ = 0, group_cache_hits_ = 0;
+};
+
+struct SearchState {
+    Plan best;
+    std::uint64_t best_bytes = UINT64_MAX;
+    std::uint64_t start_bytes = 0;
+    std::uint64_t proposals = 0, restarts = 0;
+    std::string trajectory; // [proposal, spent, best_bytes] at each improvement
+    std::string stop = "budget";
+    bool done = false;
+};
+constexpr std::uint64_t max_proposals = 20000;
+
+std::expected<std::optional<std::uint64_t>, Error> try_plan(PlanEvaluator &ev, SearchState &s,
+                                                            const Plan &p) {
+    if (s.proposals >= max_proposals) {
+        s.done = true;
+        s.stop = "proposal_limit";
+        return std::optional<std::uint64_t>{};
+    }
+    ++s.proposals;
+    auto r = ev.evaluate(p);
+    if (!r) {
+        return std::unexpected(r.error());
+    }
+    if (!*r) {
+        s.done = true;
+        s.stop = "budget";
+        return std::optional<std::uint64_t>{};
+    }
+    if (**r < s.best_bytes) {
+        s.best_bytes = **r;
+        s.best = p;
+        s.trajectory += (s.trajectory.empty() ? "[" : ",[") + std::to_string(s.proposals) + "," +
+                        std::to_string(ev.spent()) + "," + std::to_string(**r) + "]";
+    }
+    return r;
+}
+
+// Re-starts from a random plan (restart mode) or ends the search (local mode). Returns the new
+// current size, or nullopt when the search is over.
+std::expected<std::optional<std::uint64_t>, Error>
+stuck(PlanEvaluator &ev, SearchState &s, Rng &rng, bool restart, Plan &current, const char *why) {
+    if (!restart) {
+        s.done = true;
+        s.stop = why;
+        return std::optional<std::uint64_t>{};
+    }
+    ++s.restarts;
+    current = random_plan(rng);
+    return try_plan(ev, s, current);
+}
+
+std::expected<void, Error> search_seed(PlanEvaluator &ev, SearchState &s, Rng &rng, Plan current,
+                                       int stall, bool restart) {
+    auto first = try_plan(ev, s, current);
+    if (!first || !*first) {
+        return first ? std::expected<void, Error>{} : std::unexpected(first.error());
+    }
+    s.start_bytes = **first;
+    std::uint64_t current_bytes = **first;
+    int without = 0;
+    while (!s.done) {
+        const auto fields = active_fields(current);
+        const auto field = fields[rng.below(fields.size())];
+        auto v = static_cast<int>(rng.below(static_cast<std::uint64_t>(field.values - 1)));
+        if (v >= field_value(current, field.id)) {
+            ++v; // a different value
+        }
+        const auto candidate = with_field(current, field.id, v);
+        if (candidate != current) {
+            auto r = try_plan(ev, s, candidate);
+            if (!r) {
+                return std::unexpected(r.error());
+            }
+            if (!*r) {
+                return {};
+            }
+            if (**r < current_bytes) {
+                current = candidate;
+                current_bytes = **r;
+                without = 0;
+                continue;
+            }
+        }
+        if (++without >= stall) {
+            without = 0;
+            auto r = stuck(ev, s, rng, restart, current, "stalled");
+            if (!r) {
+                return std::unexpected(r.error());
+            }
+            if (!*r) {
+                return {};
+            }
+            current_bytes = **r;
+        }
+    }
+    return {};
+}
+
+std::expected<void, Error> search_coord(PlanEvaluator &ev, SearchState &s, Rng &rng, Plan current,
+                                        bool restart) {
+    auto first = try_plan(ev, s, current);
+    if (!first || !*first) {
+        return first ? std::expected<void, Error>{} : std::unexpected(first.error());
+    }
+    s.start_bytes = **first;
+    std::uint64_t current_bytes = **first;
+    while (!s.done) {
+        auto fields = active_fields(current);
+        for (std::size_t i = fields.size(); i > 1; --i) {
+            std::swap(fields[i - 1], fields[rng.below(i)]);
+        }
+        bool improved = false;
+        for (const auto &field : fields) {
+            if (field.id >= 2 + 2 * current.k) {
+                continue; // k shrank earlier in this pass
+            }
+            Plan best_here = current;
+            std::uint64_t best_here_bytes = current_bytes;
+            for (int v = 0; v < field.values && !s.done; ++v) {
+                if (v == field_value(current, field.id)) {
+                    continue;
+                }
+                const auto candidate = with_field(current, field.id, v);
+                if (candidate == current) {
+                    continue;
+                }
+                auto r = try_plan(ev, s, candidate);
+                if (!r) {
+                    return std::unexpected(r.error());
+                }
+                if (*r && **r < best_here_bytes) {
+                    best_here = candidate;
+                    best_here_bytes = **r;
+                }
+            }
+            if (best_here_bytes < current_bytes) {
+                current = best_here;
+                current_bytes = best_here_bytes;
+                improved = true;
+            }
+            if (s.done) {
+                return {};
+            }
+        }
+        if (!improved) {
+            // A full pass over every single-field neighbour found nothing better.
+            auto r = stuck(ev, s, rng, restart, current, "local_optimum");
+            if (!r) {
+                return std::unexpected(r.error());
+            }
+            if (!*r) {
+                return {};
+            }
+            current_bytes = **r;
+        }
+    }
+    return {};
+}
+
+std::string plan_hex(const Plan &p) {
+    constexpr char digits[] = "0123456789abcdef";
+    std::string out;
+    for (auto v = encode_seed(p); v != 0 || out.empty(); v >>= 4) {
+        out.insert(out.begin(), digits[v & 15]);
+    }
+    return "0x" + out;
+}
+
+int cmd_search(const std::string &method, const Plan &start, const fs::path &input,
+               std::uint64_t budget, std::uint64_t prng_seed, bool restart, int stall) {
+    const auto w = wall_ms(), c = cpu_ms();
+    auto files = read_tree(input);
+    if (!files || files->empty()) {
+        return fail(files ? bad("empty input") : files.error());
+    }
+    PlanEvaluator ev(*files, budget);
+    SearchState s;
+    s.best = start;
+    Rng rng{prng_seed};
+    auto r = method == "seed" ? search_seed(ev, s, rng, start, stall, restart)
+                              : search_coord(ev, s, rng, start, restart);
+    if (!r) {
+        return fail(r.error());
+    }
+    if (s.proposals == 0 || s.best_bytes == UINT64_MAX) {
+        return fail(Error{ErrorCode::resource_limit, "budget too small for the start plan"});
+    }
+    std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"search\",\"method\":"
+              << json_string(method) << ",\"start_plan\":\"" << plan_hex(start)
+              << "\",\"restart\":" << (restart ? "true" : "false") << ",\"stall\":" << stall
+              << ",\"prng_seed\":" << prng_seed << ",\"files\":" << files->size()
+              << ",\"input_bytes\":" << input_bytes_of(*files)
+              << ",\"objective\":\"dictionaries+data+key_table+seed_record\",\"start_bytes\":"
+              << s.start_bytes << ",\"best_plan\":\"" << plan_hex(s.best) << "\",\"best_rule\":\""
+              << rule_names[s.best.rule] << "\",\"best_k\":" << static_cast<int>(s.best.k)
+              << ",\"best_bytes\":" << s.best_bytes << ",\"proposals\":" << s.proposals
+              << ",\"restarts\":" << s.restarts << ",\"stop\":\"" << s.stop
+              << "\",\"trajectory\":[" << s.trajectory << "],"
+              << ev.stats_json() << ",\"call_wall_ms\":" << wall_ms() - w
+              << ",\"call_cpu_ms\":" << cpu_ms() - c << "," << peak_memory_json() << "}\n";
+    return std::cout ? 0 : 1;
 }
 
 // ---- commands -----------------------------------------------------------------------------------
@@ -2246,7 +2645,7 @@ std::string volumes_json(const std::vector<Volume> &vols) {
     std::uint64_t files = 0, carry = 0;
     for (const auto &v : vols) {
         files += volume_file(v).size();
-        for (const auto &[off, bytes] : v.carry) {
+        for (const auto &bytes : v.carry | std::views::values) {
             carry += bytes.size();
         }
     }
@@ -2444,7 +2843,7 @@ int cmd_selftest(const fs::path &input) {
     plan_b.d = {1, 1};
     plan_b = canonical(plan_b);
     std::uint64_t checks = 0, tried = 0, rejected = 0, stale_checked = 0, cut_checks = 0;
-    const std::uint32_t cpb = min_checkpoint_bytes;
+    constexpr std::uint32_t cpb = min_checkpoint_bytes;
     for (const auto *mode : {"seed", "explicit", "solid"}) {
         for (std::uint32_t red = red_off; red <= red_file; ++red) {
             std::vector<std::string> hows{"segment", "plan"};
@@ -2649,9 +3048,15 @@ int main(int argc, char *argv[]) {
         for (std::size_t i = 5; i < a.size(); ++i) {
             if (a[i] == "segment" || a[i] == "regroup") {
                 how = std::string{a[i]};
-            } else if (a[i] == "--plan" && i + 1 < a.size() && (plan = plan_arg(a[i + 1]))) {
-                ++i;
-            } else {
+                continue;
+            }
+            if (a[i] != "--plan" || i + 1 == a.size() || plan) {
+                std::cerr << usage; // unknown token, missing value or a second --plan
+                return 2;
+            }
+            plan = plan_arg(a[i + 1]);
+            ++i;
+            if (!plan) {
                 std::cerr << usage;
                 return 2;
             }
@@ -2691,9 +3096,12 @@ int main(int argc, char *argv[]) {
     }
     if ((a.size() == 4 || a.size() == 6) && a[1] == "vappend") {
         std::optional<Plan> plan;
-        if (a.size() == 6 && (a[4] != "--plan" || !(plan = plan_arg(a[5])))) {
-            std::cerr << usage;
-            return 2;
+        if (a.size() == 6) {
+            plan = a[4] == "--plan" ? plan_arg(a[5]) : std::nullopt;
+            if (!plan) {
+                std::cerr << usage;
+                return 2;
+            }
         }
         return cmd_vappend(native(a[2]), native(a[3]), plan);
     }
@@ -2702,6 +3110,21 @@ int main(int argc, char *argv[]) {
     }
     if (a.size() == 4 && a[1] == "vpartial") {
         return cmd_vpartial(native(a[2]), native(a[3]));
+    }
+    if (a.size() >= 7 && a.size() <= 9 && a[1] == "search" && (a[2] == "seed" || a[2] == "coord")) {
+        const auto start = a[3] == "default" ? std::optional{default_start()} : plan_arg(a[3]);
+        const auto budget = number(a[5]);
+        const auto prng = number(a[6]);
+        const bool restart = a.size() < 8 || a[7] == "restart";
+        const auto stall = a.size() == 9 ? number(a[8]) : std::optional<std::uint64_t>{20};
+        if (!start || !budget || *budget == 0 || !prng ||
+            (a.size() >= 8 && a[7] != "restart" && a[7] != "local") || !stall || *stall == 0 ||
+            *stall > 10000) {
+            std::cerr << usage;
+            return 2;
+        }
+        return cmd_search(std::string{a[2]}, *start, native(a[4]), *budget, *prng, restart,
+                          static_cast<int>(*stall));
     }
     std::cerr << usage;
     return 2;

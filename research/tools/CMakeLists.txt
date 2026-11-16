@@ -55,6 +55,7 @@ endif()
 # DEV-017: append study, research container v4 (generation records, redundancy levels, recovery).
 add_executable(seedarc_append4_study append4_study.cpp)
 target_link_libraries(seedarc_append4_study PRIVATE seedarc_codec_dictionary SeedArc::core)
+target_include_directories(seedarc_append4_study PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
 if(WIN32)
     target_link_libraries(seedarc_append4_study PRIVATE psapi)
 endif()
