@@ -1,0 +1,26 @@
+{
+  "reproduced_manifest_bytes": true,
+  "nested_paths": true,
+  "unique_content": true,
+  "scales": [
+    {
+      "target_mib": 128,
+      "files": 7939,
+      "bytes": 134159235,
+      "unique_contents": true
+    },
+    {
+      "target_mib": 256,
+      "files": 14031,
+      "bytes": 265708015,
+      "unique_contents": true
+    },
+    {
+      "target_mib": 512,
+      "files": 30134,
+      "bytes": 536864155,
+      "unique_contents": true
+    }
+  ],
+  "source_listing_sha256": "a4bc8fb0844c86773ac4275e058e1aeb5e843d8385ab6c2b56e811d3b4bc4526"
+}

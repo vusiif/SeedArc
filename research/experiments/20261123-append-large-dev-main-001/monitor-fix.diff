@@ -1,0 +1,42 @@
+--- original-task-runner.py
++++ guarded-task-runner.py
+@@ -5,6 +5,7 @@
+ import hashlib
+ import json
+ import os
++import stat
+ from pathlib import Path
+ import re
+ import shutil
+@@ -210,6 +211,22 @@
+     raise ValueError('Unknown operation')
+ 
+ 
++def task_disk_bytes(root):
++    total = 0
++    def on_error(error):
++        if not isinstance(error, FileNotFoundError):
++            raise error
++    for folder, directories, names in os.walk(root, followlinks=False, onerror=on_error):
++        for name in names:
++            try:
++                info = (Path(folder) / name).lstat()
++            except FileNotFoundError:
++                continue
++            if stat.S_ISREG(info.st_mode):
++                total += info.st_size
++    return total
++
++
+ def run_task(task):
+     path = job_path(task)
+     manifest = json.loads((path / 'manifest.json').read_text())
+@@ -238,7 +255,7 @@
+     thread.start()
+     disk_exceeded = False
+     while proc.poll() is None:
+-        size = sum(f.lstat().st_size for f in path.rglob('*') if not f.is_symlink() and f.is_file())
++        size = task_disk_bytes(path)
+         if size > manifest['disk_limit_bytes']:
+             disk_exceeded = True
+             # Stop the full service cgroup, not only the shell.

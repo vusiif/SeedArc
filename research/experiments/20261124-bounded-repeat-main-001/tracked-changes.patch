@@ -1,0 +1,1805 @@
+diff --git a/STATUS.md b/STATUS.md
+index 9849f14..f8271f2 100644
+--- a/STATUS.md
++++ b/STATUS.md
+@@ -1,9 +1,45 @@
+ # SeedArc 当前状态与协作交接
+ 
+-更新日期：2026-11-14。此文件是当前进度入口；[开发计划](docs/development-plan.md) 保存长期路线，[research](research/README.md) 保存研究证据。
++更新日期：2026-11-24。此文件是当前进度入口；[开发计划](docs/development-plan.md) 保存长期路线，[research](research/README.md) 保存研究证据。
+ 
+ ## 当前基线
+ 
++- DEV-022 有界固实轮换复测开始（2026-11-24，主Agent）：不改C++ / 协议，四档四轮平衡位置，重建 / 末批追加顺序交替；固定自己的第3代父包，输出SHA与DEV-021对账，报告波动和成对倍率，稳定后仅形成研究可选档位。新Python运行器 / 分析 / 记录，Windows72命令 / 27包及独立分析通过，印度独占任务`20261124T102611Z-2912f5b3`已启动，尚未测量完成，见[预登记](research/experiments/20261124-bounded-repeat-main-001/record.md)。
++
++
++- DEV-021 有界固实首轮dev完成（2026-11-24，主Agent）：固定Zstd9在文件之间新增32/64/128MiB硬帧上限，已有帧表 / v4/v5语义不变；旧读者兼容、默认包字节不变。237MB mixed dev的128命令 / 40包往返 / 20对载荷、20提取 / 8损坏剖析通过；64MiB体积+0.050%，提取中位587.8→252.3ms（2.33×），32MiB+0.470%、200.0ms（2.94×）；编码11.46–12.27s，无压缩速度大突破结论。32MiB末批18.39MB追加3.35s vs重建11.73s，但第4代包比同档重建大4.70%，仍复制40.05MB旧包。损坏仅索引完好条件，非通用恢复；Seed / 显式相同收益。Windows45/45、Linux46/46、相关ASan4/4，夹具CRLF差异修复后13包跨平台SHA一致，原始证据保留。任务`20261124T092901Z-14334bcf` exit0，主 / 补查bundle及输入哈希独立核验，已clean，无运行任务；未提交推送。单遍dev不冻结预设，下一步轮换复测 / 扩数据，再处理全包I/O与多codec可比曲线。见[完整记录](research/experiments/20261124-bounded-solid-main-001/record.md)与[观测表](research/experiments/20261124-bounded-solid-main-001/preview.md)。
++
++
++- 2026-11-24 用户进一步明确取舍由用户选择：优先速度、体积、损坏恢复、单文件提取或补加新文件，以少量 / 无牺牲换取明显优势。追加与单文件提取并列核心；分别计旧数据读写 / 重压量、提取额外解码量、多轮追加后的完整包大小和生命周期成本，不能隐藏定期全量重压。偏好 / 可接受代价范围及预设待实测设计，当前未实现用户选择接口，也不宣称已有速度 / 恢复收益。两份users_idea原稿哈希复核未变，最新聊天决定已纳入[联合计划](research/ideas/speed-resilience-r1.md)。
++
++- 2026-11-24 用户最新主目标：接近固实压缩率时提高速度与损坏隔离 / 恢复性，或相同实际压缩时间下取得更小完整包；不能只与各算法的单项极值比较。DEV-019/020分组体积搜索收尾为机制基线，后续先成熟codec / 整段固实 / 有界分段的可比速度—大小曲线及故障恢复，再让Seed描述 / 选择 / 复用计划。规划 / 搜索和冗余成本全部计入。详见[联合计划](research/ideas/speed-resilience-r1.md)；新主实验尚未运行。
++
++- 2026-11-24 用户明确：当前阶段暂不考虑CLion建议性优化，集中IDE检查暂缓且不阻塞本阶段；安全错误、真实构建与往返验收仍保留。历史IDE覆盖事实不改写。
++
++- DEV-020 异构 / 真实版本机制基线完成（主Agent，2026-11-24）：237MB / 7,993文件，正式6.12.5补丁127修改 / 7,866不变，路径投影严格核验。v0全29最佳dir2/k3，只比默认少6,209B、规划321s；v1旧计划重压反而比默认多11,552B，冷热8次同为41,507,556B / 约87–89s，默认41,512,683B / 11.56s。达到相同质量热5次 / 冷6次仅为轨迹观察，不是已实现提前停止；按用户最新速度优先标准不主推该体积搜索。25命令 / 10包往返 / 5载荷比较、Linux45/45与Windows功能夹具通过；C++ / ELF与DEV-019相同，ASan未重复（沿用同快照2/2）。任务`20261124T082849Z-65827d9a` exit0、fetch / 上传哈希及独立审计通过，已clean，无运行任务；未测恢复，无安全性优势声明，未提交推送。下一阶段见上方联合目标，CLion按用户明确授权暂缓。详见[记录](research/experiments/20261124-solid-version-main-001/record.md)。
++
++- DEV-019 固实预算搜索 / 首轮dev完成，IDE待补（2026-11-24，主Agent）：共享Zstd-9强固实管线新增29具体计划的near-r1 / enumerate预算搜索和显式rule:k入口，旧v4/v5格式 / 语义不变。Windows44/44，印度Release45/45与相关ASan+UBSan2/2，旧包兼容、32个既有样例字节一致。相对根路径512MiB dev的25命令 / 10包往返 / 5对载荷通过；固定默认56,739,671B / 23.86s，旧计划直接追加60,711,163B / 11.13s（大7.00%），冷热搜均56,739,671B / 约85s，4次完整编码无新增收益。初始计划0使冷热起点 / 候选相同，仅测4/29，不宣称全域最优、热启价值或Seed独立优势。任务`20261124T075308Z-0ab63a9b` exit0，fetch / 源码哈希和独立原始指标审计通过，已clean，本轮无运行任务。下一步登记预算梯度、异构 / 真实版本变化dev和非默认旧计划复用；CLion按用户选择待补，尚未提交推送。详见[本轮记录](research/experiments/20261123-solid-search-main-001/record.md)。
++
++- DEV-018 固实策略Seed最小闭环已实现，IDE待补（2026-11-23，主Agent）：新实验头部修订5 / solid-plan-r1映射2，seed-solid与explicit-solid共享既有Zstd-9固实帧编码；旧v4三模式字节 / 双向读写兼容。Windows Release43/43，印度Release与ASan+UBSan各44/44，0构建警告 / sanitizer报告；32份新修订小夹具跨Windows/Linux归档SHA完全一致。512MiB dev零搜索40命令 / 15包逐字节校验 / 10次载荷比较通过；初始和三批追加载荷与旧固实完全相同，最终新两表示均65,818,274 B，仅比旧固实多56 B元数据，regroup后多8 B。任务 `20261124T065628Z-509e5ae7` exit0，fetch SHA已独立核验，已clean临时工作区，本轮无运行任务。未实现固实搜索 / B-mix / 新修订恢复分卷，仍非全流式，不声称压缩增益；下一步在同固实管线上加有限预算搜索 / 旧计划复用 / 显式同算子对照。用户本轮暂不便前台，CLion集中诊断待补，不宣称阶段全部验收完成。详见 [执行记录](research/experiments/20261123-solid-seed-main-001/record.md) / [策略说明](research/ideas/solid-seed-r1.md)。
++
++- 2026-11-23 用户最新研究优先级（在本轮结果之后）：利用现有成熟策略，先在固实 / 固实分段等强策略上最小接入 Seed，再重点做大规模优化与测试；小 / 简单输入不专门追求 Seed 搜索收益，可保留强默认策略和零搜索路径。已核对 v4 的 seed / solid 当前互斥，旧比较混入分块与固实布局差，不能作为“同一成熟策略上附加 Seed”的结论。下一步改为同编码路径的 Seed / 显式计划接入与零搜索验收，再进入已验收 512 MiB dev 范围；不以先制造复杂空间或开发索引优化器为前置任务。最小接入与零搜索验证现已完成，见上方DEV-018；不更改旧v4格式 / 种子语义；小文件近似等价是用户工作判断而非新增实测结论。详见 [最新定位与顺序](research/ideas/seed-append-main-r2.md#9-用户最新定位在成熟策略上使用-seed重点测大规模)。users_idea 原稿两份哈希核对未变。
++
++- DEV-017-r2 大目录 dev 单遍成本观测完成（2026-11-23，主 Agent）：512 MiB 真实 Linux 源码、4× 预算 / seed3，9 分支 / 83 命令 / 34 逐字节校验产物的数据已独立核验。A 沿用 85.82 MB / 23.75 s；B-new 86.05 MB / 61.56 s；C 热搜重建 80.52 MB / 250.41 s；固实分段 65.82 MB / 27.42 s，固实重压 60.71 MB / 76.76 s（时间为三批搜索 + 写包调用，外部校验另列）。C 的体积减少来自清除 5.57 MB 旧尾部，实际压缩数据反而增加 0.27 MB；Seed 暖冷最终哈希及实际搜索预算均相同。本轮没有发现 Seed 独立优势，也没有覆盖真正难搜索空间（dir1 因 linux/ 前缀仅一个键）；不能推广为长期 Seed 方案的否定结论。首任务 `20261124T051435Z-cef36683` 因监控删除竞态中断，49 命令 / 20 产物已取回；续测 `20261124T054749Z-aef206e4` 在任务专用监控副本修复后 exit0，fetch SHA 核验后已 clean。全局 skill 未改，原 unknown 任务 work/tmp 保留；本轮无运行任务。结果来自跨两任务单遍 dev，非显著性 / 留出评估；下一步先补结构与固定策略对照、改进清单根路径和实际候选，再做预算梯度 / 漂移。详见 [本轮记录](research/experiments/20261123-append-large-dev-main-001/record.md) 与 [完整表](research/experiments/20261123-append-large-dev-main-001/preview.md)。
++
++- DEV-017-r2 资源优化本轮验证完成（2026-11-23）：研究 v4 减少显式布局复制、全量解码缓存与 regroup 原文复制；不改格式、Seed 语义或输入上限。印度前后同输入 / 同归档，128 / 256 MiB 峰值 RSS 下降 14.6–14.7%。容量任务 `20261123T140842Z-51eacc6a` exit0、6 case / 48 命令逐条核验通过；512 MiB 两布局峰值 RSS 约 2.02 GiB、逻辑磁盘 1.85 GiB。此前集成任务 `20261123T134340Z-d28b6277` 触发磁盘限额 exit125，证据保留；拆出构建和历史产物后完成，未放宽资源限额。Windows Release 42/42，印度 Release / ASan+UBSan 各 43/43；旧 / 新 MSVC 的 34 个历史产物哈希一致。CLion CMake 文件无诊断，C++ 两次超时；用户人工提示核对整理后 MSVC 重建、定向 1/1 通过，最后小差异未重跑 Linux sanitizer。完整流式 I/O 仍未完成；多历史磁盘调度和真实 dev 成本测量现正接续，见上方新阶段。证据见 [资源记录](research/experiments/20261123-append-resource-main-001/record.md)。
++
++- 2026-11-23 用户授权后续测试使用印度服务器全部资源：需要时使用 `in-long-task` 独占模式，无 CPU / 内存 / Swap / 进程数上限；同主机同时仅一个技能任务。当前固定资源前后对照不在中途变更条件。技能独占仍保留 2 GiB 磁盘预算，后续大规模须先处理磁盘工作集，不能把授权写成已执行的独占测试。
++
++- DEV-017-r2 第一阶段已落地（2026-11-23，主 Agent）：[r2 方案](research/ideas/seed-append-main-r2.md)、代码差距与独立历史运行器已完成；MSVC / 印度 Linux 各两遍功能验收通过，每遍 34 产物 / 15 搜索，34 个跨平台产物哈希一致，含中文路径。印度任务 `20261123T130743Z-47520bcb` exit0、日志未截断，fetch 校验后已 clean，无运行任务。GNU Windows 既有工具在中文 canonical 路径处异常，两次复现，未解决；不声称全平台通过。当前目标按组可分，形式约 2690 万计划可归约到最多 987 组配置 / 203 次整份编码（仅源码成本推导，不代表实际耗时）。下一步先处理有界 I/O / 旧包复制 / 磁盘预算并测实际参考成本，不强制先扩字段，不抬高 1 GiB 上限；主性能实验尚未启动。证据及限制见 [验收记录](research/experiments/20261123-append-r2-readiness-main-001/record.md)。
++
++- 2026-11-23 用户明确阅读优先级：判断当前研究目标时，优先查阅测试之后形成的最新 Markdown 与其中记录的用户补充，再回看初始构想；不能只检查 users_idea 两份原稿是否变化。时间顺序结合 Git 提交、正文日期与明确决定核对，不将检出时间或 Agent 本轮改写时间当成用户新想法。当前主要设计输入是 seed-append-r1 的后续追加 / 分代 / 热启动 / 部分恢复 / 分卷讨论（2026-11-15–16）；G5 记录提供此前负面结果的适用边界。新方向仍是待验证假设，不自动变成已证实收益。
++
++- 2026-11-23 用户方向复核：Seed 的核心评估是大体积 / 难穷举的策略空间，以及接近固实压缩率下的追加、旧 Seed 复用 / 热启动与解码可复现性，不再用中小样本的小空间搜索反复判定长期价值。两份 users_idea 原稿哈希复核未变；最新定位已在 seed-append-r1 §1 / §7.5.1 有记录。本轮印度两个约 50 MB 的公开 dev 池仅作固定主机和追加流程预演，其小型计划空间不足以验证上述主张；限制已补入本轮记录，不改用户原稿，不自动重启任务。后续主实验需同时覆盖数据规模与策略空间复杂度，并先解决研究工具整批内存 / 1 GiB 上限的适用边界。
++
++- DEV-017 印度流程预演 `20261123T123105Z-d5596074` 已于 2026-11-23 12:48:28 UTC 主动停止，不再完成剩余重复：用户最新方向需要大规模 / 难穷举主实验，本轮两个约 50 MB 的 dev 池只够预演。停止前 Release 0 警告、CTest 43/43、全部输入哈希通过；241 条完整命令记录中 0 非零退出，不能当成整轮完成。已核对 systemd 停止日志、无相关进程，586 个结果 / 日志文件已逐个 SHA256 核验取回。技能 fetch 因没有正常 result.json 拒绝打包；诊断后仅只读取回文件，未伪造完成记录。前两次失败任务均已清理；本次中止任务 work/tmp 因技能仍判 unknown 而保留，待处理该状态后再清理。详情与下一步见 [本轮记录](research/experiments/20261123-append-india-dev-main-001/record.md)。
++
++- 2026-11-23 实验环境决定：后续正式性能实验统一放到印度 `vps-in1`，使用 `in-long-task`；固定源码、工具链、依赖、数据哈希与运行资源，环境变化后重新建立基线，详见 [追加实验计划](research/ideas/seed-append-r1.md)。本轮只用公开 linux-src / wiki-text dev，不上传本机专有二进制或读取 holdout；源码为 `479eab9`，运行器 / 配置与进度在本轮记录。本机回执在 `research/local/india-append/receipts/`。preflight 发现的两条旧任务完成状态未知，未清理或重启。
++
+ - 2026-11-12 提交整理：补充 DEV-013 已出现的工作区产物，尚未完成该研究阶段。r1 实验记录已更正 dev / test 内容重叠（614 个 test 文件）；新增 [r2 语料说明](research/datasets/b2r5-corpus-r2.md)、JSON / TSV 与生成脚本。此次实际检查：`b2_corpus_r2.py --check` 内容交集为 0，六份清单哈希与 JSON 一致，Python 语法和 JSON 解析通过。`core/codec/dictionary.*` 仅保存为未验证研究草稿，尚未纳入 CMake、编译或往返测试，不属于已完成能力。未重新运行构建、CTest、ASan 或 CLion；调试日志 `docs/debug.log` 不纳入提交。最新基线提交已为 `631cb39`（此前“未提交推送”属于历史记录）；本条对应的后续提交以 Git 记录为准。
+ 
+ - 最新阶段 D 第一步已完成（DEV-013，共享 zstd 字典可行性）：复核 DEV-012 中 Oracle 比 LZMA2-6 小 10,927 B（0.025 %），数字无误；r1 的 test 有 614 个文件的内容也出现在 dev，已登记为已知缺陷，原结果保留。新建 [b2r5-corpus-r2](research/datasets/b2r5-corpus-r2.md)：按项目分组划分，内容哈希不相交并有自动检查；修订 2 增加了生产路径过滤。新增研究用字典适配器 `core/codec/dictionary.*`，属 B 级、独立目标 `seedarc_codec_dictionary`，生产库与归档格式没有改动；新增研究工具 `seedarc_dict_study` 与研究容器（字典和分组表都计入字节）。dev 选参得到 D=64 KiB、训练用全部输入；test **只评估一次**：Zstd-9 加字典 2,997,893 B，比 Fixed LZMA2-6（3,563,980 B）小 15.9 %，耗时约为它的 0.57 倍，按生产索引大小折算后仍小 12.1 %，满足 H2(a)；H1（耗时不超过无字典的 1.5 倍）不成立，训练使耗时变成 1.45–3.3 倍。G5 的设计已补充（分组与字典分配），没有实现。见 [test 记录](research/experiments/20261113-dict-test-main-001/record.md)、[设计](research/ideas/shared-dictionary-r1.md)。
+@@ -48,6 +84,10 @@
+ 
+ | 任务 ID | 任务 | 负责人 | 写入范围 | 状态 | 验收 / 证据 |
+ | --- | --- | --- | --- | --- | --- |
++| DEV-022 | 有界固实平衡顺序稳定性复测 | 主Agent | 轮换运行器 / 分析 / 研究选项与记录 | 进行中 | 四档四轮、120命令 / 44包、成对提取 / 编码 / 追加及固定父包SHA；见预登记 |
++| DEV-021 | 有界固实分段联合取舍dev | 主Agent | append4私有写入选项 / 计量、测试、研究脚本 / 文档 | 首轮dev完成 | 128命令 / 40包 / 20对载荷，Windows45、Linux46、相关ASan4；小体积代价换提取改善，单遍待轮换复测，见完整记录 |
++| DEV-020 | 异构与正式版本变化策略复用dev | 主Agent | 新数据清单 / Python运行器 / 分析 / 研究文档 | 完成机制基线，转速度 / 恢复目标 | 25命令 / 10包 / 5对载荷、Linux45/45；237MB正式版本127修改，按速度优先不主推87s只省5KB；详见DEV-020记录 |
++| DEV-019 | 固实预算搜索、旧计划复用与公平对照 | 主Agent | solid_plan.hpp、append4_study.cpp、CMake / 研究测试、新清单 / 运行器 / 分析 / 文档 | 实现与本轮实验完成，IDE待补 | Windows44/44、印度Release45/45、相关ASan2/2；25命令 / 10包 / 5载荷对照，4×搜索无收益，追加大7%但更快；见当前基线与DEV-019记录 |
+ | DOC-001 | 研究归档及协作规范 | 本次主 Agent | AGENTS、STATUS、README、研究目录及相关流程文档 | 完成 | 本地链接、JSON 模板与归档结构检查通过；仅文档工作 |
+ | DOC-002 | 第三方源码目录与 UI 计划同步 | 本次主 Agent | third_party/README、AGENTS、README、STATUS、开发计划与架构文档 | 完成 | 21 份 Markdown 本地链接检查通过，third_party 文档未被项目规则忽略；无源码引入或构建测试 |
+ | DOC-003 | 用户想法更新检查与设计输入 | 主 Agent | AGENTS、STATUS、README、开发计划与流程文档 | 完成 | 已读两份原稿，记录哈希与影响；23 份 Markdown 本地链接及原稿哈希核对通过，原稿未改动；仅文档工作 |
+diff --git a/docs/development-plan.md b/docs/development-plan.md
+index f940dd9..a4d9a56 100644
+--- a/docs/development-plan.md
++++ b/docs/development-plan.md
+@@ -122,3 +122,9 @@ UI-2：M5 核心搜索验收后，补预算设置、搜索曲线和结果对比
+ - LICENSE 使用本机 MSYS2 XZ 包自带的 `C:/msys64/ucrt64/share/licenses/xz/COPYING.GPLv3` 原文副本，确认包含第 0–17 节及应用说明，复制前后 SHA256 一致：`3972DC9744F6499F0F9B2DBF76696F2AE7AD8AF9B23DDE66D6AF86C9DFB36986`。这是本地副本指纹，不是官方在线校验值；README 单独声明 or-later 授权。
+ - 全部 Markdown 本地链接存在性检查通过；`git status --short` 显示文档可见，`git check-ignore` 确认代表性 Markdown 未被项目规则忽略。沙盒无法读取用户全局 ignore 文件，该部分未核验。
+ - 没有源码 / 构建配置，本次未运行构建、CTest、Sanitizer、Fuzz 或性能实验。
++
++## 当前研究优先级（用户2026-11-24明确）
++
++以接近固实压缩率下的速度 / 损坏隔离改善，或相同压缩时间下的完整大小优势为主目标；不以极慢搜索换少量字节为当前主线。先建立成熟codec / 整段固实 / 有界分段的可比曲线，再研究追加、局部重压与Seed计划选择 / 复用。恢复实验和工程安全均保留；具体顺序与能力边界见[联合研究计划](../research/ideas/speed-resilience-r1.md)，当前已实现范围和执行证据见STATUS。
++
++用户进一步明确：用户应可选择优先速度 / 体积等取舍，以少量甚至无牺牲换取显著优势。首次压缩、补加新文件、单文件提取、损坏恢复均为核心场景；补加与提取不能相互替代。评价包含旧数据读写 / 重压、额外解码、索引 / 冗余增长和必要整理的完整生命周期成本。用户偏好 / 可接受代价范围及具体预设尚待设计 / 实测，不写成已实现产品能力。
+diff --git a/research/ideas/seed-append-r1.md b/research/ideas/seed-append-r1.md
+index fbeb56c..109e442 100644
+--- a/research/ideas/seed-append-r1.md
++++ b/research/ideas/seed-append-r1.md
+@@ -73,6 +73,12 @@
+ - 仍然按 dev / 留出集划分，留出集只评估一次。
+ - 长时间运行可以放到印度服务器上，用 `in-long-task`，在资源上限内运行。
+ 
++### 固定实验主机（2026-11-23）
++
++用户决定后续正式性能实验统一使用印度 `vps-in1`，按 `in-long-task` 执行；本机用于开发与功能验证，不将不同主机的耗时直接拼成性能对照。服务器也不是天然不变：每轮保存源码提交、编译器 / CMake / 依赖版本、Release 构建参数、二进制哈希、CPU / 内核信息、资源限制和运行负载，环境变化时建立新的基线。
++
++正式计时串行执行各方案，固定线程数、输入清单与 SHA256、种子和预算；重复测量并轮换方案顺序，记录墙钟、CPU 时间、内存和完整产物大小。dev 选参后再冻结配置，留出集不参与调参。语料上传前核对来源与远端使用权限，尤其是原先限定本机评估的部分；本次仅确认主机与任务状态，没有上传语料或启动实验。
++
+ **用户决定（2026-11-15）：本机 + 公开混合。**
+ 
+ - **本机候选**：MSVC Build Tools 和 MSYS2 UCRT64 的原生二进制（`.lib` / `.a` / `.dll` / `.exe`，≥ 4 MiB 的约 3.3 GB，最大 140 MB）。按项目分组抽取几百 MB，只存清单。不收已经压缩过的格式（`.zst` / `.zip` / `.gz` / `.gif`），也不收用户的个人文件。
+@@ -192,7 +198,7 @@ v3 的 Seed、组键表、字典位置和索引都只在尾部，这个顾虑成
+   - **H-queue**：B 相对 A 的体积收益，值得它多花的搜索时间；并报告批次越多、漂移越大时这个差距怎么变；
+   - **H-partial**：在 x % 处截断，能恢复的文件字节比例接近 x %；v4 相对 v3 的额外开销不超过 Z %。
+ - **C 什么时候做**（何时合并重写）先不定规则，dev 上看漂移（H-drift）再决定，可能是“旧数据按新 Seed 估算能省超过某个比例才重写”。
+-- **诚实的预期**：G5 留出集上 Seed 搜索没有赢过简单基线（H1、H2 不成立）。所以 B、C 相对 A 能不能多省体积并不确定；热启动可以肯定的好处是少花搜索时间，体积收益要实测。
++- **诚实的预期**：G5 留出集上 Seed 搜索没有赢过简单基线（H1、H2 不成立）。所以 B、C 相对 A 能不能多省体积并不确定；热启动可能减少搜索时间与预算，但须在相同算子和质量目标下实测，不能预先认定优势；体积收益也要实测。
+ 
+ #### 7.5.2 小文件时的浪费：按大小推荐，用户可以自己选（用户 2026-11-15 提出）
+ 
+@@ -292,3 +298,11 @@ v3 的 Seed、组键表、字典位置和索引都只在尾部，这个顾虑成
+ ## 8. 实现边界
+ 
+ 研究工具与研究容器（从 G5 的容器 v2 演进为 v3，加入组键映射和追加），不改生产归档格式，也不冻结任何格式。固实对照组需要新的研究编码路径（同组文件连续压成一个 zstd 流，记录每个文件在流中的偏移）。
++
++## 9. 主实验接续（2026-11-23）
++
++用户再次强调应以测试后的最新想法为主。印度两个约 50 MB 的流程预演已主动中止并保留记录。大规模追加主实验的目标、A / B / C 独立历史、当前实现差距与资源 / 搜索复杂度验收关口见 [r2 实施方案](seed-append-main-r2.md)；这是 Agent 根据现有方向提出的方案，不把新阈值或候选当成用户已确定的决定。
++
++2026-11-23 大目录 dev 成本补充：固定真实 512 MiB 数据的单遍观测已完成，详见 [完整记录](../experiments/20261123-append-large-dev-main-001/record.md)。本轮固实分段比固实重压大 8.42%，三批追加调用成本约为其 35.72%；当前 Seed 暖冷搜索没有预算优势，整体重建变小主要来自清除旧索引尾部。数据路径公共前缀 / 可分空间 / 单遍 / 中断续测等限制均已标注，不据此否定大空间方案，不修改用户原始构想；后续对照优先顺序同步到 [r2 方案](seed-append-main-r2.md)。
++
++2026-11-23 用户在上述结果之后进一步明确：利用现有成熟策略，在其上最小接入 Seed，重点投入大规模优化和测试；小 / 简单输入无需专门优化 Seed 的压缩收益。最新方向、当前 seed / solid 互斥的实现差距、零搜索路径与同编码路径公平对照见 [r2 §9](seed-append-main-r2.md#9-用户最新定位在成熟策略上使用-seed重点测大规模)，优先于此前的后续实现排序。这是新用户意见的记录，不是已实现能力或普遍实验结论。
+diff --git a/research/scripts/README.md b/research/scripts/README.md
+index cc811be..81031de 100644
+--- a/research/scripts/README.md
++++ b/research/scripts/README.md
+@@ -1,5 +1,19 @@
+ # 分析脚本
+ 
++## DEV-017-r2 独立历史验收与成本审查
++
++`append_history_r2.py --tool <v4 工具> --input <输入根> --manifest <dev TSV> --output <新目录>` 验收独立的 A / B-new / C / C-coord / 显式 / 固实历史与冷启动对照，最多接收 8 MiB。它只验证流程，**不能作为大规模性能运行器**。每批独立 verify，记录 parent / plan / artifact 哈希，拒绝复用已有输出目录。
++
++`check_append_history_r2.py --tool <v4 工具> --work <新目录>` 生成含中文路径的四批夹具，运行两遍并核对历史与字节确定性。`append_space_audit.py --raw <pilot raw.jsonl> --output <新 JSON>` 对当前可分离目标作成本上界推导，读取旧记录仅作描述性观察，不执行新压缩或给出 Seed 收益结论。目标与未满足的主实验条件见 [r2 方案](../ideas/seed-append-main-r2.md)。
++
++## DEV-017 印度固定主机 dev 首轮
++
++本轮已因定位复核主动中止，以下脚本保留为流程预演的复现材料，不应当作主实验重新启动。
++
++`append_india_task.sh` 通过 `in-long-task` 启动；`append_india_bootstrap.py` 仅在任务目录解包工具链，使用仓库锁定的 vcpkg manifest 构建 Release 并先跑全量 CTest。必要输入为指定提交的最小源码 zip、两个公开 dev TSV、配置及运行器；不传个人文件、本机专有二进制或 holdout。
++
++`append_india_dev.py` 在远端下载并校验公开源归档，只重建清单选中的 dev 文件。按 `append-india-dev-r0.json` 串行比较追加、重建、固实及冷 / 热启动；每个产物独立往返。原始结果实时写到 `TASK_RESULTS/raw.jsonl`，产物大小和哈希写 `artifacts.jsonl`。`--analyze-only --results <目录>` 从原始数据重新生成 `summary.json`。这是探索性 dev 运行，不能直接作为留出结论。失败不覆盖或混入新运行，复现时保留任务实际输入快照与完整工具链版本。
++
+ `m3_baseline.py` 使用 Python 标准库生成小型合成数据，运行固定算法、逐文件哈希往返验证并汇总原始指标。用 `--help` 查看用法；每次使用新 run ID，生成数据和大产物保留在 research/local，小型证据保存在 research/experiments。调用者须验证传入 CLI 的 Release 构建来源；内存未测量，合成输入不代表实际性能。
+ 
+ 脚本应记录依赖 / 版本、输入格式、命令与输出；从保留的原始指标生成报告，不覆盖原始数据。对缺字段、失败运行及单位明确处理；null / 未测量不当成 0。随机分析固定并记录种子。
+@@ -35,3 +49,47 @@
+ `b2_corpus_r2.py` 构建 b2r5-corpus-r2：按项目分组，共享内容的分组合并成连通分量，分量整体划入 dev 或 test；空文件和生产归档拒绝的路径会被排除。`--check` 根据已提交的清单验证 test 与 dev 的内容哈希交集为 0。
+ 
+ `b2_dictionary.py --phase dev|test` 调用研究工具 `seedarc_dict_study`（研究容器）和 `seedarc_seed_archive`（生产参照），完成打包、内存校验、冷启动单文件提取，并给出分位数与逐文件分布。dev 阶段写出 `selection.json`；test 阶段必须读入它。test 只能运行一次，再次运行需要 `--rerun-reason`。只依赖 Python 标准库。
++
++## 追加 r2 资源容量
++
++`append_resource_probe.py --tool <Release tool> --work <new dir> --results <new dir>` 使用固定随机数据测 128 / 256 / 512 MiB 内存、磁盘和往返，超预测门槛停止，不代表 Seed 收益。`append_resource_post.py` 在印度固定任务内构建、运行 Release / Sanitizer 与功能验收；容量负载应单独安排，避免构建和历史产物挤占技能磁盘预算。
++
++`append_resource_compare.py <baseline probe results> <after probe results>` 校验完成 case 的八条命令、逐字节验证、输入与归档哈希，输出资源比较；部分 case 单独统计，不当成成功。完整示例见 [资源记录](../experiments/20261123-append-resource-main-001/record.md)。仅 Python 标准库。
++
++## 大目录追加 dev r2
++
++`append_large_manifest.py` 从已有 Linux 完整哈希索引沿用原 dev 连通分量归属，去重并生成嵌套 128 / 256 / 512 MiB 清单；每份经过生产 manifest 检查，输入不复制填充。见 [数据集](../datasets/append-linux-large-dev-r2.md)。
++
++`append_large_dev.py` 是有独立 512 MiB / 100000 文件边界的新运行器，每次保留一个分支的旧新包，验证并记录哈希后回收；不修改 `append_history_r2.py` 的 8 MiB 功能上限。`check_append_large_dev.py` 用中文小夹具比较新旧调度的 34 个归档并检查确定性、父历史和回收。`append_large_task.py` 是本轮固定印度工具链的 bootstrap，绑定任务路径、源码和清单；不作为一般生产部署工具。
++
++`append_large_report.py <dev-results> --output <new-json>` 从完整原始记录检查历史、预算搜索起点、代数及独立验证，汇总完整大小和工具进程成本。计时包括工具内部校验；单独的 verify 成本另列，准备输入 / 预热不包含在该表里。单遍成本测量不提供显著性或留出结论，详见 [本轮记录](../experiments/20261123-append-large-dev-main-001/record.md)。仅 Python 标准库。
++
++本轮监控器发现并发删除文件竞态：`append_monitor_guard.py` 仅用于生成任务专用 runner 副本修复，并检查硬链接计数 / 消失文件 / 权限错误，不修改已安装 skill 或资源阈值。`append_large_continue.py` 绑定本轮原任务的固定数据 / 二进制哈希，只续测四个未完成分支。`append_large_merge.py <interrupted-dev> <continuation-dev> --output <new-dir>` 保留原命令的 task/index，生成明确标记的 aggregation.json；不向任何原任务写 result.json 或伪造完成状态。详细中断诊断与版本哈希见本轮记录。
++
++## 成熟固实策略的 Seed 零搜索接入
++
++`solid_seed_task.py` 为本轮印度固定工具链入口，执行 Release / ASan+UBSan、旧二进制兼容及真实 dev 验证；`solid_seed_zero.py` 对相同 Zstd-9 单组计划运行 legacy-solid / seed-solid / explicit-solid 三条独立历史，比较完整帧载荷和往返，不进行策略搜索。`solid_seed_report.py <zero-results> --manifest <fixed-tsv> --output <new-json>` 从40条原始命令核验15个产物与10次载荷比较，单独对账表示开销；只作零搜索封装等价结论。接口与当前限制见 [solid-plan-r1](../ideas/solid-seed-r1.md)，真实验证程度见 [执行记录](../experiments/20261123-solid-seed-main-001/record.md)。
++
++## 固实预算搜索与复用
++
++`solid_search_manifest.py <seedarc_path_check>`只移除既有512MiB dev清单的人工linux/前缀，保持内容与批次，并用真实group_key语义重新统计键数、运行生产manifest校验。
++
++`solid_search_task.py`固定印度编译环境，Release全量 / 相关ASan后执行`solid_search_dev.py`：25条命令、10份独立verify产物、5次载荷对照，Seed / 显式各自初始搜索、固定默认、直接追加、热搜和冷搜，所有搜索预算4×输入字节。三份新增批次合并为一次更新；单遍dev，不是留出或显著性结论。
++
++`solid_search_report.py <search-results> <manifest.tsv> <output.json>`独立重算每次搜索的候选最小值、确定性同分决胜、预算与轨迹，核对完整矩阵、物理字节对账和两表示同算子结果。原始日志 / 源码 / 环境和限制见[记录](../experiments/20261123-solid-search-main-001/record.md)。仅Python标准库。
++
++## 固实混合数据与真实版本变化
++
++`solid_version_data.py`在固定Linux dev路径投影中筛选正式6.12.5补丁，限制路径 / 模式 / 大小 / 重复项；仅对任务私有副本调用严格GNU patch，并按上游diff index核对新旧Git blob指纹、记录新SHA256和所有变化。`solid_version_task.py`复用固定印度工具链与DEV-019完全相同的C++源码zip，构建 / 回归与版本数据验收后再运行实验，不修改归档格式。
++
++`solid_version_dev.py`在混合dev的v0分别全枚举29个Seed / 显式计划，再对实际v1比较固定默认、旧具体计划零搜索重压、8×热搜与8×冷搜。10份包全部独立verify，5对载荷比较，逐对回收归档并保留SHA / 原始指标。复用的是策略，输入仍完整重编码，不使用append覆盖同路径。
++
++`solid_version_report.py <matrix> <v0.tsv> <v1.tsv> <version-delta.json> <output.json>`审计预算、初始全域最优值、4/8/29枚举前缀、真实继承起点、同算子对照和版本内容差异。枚举前缀是同一次运行内的累计观测，不能当作独立重复或与near算子直接归因比较。详见[数据集](../datasets/solid-mixed-version-dev-r1.md)及[DEV-020预登记 / 结果](../experiments/20261124-solid-version-main-001/record.md)。
++
++混合清单可用`solid_version_manifest.py --path-tool <seedarc_path_check> --output research/datasets/solid-mixed-version-dev-r1`重建；拒绝覆盖不同清单，保留原始来源清单哈希。用户2026-11-24已明确速度 / 损坏恢复优先；上述体积搜索仅作机制基线，后续按[联合目标](../ideas/speed-resilience-r1.md)。
++
++## 有界固实联合取舍
++
++`bounded_solid_task.py`使用固定印度工具链，Release全量与相关ASan+UBSan、跨平台固定包哈希检查后运行`bounded_solid_dev.py`。整段 / 32 / 64 / 128MiB各自独立initial+3次新文件追加历史及最终重建，两表示压缩帧对照、独立verify、12个均匀路径加最大文件的提取诊断，以及10/50/90%载荷位置翻转1bit的条件损坏诊断。128命令 / 40包 / 20对载荷，验证后回收本任务包。
++
++`bounded_solid_report.py <results> <manifest.tsv> <output.json>`从原始JSON审计帧上限 / 字节对账、旧包前缀与读写量、抽样集合和额外解码量、索引完好故障边界，生成每个配置的阶段表与生命周期编码成本。单遍dev，不作统计优势或用户预设冻结。工具能力边界见[说明](../ideas/bounded-solid-r0.md)，真实证据见[记录](../experiments/20261124-bounded-solid-main-001/record.md)。
+diff --git a/research/tools/CMakeLists.txt b/research/tools/CMakeLists.txt
+index 9ec51c5..d0db707 100644
+--- a/research/tools/CMakeLists.txt
++++ b/research/tools/CMakeLists.txt
+@@ -65,6 +65,19 @@ if(BUILD_TESTING)
+         "-DTOOL=$<TARGET_FILE:seedarc_append4_study>" "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/append4-check-$<CONFIG>"
+         -P "${CMAKE_CURRENT_SOURCE_DIR}/check_append4.cmake")
+     set_tests_properties(research.append4_study PROPERTIES TIMEOUT 600)
++    add_test(NAME research.solid_seed COMMAND "${CMAKE_COMMAND}"
++        "-DTOOL=$<TARGET_FILE:seedarc_append4_study>" "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/solid-seed-check-$<CONFIG>"
++        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_solid_seed.cmake")
++    set_tests_properties(research.solid_seed PROPERTIES TIMEOUT 600)
++    add_test(NAME research.solid_search COMMAND "${CMAKE_COMMAND}"
++        "-DTOOL=$<TARGET_FILE:seedarc_append4_study>" "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/solid-search-check-$<CONFIG>"
++        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_solid_search.cmake")
++    set_tests_properties(research.solid_search PROPERTIES TIMEOUT 600)
++    add_test(NAME research.bounded_solid COMMAND "${CMAKE_COMMAND}"
++        "-DTOOL=$<TARGET_FILE:seedarc_append4_study>"
++        "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/bounded-solid-check-$<CONFIG>"
++        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_bounded_solid.cmake")
++    set_tests_properties(research.bounded_solid PROPERTIES TIMEOUT 600)
+ endif()
+ 
+ # DEV-016: production path-profile check for corpus builders (portable).
+diff --git a/research/tools/append4_study.cpp b/research/tools/append4_study.cpp
+index c29e5c6..695acc2 100644
+--- a/research/tools/append4_study.cpp
++++ b/research/tools/append4_study.cpp
+@@ -16,8 +16,8 @@
+ //   off         no per-file records; files are listed only by trailers
+ //   checkpoint  a CKP record after about every N data bytes lists the files since the previous
+ //               one (zstd-compressed listing), so the cost hardly depends on the file count
+-//   file        a FIL record in front of every file
+-// Solid mode writes a FRM record in front of every frame unless the level is off.
++//   file        an FIL record in front of every file
++// Solid mode writes an FRM record in front of every frame unless the level is off.
+ //
+ // Records: tag (8) | body length (4) | body | CRC32C(body) (4). Every body starts with the
+ // record's own offset, so a record is only valid where it claims to be (copies inside stored
+@@ -27,6 +27,7 @@
+ // the newest intact trailer in the prefix plus every valid record, verifies every file by CRC,
+ // refuses conflicting copies and applies the production manifest checks (ADR-0005).
+ #include "append_common.hpp"
++#include "solid_plan.hpp"
+ #include "splitmix64/splitmix64.hpp"
+ 
+ #include <cstring>
+@@ -54,7 +55,17 @@ constexpr std::string_view usage =
+     " [STALL]\n"
+     "      START: default (G5 start plan) or PLAN_HEX; restart = cold (G5), local = stop when"
+     " stuck; STALL default 20\n"
+-    "  append4_study selftest INPUT_DIR\n";
++    "  append4_study selftest INPUT_DIR\n"
++    "  append4_study pack seed-solid|explicit-solid SOLID_PLAN_HEX INPUT_DIR OUT [off]\n"
++    "  append4_study payload-compare LEFT RIGHT\n"
++    "  append4_study solid-selftest INPUT_DIR\n"
++    "  append4_study solid-search seed|explicit START INPUT_DIR OUT BUDGET_BYTES PRNG_SEED "
++    "[near|enumerate]\n"
++    "      START: default, Seed hex (seed), or rule:k (explicit)\n"
++    "  append4_study bounded-pack seed|explicit FRAME_LIMIT_BYTES INPUT_DIR OUT\n"
++    "  append4_study bounded-append FRAME_LIMIT_BYTES OLD NEW_DIR OUT\n"
++    "  append4_study access-profile ARCHIVE INPUT_DIR UNIFORM_SAMPLE_COUNT\n"
++    "  append4_study payload-fault-profile ARCHIVE INPUT_DIR\n";
+ using Tag = std::array<char, 8>;
+ constexpr Tag magic{'S', 'A', 'D', 'X', 'R', '0', '0', '4'};
+ constexpr Tag footer_magic{'S', 'A', 'D', 'X', 'E', 'N', 'D', '4'};
+@@ -87,9 +98,7 @@ int fail(const Error &e) {
+     std::cerr << e.message << '\n';
+     return 1;
+ }
+-std::span<const std::byte> as_bytes(const Tag &t) {
+-    return std::as_bytes(std::span{t});
+-}
++std::span<const std::byte> as_bytes(const Tag &t) { return std::as_bytes(std::span{t}); }
+ void put_text(std::vector<std::byte> &out, std::string_view s) {
+     put(out, s.size(), 2);
+     for (const auto c : s) {
+@@ -112,6 +121,7 @@ struct Header {
+     std::uint32_t flags = 0;
+     std::uint32_t redundancy = red_off;
+     std::uint32_t checkpoint_bytes = 0;
++    std::uint32_t revision = version;
+     bool seed() const { return (flags & flag_seed) != 0; }
+     bool solid() const { return (flags & flag_solid) != 0; }
+     bool explicit_groups() const { return !seed() && !solid(); }
+@@ -119,7 +129,7 @@ struct Header {
+ std::vector<std::byte> header_of(const Header &h) {
+     std::vector<std::byte> out(magic.size());
+     std::memcpy(out.data(), magic.data(), magic.size());
+-    put(out, version, 4);
++    put(out, h.revision, 4);
+     put(out, chunk, 4);
+     put(out, level, 4);
+     put(out, h.flags, 4);
+@@ -134,14 +144,16 @@ std::expected<Header, Error> parse_header(std::span<const std::byte> bytes) {
+     Reader r{bytes, magic.size()};
+     const auto ver = r.get(4), ck = r.get(4), lv = r.get(4), flags = r.get(4), red = r.get(4),
+                cpb = r.get(4);
+-    if (!cpb || *ver != version || *ck != chunk || *lv != level || (*flags & ~3ULL) != 0 ||
+-        *flags == (flag_seed | flag_solid) || *red > red_file ||
++    const bool strong = ver && *ver == 5;
++    if (!cpb || (*ver != version && !strong) || *ck != chunk || *lv != level ||
++        (*flags & ~3ULL) != 0 || (!strong && *flags == (flag_seed | flag_solid)) ||
++        (strong && ((*flags & flag_solid) == 0 || *red != red_off)) || *red > red_file ||
+         (*red == red_checkpoint) != (*cpb != 0) ||
+         (*cpb != 0 && (*cpb < min_checkpoint_bytes || *cpb > max_checkpoint_bytes))) {
+         return std::unexpected(bad("bad header"));
+     }
+     return Header{static_cast<std::uint32_t>(*flags), static_cast<std::uint32_t>(*red),
+-                  static_cast<std::uint32_t>(*cpb)};
++                  static_cast<std::uint32_t>(*cpb), static_cast<std::uint32_t>(*ver)};
+ }
+ 
+ // ---- the container model ------------------------------------------------------------------------
+@@ -157,6 +169,7 @@ struct Gen {
+     std::uint32_t files_after = 0; // trailer only
+     std::uint64_t record_offset = 0;
+     bool has_seed = false;
++    std::uint16_t mapping_revision = seed_revision;
+     Plan plan;
+     Grouping grouping;
+     std::vector<GenGroup> groups;
+@@ -255,7 +268,11 @@ std::vector<std::byte> gen_body(const Gen &g) {
+     put(b, g.record_offset, 8);
+     put(b, g.index, 4);
+     put(b, g.first_file, 4);
+-    if (g.has_seed) {
++    if (g.mapping_revision == solid_seed_revision) {
++        put(b, g.has_seed ? solid_seed_revision : 0, 2);
++        put(b, 4, 2);
++        put(b, g.has_seed ? encode_solid_seed(g.plan) : encode_solid_explicit(g.plan), 4);
++    } else if (g.has_seed) {
+         put(b, seed_revision, 2);
+         put(b, 4, 2);
+         put(b, encode_seed(g.plan), 4);
+@@ -286,7 +303,19 @@ std::expected<Gen, Error> parse_gen_body(std::span<const std::byte> body, const
+     g.record_offset = *self;
+     g.index = static_cast<std::uint32_t>(*index);
+     g.first_file = static_cast<std::uint32_t>(*first);
+-    if (h.seed()) {
++    if (h.revision == 5) {
++        const auto value = r.get(4);
++        const auto plan =
++            value ? (h.seed() ? decode_solid_seed(static_cast<std::uint32_t>(*value))
++                              : decode_solid_explicit(static_cast<std::uint32_t>(*value)))
++                  : std::nullopt;
++        if (*rev != (h.seed() ? solid_seed_revision : 0) || *len != 4 || !plan) {
++            return std::unexpected(bad("bad solid strategy record"));
++        }
++        g.has_seed = h.seed();
++        g.mapping_revision = solid_seed_revision;
++        g.plan = *plan;
++    } else if (h.seed()) {
+         const auto seed = r.get(4);
+         const auto plan = seed ? decode_seed(static_cast<std::uint32_t>(*seed)) : std::nullopt;
+         if (*rev != seed_revision || *len != 4 || !plan || canonical(*plan) != *plan) {
+@@ -311,15 +340,16 @@ std::expected<Gen, Error> parse_gen_body(std::span<const std::byte> body, const
+         }
+     }
+     const auto ngroups = r.get(4);
+-    // Distinct ids with the largest equal to nkeys - 1 are exactly 0 .. nkeys - 1.
++    // Distinct ids with the largest equal to nkeys - 1 cover the range [0, nkeys - 1].
+     if (!ngroups || *ngroups == 0 || *ngroups > max_groups || *nkeys != *ngroups - 1 ||
+-        (!ids.empty() && *ids.rbegin() != *nkeys - 1) || (g.has_seed && *ngroups > g.plan.k)) {
++        (!ids.empty() && *ids.rbegin() != *nkeys - 1) ||
++        ((g.has_seed || h.revision == 5) && *ngroups > g.plan.k)) {
+         return std::unexpected(bad("key table does not name every group but the last"));
+     }
+     g.grouping.other = static_cast<std::uint8_t>(*ngroups - 1);
+     for (std::uint64_t i = 0; i < *ngroups; ++i) {
+         const auto off = r.get(8), size = r.get(4), crc = r.get(4);
+-        if (!crc || *size > research::max_dictionary_bytes ||
++        if (!crc || *size > research::max_dictionary_bytes || (h.revision == 5 && *size != 0) ||
+             (*size == 0 && (*off != 0 || *crc != 0))) {
+             return std::unexpected(bad("bad group table"));
+         }
+@@ -648,7 +678,8 @@ std::expected<Scan, Error> scan(std::span<const std::byte> bytes, const Header &
+ // ---- trailer ------------------------------------------------------------------------------------
+ std::vector<std::byte> trailer_bytes(const Model &m) {
+     std::vector<std::byte> t;
+-    put(t, seedarc::experimental::crc32c(header_of(m.header)), 4); // the header has no CRC of its own
++    put(t, seedarc::experimental::crc32c(header_of(m.header)),
++        4); // the header has no CRC of its own
+     put(t, m.entries.size(), 4);
+     put(t, m.gens.size(), 4);
+     for (const auto &g : m.gens) {
+@@ -753,8 +784,7 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
+             return std::unexpected(g.error());
+         }
+         if (g->index != i || g->first_file != prev_after || *after <= prev_after ||
+-            *after > *count ||
+-            (!m.gens.empty() && *off < m.data_start.back())) {
++            *after > *count || (!m.gens.empty() && *off < m.data_start.back())) {
+             return std::unexpected(bad("bad generation order"));
+         }
+         const auto ds = check_gen_dicts(body_bytes, *g, rec->end, &m.gens);
+@@ -848,7 +878,8 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
+             const auto off = t.get(8), stored = t.get(8), raw = t.get(8), fgen = t.get(4),
+                        group = t.get(1);
+             if (!group || *fgen >= m.gens.size() || *group >= m.gens[*fgen].groups.size() ||
+-                *off < m.data_start[*fgen] || *off > region_end(static_cast<std::uint32_t>(*fgen)) ||
++                *off < m.data_start[*fgen] ||
++                *off > region_end(static_cast<std::uint32_t>(*fgen)) ||
+                 region_end(static_cast<std::uint32_t>(*fgen)) - *off < *stored || *stored == 0 ||
+                 *raw == 0 || *raw > research::max_solid_bytes) {
+                 return std::unexpected(bad("bad frame"));
+@@ -863,6 +894,9 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
+                 return std::unexpected(bad("solid entry outside its frame"));
+             }
+             e.group = m.frames[e.frame].group;
++            if (h.revision == 5 && e.group != group_of(m.gens[e.gen], e.path, e.size)) {
++                return std::unexpected(bad("solid strategy and frame group disagree"));
++            }
+         }
+     }
+     if (t.at != trailer.size()) {
+@@ -925,9 +959,10 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
+ // Dictionary decoders by (offset, size): one per distinct dictionary in the container.
+ using DecoderCache = std::map<std::pair<std::uint64_t, std::uint32_t>, research::DictionaryDecoder>;
+ 
+-std::expected<std::vector<std::byte>, Error> decode_blocks(const Entry &e, const GenGroup &grp,
+-                                                           std::span<const std::byte> bytes,
+-                                                           DecoderCache &cache) {
++template <class Consumer>
++std::expected<void, Error> visit_blocks(const Entry &e, const GenGroup &grp,
++                                        std::span<const std::byte> bytes, DecoderCache &cache,
++                                        Consumer &&consume) {
+     research::DictionaryDecoder *dict = nullptr;
+     if (grp.dict_size != 0) {
+         const auto key = std::pair{grp.dict_offset, grp.dict_size};
+@@ -943,16 +978,23 @@ std::expected<std::vector<std::byte>, Error> decode_blocks(const Entry &e, const
+         dict = &it->second;
+     }
+     codec::Decoder plain;
+-    std::vector<std::byte> file(static_cast<std::size_t>(e.size));
++    // Only the exact decoded destination is read below; codecs must fill it before success.
++    std::array<std::byte, chunk> scratch;
+     std::size_t at = 0;
+     for (const auto &b : e.blocks) {
+-        const auto raw = std::min<std::size_t>(chunk, file.size() - at);
++        if (at >= e.size) {
++            return std::unexpected(bad("too many blocks for file"));
++        }
++        const auto raw = std::min<std::size_t>(chunk, static_cast<std::size_t>(e.size) - at);
+         if (b.offset > bytes.size() || bytes.size() - b.offset < b.stored) {
+             return std::unexpected(bad("block outside the container"));
+         }
+         const auto in = bytes.subspan(static_cast<std::size_t>(b.offset), b.stored);
+-        const auto dst = std::span{file}.subspan(at, raw);
++        const auto dst = std::span{scratch}.first(raw);
+         if (b.kind == kind_store) {
++            if (in.size() != dst.size()) {
++                return std::unexpected(bad("stored block size mismatch"));
++            }
+             std::ranges::copy(in, dst.begin());
+         } else if (b.kind == kind_zstd) {
+             if (auto r = plain.decode(codec::zstd_id, in, dst); !r) {
+@@ -966,8 +1008,31 @@ std::expected<std::vector<std::byte>, Error> decode_blocks(const Entry &e, const
+         if (seedarc::experimental::crc32c(dst) != b.crc) {
+             return std::unexpected(bad("block crc mismatch"));
+         }
++        if (auto r = consume(at, std::span<const std::byte>{dst}); !r) {
++            return r;
++        }
+         at += raw;
+     }
++    if (at != e.size) {
++        return std::unexpected(bad("file blocks do not cover its size"));
++    }
++    // Also visit empty files, and let a consumer observe end-of-file without retaining bytes.
++    return consume(at, std::span<const std::byte>{});
++}
++
++std::expected<std::vector<std::byte>, Error> decode_blocks(const Entry &e, const GenGroup &grp,
++                                                           std::span<const std::byte> bytes,
++                                                           DecoderCache &cache) {
++    std::vector<std::byte> file(static_cast<std::size_t>(e.size));
++    auto r = visit_blocks(
++        e, grp, bytes, cache,
++        [&](std::size_t at, std::span<const std::byte> raw) -> std::expected<void, Error> {
++            std::ranges::copy(raw, file.begin() + static_cast<std::ptrdiff_t>(at));
++            return {};
++        });
++    if (!r) {
++        return std::unexpected(r.error());
++    }
+     return file;
+ }
+ 
+@@ -982,53 +1047,105 @@ std::expected<std::vector<std::byte>, Error> decode_frame(const Frame &f,
+     return raw;
+ }
+ 
+-std::expected<std::map<std::string, std::vector<std::byte>>, Error>
+-decode_all(const Model &m, std::span<const std::byte> bytes) {
+-    std::map<std::string, std::vector<std::byte>> out;
++// Visit every block/frame and validate every CRC. A subset comparison must still validate old
++// payloads: append is not permitted to copy corrupt old content into a purportedly valid output.
++template <class Consumer>
++std::expected<void, Error> visit_decoded(const Model &m, std::span<const std::byte> bytes,
++                                         Consumer &&consume) {
+     if (m.header.solid()) {
+-        std::vector<std::vector<std::byte>> raw;
+-        for (const auto &f : m.frames) {
+-            auto r = decode_frame(f, bytes);
++        std::vector<std::vector<const Entry *>> entries(m.frames.size());
++        for (const auto &e : m.entries) {
++            if (e.frame >= entries.size()) {
++                return std::unexpected(bad("file frame index out of range"));
++            }
++            entries[e.frame].push_back(&e);
++        }
++        for (std::size_t frame = 0; frame < m.frames.size(); ++frame) {
++            auto r = decode_frame(m.frames[frame], bytes);
+             if (!r) {
+                 return std::unexpected(r.error());
+             }
+-            raw.push_back(std::move(*r));
+-        }
+-        for (const auto &e : m.entries) {
+-            const auto view = std::span{raw[e.frame]}.subspan(
+-                static_cast<std::size_t>(e.frame_offset), static_cast<std::size_t>(e.size));
+-            if (seedarc::experimental::crc32c(view) != e.file_crc) {
+-                return std::unexpected(bad("file crc mismatch"));
++            for (const auto *e : entries[frame]) {
++                if (e->frame_offset > r->size() || e->size > r->size() - e->frame_offset) {
++                    return std::unexpected(bad("file outside decoded frame"));
++                }
++                const auto view = std::span<const std::byte>{*r}.subspan(
++                    static_cast<std::size_t>(e->frame_offset), static_cast<std::size_t>(e->size));
++                if (seedarc::experimental::crc32c(view) != e->file_crc) {
++                    return std::unexpected(bad("file crc mismatch"));
++                }
++                if (auto checked = consume(*e, 0, view); !checked) {
++                    return checked;
++                }
+             }
+-            out.emplace(e.path, std::vector<std::byte>{view.begin(), view.end()});
+         }
+-        return out;
++        return {};
+     }
+-    DecoderCache cache;
+-    for (const auto &e : m.entries) {
+-        auto file = decode_blocks(e, m.gens[e.gen].groups[e.group], bytes, cache);
+-        if (!file) {
+-            return std::unexpected(file.error());
++    for (DecoderCache cache; const auto &e : m.entries) {
++        auto r = visit_blocks(
++            e, m.gens[e.gen].groups[e.group], bytes, cache,
++            [&](std::size_t at, std::span<const std::byte> raw) { return consume(e, at, raw); });
++        if (!r) {
++            return r;
+         }
+-        out.emplace(e.path, std::move(*file));
++    }
++    return {};
++}
++
++std::expected<std::map<std::string, std::vector<std::byte>>, Error>
++decode_all(const Model &m, std::span<const std::byte> bytes) {
++    std::map<std::string, std::vector<std::byte>> out;
++    auto r = visit_decoded(m, bytes,
++                           [&](const Entry &e, std::size_t at,
++                               std::span<const std::byte> raw) -> std::expected<void, Error> {
++                               auto [it, inserted] = out.try_emplace(e.path);
++                               if (inserted) {
++                                   it->second.resize(static_cast<std::size_t>(e.size));
++                               }
++                               std::ranges::copy(raw, it->second.begin() +
++                                                          static_cast<std::ptrdiff_t>(at));
++                               return {};
++                           });
++    if (!r) {
++        return std::unexpected(r.error());
+     }
+     return out;
+ }
+ 
+ std::expected<void, Error> byte_exact(const std::vector<InputFile> &files, const Model &m,
+-                                      std::span<const std::byte> bytes) {
+-    auto decoded = decode_all(m, bytes);
+-    if (!decoded) {
+-        return std::unexpected(decoded.error());
+-    }
+-    if (decoded->size() != files.size()) {
++                                      std::span<const std::byte> bytes, bool require_all = true) {
++    if (require_all && m.entries.size() != files.size()) {
+         return std::unexpected(bad("file count differs from input"));
+     }
++    std::map<std::string_view, const std::vector<std::byte> *, std::less<>> expected;
+     for (const auto &f : files) {
+-        const auto it = decoded->find(f.path);
+-        if (it == decoded->end() || it->second != f.data) {
+-            return std::unexpected(bad("round trip mismatch"));
+-        }
++        if (!expected.emplace(f.path, &f.data).second) {
++            return std::unexpected(bad("duplicate comparison file"));
++        }
++    }
++    std::set<std::string_view> seen;
++    auto r = visit_decoded(
++        m, bytes,
++        [&](const Entry &e, std::size_t at,
++            std::span<const std::byte> raw) -> std::expected<void, Error> {
++            const auto it = expected.find(e.path);
++            if (it == expected.end()) {
++                return require_all ? std::unexpected(bad("file missing from comparison"))
++                                   : std::expected<void, Error>{};
++            }
++            const auto &data = *it->second;
++            if (data.size() != e.size || at > data.size() || raw.size() > data.size() - at ||
++                !std::ranges::equal(raw, std::span{data}.subspan(at, raw.size()))) {
++                return std::unexpected(bad("round trip mismatch"));
++            }
++            seen.insert(it->first);
++            return {};
++        });
++    if (!r) {
++        return r;
++    }
++    if (seen.size() != expected.size()) {
++        return std::unexpected(bad("comparison file missing from archive"));
+     }
+     return {};
+ }
+@@ -1046,6 +1163,9 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
+     if (!header) {
+         return out; // not even the header: nothing can be read
+     }
++    if (header->revision == 5) {
++        return std::unexpected(bad("recovery is not implemented for solid strategy revision 5"));
++    }
+     out.header_ok = true;
+     std::uint64_t total = 0;
+     const auto add = [&](const std::string &path,
+@@ -1068,9 +1188,8 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
+     //    from an earlier generation).
+     const auto fm = as_bytes(footer_magic);
+     std::vector<std::size_t> footers;
+-    for (auto it = bytes.begin(); (it = std::search(it, bytes.end(), fm.begin(), fm.end())) !=
+-                                  bytes.end();
+-         ++it) {
++    for (auto it = bytes.begin();
++         (it = std::search(it, bytes.end(), fm.begin(), fm.end())) != bytes.end(); ++it) {
+         footers.push_back(static_cast<std::size_t>(it - bytes.begin()));
+     }
+     for (auto f = footers.rbegin(); f != footers.rend(); ++f) {
+@@ -1078,9 +1197,8 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
+         if (!m) {
+             continue;
+         }
+-        DecoderCache cache;
+         std::vector<std::optional<std::vector<std::byte>>> frames(m->frames.size());
+-        for (const auto &e : m->entries) {
++        for (DecoderCache cache; const auto &e : m->entries) {
+             std::expected<std::vector<std::byte>, Error> data = std::unexpected(bad("unread"));
+             if (m->header.solid()) {
+                 auto &raw = frames[e.frame];
+@@ -1121,8 +1239,7 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
+     if (!s) {
+         return std::unexpected(s.error());
+     }
+-    DecoderCache cache;
+-    for (const auto &e : s->entries | std::views::values) {
++    for (DecoderCache cache; const auto &e : s->entries | std::views::values) {
+         std::expected<std::vector<std::byte>, Error> data = std::unexpected(bad("unread"));
+         if (header->solid()) {
+             const auto &raw = s->frame_raw[e.frame];
+@@ -1169,7 +1286,11 @@ struct Pending {
+ std::expected<void, Error> encode_pending(Pending &p, const Header &h,
+                                           const std::vector<InputFile> &files,
+                                           const std::vector<std::uint8_t> &groups,
+-                                          const std::vector<std::span<const std::byte>> &dicts) {
++                                          const std::vector<std::span<const std::byte>> &dicts,
++                                          std::uint64_t frame_limit = research::max_solid_bytes) {
++    if (frame_limit == 0 || frame_limit > research::max_solid_bytes) {
++        return std::unexpected(bad("invalid solid frame limit"));
++    }
+     p.entries.resize(files.size());
+     for (std::size_t i = 0; i < files.size(); ++i) {
+         p.entries[i].path = files[i].path;
+@@ -1191,10 +1312,36 @@ std::expected<void, Error> encode_pending(Pending &p, const Header &h,
+     for (std::size_t g = 0; g < p.gen.groups.size(); ++g) {
+         std::vector<std::byte> joined;
+         bool any = false;
++        const auto flush = [&]() -> std::expected<void, Error> {
++            if (!any) {
++                return {};
++            }
++            if (joined.empty()) {
++                joined.push_back(std::byte{0}); // retain a frame for all-empty files
++            }
++            auto frame = research::compress_solid(joined, level);
++            if (!frame) {
++                return std::unexpected(frame.error());
++            }
++            p.frames.push_back({0, frame->size(), joined.size(), 0, static_cast<std::uint8_t>(g)});
++            p.payloads.push_back(std::move(*frame));
++            joined.clear();
++            any = false;
++            return {};
++        };
+         for (std::size_t i = 0; i < files.size(); ++i) {
+             if (groups[i] != g) {
+                 continue;
+             }
++            if (files[i].data.size() > frame_limit) {
++                return std::unexpected(Error{ErrorCode::resource_limit,
++                                             "file exceeds the requested solid frame limit"});
++            }
++            if (files[i].data.size() > frame_limit - joined.size()) {
++                if (auto r = flush(); !r) {
++                    return r;
++                }
++            }
+             any = true;
+             auto &e = p.entries[i];
+             e.frame = static_cast<std::uint32_t>(p.frames.size());
+@@ -1202,21 +1349,9 @@ std::expected<void, Error> encode_pending(Pending &p, const Header &h,
+             e.file_crc = seedarc::experimental::crc32c(files[i].data);
+             joined.insert(joined.end(), files[i].data.begin(), files[i].data.end());
+         }
+-        if (!any) {
+-            continue;
+-        }
+-        if (joined.empty()) {
+-            joined.push_back(std::byte{0}); // an all-empty group still needs a frame
+-        }
+-        if (joined.size() > research::max_solid_bytes) {
+-            return std::unexpected(Error{ErrorCode::resource_limit, "solid group too large"});
+-        }
+-        auto frame = research::compress_solid(joined, level);
+-        if (!frame) {
+-            return std::unexpected(frame.error());
++        if (auto r = flush(); !r) {
++            return r;
+         }
+-        p.frames.push_back({0, frame->size(), joined.size(), 0, static_cast<std::uint8_t>(g)});
+-        p.payloads.push_back(std::move(*frame));
+     }
+     return {};
+ }
+@@ -1289,7 +1424,8 @@ std::expected<void, Error> layout(std::vector<std::byte> &out, Model &m, Pending
+                 put(body, m.entries.size(), 4);
+                 put_file_info(body, e, h.explicit_groups());
+                 if (body.size() > max_record_body) {
+-                    return std::unexpected(Error{ErrorCode::resource_limit, "file record too large"});
++                    return std::unexpected(
++                        Error{ErrorCode::resource_limit, "file record too large"});
+                 }
+                 put_record(out, rec_file, body);
+             }
+@@ -1368,6 +1504,7 @@ std::expected<Pending, Error> fresh_pending(const Header &h, const Plan &plan,
+                                             std::vector<std::uint8_t> &groups) {
+     Pending p;
+     p.gen.has_seed = h.seed();
++    p.gen.mapping_revision = h.revision == 5 ? solid_seed_revision : seed_revision;
+     p.gen.plan = plan;
+     p.gen.grouping = initial_grouping(plan, files);
+     p.gen.groups.resize(p.gen.grouping.groups());
+@@ -1423,7 +1560,12 @@ std::expected<std::vector<std::byte>, Error> lay_out_fresh(const Header &h, Pend
+ 
+ Header header_for(const std::string &mode, std::uint32_t redundancy, std::uint32_t cpb) {
+     Header h;
+-    h.flags = mode == "seed" ? std::uint32_t{flag_seed} : mode == "solid" ? std::uint32_t{flag_solid} : 0U;
++    h.revision = (mode == "seed-solid" || mode == "explicit-solid") ? 5 : version;
++    h.flags = mode == "seed-solid"       ? std::uint32_t{flag_seed | flag_solid}
++              : mode == "explicit-solid" ? std::uint32_t{flag_solid}
++              : mode == "seed"           ? std::uint32_t{flag_seed}
++              : mode == "solid"          ? std::uint32_t{flag_solid}
++                                         : 0U;
+     h.redundancy = redundancy;
+     h.checkpoint_bytes = redundancy == red_checkpoint ? cpb : 0;
+     return h;
+@@ -1439,22 +1581,38 @@ struct Packed {
+ // then keeps the requested level, or the one rule rec-r0 recommends.
+ std::expected<Packed, Error> pack_bytes(const std::string &mode, const Plan &plan,
+                                         const std::vector<InputFile> &files,
+-                                        std::optional<std::uint32_t> wanted, std::uint32_t cpb) {
++                                        std::optional<std::uint32_t> wanted, std::uint32_t cpb,
++                                        std::uint64_t frame_limit = research::max_solid_bytes) {
+     std::vector<std::uint8_t> groups;
+     const auto base = header_for(mode, red_off, cpb);
++    if (base.revision == 5) {
++        if (!valid_solid_plan(plan) || (wanted && *wanted != red_off)) {
++            return std::unexpected(
++                bad("solid strategy requires a canonical solid plan and off redundancy"));
++        }
++        wanted = red_off;
++    }
+     auto p = fresh_pending(base, plan, files, groups);
+     if (!p) {
+         return std::unexpected(p.error());
+     }
+-    if (auto r = encode_pending(*p, base, files, groups, dict_views(*p, {})); !r) {
++    if (auto r = encode_pending(*p, base, files, groups, dict_views(*p, {}), frame_limit); !r) {
+         return std::unexpected(r.error());
+     }
+     Packed out;
++    if (wanted) {
++        // A single explicit layout does not need a second full copy of encoded payloads.
++        auto bytes = lay_out_fresh(header_for(mode, *wanted, cpb), std::move(*p));
++        if (!bytes) {
++            return std::unexpected(bytes.error());
++        }
++        out.redundancy = *wanted;
++        out.candidate_bytes[*wanted] = bytes->size();
++        out.bytes = std::move(*bytes);
++        return out;
++    }
+     std::array<std::vector<std::byte>, 3> all;
+     for (std::uint32_t red = red_off; red <= red_file; ++red) {
+-        if (wanted && *wanted != red) {
+-            continue;
+-        }
+         auto bytes = lay_out_fresh(header_for(mode, red, cpb), *p);
+         if (!bytes) {
+             return std::unexpected(bytes.error());
+@@ -1462,19 +1620,15 @@ std::expected<Packed, Error> pack_bytes(const std::string &mode, const Plan &pla
+         out.candidate_bytes[red] = bytes->size();
+         all[red] = std::move(*bytes);
+     }
+-    if (wanted) {
+-        out.redundancy = *wanted;
+-    } else {
+-        out.recommended = true;
+-        const auto off = static_cast<double>(out.candidate_bytes[red_off]);
+-        const auto within = [&](std::uint32_t red) {
+-            return static_cast<double>(out.candidate_bytes[red]) - off <= rec_overhead_budget * off;
+-        };
+-        out.redundancy = out.candidate_bytes[red_off] < rec_small_archive ? red_off
+-                         : within(red_file)                               ? red_file
+-                         : within(red_checkpoint)                         ? red_checkpoint
+-                                                                          : red_off;
+-    }
++    out.recommended = true;
++    const auto off = static_cast<double>(out.candidate_bytes[red_off]);
++    const auto within = [&](std::uint32_t red) {
++        return static_cast<double>(out.candidate_bytes[red]) - off <= rec_overhead_budget * off;
++    };
++    out.redundancy = out.candidate_bytes[red_off] < rec_small_archive ? red_off
++                     : within(red_file)                               ? red_file
++                     : within(red_checkpoint)                         ? red_checkpoint
++                                                                      : red_off;
+     out.bytes = std::move(all[out.redundancy]);
+     return out;
+ }
+@@ -1501,16 +1655,24 @@ std::uint8_t nearest_group(const Model &m, const Gen &ref, std::string_view path
+     return best;
+ }
+ 
+-std::expected<std::vector<std::byte>, Error> append_bytes(std::span<const std::byte> old,
+-                                                          const std::vector<InputFile> &added,
+-                                                          const std::string &how,
+-                                                          const std::optional<Plan> &plan) {
++std::expected<std::vector<std::byte>, Error>
++append_bytes(std::span<const std::byte> old, const std::vector<InputFile> &added,
++             const std::string &how, const std::optional<Plan> &plan,
++             std::uint64_t frame_limit = research::max_solid_bytes) {
+     auto parsed = parse(old);
+     if (!parsed) {
+         return std::unexpected(parsed.error());
+     }
+     Model m = std::move(*parsed);
+     const auto &h = m.header;
++    if (frame_limit == 0 || frame_limit > research::max_solid_bytes ||
++        std::ranges::any_of(m.frames,
++                            [frame_limit](const Frame &f) { return f.raw > frame_limit; })) {
++        return std::unexpected(bad("old archive exceeds the requested solid frame limit"));
++    }
++    if (h.revision == 5 && plan && !valid_solid_plan(*plan)) {
++        return std::unexpected(bad("invalid solid generation plan"));
++    }
+     std::set<std::string> existing;
+     for (const auto &e : m.entries) {
+         existing.insert(e.path);
+@@ -1533,7 +1695,7 @@ std::expected<std::vector<std::byte>, Error> append_bytes(std::span<const std::b
+                 Error{ErrorCode::invalid_argument, "regroup is for solid containers, no plan"});
+         }
+         for (const auto &g : m.gens) {
+-            if (g.grouping != m.gens[0].grouping) {
++            if (g.grouping != m.gens[0].grouping || (h.revision == 5 && g.plan != m.gens[0].plan)) {
+                 return std::unexpected(
+                     Error{ErrorCode::invalid_argument, "regroup needs one grouping"});
+             }
+@@ -1545,17 +1707,23 @@ std::expected<std::vector<std::byte>, Error> append_bytes(std::span<const std::b
+         std::vector<InputFile> all;
+         std::vector<std::uint8_t> groups;
+         for (const auto &e : m.entries) {
+-            all.push_back({e.path, (*decoded)[e.path]});
++            const auto it = decoded->find(e.path);
++            if (it == decoded->end()) {
++                return std::unexpected(bad("regroup file missing from decoded input"));
++            }
++            all.push_back({e.path, std::move(it->second)});
+             groups.push_back(e.group);
+         }
+         for (const auto &f : added) {
+-            groups.push_back(nearest_group(m, last, f.path));
++            groups.push_back(h.revision == 5 ? group_of(last, f.path, f.data.size())
++                                             : nearest_group(m, last, f.path));
+             all.push_back(f);
+         }
++        decoded->clear();
+         Pending p;
+         p.gen = m.gens[0];
+         p.new_dicts.resize(p.gen.groups.size());
+-        if (auto r = encode_pending(p, h, all, groups, dict_views(p, old)); !r) {
++        if (auto r = encode_pending(p, h, all, groups, dict_views(p, old), frame_limit); !r) {
+             return std::unexpected(r.error());
+         }
+         return lay_out_fresh(h, std::move(p));
+@@ -1575,11 +1743,11 @@ std::expected<std::vector<std::byte>, Error> append_bytes(std::span<const std::b
+         p.gen = last;
+         p.new_dicts.resize(p.gen.groups.size());
+         for (const auto &f : added) {
+-            groups.push_back(h.seed() ? group_of(last, f.path, f.data.size())
+-                                      : nearest_group(m, last, f.path));
++            groups.push_back((h.seed() || h.revision == 5) ? group_of(last, f.path, f.data.size())
++                                                           : nearest_group(m, last, f.path));
+         }
+     }
+-    if (auto r = encode_pending(p, h, added, groups, dict_views(p, old)); !r) {
++    if (auto r = encode_pending(p, h, added, groups, dict_views(p, old), frame_limit); !r) {
+         return std::unexpected(r.error());
+     }
+     std::vector<std::byte> out(old.begin(), old.end());
+@@ -1613,8 +1781,8 @@ std::string parts_json(const Model &m, std::span<const std::byte> bytes) {
+     for (const auto &f : m.frames) {
+         data += f.stored;
+     }
+-    const auto redundancy = m.record_bytes[rec_file] + m.record_bytes[rec_checkpoint] +
+-                            m.record_bytes[rec_frame];
++    const auto redundancy =
++        m.record_bytes[rec_file] + m.record_bytes[rec_checkpoint] + m.record_bytes[rec_frame];
+     const auto trailer = bytes.size() - footer_bytes - m.trailer_offset;
+     const auto stale = m.trailer_offset - header_bytes - gen_records - dicts - data - redundancy;
+     // Group metadata (H-meta): key tables plus the Seed records, or per-file group bytes (in the
+@@ -1622,9 +1790,14 @@ std::string parts_json(const Model &m, std::span<const std::byte> bytes) {
+     const auto per_file = m.header.explicit_groups()
+                               ? m.entries.size() * (m.header.redundancy == red_file ? 2U : 1U)
+                               : 0U;
+-    const auto group_meta = key_tables + (m.header.seed() ? 8 * m.gens.size() : 0) + per_file;
+-    return "\"container_bytes\":" + std::to_string(bytes.size()) +
+-           ",\"redundancy\":\"" + redundancy_names[m.header.redundancy] +
++    const auto group_meta = key_tables +
++                            ((m.header.seed() || m.header.revision == 5) ? 8 * m.gens.size() : 0) +
++                            per_file;
++    return "\"container_revision\":" + std::to_string(m.header.revision) +
++           ",\"strategy_revision\":" +
++           std::to_string(m.header.revision == 5 ? solid_seed_revision : seed_revision) +
++           ",\"container_bytes\":" + std::to_string(bytes.size()) + ",\"redundancy\":\"" +
++           redundancy_names[m.header.redundancy] +
+            "\",\"checkpoint_bytes\":" + std::to_string(m.header.checkpoint_bytes) +
+            ",\"parts\":{\"header\":" + std::to_string(header_bytes) +
+            ",\"generation_records\":" + std::to_string(gen_records) +
+@@ -1687,7 +1860,8 @@ std::uint64_t archive_id(std::span<const std::byte> logical, const Model &m) {
+ }
+ std::string volume_name(std::uint32_t index) {
+     auto digits = std::to_string(index);
+-    return "vol-" + std::string(5 - std::min<std::size_t>(5, digits.size()), '0') + digits + ".sadv";
++    return "vol-" + std::string(5 - std::min<std::size_t>(5, digits.size()), '0') + digits +
++           ".sadv";
+ }
+ std::optional<std::uint32_t> volume_index_of(std::string_view name) {
+     if (name.size() != 14 || !name.starts_with("vol-") || !name.ends_with(".sadv")) {
+@@ -1773,8 +1947,9 @@ std::expected<Volume, Error> parse_volume(std::span<const std::byte> file) {
+         if (!n || *n == 0 || head.size() - k.at < *n || *off >= *start || *off > max_logical) {
+             return vbad("bad carry range");
+         }
+-        v.carry.emplace_back(*off, std::vector<std::byte>{head.begin() + static_cast<std::ptrdiff_t>(k.at),
+-                                                          head.begin() + static_cast<std::ptrdiff_t>(k.at + *n)});
++        v.carry.emplace_back(
++            *off, std::vector<std::byte>{head.begin() + static_cast<std::ptrdiff_t>(k.at),
++                                         head.begin() + static_cast<std::ptrdiff_t>(k.at + *n)});
+         k.at += static_cast<std::size_t>(*n);
+     }
+     if (k.at != head.size() || (v.carry_mode == carry_none && !v.carry.empty())) {
+@@ -1821,6 +1996,9 @@ std::expected<std::vector<Volume>, Error> make_volumes(std::span<const std::byte
+                                                        std::uint32_t first_index,
+                                                        std::uint64_t nominal, std::uint32_t mode,
+                                                        std::uint32_t prev_crc) {
++    if (m.header.revision == 5) {
++        return std::unexpected(bad("volumes are not implemented for solid strategy revision 5"));
++    }
+     if (logical.size() > max_logical) {
+         return std::unexpected(Error{ErrorCode::resource_limit, "archive too large for volumes"});
+     }
+@@ -1839,10 +2017,12 @@ std::expected<std::vector<Volume>, Error> make_volumes(std::span<const std::byte
+         v.prev_crc = prev_crc;
+         v.carry_mode = mode;
+         const auto len = std::min<std::uint64_t>(nominal, logical.size() - s);
+-        const auto data = logical.subspan(static_cast<std::size_t>(s), static_cast<std::size_t>(len));
++        const auto data =
++            logical.subspan(static_cast<std::size_t>(s), static_cast<std::size_t>(len));
+         v.data.assign(data.begin(), data.end());
+         for (const auto &[b, e] : carry_ranges(m, s, mode)) {
+-            const auto r = logical.subspan(static_cast<std::size_t>(b), static_cast<std::size_t>(e - b));
++            const auto r =
++                logical.subspan(static_cast<std::size_t>(b), static_cast<std::size_t>(e - b));
+             v.carry.emplace_back(b, std::vector<std::byte>{r.begin(), r.end()});
+         }
+         auto file = volume_file(v);
+@@ -1854,7 +2034,7 @@ std::expected<std::vector<Volume>, Error> make_volumes(std::span<const std::byte
+ }
+ 
+ // A volume directory as found: present volumes by index, checked for consistency where
+-// neighbours are both present (same archive, chained CRCs, contiguous logical ranges).
++// neighbors are both present (same archive, chained CRCs, contiguous logical ranges).
+ struct VolumeSet {
+     std::map<std::uint32_t, Volume> volumes;
+     std::uint64_t id = 0, nominal = 0;
+@@ -1906,8 +2086,8 @@ std::expected<VolumeSet, Error> read_volumes(const fs::path &dir,
+             return std::unexpected(bad("bad first volume"));
+         }
+         if (prev != nullptr &&
+-            (v.start < prev->end() ||
+-             (prev->index + 1 == index && (v.start != prev->end() || v.prev_crc != prev->file_crc)))) {
++            (v.start < prev->end() || (prev->index + 1 == index &&
++                                       (v.start != prev->end() || v.prev_crc != prev->file_crc)))) {
+             return std::unexpected(bad("volumes out of order or not chained"));
+         }
+         prev = &v;
+@@ -1918,8 +2098,7 @@ bool complete(const VolumeSet &set) {
+     return set.volumes.size() == set.volumes.rbegin()->first + 1;
+ }
+ // The logical stream with what is present (volume data and carried ranges); holes are zero.
+-std::expected<std::pair<std::vector<std::byte>, Presence>, Error>
+-assemble(const VolumeSet &set) {
++std::expected<std::pair<std::vector<std::byte>, Presence>, Error> assemble(const VolumeSet &set) {
+     std::uint64_t size = 0;
+     for (const auto &v : set.volumes | std::views::values) {
+         size = std::max(size, v.end());
+@@ -1993,7 +2172,7 @@ std::expected<void, Error> write_volumes(const fs::path &dir, const std::vector<
+ // in G5: input bytes read by training and trial encoding, cache hits free. The objective is the
+ // part of the container a plan changes: dictionaries + data + key table + Seed record (per-file
+ // metadata is the same for every plan and left out). "restart" re-starts from a random plan when
+-// stuck (G5 behaviour, a cold search); "local" stops instead (a warm search that stays near its
++// stuck (G5 behavior, a cold search); "local" stops instead (a warm search that stays near its
+ // start). The start plan is always the first candidate, so the result is never worse than it.
+ Plan default_start() { // G-dict-r1, the G5 start plan: one group, 64 KiB dictionary
+     Plan p;
+@@ -2320,7 +2499,7 @@ std::expected<void, Error> search_coord(PlanEvaluator &ev, SearchState &s, Rng &
+             }
+         }
+         if (!improved) {
+-            // A full pass over every single-field neighbour found nothing better.
++            // A full pass over every single-field neighbor found nothing better.
+             auto r = stuck(ev, s, rng, restart, current, "local_optimum");
+             if (!r) {
+                 return std::unexpected(r.error());
+@@ -2335,9 +2514,9 @@ std::expected<void, Error> search_coord(PlanEvaluator &ev, SearchState &s, Rng &
+ }
+ 
+ std::string plan_hex(const Plan &p) {
+-    constexpr char digits[] = "0123456789abcdef";
+     std::string out;
+     for (auto v = encode_seed(p); v != 0 || out.empty(); v >>= 4) {
++        constexpr char digits[] = "0123456789abcdef";
+         out.insert(out.begin(), digits[v & 15]);
+     }
+     return "0x" + out;
+@@ -2371,17 +2550,182 @@ int cmd_search(const std::string &method, const Plan &start, const fs::path &inp
+               << s.start_bytes << ",\"best_plan\":\"" << plan_hex(s.best) << "\",\"best_rule\":\""
+               << rule_names[s.best.rule] << "\",\"best_k\":" << static_cast<int>(s.best.k)
+               << ",\"best_bytes\":" << s.best_bytes << ",\"proposals\":" << s.proposals
+-              << ",\"restarts\":" << s.restarts << ",\"stop\":\"" << s.stop
+-              << "\",\"trajectory\":[" << s.trajectory << "],"
+-              << ev.stats_json() << ",\"call_wall_ms\":" << wall_ms() - w
++              << ",\"restarts\":" << s.restarts << ",\"stop\":\"" << s.stop << "\",\"trajectory\":["
++              << s.trajectory << "]," << ev.stats_json() << ",\"call_wall_ms\":" << wall_ms() - w
+               << ",\"call_cpu_ms\":" << cpu_ms() - c << "," << peak_memory_json() << "}\n";
+     return std::cout ? 0 : 1;
+ }
+ 
++std::string solid_plan_json(const Plan &p) {
++    return "{\"rule\":" + std::to_string(p.rule) + ",\"groups\":" + std::to_string(p.k) +
++           ",\"layout\":\"solid\",\"codec\":\"zstd\",\"level\":9}";
++}
++
++// Bounded full-pack trials; representation changes persistence only, never the search operator.
++int cmd_solid_search(bool seeded, const Plan &start, const fs::path &input, const fs::path &output,
++                     std::uint64_t budget, std::uint64_t prng, const std::string &policy) {
++    const auto wall = wall_ms(), cpu = cpu_ms();
++    auto files = read_tree(input);
++    if (!files || files->empty()) {
++        return fail(files ? bad("solid search needs a file") : files.error());
++    }
++    const Plan baseline;
++    const auto input_bytes = input_bytes_of(*files);
++    const auto unit = std::max<std::uint64_t>(input_bytes, 1);
++    if (budget < unit || (start != baseline && budget - unit < unit)) {
++        return fail(
++            Error{ErrorCode::resource_limit, "budget must fund the start and strong default"});
++    }
++    std::map<Plan, std::uint64_t> cache;
++    std::vector<std::byte> best_archive;
++    Plan best = start;
++    std::uint64_t best_size = UINT64_MAX, spent = 0, hits = 0;
++    double encode_ms = 0, verify_ms = 0;
++    std::string trajectory, trials;
++    auto evaluate = [&](const Plan &plan) -> std::expected<std::optional<std::uint64_t>, Error> {
++        if (const auto it = cache.find(plan); it != cache.end()) {
++            ++hits;
++            return std::optional{it->second};
++        }
++        if (unit > budget - spent) {
++            return std::optional<std::uint64_t>{};
++        }
++        const auto ew = wall_ms();
++        auto encoded =
++            pack_bytes(seeded ? "seed-solid" : "explicit-solid", plan, *files, red_off, 0);
++        encode_ms += wall_ms() - ew;
++        if (!encoded) {
++            return std::unexpected(encoded.error());
++        }
++        spent += unit;
++        const auto vw = wall_ms();
++        auto model = parse(encoded->bytes);
++        if (!model) {
++            return std::unexpected(model.error());
++        }
++        if (auto verified = byte_exact(*files, *model, encoded->bytes); !verified) {
++            return std::unexpected(verified.error());
++        }
++        verify_ms += wall_ms() - vw;
++        const auto size = static_cast<std::uint64_t>(encoded->bytes.size());
++        cache.emplace(plan, size);
++        trials += (trials.empty() ? "" : ",") + std::string{"{\"evaluation\":"} +
++                  std::to_string(cache.size()) + ",\"plan\":" + solid_plan_json(plan) +
++                  ",\"bytes\":" + std::to_string(size) +
++                  ",\"spent_bytes\":" + std::to_string(spent) +
++                  ",\"elapsed_wall_ms\":" + std::to_string(wall_ms() - wall) + "}";
++        if (size < best_size ||
++            (size == best_size && std::pair{plan.rule, plan.k} < std::pair{best.rule, best.k})) {
++            best = plan;
++            best_size = size;
++            best_archive = std::move(encoded->bytes);
++            trajectory += (trajectory.empty() ? "" : ",") + std::string{"{\"evaluations\":"} +
++                          std::to_string(cache.size()) +
++                          ",\"spent_bytes\":" + std::to_string(spent) +
++                          ",\"best_bytes\":" + std::to_string(size) +
++                          ",\"plan\":" + solid_plan_json(best) + "}";
++        }
++        return std::optional{size};
++    };
++    auto initial = evaluate(start);
++    if (!initial || !*initial) {
++        return fail(initial ? bad("start budget invariant") : initial.error());
++    }
++    const auto start_size = **initial;
++    auto fixed = evaluate(baseline);
++    if (!fixed || !*fixed) {
++        return fail(fixed ? bad("baseline budget invariant") : fixed.error());
++    }
++    const auto baseline_size = **fixed;
++    auto candidates = solid_candidates();
++    std::map<Plan, std::uint64_t> rank;
++    Rng rng{prng};
++    for (const auto &plan : candidates) {
++        rank.emplace(plan, rng.next());
++    }
++    if (policy == "near") {
++        const auto distance = [&](const Plan &p) {
++            return (p.rule != start.rule ? 1 : 0) + std::abs(int{p.k} - int{start.k});
++        };
++        std::ranges::sort(candidates, [&](const Plan &a, const Plan &b) {
++            return std::tuple{distance(a), rank.at(a), a.rule, a.k} <
++                   std::tuple{distance(b), rank.at(b), b.rule, b.k};
++        });
++    } else {
++        std::ranges::sort(candidates, [](const Plan &a, const Plan &b) {
++            return std::pair{a.rule, a.k} < std::pair{b.rule, b.k};
++        });
++    }
++    std::string evaluated;
++    // The ledger includes cache entries in a concrete-plan order, independent of representation.
++    for (const auto &plan : candidates) {
++        if (cache.contains(plan)) {
++            continue;
++        }
++        auto trial = evaluate(plan);
++        if (!trial) {
++            return fail(trial.error());
++        }
++        if (!*trial) {
++            break;
++        }
++    }
++    for (const auto &[plan, size] : cache) {
++        evaluated += (evaluated.empty() ? "" : ",") + std::string{"{\"plan\":"} +
++                     solid_plan_json(plan) + ",\"bytes\":" + std::to_string(size) + "}";
++    }
++    auto best_model = parse(best_archive);
++    if (!best_model) {
++        return fail(best_model.error());
++    }
++    const auto publish = wall_ms();
++    if (auto written = write_new(output, best_archive); !written) {
++        return fail(written.error());
++    }
++    const auto publish_ms = wall_ms() - publish;
++    std::cout << "{\"schema\":\"seedarc.solid-search.r1\",\"representation\":\""
++              << (seeded ? "seed" : "explicit") << "\",\"policy\":" << json_string(policy)
++              << ",\"search_revision\":\"near-r1\",\"prng_seed\":" << prng
++              << ",\"start_plan\":" << solid_plan_json(start)
++              << ",\"best_plan\":" << solid_plan_json(best) << ",\"strategy_seed\":"
++              << (seeded ? std::to_string(encode_solid_seed(best)) : "null")
++              << ",\"input_bytes\":" << input_bytes << ",\"accounting_unit_bytes\":" << unit
++              << ",\"budget_bytes\":" << budget << ",\"budget_spent_bytes\":" << spent
++              << ",\"evaluations\":" << cache.size() << ",\"cache_hits\":" << hits
++              << ",\"domain_size\":" << candidates.size()
++              << ",\"space_exhausted\":" << (cache.size() == candidates.size() ? "true" : "false")
++              << ",\"start_bytes\":" << start_size << ",\"baseline_bytes\":" << baseline_size
++              << ",\"best_bytes\":" << best_size << ",\"trajectory\":[" << trajectory
++              << "],\"trials\":[" << trials << "],\"evaluated\":[" << evaluated
++              << "],\"encode_wall_ms\":" << encode_ms << ",\"verify_wall_ms\":" << verify_ms
++              << ",\"publish_wall_ms\":" << publish_ms << ",\"call_wall_ms\":" << wall_ms() - wall
++              << ",\"call_cpu_ms\":" << cpu_ms() - cpu << ",\"byte_exact\":true,"
++              << parts_json(*best_model, best_archive) << "," << peak_memory_json() << "}\n";
++    return std::cout ? 0 : 1;
++}
++
++std::string frame_stats_json(const Model &m) {
++    std::uint64_t largest = 0;
++    std::string sizes;
++    for (const auto &f : m.frames) {
++        largest = std::max(largest, f.raw);
++        sizes += (sizes.empty() ? "" : ",") + std::to_string(f.raw);
++    }
++    return "\"frame_count\":" + std::to_string(m.frames.size()) +
++           ",\"max_frame_raw_bytes\":" + std::to_string(largest) + ",\"frame_raw_bytes\":[" +
++           sizes + "]";
++}
++
+ // ---- commands -----------------------------------------------------------------------------------
+ int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path &input,
+-             const fs::path &out_path, std::optional<std::uint32_t> wanted, std::uint32_t cpb) {
+-    const auto plan = plan_arg(plan_hex);
++             const fs::path &out_path, std::optional<std::uint32_t> wanted, std::uint32_t cpb,
++             std::uint64_t frame_limit = research::max_solid_bytes) {
++    const bool strong = mode == "seed-solid" || mode == "explicit-solid";
++    const auto bits = hex32(plan_hex);
++    const auto plan = mode == "explicit-solid" && plan_hex.find(':') != std::string_view::npos
++                          ? parse_solid_explicit(plan_hex)
++                      : strong ? (bits ? decode_solid_seed(*bits) : std::nullopt)
++                               : plan_arg(plan_hex);
+     if (!plan) {
+         std::cerr << "not a canonical plan\n";
+         return 2;
+@@ -2392,7 +2736,7 @@ int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path
+         return fail(files.error());
+     }
+     const auto rw = wall_ms(), rc = cpu_ms();
+-    auto packed = pack_bytes(mode, *plan, *files, wanted, cpb);
++    auto packed = pack_bytes(mode, *plan, *files, wanted, cpb, frame_limit);
+     if (!packed) {
+         return fail(packed.error());
+     }
+@@ -2409,16 +2753,17 @@ int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path
+     }
+     std::string candidates;
+     for (std::uint32_t red = red_off; red <= red_file; ++red) {
+-        candidates += std::string{red == 0 ? "" : ","} + "\"" + redundancy_names[red] + "\":" +
+-                      (packed->candidate_bytes[red] != 0
+-                           ? std::to_string(packed->candidate_bytes[red])
+-                           : std::string{"null"});
++        candidates +=
++            std::string{red == 0 ? "" : ","} + "\"" + redundancy_names[red] + "\":" +
++            (packed->candidate_bytes[red] != 0 ? std::to_string(packed->candidate_bytes[red])
++                                               : std::string{"null"});
+     }
+     std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"pack\",\"metadata\":"
+               << json_string(mode) << ",\"plan_seed\":" << encode_seed(*plan) << ",\"rule\":\""
+               << rule_names[plan->rule] << "\",\"k\":" << static_cast<int>(plan->k)
+-              << ",\"input_bytes\":" << input_bytes_of(*files) << "," << parts_json(*m, packed->bytes)
+-              << ",\"redundancy_chosen_by\":\""
++              << ",\"input_bytes\":" << input_bytes_of(*files) << ","
++              << parts_json(*m, packed->bytes) << "," << frame_stats_json(*m)
++              << ",\"frame_limit_bytes\":" << frame_limit << ",\"redundancy_chosen_by\":\""
+               << (packed->recommended ? "recommendation" : "user")
+               << "\",\"recommendation_rule\":\"rec-r0 (provisional)\",\"candidate_bytes\":{"
+               << candidates << "},\"pack_wall_ms\":" << pack_wall << ",\"pack_cpu_ms\":" << pack_cpu
+@@ -2428,18 +2773,26 @@ int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path
+ }
+ 
+ int cmd_append(const fs::path &old_path, const fs::path &new_dir, const fs::path &out_path,
+-               const std::string &how, const std::optional<Plan> &plan) {
++               const std::string &how, const std::optional<Plan> &plan,
++               std::uint64_t frame_limit = research::max_solid_bytes, bool require_strong = false) {
+     const auto w = wall_ms(), c = cpu_ms();
+     auto old = read_file(old_path);
+     if (!old) {
+         return fail(old.error());
+     }
++    if (require_strong) {
++        auto header = parse_header(*old);
++        if (!header || header->revision != 5 || !header->solid()) {
++            return fail(header ? bad("bounded append requires a revision5 solid archive")
++                               : header.error());
++        }
++    }
+     auto added = read_tree(new_dir);
+     if (!added) {
+         return fail(added.error());
+     }
+     const auto aw = wall_ms(), ac = cpu_ms();
+-    auto bytes = append_bytes(*old, *added, how, plan);
++    auto bytes = append_bytes(*old, *added, how, plan, frame_limit);
+     if (!bytes) {
+         return fail(bytes.error());
+     }
+@@ -2448,15 +2801,8 @@ int cmd_append(const fs::path &old_path, const fs::path &new_dir, const fs::path
+     if (!m) {
+         return fail(m.error());
+     }
+-    auto decoded = decode_all(*m, *bytes);
+-    if (!decoded) {
+-        return fail(decoded.error());
+-    }
+-    for (const auto &f : *added) {
+-        const auto it = decoded->find(f.path);
+-        if (it == decoded->end() || it->second != f.data) {
+-            return fail(bad("appended file does not round trip"));
+-        }
++    if (auto checked = byte_exact(*added, *m, *bytes, false); !checked) {
++        return fail(checked.error());
+     }
+     if (auto r = write_new(out_path, *bytes); !r) {
+         return fail(r.error());
+@@ -2470,10 +2816,16 @@ int cmd_append(const fs::path &old_path, const fs::path &new_dir, const fs::path
+               << ",\"appended_bytes\":" << input_bytes_of(*added)
+               << ",\"old_container_bytes\":" << old->size()
+               << ",\"old_is_prefix\":" << (prefix ? "true" : "false") << ","
+-              << parts_json(*m, *bytes) << ",\"append_wall_ms\":" << append_wall
+-              << ",\"append_cpu_ms\":" << append_cpu << ",\"call_wall_ms\":" << wall_ms() - w
+-              << ",\"call_cpu_ms\":" << cpu_ms() - c << ",\"appended_byte_exact\":true,"
+-              << peak_memory_json() << "}\n";
++              << parts_json(*m, *bytes) << "," << frame_stats_json(*m)
++              << ",\"frame_limit_bytes\":" << frame_limit
++              << ",\"old_archive_bytes_read\":" << old->size()
++              << ",\"old_archive_bytes_copied\":" << (prefix ? old->size() : 0)
++              << ",\"old_plaintext_bytes_recompressed\":"
++              << (how == "regroup" ? std::string{"null"} : std::string{"0"})
++              << ",\"archive_bytes_written\":" << bytes->size()
++              << ",\"append_wall_ms\":" << append_wall << ",\"append_cpu_ms\":" << append_cpu
++              << ",\"call_wall_ms\":" << wall_ms() - w << ",\"call_cpu_ms\":" << cpu_ms() - c
++              << ",\"appended_byte_exact\":true," << peak_memory_json() << "}\n";
+     return std::cout ? 0 : 1;
+ }
+ 
+@@ -2487,29 +2839,27 @@ int cmd_verify(const fs::path &container, const fs::path &input) {
+     if (!m) {
+         return fail(m.error());
+     }
+-    auto decoded = decode_all(*m, *bytes);
+-    if (!decoded) {
+-        return fail(decoded.error());
+-    }
+-    const auto decode_wall = wall_ms() - w, decode_cpu = cpu_ms() - c;
++    const auto load_wall = wall_ms() - w, load_cpu = cpu_ms() - c;
++    const auto iw = wall_ms(), ic = cpu_ms();
+     auto files = read_tree(input);
+     if (!files) {
+         return fail(files.error());
+     }
+-    if (files->size() != decoded->size()) {
+-        return fail(bad("file count differs from input"));
+-    }
+-    for (const auto &f : *files) {
+-        const auto it = decoded->find(f.path);
+-        if (it == decoded->end() || it->second != f.data) {
+-            return fail(bad("round trip mismatch"));
+-        }
++    const auto input_wall = wall_ms() - iw, input_cpu = cpu_ms() - ic;
++    const auto vw = wall_ms(), vc = cpu_ms();
++    if (auto checked = byte_exact(*files, *m, *bytes); !checked) {
++        return fail(checked.error());
+     }
++    const auto decode_wall = load_wall + wall_ms() - vw;
++    const auto decode_cpu = load_cpu + cpu_ms() - vc;
+     std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"verify\",\"byte_exact\":"
+                  "true,\"files\":"
+               << files->size() << ",\"generations\":" << m->gens.size() << ",\"redundancy\":\""
+               << redundancy_names[m->header.redundancy] << "\",\"decode_wall_ms\":" << decode_wall
+-              << ",\"decode_cpu_ms\":" << decode_cpu << "," << peak_memory_json() << "}\n";
++              << ",\"decode_cpu_ms\":" << decode_cpu << ",\"input_read_wall_ms\":" << input_wall
++              << ",\"input_read_cpu_ms\":" << input_cpu
++              << ",\"verification_mode\":\"incremental_crc_and_compare\"," << peak_memory_json()
++              << "}\n";
+     return std::cout ? 0 : 1;
+ }
+ 
+@@ -2576,10 +2926,10 @@ int cmd_peek(const fs::path &container, const fs::path &input, std::size_t n) {
+ struct CutResult {
+     std::uint64_t files = 0, bytes = 0, from_trailer = 0, from_records = 0, unreadable = 0;
+ };
+-std::expected<CutResult, Error> recover_checked(std::span<const std::byte> bytes,
+-                                                const std::map<std::string_view,
+-                                                               const InputFile *> &by_path,
+-                                                const Presence *presence = nullptr) {
++std::expected<CutResult, Error>
++recover_checked(std::span<const std::byte> bytes,
++                const std::map<std::string_view, const InputFile *> &by_path,
++                const Presence *presence = nullptr) {
+     auto r = recover(bytes, presence);
+     if (!r) {
+         return std::unexpected(r.error());
+@@ -2614,9 +2964,10 @@ int cmd_partial(const fs::path &container, const fs::path &input) {
+     }
+     const auto by_path = index_files(*files);
+     const auto total = input_bytes_of(*files);
+-    std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"partial\",\"container_bytes\":"
+-              << bytes->size() << ",\"input_files\":" << files->size()
+-              << ",\"input_bytes\":" << total << ",\"cuts\":[";
++    std::cout
++        << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"partial\",\"container_bytes\":"
++        << bytes->size() << ",\"input_files\":" << files->size() << ",\"input_bytes\":" << total
++        << ",\"cuts\":[";
+     std::vector<std::uint64_t> cuts;
+     for (int pct = 5; pct <= 95; pct += 5) {
+         cuts.push_back(bytes->size() * static_cast<std::uint64_t>(pct) / 100);
+@@ -2625,7 +2976,8 @@ int cmd_partial(const fs::path &container, const fs::path &input) {
+     cuts.push_back(bytes->size());
+     for (std::size_t i = 0; i < cuts.size(); ++i) {
+         const auto w = wall_ms();
+-        auto r = recover_checked(std::span{*bytes}.first(static_cast<std::size_t>(cuts[i])), by_path);
++        auto r =
++            recover_checked(std::span{*bytes}.first(static_cast<std::size_t>(cuts[i])), by_path);
+         if (!r) {
+             std::cout << "]}\n";
+             return fail(r.error());
+@@ -2675,9 +3027,10 @@ int cmd_split(const fs::path &container, std::uint64_t nominal, const fs::path &
+     if (auto r = write_volumes(dir, *vols); !r) {
+         return fail(r.error());
+     }
+-    std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"split\",\"container_bytes\":"
+-              << bytes->size() << ",\"volume_bytes\":" << nominal << ",\"carry\":\""
+-              << carry_names[mode] << "\"," << volumes_json(*vols) << "}\n";
++    std::cout
++        << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"split\",\"container_bytes\":"
++        << bytes->size() << ",\"volume_bytes\":" << nominal << ",\"carry\":\"" << carry_names[mode]
++        << "\"," << volumes_json(*vols) << "}\n";
+     return std::cout ? 0 : 1;
+ }
+ 
+@@ -2714,8 +3067,8 @@ int cmd_vappend(const fs::path &dir, const fs::path &new_dir, const std::optiona
+         }
+     }
+     const auto &last = set->volumes.rbegin()->second;
+-    auto vols = make_volumes(*bytes, *m, old->size(), last.index + 1, set->nominal,
+-                             set->carry_mode, last.file_crc);
++    auto vols = make_volumes(*bytes, *m, old->size(), last.index + 1, set->nominal, set->carry_mode,
++                             last.file_crc);
+     if (!vols) {
+         return fail(vols.error());
+     }
+@@ -2723,10 +3076,11 @@ int cmd_vappend(const fs::path &dir, const fs::path &new_dir, const std::optiona
+         return fail(r.error());
+     }
+     std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"vappend\",\"old_volumes\":"
+-              << set->volumes.size() << ",\"old_volumes_rewritten\":0,\"first_new_volume\":"
+-              << last.index + 1 << "," << volumes_json(*vols) << ",\"appended_files\":"
+-              << added->size() << ",\"call_wall_ms\":" << wall_ms() - w
+-              << ",\"call_cpu_ms\":" << cpu_ms() - c << ",\"appended_byte_exact\":true}\n";
++              << set->volumes.size()
++              << ",\"old_volumes_rewritten\":0,\"first_new_volume\":" << last.index + 1 << ","
++              << volumes_json(*vols) << ",\"appended_files\":" << added->size()
++              << ",\"call_wall_ms\":" << wall_ms() - w << ",\"call_cpu_ms\":" << cpu_ms() - c
++              << ",\"appended_byte_exact\":true}\n";
+     return std::cout ? 0 : 1;
+ }
+ 
+@@ -2842,6 +3196,34 @@ int cmd_selftest(const fs::path &input) {
+     plan_b.k = 2;
+     plan_b.d = {1, 1};
+     plan_b = canonical(plan_b);
++    // The append command compares only new source files, but must still decode and CRC-check
++    // old payloads. A subset comparator that simply skips old files would accept this damage.
++    {
++        const auto plain_plan = canonical(Plan{});
++        auto packed = pack_bytes("seed", plain_plan, first, red_off, min_checkpoint_bytes);
++        if (!packed) {
++            return fail(packed.error());
++        }
++        auto old_model = parse(packed->bytes);
++        if (!old_model) {
++            return fail(old_model.error());
++        }
++        const auto file = std::ranges::find_if(old_model->entries,
++                                               [](const Entry &e) { return !e.blocks.empty(); });
++        if (file == old_model->entries.end()) {
++            return fail(bad("selftest: no old payload for subset verification"));
++        }
++        auto damaged = std::move(packed->bytes);
++        damaged[static_cast<std::size_t>(file->blocks.front().offset)] ^= std::byte{1};
++        auto grown = append_bytes(damaged, second, "segment", std::nullopt);
++        if (!grown) {
++            return fail(grown.error());
++        }
++        auto model = parse(*grown);
++        if (!model || byte_exact(second, *model, *grown, false)) {
++            return fail(bad("selftest: subset comparison accepted corrupt old payload"));
++        }
++    }
+     std::uint64_t checks = 0, tried = 0, rejected = 0, stale_checked = 0, cut_checks = 0;
+     constexpr std::uint32_t cpb = min_checkpoint_bytes;
+     for (const auto *mode : {"seed", "explicit", "solid"}) {
+@@ -2886,9 +3268,18 @@ int cmd_selftest(const fs::path &input) {
+                     stale_begin = static_cast<std::size_t>(parse(old)->trailer_offset);
+                     stale_end = old.size();
+                 }
+-                std::vector<std::size_t> offsets{0, 8, 12, 16, 20, 24, 28, header_bytes,
+-                                                 good.size() / 2, good.size() - 1,
+-                                                 good.size() - 9, good.size() - 17};
++                std::vector<std::size_t> offsets{0,
++                                                 8,
++                                                 12,
++                                                 16,
++                                                 20,
++                                                 24,
++                                                 28,
++                                                 header_bytes,
++                                                 good.size() / 2,
++                                                 good.size() - 1,
++                                                 good.size() - 9,
++                                                 good.size() - 17};
+                 for (std::size_t at = 33; at < good.size(); at += good.size() / 40 + 1) {
+                     offsets.push_back(at);
+                 }
+@@ -2929,8 +3320,9 @@ int cmd_selftest(const fs::path &input) {
+                 // missing. Without them, the superseded trailer still yields generation 0.
+                 std::uint64_t prev = 0;
+                 for (int pct = 0; pct <= 100; pct += 10) {
+-                    const auto keep = pct == 100 ? good.size() - 1
+-                                                 : good.size() * static_cast<std::size_t>(pct) / 100;
++                    const auto keep = pct == 100
++                                          ? good.size() - 1
++                                          : good.size() * static_cast<std::size_t>(pct) / 100;
+                     auto r = recover_checked(std::span{good}.first(keep), by_path);
+                     if (!r || r->files < prev) {
+                         return fail(r ? bad("selftest: recovery shrank with more bytes")
+@@ -3011,6 +3403,147 @@ int cmd_selftest(const fs::path &input) {
+     return rejected == tried ? 0 : 1;
+ }
+ 
++// Compare encoded frames, independently of offsets and representation metadata.
++bool same_solid_payload(const Model &a, std::span<const std::byte> ab, const Model &b,
++                        std::span<const std::byte> bb) {
++    if (!a.header.solid() || !b.header.solid() || a.frames.size() != b.frames.size() ||
++        a.entries.size() != b.entries.size()) {
++        return false;
++    }
++    for (std::size_t i = 0; i < a.entries.size(); ++i) {
++        const auto &x = a.entries[i], &y = b.entries[i];
++        if (x.path != y.path || x.size != y.size || x.gen != y.gen || x.group != y.group ||
++            x.frame != y.frame || x.frame_offset != y.frame_offset || x.file_crc != y.file_crc) {
++            return false;
++        }
++    }
++    for (std::size_t i = 0; i < a.frames.size(); ++i) {
++        const auto &x = a.frames[i], &y = b.frames[i];
++        if (x.gen != y.gen || x.group != y.group || x.raw != y.raw || x.stored != y.stored ||
++            !std::ranges::equal(
++                ab.subspan(static_cast<std::size_t>(x.offset), static_cast<std::size_t>(x.stored)),
++                bb.subspan(static_cast<std::size_t>(y.offset),
++                           static_cast<std::size_t>(y.stored)))) {
++            return false;
++        }
++    }
++    return true;
++}
++
++int cmd_payload_compare(const fs::path &left, const fs::path &right) {
++    auto a = read_file(left), b = read_file(right);
++    if (!a || !b) {
++        return fail(!a ? a.error() : b.error());
++    }
++    auto am = parse(*a), bm = parse(*b);
++    if (!am || !bm) {
++        return fail(!am ? am.error() : bm.error());
++    }
++    const auto equal = same_solid_payload(*am, *a, *bm, *b);
++    std::uint64_t data = 0;
++    for (const auto &f : am->frames) {
++        data += f.stored;
++    }
++    std::cout << "{\"schema\":\"seedarc.solid-payload-compare.r1\",\"equal\":"
++              << (equal ? "true" : "false") << ",\"frames\":" << am->frames.size()
++              << ",\"payload_bytes\":" << data << ",\"left_container_bytes\":" << a->size()
++              << ",\"right_container_bytes\":" << b->size() << "}\n";
++    return equal ? 0 : 1;
++}
++
++int cmd_solid_selftest(const fs::path &input) {
++    auto files = read_tree(input);
++    if (!files || files->size() < 4) {
++        return fail(files ? bad("solid selftest needs four files") : files.error());
++    }
++    std::uint64_t checks = 0;
++    for (auto bits : {0U, 6U, 11U, 31U}) {
++        auto plan = decode_solid_seed(bits);
++        if (!plan || encode_solid_seed(*plan) != bits ||
++            decode_solid_explicit(encode_solid_explicit(*plan)) != plan) {
++            return fail(bad("solid mapping fixed vector failed"));
++        }
++        const auto half = files->size() / 2;
++        std::vector<InputFile> initial(files->begin(),
++                                       files->begin() + static_cast<std::ptrdiff_t>(half));
++        std::vector<InputFile> added(files->begin() + static_cast<std::ptrdiff_t>(half),
++                                     files->end());
++        auto a = pack_bytes("seed-solid", *plan, initial, red_off, 0);
++        auto b = pack_bytes("explicit-solid", *plan, initial, red_off, 0);
++        auto legacy = pack_bytes("solid", *plan, initial, red_off, 0);
++        if (!a || !b || !legacy) {
++            return fail(bad("solid selftest pack failed"));
++        }
++        auto check_pair = [&](const std::vector<std::byte> &x, const std::vector<std::byte> &y,
++                              const std::vector<InputFile> &original) {
++            auto xm = parse(x), ym = parse(y);
++            return xm && ym && byte_exact(original, *xm, x) && byte_exact(original, *ym, y) &&
++                   same_solid_payload(*xm, x, *ym, y);
++        };
++        if (!check_pair(a->bytes, b->bytes, initial) ||
++            !check_pair(a->bytes, legacy->bytes, initial)) {
++            return fail(bad("solid pack changed the codec payload"));
++        }
++        auto again = pack_bytes("seed-solid", *plan, initial, red_off, 0);
++        if (!again || again->bytes != a->bytes) {
++            return fail(bad("solid pack is not deterministic"));
++        }
++        for (const auto &how : {"segment", "regroup"}) {
++            auto x = append_bytes(a->bytes, added, how, std::nullopt);
++            auto y = append_bytes(b->bytes, added, how, std::nullopt);
++            if (!x || !y || !check_pair(*x, *y, *files)) {
++                return fail(bad("solid append changed payload or roundtrip"));
++            }
++            if (std::string_view{how} == "segment" &&
++                (x->size() < a->bytes.size() ||
++                 !std::equal(a->bytes.begin(), a->bytes.end(), x->begin()))) {
++                return fail(bad("solid append lost old prefix"));
++            }
++            auto repeated = append_bytes(a->bytes, added, how, std::nullopt);
++            if (!repeated || *repeated != *x) {
++                return fail(bad("solid append is not deterministic"));
++            }
++            ++checks;
++        }
++        const auto next = decode_solid_seed(bits == 6 ? 11U : 6U);
++        auto x = append_bytes(a->bytes, added, "segment", next);
++        auto y = append_bytes(b->bytes, added, "segment", next);
++        if (!x || !y || !check_pair(*x, *y, *files)) {
++            return fail(bad("solid new-generation plan mismatch"));
++        }
++        auto model = parse(a->bytes);
++        auto body = gen_body(model->gens.front());
++        body[16] = std::byte{99};
++        if (parse_gen_body(body, model->header)) {
++            return fail(bad("unknown solid seed revision accepted"));
++        }
++        body = gen_body(model->gens.front());
++        body[20] = std::byte{32};
++        if (parse_gen_body(body, model->header)) {
++            return fail(bad("reserved solid seed bits accepted"));
++        }
++        auto invalid = a->bytes;
++        invalid[8] = std::byte{4}; // v4 must still reject the combined seed+solid flags.
++        if (parse(invalid)) {
++            return fail(bad("v4 accepted the new feature flags"));
++        }
++        auto corrupt = a->bytes;
++        corrupt[static_cast<std::size_t>(model->frames.front().offset)] ^= std::byte{1};
++        if (auto parsed = parse(corrupt); parsed && byte_exact(initial, *parsed, corrupt)) {
++            return fail(bad("corrupt solid frame accepted"));
++        }
++        ++checks;
++    }
++    for (auto invalid : {1U, 2U, 3U, 32U, 64U, UINT32_MAX}) {
++        if (decode_solid_seed(invalid)) {
++            return fail(bad("noncanonical solid seed accepted"));
++        }
++    }
++    std::cout << "{\"schema\":\"seedarc.solid-selftest.r1\",\"checks\":" << checks
++              << ",\"payload_equal\":true,\"deterministic\":true,\"strategy_revision\":2}\n";
++    return 0;
++}
++
+ std::optional<std::uint32_t> redundancy_arg(std::string_view s, bool &ok) {
+     ok = true;
+     for (std::uint32_t red = red_off; red <= red_file; ++red) {
+@@ -3021,12 +3554,65 @@ std::optional<std::uint32_t> redundancy_arg(std::string_view s, bool &ok) {
+     ok = s == "auto";
+     return std::nullopt;
+ }
++#include "bounded_solid.hpp"
++
+ } // namespace
+ 
+ int main(int argc, char *argv[]) {
+     const std::vector<std::string_view> a(argv, argv + argc);
++    if (a.size() == 6 && a[1] == "bounded-pack") {
++        const auto cap = number(a[3]);
++        if (!cap || *cap == 0 || *cap > research::max_solid_bytes ||
++            (a[2] != "seed" && a[2] != "explicit")) {
++            std::cerr << usage;
++            return 2;
++        }
++        return cmd_pack(a[2] == "seed" ? "seed-solid" : "explicit-solid", "0x0", native(a[4]),
++                        native(a[5]), red_off, 0, *cap);
++    }
++    if (a.size() == 6 && a[1] == "bounded-append") {
++        const auto cap = number(a[2]);
++        if (!cap || *cap == 0 || *cap > research::max_solid_bytes) {
++            std::cerr << usage;
++            return 2;
++        }
++        return cmd_append(native(a[3]), native(a[4]), native(a[5]), "segment", std::nullopt, *cap,
++                          true);
++    }
++    if (a.size() == 5 && a[1] == "access-profile") {
++        const auto count = number(a[4]);
++        if (!count || *count == 0 || *count > 1000) {
++            return 2;
++        }
++        return cmd_access_profile(native(a[2]), native(a[3]), static_cast<std::size_t>(*count));
++    }
++    if (a.size() == 4 && a[1] == "payload-fault-profile") {
++        return cmd_payload_fault_profile(native(a[2]), native(a[3]));
++    }
++    if ((a.size() == 8 || a.size() == 9) && a[1] == "solid-search" &&
++        (a[2] == "seed" || a[2] == "explicit")) {
++        const bool seeded = a[2] == "seed";
++        const auto bits = hex32(a[3]);
++        const auto start = a[3] == "default" ? std::optional{Plan{}}
++                           : seeded          ? (bits ? decode_solid_seed(*bits) : std::nullopt)
++                                             : parse_solid_explicit(a[3]);
++        const auto budget = number(a[6]), prng = number(a[7]);
++        const std::string policy = a.size() == 9 ? std::string{a[8]} : "near";
++        if (!start || !budget || !prng || (policy != "near" && policy != "enumerate")) {
++            std::cerr << "invalid solid search arguments\n";
++            return 2;
++        }
++        return cmd_solid_search(seeded, *start, native(a[4]), native(a[5]), *budget, *prng, policy);
++    }
++    if (a.size() == 4 && a[1] == "payload-compare") {
++        return cmd_payload_compare(native(a[2]), native(a[3]));
++    }
++    if (a.size() == 3 && a[1] == "solid-selftest") {
++        return cmd_solid_selftest(native(a[2]));
++    }
+     if (a.size() >= 6 && a.size() <= 8 && a[1] == "pack" &&
+-        (a[2] == "seed" || a[2] == "explicit" || a[2] == "solid")) {
++        (a[2] == "seed" || a[2] == "explicit" || a[2] == "solid" || a[2] == "seed-solid" ||
++         a[2] == "explicit-solid")) {
+         bool ok = true;
+         const auto wanted = a.size() >= 7 ? redundancy_arg(a[6], ok) : std::nullopt;
+         std::uint64_t cpb = default_checkpoint_bytes;
+diff --git a/research/tools/check_append4.cmake b/research/tools/check_append4.cmake
+index b23eb7c..d9db1ac 100644
+--- a/research/tools/check_append4.cmake
++++ b/research/tools/check_append4.cmake
+@@ -33,6 +33,8 @@ foreach(i RANGE 21 26)
+ endforeach()
+ make_file("newdir/fresh.cfg" "key=value\n" more)
+ make_file("src/mod99.py" "def g():\n    return 99\n" more)
++file(GLOB_RECURSE initial_fixture_files LIST_DIRECTORIES false "${init}/*")
++list(LENGTH initial_fixture_files expected_initial_files)
+ 
+ function(run expect out_var)
+     execute_process(COMMAND "${TOOL}" ${ARGN} RESULT_VARIABLE code OUTPUT_VARIABLE out ERROR_VARIABLE err)
+@@ -90,8 +92,8 @@ foreach(mode seed explicit solid)
+             if(NOT red STREQUAL "off" AND NOT nearly EQUAL input_files)
+                 message(FATAL_ERROR "${tag}/${variant}: ${nearly} of ${input_files} files without the footer")
+             endif()
+-            if(red STREQUAL "off" AND NOT nearly EQUAL 41)
+-                message(FATAL_ERROR "${tag}/${variant}: off should recover generation 0 (41 files), got ${nearly}")
++            if(red STREQUAL "off" AND NOT nearly EQUAL expected_initial_files)
++                message(FATAL_ERROR "${tag}/${variant}: off should recover generation 0 (${expected_initial_files} files), got ${nearly}")
+             endif()
+         endforeach()
+         run(1 ignored append "${WORK}/${tag}-1a.sadx" "${more}" "${WORK}/${tag}-dup.sadx")   # duplicate paths
+@@ -235,6 +237,36 @@ run(2 ignored search seed 0x41 "${init}" 3000000 7)             # non-canonical
+ run(2 ignored search seed default "${init}" 0 7)                # zero budget
+ run(2 ignored search walk default "${init}" 3000000 7)          # unknown method
+ run(2 ignored search seed default "${init}" 3000000 7 sometimes)
++
++# Dedicated verification edges: do not change the nonempty-file fixture used by volume-loss
++# accounting above. Empty files have metadata dependencies but no data bytes to count there.
++set(edge "${WORK}/verify-edge")
++set(edge_more "${WORK}/verify-edge-more")
++set(edge_all "${WORK}/verify-edge-all")
++file(MAKE_DIRECTORY "${edge}" "${edge_more}" "${edge_all}")
++string(REPEAT "${words} ${noise}\n" 4000 edge_big)
++file(WRITE "${edge}/multi.bin" "${edge_big}")
++file(WRITE "${edge}/empty.bin" "")
++file(WRITE "${edge_all}/multi.bin" "${edge_big}")
++file(WRITE "${edge_all}/empty.bin" "")
++file(WRITE "${edge_more}/new-empty.bin" "")
++file(WRITE "${edge_more}/tail.txt" "appended tail\n")
++file(WRITE "${edge_all}/new-empty.bin" "")
++file(WRITE "${edge_all}/tail.txt" "appended tail\n")
++foreach(mode seed explicit solid)
++    foreach(red off checkpoint file)
++        set(edge_old "${WORK}/edge-${mode}-${red}-old.sadx")
++        set(edge_new "${WORK}/edge-${mode}-${red}-new.sadx")
++        run(0 ignored pack ${mode} ${plan} "${edge}" "${edge_old}" ${red} 4096)
++        run(0 ignored verify "${edge_old}" "${edge}")
++        run(0 ignored append "${edge_old}" "${edge_more}" "${edge_new}")
++        run(0 checked verify "${edge_new}" "${edge_all}")
++        string(JSON edge_count GET "${checked}" files)
++        if(NOT edge_count EQUAL 4)
++            message(FATAL_ERROR "${mode}/${red}: verification lost an empty or multiblock file")
++        endif()
++    endforeach()
++endforeach()
+ run(0 selftest selftest "${all}")
+ string(JSON tried GET "${selftest}" damaged_tried)
+ string(JSON rejected GET "${selftest}" damaged_rejected)

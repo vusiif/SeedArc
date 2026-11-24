@@ -1,0 +1,709 @@
+{
+  "scope": "single-run same-source dev costs; no Seed advantage conclusion",
+  "validated": {
+    "commands": 83,
+    "artifacts": 34,
+    "byte_exact": true,
+    "independent_histories": true
+  },
+  "costs": "sum subprocess wall time for stages 1..3; includes tool internal verification, excludes staging, prewarming and external verify (separately reported)",
+  "provenance": [
+    {
+      "task_id": "20261124T051435Z-cef36683",
+      "raw_sha256": "9fd98387bbec3494ffd45d3004d537c8f9e706bd36640dc9dc5ee829a1780532",
+      "histories_sha256": "070ae7f311662f64566afa9d65f1675f04332cb421f2f2a7d4a0e9bacd1d4e4a",
+      "branches": [
+        "A",
+        "B-new",
+        "C",
+        "C-coord",
+        "D-nearest"
+      ]
+    },
+    {
+      "task_id": "20261124T054749Z-aef206e4",
+      "raw_sha256": "4f23a92986b3de7094a6c97af4f0b2bde46d858cd5d4acaa80e10102f709bebd",
+      "histories_sha256": "511730ba38340e17c7cfb96e82f8d81009427ae77250d47e4897cc3142d74a59",
+      "branches": [
+        "S-segment",
+        "S-regroup",
+        "R-seed",
+        "R-coord"
+      ]
+    }
+  ],
+  "limitations": [
+    "One PRNG seed and one repetition; no statistical estimate.",
+    "For an aggregate, the interruption and task-local monitor change must be disclosed; no uninterrupted-run claim.",
+    "Existing separable space; bounded searches do not establish global optimum or infeasible exhaustive cost.",
+    "No B-mix, cross-type drift, single large-file case or holdout evaluation.",
+    "Archives were checked and hashed before reclamation; reproduce from fixed inputs to regenerate."
+  ],
+  "branches": [
+    {
+      "branch": "A",
+      "final_bytes": 85821177,
+      "final_plan": "0x148",
+      "input_bytes": 536864155,
+      "ratio": 0.15985641097606898,
+      "initial_write_ms": 27735.680527985096,
+      "append_search_ms": 0,
+      "append_write_ms": 23750.534729100764,
+      "append_search_plus_write_ms": 23750.534729100764,
+      "independent_verify_ms": 22438.39152099099,
+      "peak_tool_rss_bytes": 640393216,
+      "final_parts": {
+        "header": 32,
+        "generation_records": 352,
+        "dictionaries": 65536,
+        "data": 77814655,
+        "redundancy_records": 0,
+        "stale_trailers": 5572240,
+        "trailer": 2368338,
+        "footer": 24,
+        "group_metadata": 80
+      },
+      "size_vs_solid_regroup_percent": 41.372879528550484
+    },
+    {
+      "branch": "B-new",
+      "final_bytes": 86047579,
+      "final_plan": "0x40",
+      "input_bytes": 536864155,
+      "ratio": 0.16027812287076607,
+      "initial_write_ms": 27856.97095305659,
+      "append_search_ms": 29917.461944860406,
+      "append_write_ms": 31641.528131091036,
+      "append_search_plus_write_ms": 61558.99007595144,
+      "independent_verify_ms": 21863.855825038627,
+      "peak_tool_rss_bytes": 641011712,
+      "final_parts": {
+        "header": 32,
+        "generation_records": 280,
+        "dictionaries": 262144,
+        "data": 77844665,
+        "redundancy_records": 0,
+        "stale_trailers": 5572168,
+        "trailer": 2368266,
+        "footer": 24,
+        "group_metadata": 56
+      },
+      "size_vs_solid_regroup_percent": 41.74583063211112
+    },
+    {
+      "branch": "C",
+      "final_bytes": 80521172,
+      "final_plan": "0x40",
+      "input_bytes": 536864155,
+      "ratio": 0.14998425812205696,
+      "initial_write_ms": 27340.054369997233,
+      "append_search_ms": 146491.04223307222,
+      "append_write_ms": 103921.33275198285,
+      "append_search_plus_write_ms": 250412.37498505507,
+      "independent_verify_ms": 21906.604970921762,
+      "peak_tool_rss_bytes": 799105024,
+      "final_parts": {
+        "header": 32,
+        "generation_records": 64,
+        "dictionaries": 65536,
+        "data": 78087466,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 2368050,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "size_vs_solid_regroup_percent": 32.642202619217066
+    },
+    {
+      "branch": "C-coord",
+      "final_bytes": 80551346,
+      "final_plan": "0x148",
+      "input_bytes": 536864155,
+      "ratio": 0.15004046228416945,
+      "initial_write_ms": 28599.238613038324,
+      "append_search_ms": 160875.46809390187,
+      "append_write_ms": 100265.1363320183,
+      "append_search_plus_write_ms": 261140.60442592017,
+      "independent_verify_ms": 22214.67699005734,
+      "peak_tool_rss_bytes": 798527488,
+      "final_parts": {
+        "header": 32,
+        "generation_records": 84,
+        "dictionaries": 65536,
+        "data": 78087466,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 2398204,
+        "footer": 24,
+        "group_metadata": 30146
+      },
+      "size_vs_solid_regroup_percent": 32.6919081279972
+    },
+    {
+      "branch": "D-nearest",
+      "final_bytes": 85922057,
+      "final_plan": "0x148",
+      "input_bytes": 536864155,
+      "ratio": 0.16004431698368837,
+      "initial_write_ms": 27004.59177105222,
+      "append_search_ms": 0,
+      "append_write_ms": 31078.644347959198,
+      "append_search_plus_write_ms": 31078.644347959198,
+      "independent_verify_ms": 22086.602096096613,
+      "peak_tool_rss_bytes": 640401408,
+      "final_parts": {
+        "header": 32,
+        "generation_records": 336,
+        "dictionaries": 65536,
+        "data": 77814655,
+        "redundancy_records": 0,
+        "stale_trailers": 5643018,
+        "trailer": 2398456,
+        "footer": 24,
+        "group_metadata": 30182
+      },
+      "size_vs_solid_regroup_percent": 41.539058746610365
+    },
+    {
+      "branch": "S-segment",
+      "final_bytes": 65818554,
+      "final_plan": "0x148",
+      "input_bytes": 536864155,
+      "ratio": 0.12259815334476931,
+      "initial_write_ms": 15928.119563031942,
+      "append_search_ms": 0,
+      "append_write_ms": 27421.09355411958,
+      "append_search_plus_write_ms": 27421.09355411958,
+      "independent_verify_ms": 22417.696479940787,
+      "peak_tool_rss_bytes": 1161936896,
+      "final_parts": {
+        "header": 32,
+        "generation_records": 336,
+        "dictionaries": 0,
+        "data": 58646773,
+        "redundancy_records": 0,
+        "stale_trailers": 5030032,
+        "trailer": 2141357,
+        "footer": 24,
+        "group_metadata": 48
+      },
+      "size_vs_solid_regroup_percent": 8.42263915100343
+    },
+    {
+      "branch": "S-regroup",
+      "final_bytes": 60705545,
+      "final_plan": "0x148",
+      "input_bytes": 536864155,
+      "ratio": 0.11307431206689521,
+      "initial_write_ms": 15760.758462012745,
+      "append_search_ms": 0,
+      "append_write_ms": 76763.9455429744,
+      "append_search_plus_write_ms": 76763.9455429744,
+      "independent_verify_ms": 22718.670085887425,
+      "peak_tool_rss_bytes": 1754210304,
+      "final_parts": {
+        "header": 32,
+        "generation_records": 84,
+        "dictionaries": 0,
+        "data": 58564387,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 2141018,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "size_vs_solid_regroup_percent": 0.0
+    },
+    {
+      "branch": "R-seed",
+      "final_bytes": 80521172,
+      "final_plan": "0x40",
+      "input_bytes": 536864155,
+      "ratio": 0.14998425812205696,
+      "initial_write_ms": 0,
+      "append_search_ms": 147226.96829005145,
+      "append_write_ms": 100380.3449459374,
+      "append_search_plus_write_ms": 247607.31323598884,
+      "independent_verify_ms": 22054.956029052846,
+      "peak_tool_rss_bytes": 798642176,
+      "final_parts": {
+        "header": 32,
+        "generation_records": 64,
+        "dictionaries": 65536,
+        "data": 78087466,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 2368050,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "size_vs_solid_regroup_percent": 32.642202619217066
+    },
+    {
+      "branch": "R-coord",
+      "final_bytes": 80551298,
+      "final_plan": "0x40",
+      "input_bytes": 536864155,
+      "ratio": 0.150040372876077,
+      "initial_write_ms": 0,
+      "append_search_ms": 123664.42594304681,
+      "append_write_ms": 100349.76926096715,
+      "append_search_plus_write_ms": 224014.19520401396,
+      "independent_verify_ms": 22128.082212992013,
+      "peak_tool_rss_bytes": 798433280,
+      "final_parts": {
+        "header": 32,
+        "generation_records": 60,
+        "dictionaries": 65536,
+        "data": 78087466,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 2398180,
+        "footer": 24,
+        "group_metadata": 30138
+      },
+      "size_vs_solid_regroup_percent": 32.69182905779036
+    }
+  ],
+  "physical_parts_delta_vs_A": {
+    "B-new": {
+      "header": 0,
+      "generation_records": -72,
+      "dictionaries": 196608,
+      "data": 30010,
+      "redundancy_records": 0,
+      "stale_trailers": -72,
+      "trailer": -72,
+      "footer": 0
+    },
+    "C": {
+      "header": 0,
+      "generation_records": -288,
+      "dictionaries": 0,
+      "data": 272811,
+      "redundancy_records": 0,
+      "stale_trailers": -5572240,
+      "trailer": -288,
+      "footer": 0
+    },
+    "C-coord": {
+      "header": 0,
+      "generation_records": -268,
+      "dictionaries": 0,
+      "data": 272811,
+      "redundancy_records": 0,
+      "stale_trailers": -5572240,
+      "trailer": 29866,
+      "footer": 0
+    },
+    "D-nearest": {
+      "header": 0,
+      "generation_records": -16,
+      "dictionaries": 0,
+      "data": 0,
+      "redundancy_records": 0,
+      "stale_trailers": 70778,
+      "trailer": 30118,
+      "footer": 0
+    },
+    "S-segment": {
+      "header": 0,
+      "generation_records": -16,
+      "dictionaries": -65536,
+      "data": -19167882,
+      "redundancy_records": 0,
+      "stale_trailers": -542208,
+      "trailer": -226981,
+      "footer": 0
+    },
+    "S-regroup": {
+      "header": 0,
+      "generation_records": -268,
+      "dictionaries": -65536,
+      "data": -19250268,
+      "redundancy_records": 0,
+      "stale_trailers": -5572240,
+      "trailer": -227320,
+      "footer": 0
+    },
+    "R-seed": {
+      "header": 0,
+      "generation_records": -288,
+      "dictionaries": 0,
+      "data": 272811,
+      "redundancy_records": 0,
+      "stale_trailers": -5572240,
+      "trailer": -288,
+      "footer": 0
+    },
+    "R-coord": {
+      "header": 0,
+      "generation_records": -292,
+      "dictionaries": 0,
+      "data": 272811,
+      "redundancy_records": 0,
+      "stale_trailers": -5572240,
+      "trailer": 29842,
+      "footer": 0
+    }
+  },
+  "searches": [
+    {
+      "branch": "B-new",
+      "stage": 1,
+      "process_wall_ms": 10328.076182981022,
+      "method": "seed",
+      "start_plan": "0x148",
+      "best_plan": "0x40",
+      "start_bytes": 8331036,
+      "best_bytes": 8331028,
+      "budget_bytes": 198853696,
+      "budget_spent_bytes": 164899886,
+      "plan_evaluations": 4,
+      "group_evaluations": 2,
+      "group_cache_hits": 2,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          82449943,
+          8331036
+        ],
+        [
+          3,
+          82449943,
+          8331028
+        ]
+      ]
+    },
+    {
+      "branch": "B-new",
+      "stage": 2,
+      "process_wall_ms": 10292.224847944453,
+      "method": "seed",
+      "start_plan": "0x40",
+      "best_plan": "0x40",
+      "start_bytes": 8312588,
+      "best_bytes": 8312588,
+      "budget_bytes": 213694084,
+      "budget_spent_bytes": 167017018,
+      "plan_evaluations": 4,
+      "group_evaluations": 2,
+      "group_cache_hits": 2,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          83508509,
+          8312588
+        ]
+      ]
+    },
+    {
+      "branch": "B-new",
+      "stage": 3,
+      "process_wall_ms": 9297.160913934931,
+      "method": "seed",
+      "start_plan": "0x40",
+      "best_plan": "0x40",
+      "start_bytes": 8243075,
+      "best_bytes": 8243075,
+      "budget_bytes": 214713268,
+      "budget_spent_bytes": 166555260,
+      "plan_evaluations": 4,
+      "group_evaluations": 2,
+      "group_cache_hits": 2,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          83277630,
+          8243075
+        ]
+      ]
+    },
+    {
+      "branch": "C",
+      "stage": 1,
+      "process_wall_ms": 45116.66982807219,
+      "method": "seed",
+      "start_plan": "0x148",
+      "best_plan": "0x40",
+      "start_bytes": 61504703,
+      "best_bytes": 61504695,
+      "budget_bytes": 1719049268,
+      "budget_spent_bytes": 1291289160,
+      "plan_evaluations": 4,
+      "group_evaluations": 2,
+      "group_cache_hits": 2,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          645644580,
+          61504703
+        ],
+        [
+          3,
+          645644580,
+          61504695
+        ]
+      ]
+    },
+    {
+      "branch": "C",
+      "stage": 2,
+      "process_wall_ms": 47043.636644026265,
+      "method": "seed",
+      "start_plan": "0x40",
+      "best_plan": "0x40",
+      "start_bytes": 69879712,
+      "best_bytes": 69879712,
+      "budget_bytes": 1932743352,
+      "budget_spent_bytes": 1458306178,
+      "plan_evaluations": 4,
+      "group_evaluations": 2,
+      "group_cache_hits": 2,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          729153089,
+          69879712
+        ]
+      ]
+    },
+    {
+      "branch": "C",
+      "stage": 3,
+      "process_wall_ms": 54330.73576097377,
+      "method": "seed",
+      "start_plan": "0x40",
+      "best_plan": "0x40",
+      "start_bytes": 78153014,
+      "best_bytes": 78153014,
+      "budget_bytes": 2147456620,
+      "budget_spent_bytes": 1624861438,
+      "plan_evaluations": 4,
+      "group_evaluations": 2,
+      "group_cache_hits": 2,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          812430719,
+          78153014
+        ]
+      ]
+    },
+    {
+      "branch": "C-coord",
+      "stage": 1,
+      "process_wall_ms": 47777.7031569276,
+      "method": "coord",
+      "start_plan": "0x148",
+      "best_plan": "0x148",
+      "start_bytes": 61504703,
+      "best_bytes": 61504703,
+      "budget_bytes": 1719049268,
+      "budget_spent_bytes": 1219570403,
+      "plan_evaluations": 2,
+      "group_evaluations": 4,
+      "group_cache_hits": 0,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          645644580,
+          61504703
+        ]
+      ]
+    },
+    {
+      "branch": "C-coord",
+      "stage": 2,
+      "process_wall_ms": 55244.33565500658,
+      "method": "coord",
+      "start_plan": "0x148",
+      "best_plan": "0x148",
+      "start_bytes": 69879720,
+      "best_bytes": 69879720,
+      "budget_bytes": 1932743352,
+      "budget_spent_bytes": 1376448500,
+      "plan_evaluations": 2,
+      "group_evaluations": 4,
+      "group_cache_hits": 0,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          729153089,
+          69879720
+        ]
+      ]
+    },
+    {
+      "branch": "C-coord",
+      "stage": 3,
+      "process_wall_ms": 57853.42928196769,
+      "method": "coord",
+      "start_plan": "0x148",
+      "best_plan": "0x148",
+      "start_bytes": 78153022,
+      "best_bytes": 78153022,
+      "budget_bytes": 2147456620,
+      "budget_spent_bytes": 1533436543,
+      "plan_evaluations": 2,
+      "group_evaluations": 4,
+      "group_cache_hits": 0,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          812430719,
+          78153022
+        ]
+      ]
+    },
+    {
+      "branch": "R-seed",
+      "stage": 1,
+      "process_wall_ms": 45149.956783046946,
+      "method": "seed",
+      "start_plan": "0x40",
+      "best_plan": "0x40",
+      "start_bytes": 61504695,
+      "best_bytes": 61504695,
+      "budget_bytes": 1719049268,
+      "budget_spent_bytes": 1291289160,
+      "plan_evaluations": 4,
+      "group_evaluations": 2,
+      "group_cache_hits": 2,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          645644580,
+          61504695
+        ]
+      ]
+    },
+    {
+      "branch": "R-seed",
+      "stage": 2,
+      "process_wall_ms": 47529.55242001917,
+      "method": "seed",
+      "start_plan": "0x40",
+      "best_plan": "0x40",
+      "start_bytes": 69879712,
+      "best_bytes": 69879712,
+      "budget_bytes": 1932743352,
+      "budget_spent_bytes": 1458306178,
+      "plan_evaluations": 4,
+      "group_evaluations": 2,
+      "group_cache_hits": 2,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          729153089,
+          69879712
+        ]
+      ]
+    },
+    {
+      "branch": "R-seed",
+      "stage": 3,
+      "process_wall_ms": 54547.45908698533,
+      "method": "seed",
+      "start_plan": "0x40",
+      "best_plan": "0x40",
+      "start_bytes": 78153014,
+      "best_bytes": 78153014,
+      "budget_bytes": 2147456620,
+      "budget_spent_bytes": 1624861438,
+      "plan_evaluations": 4,
+      "group_evaluations": 2,
+      "group_cache_hits": 2,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          812430719,
+          78153014
+        ]
+      ]
+    },
+    {
+      "branch": "R-coord",
+      "stage": 1,
+      "process_wall_ms": 36991.85422307346,
+      "method": "coord",
+      "start_plan": "0x40",
+      "best_plan": "0x40",
+      "start_bytes": 61504695,
+      "best_bytes": 61504695,
+      "budget_bytes": 1719049268,
+      "budget_spent_bytes": 1075406897,
+      "plan_evaluations": 2,
+      "group_evaluations": 2,
+      "group_cache_hits": 0,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          645644580,
+          61504695
+        ]
+      ]
+    },
+    {
+      "branch": "R-coord",
+      "stage": 2,
+      "process_wall_ms": 41158.656982006505,
+      "method": "coord",
+      "start_plan": "0x40",
+      "best_plan": "0x40",
+      "start_bytes": 69879712,
+      "best_bytes": 69879712,
+      "budget_bytes": 1932743352,
+      "budget_spent_bytes": 1212338927,
+      "plan_evaluations": 2,
+      "group_evaluations": 2,
+      "group_cache_hits": 0,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          729153089,
+          69879712
+        ]
+      ]
+    },
+    {
+      "branch": "R-coord",
+      "stage": 3,
+      "process_wall_ms": 45513.91473796684,
+      "method": "coord",
+      "start_plan": "0x40",
+      "best_plan": "0x40",
+      "start_bytes": 78153014,
+      "best_bytes": 78153014,
+      "budget_bytes": 2147456620,
+      "budget_spent_bytes": 1349294874,
+      "plan_evaluations": 2,
+      "group_evaluations": 2,
+      "group_cache_hits": 0,
+      "stop": "budget",
+      "trajectory": [
+        [
+          1,
+          812430719,
+          78153014
+        ]
+      ]
+    }
+  ],
+  "peak_observed_task_disk": 1303214150
+}

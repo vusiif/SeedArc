@@ -1,0 +1,2 @@
+terminate called after throwing an instance of 'std::filesystem::__cxx11::filesystem_error'
+  what():  filesystem error: cannot make canonical path: No such file or directory [C:\Users\IceLolly\Music\Clion\SeedArc\.sandbox-test\append-history-r2-gcc-002\run-0\cumulative\docs\文件-0-1.txt]

@@ -1,0 +1,38 @@
+{
+  "manifest_sha256": "3c61cf347da0cf8a0c7fe269d85056e6330282389a68a3a5c4af9ff3160570d9",
+  "reference_sha256": "053795541d2402070454757e1e1be80e84795ea6e319d1e32f4403cdcb1e7390",
+  "tool_sha256": "50761f3800046487542403136f7872460736cbdd61e27530877dea189fd36b5d",
+  "runner_sha256": "62ec6153708d6f5868b34f230d168921bfbd06f0680f464c6b9338ad7b748f12",
+  "bytes": 29540,
+  "files": 16,
+  "frame_limits": [
+    1073741824,
+    4096,
+    8192
+  ],
+  "orders": [
+    [
+      1073741824,
+      4096,
+      8192
+    ],
+    [
+      4096,
+      8192,
+      1073741824
+    ],
+    [
+      8192,
+      1073741824,
+      4096
+    ]
+  ],
+  "rounds": 3,
+  "sample_count": 4,
+  "operation_order": "fresh then append on even rounds; reverse on odd rounds",
+  "affinity": null,
+  "mode": "seed, concrete single group Zstd9",
+  "cache": "prewarm source tree; verify before access; no global cache dropping",
+  "scope": "same dev, warm-cache stability only; no holdout/statistical significance",
+  "reused_evidence": "DEV-021 same C++ / same archive explicit-plan and payload-fault checks"
+}

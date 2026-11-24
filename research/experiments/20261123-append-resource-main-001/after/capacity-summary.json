@@ -1,0 +1,38 @@
+[
+  {
+    "size_mib": 128,
+    "layout": "two-large-files",
+    "peak_memory_bytes": 551628800,
+    "logical_disk_peak": 496689890
+  },
+  {
+    "size_mib": 128,
+    "layout": "four-mib-files",
+    "peak_memory_bytes": 551833600,
+    "logical_disk_peak": 496691540
+  },
+  {
+    "size_mib": 256,
+    "layout": "two-large-files",
+    "peak_memory_bytes": 1089155072,
+    "logical_disk_peak": 993379056
+  },
+  {
+    "size_mib": 256,
+    "layout": "four-mib-files",
+    "peak_memory_bytes": 1089683456,
+    "logical_disk_peak": 993382378
+  },
+  {
+    "size_mib": 512,
+    "layout": "two-large-files",
+    "peak_memory_bytes": 2163949568,
+    "logical_disk_peak": 1986757353
+  },
+  {
+    "size_mib": 512,
+    "layout": "four-mib-files",
+    "peak_memory_bytes": 2164707328,
+    "logical_disk_peak": 1986764063
+  }
+]

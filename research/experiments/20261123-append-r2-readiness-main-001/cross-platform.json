@@ -1,0 +1,17 @@
+{
+  "artifacts": 34,
+  "identical_history_and_archive_hashes": true,
+  "linux_acceptance": {
+    "scope": "functional acceptance, not performance",
+    "passes": 2,
+    "artifacts_per_pass": 34,
+    "searches_per_pass": 15,
+    "byte_identical_history": true,
+    "independent_parents": true,
+    "chinese_paths": true,
+    "bad_manifest_rejected": true,
+    "scale_limit_rejected": true,
+    "tool_sha256": "e171669b1b984280005e5f9fafe5c43065252ea48b6bda637e032614f5654c24"
+  },
+  "note": "Small functional fixture only, no performance or large-scale claim"
+}

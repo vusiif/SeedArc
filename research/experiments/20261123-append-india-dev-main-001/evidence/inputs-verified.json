@@ -1,0 +1,14 @@
+{
+  "linux-src": {
+    "files": 3625,
+    "bytes": 50331389,
+    "listing_sha256": "dc28c9792016c8c68421b3a0da4704e2b91b240f82810e9604052e724068d783",
+    "archive_sha256": "b1a2562be56e42afb3f8489d4c2a7ac472ac23098f1ef1c1e40da601f54625eb"
+  },
+  "wiki-text": {
+    "files": 50,
+    "bytes": 50000000,
+    "listing_sha256": "899839acfa9a1b566e668cbeff844b2ec0f9cbf726ee568f45bace465a3ac35a",
+    "archive_sha256": "547994d9980ebed1288380d652999f38a14fe291a6247c157c3d33d4932534bc"
+  }
+}

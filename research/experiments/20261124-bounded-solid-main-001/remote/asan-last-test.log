@@ -1,0 +1,66 @@
+Start testing: Nov 24 09:35 UTC
+----------------------------------------------------------
+3/46 Testing: research.append4_study
+3/46 Test: research.append4_study
+Command: "/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/cmake" "-DTOOL=/home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools/seedarc_append4_study" "-DWORK=/home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools/append4-check-Debug" "-P" "/home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/research/tools/check_append4.cmake"
+Directory: /home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools
+"research.append4_study" start time: Nov 24 09:35 UTC
+Output:
+----------------------------------------------------------
+<end of output>
+Test time = 116.49 sec
+----------------------------------------------------------
+Test Passed.
+"research.append4_study" end time: Nov 24 09:37 UTC
+"research.append4_study" time elapsed: 00:01:56
+----------------------------------------------------------
+
+4/46 Testing: research.solid_seed
+4/46 Test: research.solid_seed
+Command: "/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/cmake" "-DTOOL=/home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools/seedarc_append4_study" "-DWORK=/home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools/solid-seed-check-Debug" "-P" "/home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/research/tools/check_solid_seed.cmake"
+Directory: /home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools
+"research.solid_seed" start time: Nov 24 09:37 UTC
+Output:
+----------------------------------------------------------
+-- solid Seed / explicit / legacy payloads, histories, negative cases and compatibility passed
+<end of output>
+Test time =   9.51 sec
+----------------------------------------------------------
+Test Passed.
+"research.solid_seed" end time: Nov 24 09:37 UTC
+"research.solid_seed" time elapsed: 00:00:09
+----------------------------------------------------------
+
+5/46 Testing: research.solid_search
+5/46 Test: research.solid_search
+Command: "/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/cmake" "-DTOOL=/home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools/seedarc_append4_study" "-DWORK=/home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools/solid-search-check-Debug" "-P" "/home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/research/tools/check_solid_search.cmake"
+Directory: /home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools
+"research.solid_search" start time: Nov 24 09:37 UTC
+Output:
+----------------------------------------------------------
+-- solid search budgets, full-domain reference, deterministic outputs and direct-plan equivalence passed
+<end of output>
+Test time =   5.93 sec
+----------------------------------------------------------
+Test Passed.
+"research.solid_search" end time: Nov 24 09:38 UTC
+"research.solid_search" time elapsed: 00:00:05
+----------------------------------------------------------
+
+6/46 Testing: research.bounded_solid
+6/46 Test: research.bounded_solid
+Command: "/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/cmake" "-DTOOL=/home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools/seedarc_append4_study" "-DWORK=/home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools/bounded-solid-check-Debug" "-P" "/home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/research/tools/check_bounded_solid.cmake"
+Directory: /home/sc/long-tasks/20261124T092901Z-14334bcf/work/asan/research/tools
+"research.bounded_solid" start time: Nov 24 09:38 UTC
+Output:
+----------------------------------------------------------
+-- bounded caps, old readers, default bytes, append, access, faults and negatives passed
+<end of output>
+Test time =   2.78 sec
+----------------------------------------------------------
+Test Passed.
+"research.bounded_solid" end time: Nov 24 09:38 UTC
+"research.bounded_solid" time elapsed: 00:00:02
+----------------------------------------------------------
+
+End testing: Nov 24 09:38 UTC

@@ -1,0 +1,8 @@
+{
+  "research/tools/append_common.hpp": "29cbd9bdf26c4bce7cccfa7c2b8a3a461f33039e391d05b9c07254f2b4042d98",
+  "research/tools/append4_study.cpp": "0a958097d42b27dcf1950f00d1e3f01459c9ef0b532f2b202e9b5133b7d01240",
+  "research/tools/study_common.hpp": "25b47c1f6363c4c5af9b238952151428418628532bd8650868ecc2fc13d4a1df",
+  "research/scripts/append_history_r2.py": "138156d054a5ffa6ba01cd633ea1d4ef96634f1d96052062a1a744834011ea35",
+  "research/scripts/check_append_history_r2.py": "359ac7b5242ae512709c3da2683a718076daa5e7ab080788dd75be37f3aeab2a",
+  "research/scripts/append_space_audit.py": "c0e7b08b62c727157cbdc82513a8b8c880d0fbfae02344f8d83edcc88f16ab93"
+}

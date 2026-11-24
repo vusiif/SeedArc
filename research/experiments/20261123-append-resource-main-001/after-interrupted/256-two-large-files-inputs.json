@@ -1,0 +1,10 @@
+{
+  "0001.bin": {
+    "bytes": 80530637,
+    "sha256": "8a3e1fe0865a3ac15bf35f0422aa5f4b157b2417342f6df119a593361822d93c"
+  },
+  "0000.bin": {
+    "bytes": 187904819,
+    "sha256": "f6404afc31395fd5a96ff1cc4ef0dc4a37cf58ead1fd2bc49c885a8b29672cd5"
+  }
+}

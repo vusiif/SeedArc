@@ -16,8 +16,8 @@
 //   off         no per-file records; files are listed only by trailers
 //   checkpoint  a CKP record after about every N data bytes lists the files since the previous
 //               one (zstd-compressed listing), so the cost hardly depends on the file count
-//   file        a FIL record in front of every file
-// Solid mode writes a FRM record in front of every frame unless the level is off.
+//   file        an FIL record in front of every file
+// Solid mode writes an FRM record in front of every frame unless the level is off.
 //
 // Records: tag (8) | body length (4) | body | CRC32C(body) (4). Every body starts with the
 // record's own offset, so a record is only valid where it claims to be (copies inside stored
@@ -27,6 +27,7 @@
 // the newest intact trailer in the prefix plus every valid record, verifies every file by CRC,
 // refuses conflicting copies and applies the production manifest checks (ADR-0005).
 #include "append_common.hpp"
+#include "solid_plan.hpp"
 #include "splitmix64/splitmix64.hpp"
 
 #include <cstring>
@@ -54,7 +55,17 @@ constexpr std::string_view usage =
     " [STALL]\n"
     "      START: default (G5 start plan) or PLAN_HEX; restart = cold (G5), local = stop when"
     " stuck; STALL default 20\n"
-    "  append4_study selftest INPUT_DIR\n";
+    "  append4_study selftest INPUT_DIR\n"
+    "  append4_study pack seed-solid|explicit-solid SOLID_PLAN_HEX INPUT_DIR OUT [off]\n"
+    "  append4_study payload-compare LEFT RIGHT\n"
+    "  append4_study solid-selftest INPUT_DIR\n"
+    "  append4_study solid-search seed|explicit START INPUT_DIR OUT BUDGET_BYTES PRNG_SEED "
+    "[near|enumerate]\n"
+    "      START: default, Seed hex (seed), or rule:k (explicit)\n"
+    "  append4_study bounded-pack seed|explicit FRAME_LIMIT_BYTES INPUT_DIR OUT\n"
+    "  append4_study bounded-append FRAME_LIMIT_BYTES OLD NEW_DIR OUT\n"
+    "  append4_study access-profile ARCHIVE INPUT_DIR UNIFORM_SAMPLE_COUNT\n"
+    "  append4_study payload-fault-profile ARCHIVE INPUT_DIR\n";
 using Tag = std::array<char, 8>;
 constexpr Tag magic{'S', 'A', 'D', 'X', 'R', '0', '0', '4'};
 constexpr Tag footer_magic{'S', 'A', 'D', 'X', 'E', 'N', 'D', '4'};
@@ -87,9 +98,7 @@ int fail(const Error &e) {
     std::cerr << e.message << '\n';
     return 1;
 }
-std::span<const std::byte> as_bytes(const Tag &t) {
-    return std::as_bytes(std::span{t});
-}
+std::span<const std::byte> as_bytes(const Tag &t) { return std::as_bytes(std::span{t}); }
 void put_text(std::vector<std::byte> &out, std::string_view s) {
     put(out, s.size(), 2);
     for (const auto c : s) {
@@ -112,6 +121,7 @@ struct Header {
     std::uint32_t flags = 0;
     std::uint32_t redundancy = red_off;
     std::uint32_t checkpoint_bytes = 0;
+    std::uint32_t revision = version;
     bool seed() const { return (flags & flag_seed) != 0; }
     bool solid() const { return (flags & flag_solid) != 0; }
     bool explicit_groups() const { return !seed() && !solid(); }
@@ -119,7 +129,7 @@ struct Header {
 std::vector<std::byte> header_of(const Header &h) {
     std::vector<std::byte> out(magic.size());
     std::memcpy(out.data(), magic.data(), magic.size());
-    put(out, version, 4);
+    put(out, h.revision, 4);
     put(out, chunk, 4);
     put(out, level, 4);
     put(out, h.flags, 4);
@@ -134,14 +144,16 @@ std::expected<Header, Error> parse_header(std::span<const std::byte> bytes) {
     Reader r{bytes, magic.size()};
     const auto ver = r.get(4), ck = r.get(4), lv = r.get(4), flags = r.get(4), red = r.get(4),
                cpb = r.get(4);
-    if (!cpb || *ver != version || *ck != chunk || *lv != level || (*flags & ~3ULL) != 0 ||
-        *flags == (flag_seed | flag_solid) || *red > red_file ||
+    const bool strong = ver && *ver == 5;
+    if (!cpb || (*ver != version && !strong) || *ck != chunk || *lv != level ||
+        (*flags & ~3ULL) != 0 || (!strong && *flags == (flag_seed | flag_solid)) ||
+        (strong && ((*flags & flag_solid) == 0 || *red != red_off)) || *red > red_file ||
         (*red == red_checkpoint) != (*cpb != 0) ||
         (*cpb != 0 && (*cpb < min_checkpoint_bytes || *cpb > max_checkpoint_bytes))) {
         return std::unexpected(bad("bad header"));
     }
     return Header{static_cast<std::uint32_t>(*flags), static_cast<std::uint32_t>(*red),
-                  static_cast<std::uint32_t>(*cpb)};
+                  static_cast<std::uint32_t>(*cpb), static_cast<std::uint32_t>(*ver)};
 }
 
 // ---- the container model ------------------------------------------------------------------------
@@ -157,6 +169,7 @@ struct Gen {
     std::uint32_t files_after = 0; // trailer only
     std::uint64_t record_offset = 0;
     bool has_seed = false;
+    std::uint16_t mapping_revision = seed_revision;
     Plan plan;
     Grouping grouping;
     std::vector<GenGroup> groups;
@@ -255,7 +268,11 @@ std::vector<std::byte> gen_body(const Gen &g) {
     put(b, g.record_offset, 8);
     put(b, g.index, 4);
     put(b, g.first_file, 4);
-    if (g.has_seed) {
+    if (g.mapping_revision == solid_seed_revision) {
+        put(b, g.has_seed ? solid_seed_revision : 0, 2);
+        put(b, 4, 2);
+        put(b, g.has_seed ? encode_solid_seed(g.plan) : encode_solid_explicit(g.plan), 4);
+    } else if (g.has_seed) {
         put(b, seed_revision, 2);
         put(b, 4, 2);
         put(b, encode_seed(g.plan), 4);
@@ -286,7 +303,19 @@ std::expected<Gen, Error> parse_gen_body(std::span<const std::byte> body, const 
     g.record_offset = *self;
     g.index = static_cast<std::uint32_t>(*index);
     g.first_file = static_cast<std::uint32_t>(*first);
-    if (h.seed()) {
+    if (h.revision == 5) {
+        const auto value = r.get(4);
+        const auto plan =
+            value ? (h.seed() ? decode_solid_seed(static_cast<std::uint32_t>(*value))
+                              : decode_solid_explicit(static_cast<std::uint32_t>(*value)))
+                  : std::nullopt;
+        if (*rev != (h.seed() ? solid_seed_revision : 0) || *len != 4 || !plan) {
+            return std::unexpected(bad("bad solid strategy record"));
+        }
+        g.has_seed = h.seed();
+        g.mapping_revision = solid_seed_revision;
+        g.plan = *plan;
+    } else if (h.seed()) {
         const auto seed = r.get(4);
         const auto plan = seed ? decode_seed(static_cast<std::uint32_t>(*seed)) : std::nullopt;
         if (*rev != seed_revision || *len != 4 || !plan || canonical(*plan) != *plan) {
@@ -311,15 +340,16 @@ std::expected<Gen, Error> parse_gen_body(std::span<const std::byte> body, const 
         }
     }
     const auto ngroups = r.get(4);
-    // Distinct ids with the largest equal to nkeys - 1 are exactly 0 .. nkeys - 1.
+    // Distinct ids with the largest equal to nkeys - 1 cover the range [0, nkeys - 1].
     if (!ngroups || *ngroups == 0 || *ngroups > max_groups || *nkeys != *ngroups - 1 ||
-        (!ids.empty() && *ids.rbegin() != *nkeys - 1) || (g.has_seed && *ngroups > g.plan.k)) {
+        (!ids.empty() && *ids.rbegin() != *nkeys - 1) ||
+        ((g.has_seed || h.revision == 5) && *ngroups > g.plan.k)) {
         return std::unexpected(bad("key table does not name every group but the last"));
     }
     g.grouping.other = static_cast<std::uint8_t>(*ngroups - 1);
     for (std::uint64_t i = 0; i < *ngroups; ++i) {
         const auto off = r.get(8), size = r.get(4), crc = r.get(4);
-        if (!crc || *size > research::max_dictionary_bytes ||
+        if (!crc || *size > research::max_dictionary_bytes || (h.revision == 5 && *size != 0) ||
             (*size == 0 && (*off != 0 || *crc != 0))) {
             return std::unexpected(bad("bad group table"));
         }
@@ -648,7 +678,8 @@ std::expected<Scan, Error> scan(std::span<const std::byte> bytes, const Header &
 // ---- trailer ------------------------------------------------------------------------------------
 std::vector<std::byte> trailer_bytes(const Model &m) {
     std::vector<std::byte> t;
-    put(t, seedarc::experimental::crc32c(header_of(m.header)), 4); // the header has no CRC of its own
+    put(t, seedarc::experimental::crc32c(header_of(m.header)),
+        4); // the header has no CRC of its own
     put(t, m.entries.size(), 4);
     put(t, m.gens.size(), 4);
     for (const auto &g : m.gens) {
@@ -753,8 +784,7 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
             return std::unexpected(g.error());
         }
         if (g->index != i || g->first_file != prev_after || *after <= prev_after ||
-            *after > *count ||
-            (!m.gens.empty() && *off < m.data_start.back())) {
+            *after > *count || (!m.gens.empty() && *off < m.data_start.back())) {
             return std::unexpected(bad("bad generation order"));
         }
         const auto ds = check_gen_dicts(body_bytes, *g, rec->end, &m.gens);
@@ -848,7 +878,8 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
             const auto off = t.get(8), stored = t.get(8), raw = t.get(8), fgen = t.get(4),
                        group = t.get(1);
             if (!group || *fgen >= m.gens.size() || *group >= m.gens[*fgen].groups.size() ||
-                *off < m.data_start[*fgen] || *off > region_end(static_cast<std::uint32_t>(*fgen)) ||
+                *off < m.data_start[*fgen] ||
+                *off > region_end(static_cast<std::uint32_t>(*fgen)) ||
                 region_end(static_cast<std::uint32_t>(*fgen)) - *off < *stored || *stored == 0 ||
                 *raw == 0 || *raw > research::max_solid_bytes) {
                 return std::unexpected(bad("bad frame"));
@@ -863,6 +894,9 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
                 return std::unexpected(bad("solid entry outside its frame"));
             }
             e.group = m.frames[e.frame].group;
+            if (h.revision == 5 && e.group != group_of(m.gens[e.gen], e.path, e.size)) {
+                return std::unexpected(bad("solid strategy and frame group disagree"));
+            }
         }
     }
     if (t.at != trailer.size()) {
@@ -925,9 +959,10 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
 // Dictionary decoders by (offset, size): one per distinct dictionary in the container.
 using DecoderCache = std::map<std::pair<std::uint64_t, std::uint32_t>, research::DictionaryDecoder>;
 
-std::expected<std::vector<std::byte>, Error> decode_blocks(const Entry &e, const GenGroup &grp,
-                                                           std::span<const std::byte> bytes,
-                                                           DecoderCache &cache) {
+template <class Consumer>
+std::expected<void, Error> visit_blocks(const Entry &e, const GenGroup &grp,
+                                        std::span<const std::byte> bytes, DecoderCache &cache,
+                                        Consumer &&consume) {
     research::DictionaryDecoder *dict = nullptr;
     if (grp.dict_size != 0) {
         const auto key = std::pair{grp.dict_offset, grp.dict_size};
@@ -943,16 +978,23 @@ std::expected<std::vector<std::byte>, Error> decode_blocks(const Entry &e, const
         dict = &it->second;
     }
     codec::Decoder plain;
-    std::vector<std::byte> file(static_cast<std::size_t>(e.size));
+    // Only the exact decoded destination is read below; codecs must fill it before success.
+    std::array<std::byte, chunk> scratch;
     std::size_t at = 0;
     for (const auto &b : e.blocks) {
-        const auto raw = std::min<std::size_t>(chunk, file.size() - at);
+        if (at >= e.size) {
+            return std::unexpected(bad("too many blocks for file"));
+        }
+        const auto raw = std::min<std::size_t>(chunk, static_cast<std::size_t>(e.size) - at);
         if (b.offset > bytes.size() || bytes.size() - b.offset < b.stored) {
             return std::unexpected(bad("block outside the container"));
         }
         const auto in = bytes.subspan(static_cast<std::size_t>(b.offset), b.stored);
-        const auto dst = std::span{file}.subspan(at, raw);
+        const auto dst = std::span{scratch}.first(raw);
         if (b.kind == kind_store) {
+            if (in.size() != dst.size()) {
+                return std::unexpected(bad("stored block size mismatch"));
+            }
             std::ranges::copy(in, dst.begin());
         } else if (b.kind == kind_zstd) {
             if (auto r = plain.decode(codec::zstd_id, in, dst); !r) {
@@ -966,7 +1008,30 @@ std::expected<std::vector<std::byte>, Error> decode_blocks(const Entry &e, const
         if (seedarc::experimental::crc32c(dst) != b.crc) {
             return std::unexpected(bad("block crc mismatch"));
         }
+        if (auto r = consume(at, std::span<const std::byte>{dst}); !r) {
+            return r;
+        }
         at += raw;
+    }
+    if (at != e.size) {
+        return std::unexpected(bad("file blocks do not cover its size"));
+    }
+    // Also visit empty files, and let a consumer observe end-of-file without retaining bytes.
+    return consume(at, std::span<const std::byte>{});
+}
+
+std::expected<std::vector<std::byte>, Error> decode_blocks(const Entry &e, const GenGroup &grp,
+                                                           std::span<const std::byte> bytes,
+                                                           DecoderCache &cache) {
+    std::vector<std::byte> file(static_cast<std::size_t>(e.size));
+    auto r = visit_blocks(
+        e, grp, bytes, cache,
+        [&](std::size_t at, std::span<const std::byte> raw) -> std::expected<void, Error> {
+            std::ranges::copy(raw, file.begin() + static_cast<std::ptrdiff_t>(at));
+            return {};
+        });
+    if (!r) {
+        return std::unexpected(r.error());
     }
     return file;
 }
@@ -982,53 +1047,105 @@ std::expected<std::vector<std::byte>, Error> decode_frame(const Frame &f,
     return raw;
 }
 
-std::expected<std::map<std::string, std::vector<std::byte>>, Error>
-decode_all(const Model &m, std::span<const std::byte> bytes) {
-    std::map<std::string, std::vector<std::byte>> out;
+// Visit every block/frame and validate every CRC. A subset comparison must still validate old
+// payloads: append is not permitted to copy corrupt old content into a purportedly valid output.
+template <class Consumer>
+std::expected<void, Error> visit_decoded(const Model &m, std::span<const std::byte> bytes,
+                                         Consumer &&consume) {
     if (m.header.solid()) {
-        std::vector<std::vector<std::byte>> raw;
-        for (const auto &f : m.frames) {
-            auto r = decode_frame(f, bytes);
+        std::vector<std::vector<const Entry *>> entries(m.frames.size());
+        for (const auto &e : m.entries) {
+            if (e.frame >= entries.size()) {
+                return std::unexpected(bad("file frame index out of range"));
+            }
+            entries[e.frame].push_back(&e);
+        }
+        for (std::size_t frame = 0; frame < m.frames.size(); ++frame) {
+            auto r = decode_frame(m.frames[frame], bytes);
             if (!r) {
                 return std::unexpected(r.error());
             }
-            raw.push_back(std::move(*r));
-        }
-        for (const auto &e : m.entries) {
-            const auto view = std::span{raw[e.frame]}.subspan(
-                static_cast<std::size_t>(e.frame_offset), static_cast<std::size_t>(e.size));
-            if (seedarc::experimental::crc32c(view) != e.file_crc) {
-                return std::unexpected(bad("file crc mismatch"));
+            for (const auto *e : entries[frame]) {
+                if (e->frame_offset > r->size() || e->size > r->size() - e->frame_offset) {
+                    return std::unexpected(bad("file outside decoded frame"));
+                }
+                const auto view = std::span<const std::byte>{*r}.subspan(
+                    static_cast<std::size_t>(e->frame_offset), static_cast<std::size_t>(e->size));
+                if (seedarc::experimental::crc32c(view) != e->file_crc) {
+                    return std::unexpected(bad("file crc mismatch"));
+                }
+                if (auto checked = consume(*e, 0, view); !checked) {
+                    return checked;
+                }
             }
-            out.emplace(e.path, std::vector<std::byte>{view.begin(), view.end()});
         }
-        return out;
+        return {};
     }
-    DecoderCache cache;
-    for (const auto &e : m.entries) {
-        auto file = decode_blocks(e, m.gens[e.gen].groups[e.group], bytes, cache);
-        if (!file) {
-            return std::unexpected(file.error());
+    for (DecoderCache cache; const auto &e : m.entries) {
+        auto r = visit_blocks(
+            e, m.gens[e.gen].groups[e.group], bytes, cache,
+            [&](std::size_t at, std::span<const std::byte> raw) { return consume(e, at, raw); });
+        if (!r) {
+            return r;
         }
-        out.emplace(e.path, std::move(*file));
+    }
+    return {};
+}
+
+std::expected<std::map<std::string, std::vector<std::byte>>, Error>
+decode_all(const Model &m, std::span<const std::byte> bytes) {
+    std::map<std::string, std::vector<std::byte>> out;
+    auto r = visit_decoded(m, bytes,
+                           [&](const Entry &e, std::size_t at,
+                               std::span<const std::byte> raw) -> std::expected<void, Error> {
+                               auto [it, inserted] = out.try_emplace(e.path);
+                               if (inserted) {
+                                   it->second.resize(static_cast<std::size_t>(e.size));
+                               }
+                               std::ranges::copy(raw, it->second.begin() +
+                                                          static_cast<std::ptrdiff_t>(at));
+                               return {};
+                           });
+    if (!r) {
+        return std::unexpected(r.error());
     }
     return out;
 }
 
 std::expected<void, Error> byte_exact(const std::vector<InputFile> &files, const Model &m,
-                                      std::span<const std::byte> bytes) {
-    auto decoded = decode_all(m, bytes);
-    if (!decoded) {
-        return std::unexpected(decoded.error());
-    }
-    if (decoded->size() != files.size()) {
+                                      std::span<const std::byte> bytes, bool require_all = true) {
+    if (require_all && m.entries.size() != files.size()) {
         return std::unexpected(bad("file count differs from input"));
     }
+    std::map<std::string_view, const std::vector<std::byte> *, std::less<>> expected;
     for (const auto &f : files) {
-        const auto it = decoded->find(f.path);
-        if (it == decoded->end() || it->second != f.data) {
-            return std::unexpected(bad("round trip mismatch"));
+        if (!expected.emplace(f.path, &f.data).second) {
+            return std::unexpected(bad("duplicate comparison file"));
         }
+    }
+    std::set<std::string_view> seen;
+    auto r = visit_decoded(
+        m, bytes,
+        [&](const Entry &e, std::size_t at,
+            std::span<const std::byte> raw) -> std::expected<void, Error> {
+            const auto it = expected.find(e.path);
+            if (it == expected.end()) {
+                return require_all ? std::unexpected(bad("file missing from comparison"))
+                                   : std::expected<void, Error>{};
+            }
+            const auto &data = *it->second;
+            if (data.size() != e.size || at > data.size() || raw.size() > data.size() - at ||
+                !std::ranges::equal(raw, std::span{data}.subspan(at, raw.size()))) {
+                return std::unexpected(bad("round trip mismatch"));
+            }
+            seen.insert(it->first);
+            return {};
+        });
+    if (!r) {
+        return r;
+    }
+    if (seen.size() != expected.size()) {
+        return std::unexpected(bad("comparison file missing from archive"));
     }
     return {};
 }
@@ -1045,6 +1162,9 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
     auto header = parse_header(bytes);
     if (!header) {
         return out; // not even the header: nothing can be read
+    }
+    if (header->revision == 5) {
+        return std::unexpected(bad("recovery is not implemented for solid strategy revision 5"));
     }
     out.header_ok = true;
     std::uint64_t total = 0;
@@ -1068,9 +1188,8 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
     //    from an earlier generation).
     const auto fm = as_bytes(footer_magic);
     std::vector<std::size_t> footers;
-    for (auto it = bytes.begin(); (it = std::search(it, bytes.end(), fm.begin(), fm.end())) !=
-                                  bytes.end();
-         ++it) {
+    for (auto it = bytes.begin();
+         (it = std::search(it, bytes.end(), fm.begin(), fm.end())) != bytes.end(); ++it) {
         footers.push_back(static_cast<std::size_t>(it - bytes.begin()));
     }
     for (auto f = footers.rbegin(); f != footers.rend(); ++f) {
@@ -1078,9 +1197,8 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
         if (!m) {
             continue;
         }
-        DecoderCache cache;
         std::vector<std::optional<std::vector<std::byte>>> frames(m->frames.size());
-        for (const auto &e : m->entries) {
+        for (DecoderCache cache; const auto &e : m->entries) {
             std::expected<std::vector<std::byte>, Error> data = std::unexpected(bad("unread"));
             if (m->header.solid()) {
                 auto &raw = frames[e.frame];
@@ -1121,8 +1239,7 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
     if (!s) {
         return std::unexpected(s.error());
     }
-    DecoderCache cache;
-    for (const auto &e : s->entries | std::views::values) {
+    for (DecoderCache cache; const auto &e : s->entries | std::views::values) {
         std::expected<std::vector<std::byte>, Error> data = std::unexpected(bad("unread"));
         if (header->solid()) {
             const auto &raw = s->frame_raw[e.frame];
@@ -1169,7 +1286,11 @@ struct Pending {
 std::expected<void, Error> encode_pending(Pending &p, const Header &h,
                                           const std::vector<InputFile> &files,
                                           const std::vector<std::uint8_t> &groups,
-                                          const std::vector<std::span<const std::byte>> &dicts) {
+                                          const std::vector<std::span<const std::byte>> &dicts,
+                                          std::uint64_t frame_limit = research::max_solid_bytes) {
+    if (frame_limit == 0 || frame_limit > research::max_solid_bytes) {
+        return std::unexpected(bad("invalid solid frame limit"));
+    }
     p.entries.resize(files.size());
     for (std::size_t i = 0; i < files.size(); ++i) {
         p.entries[i].path = files[i].path;
@@ -1191,9 +1312,35 @@ std::expected<void, Error> encode_pending(Pending &p, const Header &h,
     for (std::size_t g = 0; g < p.gen.groups.size(); ++g) {
         std::vector<std::byte> joined;
         bool any = false;
+        const auto flush = [&]() -> std::expected<void, Error> {
+            if (!any) {
+                return {};
+            }
+            if (joined.empty()) {
+                joined.push_back(std::byte{0}); // retain a frame for all-empty files
+            }
+            auto frame = research::compress_solid(joined, level);
+            if (!frame) {
+                return std::unexpected(frame.error());
+            }
+            p.frames.push_back({0, frame->size(), joined.size(), 0, static_cast<std::uint8_t>(g)});
+            p.payloads.push_back(std::move(*frame));
+            joined.clear();
+            any = false;
+            return {};
+        };
         for (std::size_t i = 0; i < files.size(); ++i) {
             if (groups[i] != g) {
                 continue;
+            }
+            if (files[i].data.size() > frame_limit) {
+                return std::unexpected(Error{ErrorCode::resource_limit,
+                                             "file exceeds the requested solid frame limit"});
+            }
+            if (files[i].data.size() > frame_limit - joined.size()) {
+                if (auto r = flush(); !r) {
+                    return r;
+                }
             }
             any = true;
             auto &e = p.entries[i];
@@ -1202,21 +1349,9 @@ std::expected<void, Error> encode_pending(Pending &p, const Header &h,
             e.file_crc = seedarc::experimental::crc32c(files[i].data);
             joined.insert(joined.end(), files[i].data.begin(), files[i].data.end());
         }
-        if (!any) {
-            continue;
+        if (auto r = flush(); !r) {
+            return r;
         }
-        if (joined.empty()) {
-            joined.push_back(std::byte{0}); // an all-empty group still needs a frame
-        }
-        if (joined.size() > research::max_solid_bytes) {
-            return std::unexpected(Error{ErrorCode::resource_limit, "solid group too large"});
-        }
-        auto frame = research::compress_solid(joined, level);
-        if (!frame) {
-            return std::unexpected(frame.error());
-        }
-        p.frames.push_back({0, frame->size(), joined.size(), 0, static_cast<std::uint8_t>(g)});
-        p.payloads.push_back(std::move(*frame));
     }
     return {};
 }
@@ -1289,7 +1424,8 @@ std::expected<void, Error> layout(std::vector<std::byte> &out, Model &m, Pending
                 put(body, m.entries.size(), 4);
                 put_file_info(body, e, h.explicit_groups());
                 if (body.size() > max_record_body) {
-                    return std::unexpected(Error{ErrorCode::resource_limit, "file record too large"});
+                    return std::unexpected(
+                        Error{ErrorCode::resource_limit, "file record too large"});
                 }
                 put_record(out, rec_file, body);
             }
@@ -1368,6 +1504,7 @@ std::expected<Pending, Error> fresh_pending(const Header &h, const Plan &plan,
                                             std::vector<std::uint8_t> &groups) {
     Pending p;
     p.gen.has_seed = h.seed();
+    p.gen.mapping_revision = h.revision == 5 ? solid_seed_revision : seed_revision;
     p.gen.plan = plan;
     p.gen.grouping = initial_grouping(plan, files);
     p.gen.groups.resize(p.gen.grouping.groups());
@@ -1423,7 +1560,12 @@ std::expected<std::vector<std::byte>, Error> lay_out_fresh(const Header &h, Pend
 
 Header header_for(const std::string &mode, std::uint32_t redundancy, std::uint32_t cpb) {
     Header h;
-    h.flags = mode == "seed" ? std::uint32_t{flag_seed} : mode == "solid" ? std::uint32_t{flag_solid} : 0U;
+    h.revision = (mode == "seed-solid" || mode == "explicit-solid") ? 5 : version;
+    h.flags = mode == "seed-solid"       ? std::uint32_t{flag_seed | flag_solid}
+              : mode == "explicit-solid" ? std::uint32_t{flag_solid}
+              : mode == "seed"           ? std::uint32_t{flag_seed}
+              : mode == "solid"          ? std::uint32_t{flag_solid}
+                                         : 0U;
     h.redundancy = redundancy;
     h.checkpoint_bytes = redundancy == red_checkpoint ? cpb : 0;
     return h;
@@ -1439,22 +1581,38 @@ struct Packed {
 // then keeps the requested level, or the one rule rec-r0 recommends.
 std::expected<Packed, Error> pack_bytes(const std::string &mode, const Plan &plan,
                                         const std::vector<InputFile> &files,
-                                        std::optional<std::uint32_t> wanted, std::uint32_t cpb) {
+                                        std::optional<std::uint32_t> wanted, std::uint32_t cpb,
+                                        std::uint64_t frame_limit = research::max_solid_bytes) {
     std::vector<std::uint8_t> groups;
     const auto base = header_for(mode, red_off, cpb);
+    if (base.revision == 5) {
+        if (!valid_solid_plan(plan) || (wanted && *wanted != red_off)) {
+            return std::unexpected(
+                bad("solid strategy requires a canonical solid plan and off redundancy"));
+        }
+        wanted = red_off;
+    }
     auto p = fresh_pending(base, plan, files, groups);
     if (!p) {
         return std::unexpected(p.error());
     }
-    if (auto r = encode_pending(*p, base, files, groups, dict_views(*p, {})); !r) {
+    if (auto r = encode_pending(*p, base, files, groups, dict_views(*p, {}), frame_limit); !r) {
         return std::unexpected(r.error());
     }
     Packed out;
+    if (wanted) {
+        // A single explicit layout does not need a second full copy of encoded payloads.
+        auto bytes = lay_out_fresh(header_for(mode, *wanted, cpb), std::move(*p));
+        if (!bytes) {
+            return std::unexpected(bytes.error());
+        }
+        out.redundancy = *wanted;
+        out.candidate_bytes[*wanted] = bytes->size();
+        out.bytes = std::move(*bytes);
+        return out;
+    }
     std::array<std::vector<std::byte>, 3> all;
     for (std::uint32_t red = red_off; red <= red_file; ++red) {
-        if (wanted && *wanted != red) {
-            continue;
-        }
         auto bytes = lay_out_fresh(header_for(mode, red, cpb), *p);
         if (!bytes) {
             return std::unexpected(bytes.error());
@@ -1462,19 +1620,15 @@ std::expected<Packed, Error> pack_bytes(const std::string &mode, const Plan &pla
         out.candidate_bytes[red] = bytes->size();
         all[red] = std::move(*bytes);
     }
-    if (wanted) {
-        out.redundancy = *wanted;
-    } else {
-        out.recommended = true;
-        const auto off = static_cast<double>(out.candidate_bytes[red_off]);
-        const auto within = [&](std::uint32_t red) {
-            return static_cast<double>(out.candidate_bytes[red]) - off <= rec_overhead_budget * off;
-        };
-        out.redundancy = out.candidate_bytes[red_off] < rec_small_archive ? red_off
-                         : within(red_file)                               ? red_file
-                         : within(red_checkpoint)                         ? red_checkpoint
-                                                                          : red_off;
-    }
+    out.recommended = true;
+    const auto off = static_cast<double>(out.candidate_bytes[red_off]);
+    const auto within = [&](std::uint32_t red) {
+        return static_cast<double>(out.candidate_bytes[red]) - off <= rec_overhead_budget * off;
+    };
+    out.redundancy = out.candidate_bytes[red_off] < rec_small_archive ? red_off
+                     : within(red_file)                               ? red_file
+                     : within(red_checkpoint)                         ? red_checkpoint
+                                                                      : red_off;
     out.bytes = std::move(all[out.redundancy]);
     return out;
 }
@@ -1501,16 +1655,24 @@ std::uint8_t nearest_group(const Model &m, const Gen &ref, std::string_view path
     return best;
 }
 
-std::expected<std::vector<std::byte>, Error> append_bytes(std::span<const std::byte> old,
-                                                          const std::vector<InputFile> &added,
-                                                          const std::string &how,
-                                                          const std::optional<Plan> &plan) {
+std::expected<std::vector<std::byte>, Error>
+append_bytes(std::span<const std::byte> old, const std::vector<InputFile> &added,
+             const std::string &how, const std::optional<Plan> &plan,
+             std::uint64_t frame_limit = research::max_solid_bytes) {
     auto parsed = parse(old);
     if (!parsed) {
         return std::unexpected(parsed.error());
     }
     Model m = std::move(*parsed);
     const auto &h = m.header;
+    if (frame_limit == 0 || frame_limit > research::max_solid_bytes ||
+        std::ranges::any_of(m.frames,
+                            [frame_limit](const Frame &f) { return f.raw > frame_limit; })) {
+        return std::unexpected(bad("old archive exceeds the requested solid frame limit"));
+    }
+    if (h.revision == 5 && plan && !valid_solid_plan(*plan)) {
+        return std::unexpected(bad("invalid solid generation plan"));
+    }
     std::set<std::string> existing;
     for (const auto &e : m.entries) {
         existing.insert(e.path);
@@ -1533,7 +1695,7 @@ std::expected<std::vector<std::byte>, Error> append_bytes(std::span<const std::b
                 Error{ErrorCode::invalid_argument, "regroup is for solid containers, no plan"});
         }
         for (const auto &g : m.gens) {
-            if (g.grouping != m.gens[0].grouping) {
+            if (g.grouping != m.gens[0].grouping || (h.revision == 5 && g.plan != m.gens[0].plan)) {
                 return std::unexpected(
                     Error{ErrorCode::invalid_argument, "regroup needs one grouping"});
             }
@@ -1545,17 +1707,23 @@ std::expected<std::vector<std::byte>, Error> append_bytes(std::span<const std::b
         std::vector<InputFile> all;
         std::vector<std::uint8_t> groups;
         for (const auto &e : m.entries) {
-            all.push_back({e.path, (*decoded)[e.path]});
+            const auto it = decoded->find(e.path);
+            if (it == decoded->end()) {
+                return std::unexpected(bad("regroup file missing from decoded input"));
+            }
+            all.push_back({e.path, std::move(it->second)});
             groups.push_back(e.group);
         }
         for (const auto &f : added) {
-            groups.push_back(nearest_group(m, last, f.path));
+            groups.push_back(h.revision == 5 ? group_of(last, f.path, f.data.size())
+                                             : nearest_group(m, last, f.path));
             all.push_back(f);
         }
+        decoded->clear();
         Pending p;
         p.gen = m.gens[0];
         p.new_dicts.resize(p.gen.groups.size());
-        if (auto r = encode_pending(p, h, all, groups, dict_views(p, old)); !r) {
+        if (auto r = encode_pending(p, h, all, groups, dict_views(p, old), frame_limit); !r) {
             return std::unexpected(r.error());
         }
         return lay_out_fresh(h, std::move(p));
@@ -1575,11 +1743,11 @@ std::expected<std::vector<std::byte>, Error> append_bytes(std::span<const std::b
         p.gen = last;
         p.new_dicts.resize(p.gen.groups.size());
         for (const auto &f : added) {
-            groups.push_back(h.seed() ? group_of(last, f.path, f.data.size())
-                                      : nearest_group(m, last, f.path));
+            groups.push_back((h.seed() || h.revision == 5) ? group_of(last, f.path, f.data.size())
+                                                           : nearest_group(m, last, f.path));
         }
     }
-    if (auto r = encode_pending(p, h, added, groups, dict_views(p, old)); !r) {
+    if (auto r = encode_pending(p, h, added, groups, dict_views(p, old), frame_limit); !r) {
         return std::unexpected(r.error());
     }
     std::vector<std::byte> out(old.begin(), old.end());
@@ -1613,8 +1781,8 @@ std::string parts_json(const Model &m, std::span<const std::byte> bytes) {
     for (const auto &f : m.frames) {
         data += f.stored;
     }
-    const auto redundancy = m.record_bytes[rec_file] + m.record_bytes[rec_checkpoint] +
-                            m.record_bytes[rec_frame];
+    const auto redundancy =
+        m.record_bytes[rec_file] + m.record_bytes[rec_checkpoint] + m.record_bytes[rec_frame];
     const auto trailer = bytes.size() - footer_bytes - m.trailer_offset;
     const auto stale = m.trailer_offset - header_bytes - gen_records - dicts - data - redundancy;
     // Group metadata (H-meta): key tables plus the Seed records, or per-file group bytes (in the
@@ -1622,9 +1790,14 @@ std::string parts_json(const Model &m, std::span<const std::byte> bytes) {
     const auto per_file = m.header.explicit_groups()
                               ? m.entries.size() * (m.header.redundancy == red_file ? 2U : 1U)
                               : 0U;
-    const auto group_meta = key_tables + (m.header.seed() ? 8 * m.gens.size() : 0) + per_file;
-    return "\"container_bytes\":" + std::to_string(bytes.size()) +
-           ",\"redundancy\":\"" + redundancy_names[m.header.redundancy] +
+    const auto group_meta = key_tables +
+                            ((m.header.seed() || m.header.revision == 5) ? 8 * m.gens.size() : 0) +
+                            per_file;
+    return "\"container_revision\":" + std::to_string(m.header.revision) +
+           ",\"strategy_revision\":" +
+           std::to_string(m.header.revision == 5 ? solid_seed_revision : seed_revision) +
+           ",\"container_bytes\":" + std::to_string(bytes.size()) + ",\"redundancy\":\"" +
+           redundancy_names[m.header.redundancy] +
            "\",\"checkpoint_bytes\":" + std::to_string(m.header.checkpoint_bytes) +
            ",\"parts\":{\"header\":" + std::to_string(header_bytes) +
            ",\"generation_records\":" + std::to_string(gen_records) +
@@ -1687,7 +1860,8 @@ std::uint64_t archive_id(std::span<const std::byte> logical, const Model &m) {
 }
 std::string volume_name(std::uint32_t index) {
     auto digits = std::to_string(index);
-    return "vol-" + std::string(5 - std::min<std::size_t>(5, digits.size()), '0') + digits + ".sadv";
+    return "vol-" + std::string(5 - std::min<std::size_t>(5, digits.size()), '0') + digits +
+           ".sadv";
 }
 std::optional<std::uint32_t> volume_index_of(std::string_view name) {
     if (name.size() != 14 || !name.starts_with("vol-") || !name.ends_with(".sadv")) {
@@ -1773,8 +1947,9 @@ std::expected<Volume, Error> parse_volume(std::span<const std::byte> file) {
         if (!n || *n == 0 || head.size() - k.at < *n || *off >= *start || *off > max_logical) {
             return vbad("bad carry range");
         }
-        v.carry.emplace_back(*off, std::vector<std::byte>{head.begin() + static_cast<std::ptrdiff_t>(k.at),
-                                                          head.begin() + static_cast<std::ptrdiff_t>(k.at + *n)});
+        v.carry.emplace_back(
+            *off, std::vector<std::byte>{head.begin() + static_cast<std::ptrdiff_t>(k.at),
+                                         head.begin() + static_cast<std::ptrdiff_t>(k.at + *n)});
         k.at += static_cast<std::size_t>(*n);
     }
     if (k.at != head.size() || (v.carry_mode == carry_none && !v.carry.empty())) {
@@ -1821,6 +1996,9 @@ std::expected<std::vector<Volume>, Error> make_volumes(std::span<const std::byte
                                                        std::uint32_t first_index,
                                                        std::uint64_t nominal, std::uint32_t mode,
                                                        std::uint32_t prev_crc) {
+    if (m.header.revision == 5) {
+        return std::unexpected(bad("volumes are not implemented for solid strategy revision 5"));
+    }
     if (logical.size() > max_logical) {
         return std::unexpected(Error{ErrorCode::resource_limit, "archive too large for volumes"});
     }
@@ -1839,10 +2017,12 @@ std::expected<std::vector<Volume>, Error> make_volumes(std::span<const std::byte
         v.prev_crc = prev_crc;
         v.carry_mode = mode;
         const auto len = std::min<std::uint64_t>(nominal, logical.size() - s);
-        const auto data = logical.subspan(static_cast<std::size_t>(s), static_cast<std::size_t>(len));
+        const auto data =
+            logical.subspan(static_cast<std::size_t>(s), static_cast<std::size_t>(len));
         v.data.assign(data.begin(), data.end());
         for (const auto &[b, e] : carry_ranges(m, s, mode)) {
-            const auto r = logical.subspan(static_cast<std::size_t>(b), static_cast<std::size_t>(e - b));
+            const auto r =
+                logical.subspan(static_cast<std::size_t>(b), static_cast<std::size_t>(e - b));
             v.carry.emplace_back(b, std::vector<std::byte>{r.begin(), r.end()});
         }
         auto file = volume_file(v);
@@ -1854,7 +2034,7 @@ std::expected<std::vector<Volume>, Error> make_volumes(std::span<const std::byte
 }
 
 // A volume directory as found: present volumes by index, checked for consistency where
-// neighbours are both present (same archive, chained CRCs, contiguous logical ranges).
+// neighbors are both present (same archive, chained CRCs, contiguous logical ranges).
 struct VolumeSet {
     std::map<std::uint32_t, Volume> volumes;
     std::uint64_t id = 0, nominal = 0;
@@ -1906,8 +2086,8 @@ std::expected<VolumeSet, Error> read_volumes(const fs::path &dir,
             return std::unexpected(bad("bad first volume"));
         }
         if (prev != nullptr &&
-            (v.start < prev->end() ||
-             (prev->index + 1 == index && (v.start != prev->end() || v.prev_crc != prev->file_crc)))) {
+            (v.start < prev->end() || (prev->index + 1 == index &&
+                                       (v.start != prev->end() || v.prev_crc != prev->file_crc)))) {
             return std::unexpected(bad("volumes out of order or not chained"));
         }
         prev = &v;
@@ -1918,8 +2098,7 @@ bool complete(const VolumeSet &set) {
     return set.volumes.size() == set.volumes.rbegin()->first + 1;
 }
 // The logical stream with what is present (volume data and carried ranges); holes are zero.
-std::expected<std::pair<std::vector<std::byte>, Presence>, Error>
-assemble(const VolumeSet &set) {
+std::expected<std::pair<std::vector<std::byte>, Presence>, Error> assemble(const VolumeSet &set) {
     std::uint64_t size = 0;
     for (const auto &v : set.volumes | std::views::values) {
         size = std::max(size, v.end());
@@ -1993,7 +2172,7 @@ std::expected<void, Error> write_volumes(const fs::path &dir, const std::vector<
 // in G5: input bytes read by training and trial encoding, cache hits free. The objective is the
 // part of the container a plan changes: dictionaries + data + key table + Seed record (per-file
 // metadata is the same for every plan and left out). "restart" re-starts from a random plan when
-// stuck (G5 behaviour, a cold search); "local" stops instead (a warm search that stays near its
+// stuck (G5 behavior, a cold search); "local" stops instead (a warm search that stays near its
 // start). The start plan is always the first candidate, so the result is never worse than it.
 Plan default_start() { // G-dict-r1, the G5 start plan: one group, 64 KiB dictionary
     Plan p;
@@ -2320,7 +2499,7 @@ std::expected<void, Error> search_coord(PlanEvaluator &ev, SearchState &s, Rng &
             }
         }
         if (!improved) {
-            // A full pass over every single-field neighbour found nothing better.
+            // A full pass over every single-field neighbor found nothing better.
             auto r = stuck(ev, s, rng, restart, current, "local_optimum");
             if (!r) {
                 return std::unexpected(r.error());
@@ -2335,9 +2514,9 @@ std::expected<void, Error> search_coord(PlanEvaluator &ev, SearchState &s, Rng &
 }
 
 std::string plan_hex(const Plan &p) {
-    constexpr char digits[] = "0123456789abcdef";
     std::string out;
     for (auto v = encode_seed(p); v != 0 || out.empty(); v >>= 4) {
+        constexpr char digits[] = "0123456789abcdef";
         out.insert(out.begin(), digits[v & 15]);
     }
     return "0x" + out;
@@ -2371,17 +2550,182 @@ int cmd_search(const std::string &method, const Plan &start, const fs::path &inp
               << s.start_bytes << ",\"best_plan\":\"" << plan_hex(s.best) << "\",\"best_rule\":\""
               << rule_names[s.best.rule] << "\",\"best_k\":" << static_cast<int>(s.best.k)
               << ",\"best_bytes\":" << s.best_bytes << ",\"proposals\":" << s.proposals
-              << ",\"restarts\":" << s.restarts << ",\"stop\":\"" << s.stop
-              << "\",\"trajectory\":[" << s.trajectory << "],"
-              << ev.stats_json() << ",\"call_wall_ms\":" << wall_ms() - w
+              << ",\"restarts\":" << s.restarts << ",\"stop\":\"" << s.stop << "\",\"trajectory\":["
+              << s.trajectory << "]," << ev.stats_json() << ",\"call_wall_ms\":" << wall_ms() - w
               << ",\"call_cpu_ms\":" << cpu_ms() - c << "," << peak_memory_json() << "}\n";
     return std::cout ? 0 : 1;
 }
 
+std::string solid_plan_json(const Plan &p) {
+    return "{\"rule\":" + std::to_string(p.rule) + ",\"groups\":" + std::to_string(p.k) +
+           ",\"layout\":\"solid\",\"codec\":\"zstd\",\"level\":9}";
+}
+
+// Bounded full-pack trials; representation changes persistence only, never the search operator.
+int cmd_solid_search(bool seeded, const Plan &start, const fs::path &input, const fs::path &output,
+                     std::uint64_t budget, std::uint64_t prng, const std::string &policy) {
+    const auto wall = wall_ms(), cpu = cpu_ms();
+    auto files = read_tree(input);
+    if (!files || files->empty()) {
+        return fail(files ? bad("solid search needs a file") : files.error());
+    }
+    const Plan baseline;
+    const auto input_bytes = input_bytes_of(*files);
+    const auto unit = std::max<std::uint64_t>(input_bytes, 1);
+    if (budget < unit || (start != baseline && budget - unit < unit)) {
+        return fail(
+            Error{ErrorCode::resource_limit, "budget must fund the start and strong default"});
+    }
+    std::map<Plan, std::uint64_t> cache;
+    std::vector<std::byte> best_archive;
+    Plan best = start;
+    std::uint64_t best_size = UINT64_MAX, spent = 0, hits = 0;
+    double encode_ms = 0, verify_ms = 0;
+    std::string trajectory, trials;
+    auto evaluate = [&](const Plan &plan) -> std::expected<std::optional<std::uint64_t>, Error> {
+        if (const auto it = cache.find(plan); it != cache.end()) {
+            ++hits;
+            return std::optional{it->second};
+        }
+        if (unit > budget - spent) {
+            return std::optional<std::uint64_t>{};
+        }
+        const auto ew = wall_ms();
+        auto encoded =
+            pack_bytes(seeded ? "seed-solid" : "explicit-solid", plan, *files, red_off, 0);
+        encode_ms += wall_ms() - ew;
+        if (!encoded) {
+            return std::unexpected(encoded.error());
+        }
+        spent += unit;
+        const auto vw = wall_ms();
+        auto model = parse(encoded->bytes);
+        if (!model) {
+            return std::unexpected(model.error());
+        }
+        if (auto verified = byte_exact(*files, *model, encoded->bytes); !verified) {
+            return std::unexpected(verified.error());
+        }
+        verify_ms += wall_ms() - vw;
+        const auto size = static_cast<std::uint64_t>(encoded->bytes.size());
+        cache.emplace(plan, size);
+        trials += (trials.empty() ? "" : ",") + std::string{"{\"evaluation\":"} +
+                  std::to_string(cache.size()) + ",\"plan\":" + solid_plan_json(plan) +
+                  ",\"bytes\":" + std::to_string(size) +
+                  ",\"spent_bytes\":" + std::to_string(spent) +
+                  ",\"elapsed_wall_ms\":" + std::to_string(wall_ms() - wall) + "}";
+        if (size < best_size ||
+            (size == best_size && std::pair{plan.rule, plan.k} < std::pair{best.rule, best.k})) {
+            best = plan;
+            best_size = size;
+            best_archive = std::move(encoded->bytes);
+            trajectory += (trajectory.empty() ? "" : ",") + std::string{"{\"evaluations\":"} +
+                          std::to_string(cache.size()) +
+                          ",\"spent_bytes\":" + std::to_string(spent) +
+                          ",\"best_bytes\":" + std::to_string(size) +
+                          ",\"plan\":" + solid_plan_json(best) + "}";
+        }
+        return std::optional{size};
+    };
+    auto initial = evaluate(start);
+    if (!initial || !*initial) {
+        return fail(initial ? bad("start budget invariant") : initial.error());
+    }
+    const auto start_size = **initial;
+    auto fixed = evaluate(baseline);
+    if (!fixed || !*fixed) {
+        return fail(fixed ? bad("baseline budget invariant") : fixed.error());
+    }
+    const auto baseline_size = **fixed;
+    auto candidates = solid_candidates();
+    std::map<Plan, std::uint64_t> rank;
+    Rng rng{prng};
+    for (const auto &plan : candidates) {
+        rank.emplace(plan, rng.next());
+    }
+    if (policy == "near") {
+        const auto distance = [&](const Plan &p) {
+            return (p.rule != start.rule ? 1 : 0) + std::abs(int{p.k} - int{start.k});
+        };
+        std::ranges::sort(candidates, [&](const Plan &a, const Plan &b) {
+            return std::tuple{distance(a), rank.at(a), a.rule, a.k} <
+                   std::tuple{distance(b), rank.at(b), b.rule, b.k};
+        });
+    } else {
+        std::ranges::sort(candidates, [](const Plan &a, const Plan &b) {
+            return std::pair{a.rule, a.k} < std::pair{b.rule, b.k};
+        });
+    }
+    std::string evaluated;
+    // The ledger includes cache entries in a concrete-plan order, independent of representation.
+    for (const auto &plan : candidates) {
+        if (cache.contains(plan)) {
+            continue;
+        }
+        auto trial = evaluate(plan);
+        if (!trial) {
+            return fail(trial.error());
+        }
+        if (!*trial) {
+            break;
+        }
+    }
+    for (const auto &[plan, size] : cache) {
+        evaluated += (evaluated.empty() ? "" : ",") + std::string{"{\"plan\":"} +
+                     solid_plan_json(plan) + ",\"bytes\":" + std::to_string(size) + "}";
+    }
+    auto best_model = parse(best_archive);
+    if (!best_model) {
+        return fail(best_model.error());
+    }
+    const auto publish = wall_ms();
+    if (auto written = write_new(output, best_archive); !written) {
+        return fail(written.error());
+    }
+    const auto publish_ms = wall_ms() - publish;
+    std::cout << "{\"schema\":\"seedarc.solid-search.r1\",\"representation\":\""
+              << (seeded ? "seed" : "explicit") << "\",\"policy\":" << json_string(policy)
+              << ",\"search_revision\":\"near-r1\",\"prng_seed\":" << prng
+              << ",\"start_plan\":" << solid_plan_json(start)
+              << ",\"best_plan\":" << solid_plan_json(best) << ",\"strategy_seed\":"
+              << (seeded ? std::to_string(encode_solid_seed(best)) : "null")
+              << ",\"input_bytes\":" << input_bytes << ",\"accounting_unit_bytes\":" << unit
+              << ",\"budget_bytes\":" << budget << ",\"budget_spent_bytes\":" << spent
+              << ",\"evaluations\":" << cache.size() << ",\"cache_hits\":" << hits
+              << ",\"domain_size\":" << candidates.size()
+              << ",\"space_exhausted\":" << (cache.size() == candidates.size() ? "true" : "false")
+              << ",\"start_bytes\":" << start_size << ",\"baseline_bytes\":" << baseline_size
+              << ",\"best_bytes\":" << best_size << ",\"trajectory\":[" << trajectory
+              << "],\"trials\":[" << trials << "],\"evaluated\":[" << evaluated
+              << "],\"encode_wall_ms\":" << encode_ms << ",\"verify_wall_ms\":" << verify_ms
+              << ",\"publish_wall_ms\":" << publish_ms << ",\"call_wall_ms\":" << wall_ms() - wall
+              << ",\"call_cpu_ms\":" << cpu_ms() - cpu << ",\"byte_exact\":true,"
+              << parts_json(*best_model, best_archive) << "," << peak_memory_json() << "}\n";
+    return std::cout ? 0 : 1;
+}
+
+std::string frame_stats_json(const Model &m) {
+    std::uint64_t largest = 0;
+    std::string sizes;
+    for (const auto &f : m.frames) {
+        largest = std::max(largest, f.raw);
+        sizes += (sizes.empty() ? "" : ",") + std::to_string(f.raw);
+    }
+    return "\"frame_count\":" + std::to_string(m.frames.size()) +
+           ",\"max_frame_raw_bytes\":" + std::to_string(largest) + ",\"frame_raw_bytes\":[" +
+           sizes + "]";
+}
+
 // ---- commands -----------------------------------------------------------------------------------
 int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path &input,
-             const fs::path &out_path, std::optional<std::uint32_t> wanted, std::uint32_t cpb) {
-    const auto plan = plan_arg(plan_hex);
+             const fs::path &out_path, std::optional<std::uint32_t> wanted, std::uint32_t cpb,
+             std::uint64_t frame_limit = research::max_solid_bytes) {
+    const bool strong = mode == "seed-solid" || mode == "explicit-solid";
+    const auto bits = hex32(plan_hex);
+    const auto plan = mode == "explicit-solid" && plan_hex.find(':') != std::string_view::npos
+                          ? parse_solid_explicit(plan_hex)
+                      : strong ? (bits ? decode_solid_seed(*bits) : std::nullopt)
+                               : plan_arg(plan_hex);
     if (!plan) {
         std::cerr << "not a canonical plan\n";
         return 2;
@@ -2392,7 +2736,7 @@ int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path 
         return fail(files.error());
     }
     const auto rw = wall_ms(), rc = cpu_ms();
-    auto packed = pack_bytes(mode, *plan, *files, wanted, cpb);
+    auto packed = pack_bytes(mode, *plan, *files, wanted, cpb, frame_limit);
     if (!packed) {
         return fail(packed.error());
     }
@@ -2409,16 +2753,17 @@ int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path 
     }
     std::string candidates;
     for (std::uint32_t red = red_off; red <= red_file; ++red) {
-        candidates += std::string{red == 0 ? "" : ","} + "\"" + redundancy_names[red] + "\":" +
-                      (packed->candidate_bytes[red] != 0
-                           ? std::to_string(packed->candidate_bytes[red])
-                           : std::string{"null"});
+        candidates +=
+            std::string{red == 0 ? "" : ","} + "\"" + redundancy_names[red] + "\":" +
+            (packed->candidate_bytes[red] != 0 ? std::to_string(packed->candidate_bytes[red])
+                                               : std::string{"null"});
     }
     std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"pack\",\"metadata\":"
               << json_string(mode) << ",\"plan_seed\":" << encode_seed(*plan) << ",\"rule\":\""
               << rule_names[plan->rule] << "\",\"k\":" << static_cast<int>(plan->k)
-              << ",\"input_bytes\":" << input_bytes_of(*files) << "," << parts_json(*m, packed->bytes)
-              << ",\"redundancy_chosen_by\":\""
+              << ",\"input_bytes\":" << input_bytes_of(*files) << ","
+              << parts_json(*m, packed->bytes) << "," << frame_stats_json(*m)
+              << ",\"frame_limit_bytes\":" << frame_limit << ",\"redundancy_chosen_by\":\""
               << (packed->recommended ? "recommendation" : "user")
               << "\",\"recommendation_rule\":\"rec-r0 (provisional)\",\"candidate_bytes\":{"
               << candidates << "},\"pack_wall_ms\":" << pack_wall << ",\"pack_cpu_ms\":" << pack_cpu
@@ -2428,18 +2773,26 @@ int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path 
 }
 
 int cmd_append(const fs::path &old_path, const fs::path &new_dir, const fs::path &out_path,
-               const std::string &how, const std::optional<Plan> &plan) {
+               const std::string &how, const std::optional<Plan> &plan,
+               std::uint64_t frame_limit = research::max_solid_bytes, bool require_strong = false) {
     const auto w = wall_ms(), c = cpu_ms();
     auto old = read_file(old_path);
     if (!old) {
         return fail(old.error());
+    }
+    if (require_strong) {
+        auto header = parse_header(*old);
+        if (!header || header->revision != 5 || !header->solid()) {
+            return fail(header ? bad("bounded append requires a revision5 solid archive")
+                               : header.error());
+        }
     }
     auto added = read_tree(new_dir);
     if (!added) {
         return fail(added.error());
     }
     const auto aw = wall_ms(), ac = cpu_ms();
-    auto bytes = append_bytes(*old, *added, how, plan);
+    auto bytes = append_bytes(*old, *added, how, plan, frame_limit);
     if (!bytes) {
         return fail(bytes.error());
     }
@@ -2448,15 +2801,8 @@ int cmd_append(const fs::path &old_path, const fs::path &new_dir, const fs::path
     if (!m) {
         return fail(m.error());
     }
-    auto decoded = decode_all(*m, *bytes);
-    if (!decoded) {
-        return fail(decoded.error());
-    }
-    for (const auto &f : *added) {
-        const auto it = decoded->find(f.path);
-        if (it == decoded->end() || it->second != f.data) {
-            return fail(bad("appended file does not round trip"));
-        }
+    if (auto checked = byte_exact(*added, *m, *bytes, false); !checked) {
+        return fail(checked.error());
     }
     if (auto r = write_new(out_path, *bytes); !r) {
         return fail(r.error());
@@ -2470,10 +2816,16 @@ int cmd_append(const fs::path &old_path, const fs::path &new_dir, const fs::path
               << ",\"appended_bytes\":" << input_bytes_of(*added)
               << ",\"old_container_bytes\":" << old->size()
               << ",\"old_is_prefix\":" << (prefix ? "true" : "false") << ","
-              << parts_json(*m, *bytes) << ",\"append_wall_ms\":" << append_wall
-              << ",\"append_cpu_ms\":" << append_cpu << ",\"call_wall_ms\":" << wall_ms() - w
-              << ",\"call_cpu_ms\":" << cpu_ms() - c << ",\"appended_byte_exact\":true,"
-              << peak_memory_json() << "}\n";
+              << parts_json(*m, *bytes) << "," << frame_stats_json(*m)
+              << ",\"frame_limit_bytes\":" << frame_limit
+              << ",\"old_archive_bytes_read\":" << old->size()
+              << ",\"old_archive_bytes_copied\":" << (prefix ? old->size() : 0)
+              << ",\"old_plaintext_bytes_recompressed\":"
+              << (how == "regroup" ? std::string{"null"} : std::string{"0"})
+              << ",\"archive_bytes_written\":" << bytes->size()
+              << ",\"append_wall_ms\":" << append_wall << ",\"append_cpu_ms\":" << append_cpu
+              << ",\"call_wall_ms\":" << wall_ms() - w << ",\"call_cpu_ms\":" << cpu_ms() - c
+              << ",\"appended_byte_exact\":true," << peak_memory_json() << "}\n";
     return std::cout ? 0 : 1;
 }
 
@@ -2487,29 +2839,27 @@ int cmd_verify(const fs::path &container, const fs::path &input) {
     if (!m) {
         return fail(m.error());
     }
-    auto decoded = decode_all(*m, *bytes);
-    if (!decoded) {
-        return fail(decoded.error());
-    }
-    const auto decode_wall = wall_ms() - w, decode_cpu = cpu_ms() - c;
+    const auto load_wall = wall_ms() - w, load_cpu = cpu_ms() - c;
+    const auto iw = wall_ms(), ic = cpu_ms();
     auto files = read_tree(input);
     if (!files) {
         return fail(files.error());
     }
-    if (files->size() != decoded->size()) {
-        return fail(bad("file count differs from input"));
+    const auto input_wall = wall_ms() - iw, input_cpu = cpu_ms() - ic;
+    const auto vw = wall_ms(), vc = cpu_ms();
+    if (auto checked = byte_exact(*files, *m, *bytes); !checked) {
+        return fail(checked.error());
     }
-    for (const auto &f : *files) {
-        const auto it = decoded->find(f.path);
-        if (it == decoded->end() || it->second != f.data) {
-            return fail(bad("round trip mismatch"));
-        }
-    }
+    const auto decode_wall = load_wall + wall_ms() - vw;
+    const auto decode_cpu = load_cpu + cpu_ms() - vc;
     std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"verify\",\"byte_exact\":"
                  "true,\"files\":"
               << files->size() << ",\"generations\":" << m->gens.size() << ",\"redundancy\":\""
               << redundancy_names[m->header.redundancy] << "\",\"decode_wall_ms\":" << decode_wall
-              << ",\"decode_cpu_ms\":" << decode_cpu << "," << peak_memory_json() << "}\n";
+              << ",\"decode_cpu_ms\":" << decode_cpu << ",\"input_read_wall_ms\":" << input_wall
+              << ",\"input_read_cpu_ms\":" << input_cpu
+              << ",\"verification_mode\":\"incremental_crc_and_compare\"," << peak_memory_json()
+              << "}\n";
     return std::cout ? 0 : 1;
 }
 
@@ -2576,10 +2926,10 @@ int cmd_peek(const fs::path &container, const fs::path &input, std::size_t n) {
 struct CutResult {
     std::uint64_t files = 0, bytes = 0, from_trailer = 0, from_records = 0, unreadable = 0;
 };
-std::expected<CutResult, Error> recover_checked(std::span<const std::byte> bytes,
-                                                const std::map<std::string_view,
-                                                               const InputFile *> &by_path,
-                                                const Presence *presence = nullptr) {
+std::expected<CutResult, Error>
+recover_checked(std::span<const std::byte> bytes,
+                const std::map<std::string_view, const InputFile *> &by_path,
+                const Presence *presence = nullptr) {
     auto r = recover(bytes, presence);
     if (!r) {
         return std::unexpected(r.error());
@@ -2614,9 +2964,10 @@ int cmd_partial(const fs::path &container, const fs::path &input) {
     }
     const auto by_path = index_files(*files);
     const auto total = input_bytes_of(*files);
-    std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"partial\",\"container_bytes\":"
-              << bytes->size() << ",\"input_files\":" << files->size()
-              << ",\"input_bytes\":" << total << ",\"cuts\":[";
+    std::cout
+        << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"partial\",\"container_bytes\":"
+        << bytes->size() << ",\"input_files\":" << files->size() << ",\"input_bytes\":" << total
+        << ",\"cuts\":[";
     std::vector<std::uint64_t> cuts;
     for (int pct = 5; pct <= 95; pct += 5) {
         cuts.push_back(bytes->size() * static_cast<std::uint64_t>(pct) / 100);
@@ -2625,7 +2976,8 @@ int cmd_partial(const fs::path &container, const fs::path &input) {
     cuts.push_back(bytes->size());
     for (std::size_t i = 0; i < cuts.size(); ++i) {
         const auto w = wall_ms();
-        auto r = recover_checked(std::span{*bytes}.first(static_cast<std::size_t>(cuts[i])), by_path);
+        auto r =
+            recover_checked(std::span{*bytes}.first(static_cast<std::size_t>(cuts[i])), by_path);
         if (!r) {
             std::cout << "]}\n";
             return fail(r.error());
@@ -2675,9 +3027,10 @@ int cmd_split(const fs::path &container, std::uint64_t nominal, const fs::path &
     if (auto r = write_volumes(dir, *vols); !r) {
         return fail(r.error());
     }
-    std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"split\",\"container_bytes\":"
-              << bytes->size() << ",\"volume_bytes\":" << nominal << ",\"carry\":\""
-              << carry_names[mode] << "\"," << volumes_json(*vols) << "}\n";
+    std::cout
+        << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"split\",\"container_bytes\":"
+        << bytes->size() << ",\"volume_bytes\":" << nominal << ",\"carry\":\"" << carry_names[mode]
+        << "\"," << volumes_json(*vols) << "}\n";
     return std::cout ? 0 : 1;
 }
 
@@ -2714,8 +3067,8 @@ int cmd_vappend(const fs::path &dir, const fs::path &new_dir, const std::optiona
         }
     }
     const auto &last = set->volumes.rbegin()->second;
-    auto vols = make_volumes(*bytes, *m, old->size(), last.index + 1, set->nominal,
-                             set->carry_mode, last.file_crc);
+    auto vols = make_volumes(*bytes, *m, old->size(), last.index + 1, set->nominal, set->carry_mode,
+                             last.file_crc);
     if (!vols) {
         return fail(vols.error());
     }
@@ -2723,10 +3076,11 @@ int cmd_vappend(const fs::path &dir, const fs::path &new_dir, const std::optiona
         return fail(r.error());
     }
     std::cout << "{\"schema\":\"seedarc.append-study.v4.r1\",\"mode\":\"vappend\",\"old_volumes\":"
-              << set->volumes.size() << ",\"old_volumes_rewritten\":0,\"first_new_volume\":"
-              << last.index + 1 << "," << volumes_json(*vols) << ",\"appended_files\":"
-              << added->size() << ",\"call_wall_ms\":" << wall_ms() - w
-              << ",\"call_cpu_ms\":" << cpu_ms() - c << ",\"appended_byte_exact\":true}\n";
+              << set->volumes.size()
+              << ",\"old_volumes_rewritten\":0,\"first_new_volume\":" << last.index + 1 << ","
+              << volumes_json(*vols) << ",\"appended_files\":" << added->size()
+              << ",\"call_wall_ms\":" << wall_ms() - w << ",\"call_cpu_ms\":" << cpu_ms() - c
+              << ",\"appended_byte_exact\":true}\n";
     return std::cout ? 0 : 1;
 }
 
@@ -2842,6 +3196,34 @@ int cmd_selftest(const fs::path &input) {
     plan_b.k = 2;
     plan_b.d = {1, 1};
     plan_b = canonical(plan_b);
+    // The append command compares only new source files, but must still decode and CRC-check
+    // old payloads. A subset comparator that simply skips old files would accept this damage.
+    {
+        const auto plain_plan = canonical(Plan{});
+        auto packed = pack_bytes("seed", plain_plan, first, red_off, min_checkpoint_bytes);
+        if (!packed) {
+            return fail(packed.error());
+        }
+        auto old_model = parse(packed->bytes);
+        if (!old_model) {
+            return fail(old_model.error());
+        }
+        const auto file = std::ranges::find_if(old_model->entries,
+                                               [](const Entry &e) { return !e.blocks.empty(); });
+        if (file == old_model->entries.end()) {
+            return fail(bad("selftest: no old payload for subset verification"));
+        }
+        auto damaged = std::move(packed->bytes);
+        damaged[static_cast<std::size_t>(file->blocks.front().offset)] ^= std::byte{1};
+        auto grown = append_bytes(damaged, second, "segment", std::nullopt);
+        if (!grown) {
+            return fail(grown.error());
+        }
+        auto model = parse(*grown);
+        if (!model || byte_exact(second, *model, *grown, false)) {
+            return fail(bad("selftest: subset comparison accepted corrupt old payload"));
+        }
+    }
     std::uint64_t checks = 0, tried = 0, rejected = 0, stale_checked = 0, cut_checks = 0;
     constexpr std::uint32_t cpb = min_checkpoint_bytes;
     for (const auto *mode : {"seed", "explicit", "solid"}) {
@@ -2886,9 +3268,18 @@ int cmd_selftest(const fs::path &input) {
                     stale_begin = static_cast<std::size_t>(parse(old)->trailer_offset);
                     stale_end = old.size();
                 }
-                std::vector<std::size_t> offsets{0, 8, 12, 16, 20, 24, 28, header_bytes,
-                                                 good.size() / 2, good.size() - 1,
-                                                 good.size() - 9, good.size() - 17};
+                std::vector<std::size_t> offsets{0,
+                                                 8,
+                                                 12,
+                                                 16,
+                                                 20,
+                                                 24,
+                                                 28,
+                                                 header_bytes,
+                                                 good.size() / 2,
+                                                 good.size() - 1,
+                                                 good.size() - 9,
+                                                 good.size() - 17};
                 for (std::size_t at = 33; at < good.size(); at += good.size() / 40 + 1) {
                     offsets.push_back(at);
                 }
@@ -2929,8 +3320,9 @@ int cmd_selftest(const fs::path &input) {
                 // missing. Without them, the superseded trailer still yields generation 0.
                 std::uint64_t prev = 0;
                 for (int pct = 0; pct <= 100; pct += 10) {
-                    const auto keep = pct == 100 ? good.size() - 1
-                                                 : good.size() * static_cast<std::size_t>(pct) / 100;
+                    const auto keep = pct == 100
+                                          ? good.size() - 1
+                                          : good.size() * static_cast<std::size_t>(pct) / 100;
                     auto r = recover_checked(std::span{good}.first(keep), by_path);
                     if (!r || r->files < prev) {
                         return fail(r ? bad("selftest: recovery shrank with more bytes")
@@ -3011,6 +3403,147 @@ int cmd_selftest(const fs::path &input) {
     return rejected == tried ? 0 : 1;
 }
 
+// Compare encoded frames, independently of offsets and representation metadata.
+bool same_solid_payload(const Model &a, std::span<const std::byte> ab, const Model &b,
+                        std::span<const std::byte> bb) {
+    if (!a.header.solid() || !b.header.solid() || a.frames.size() != b.frames.size() ||
+        a.entries.size() != b.entries.size()) {
+        return false;
+    }
+    for (std::size_t i = 0; i < a.entries.size(); ++i) {
+        const auto &x = a.entries[i], &y = b.entries[i];
+        if (x.path != y.path || x.size != y.size || x.gen != y.gen || x.group != y.group ||
+            x.frame != y.frame || x.frame_offset != y.frame_offset || x.file_crc != y.file_crc) {
+            return false;
+        }
+    }
+    for (std::size_t i = 0; i < a.frames.size(); ++i) {
+        const auto &x = a.frames[i], &y = b.frames[i];
+        if (x.gen != y.gen || x.group != y.group || x.raw != y.raw || x.stored != y.stored ||
+            !std::ranges::equal(
+                ab.subspan(static_cast<std::size_t>(x.offset), static_cast<std::size_t>(x.stored)),
+                bb.subspan(static_cast<std::size_t>(y.offset),
+                           static_cast<std::size_t>(y.stored)))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int cmd_payload_compare(const fs::path &left, const fs::path &right) {
+    auto a = read_file(left), b = read_file(right);
+    if (!a || !b) {
+        return fail(!a ? a.error() : b.error());
+    }
+    auto am = parse(*a), bm = parse(*b);
+    if (!am || !bm) {
+        return fail(!am ? am.error() : bm.error());
+    }
+    const auto equal = same_solid_payload(*am, *a, *bm, *b);
+    std::uint64_t data = 0;
+    for (const auto &f : am->frames) {
+        data += f.stored;
+    }
+    std::cout << "{\"schema\":\"seedarc.solid-payload-compare.r1\",\"equal\":"
+              << (equal ? "true" : "false") << ",\"frames\":" << am->frames.size()
+              << ",\"payload_bytes\":" << data << ",\"left_container_bytes\":" << a->size()
+              << ",\"right_container_bytes\":" << b->size() << "}\n";
+    return equal ? 0 : 1;
+}
+
+int cmd_solid_selftest(const fs::path &input) {
+    auto files = read_tree(input);
+    if (!files || files->size() < 4) {
+        return fail(files ? bad("solid selftest needs four files") : files.error());
+    }
+    std::uint64_t checks = 0;
+    for (auto bits : {0U, 6U, 11U, 31U}) {
+        auto plan = decode_solid_seed(bits);
+        if (!plan || encode_solid_seed(*plan) != bits ||
+            decode_solid_explicit(encode_solid_explicit(*plan)) != plan) {
+            return fail(bad("solid mapping fixed vector failed"));
+        }
+        const auto half = files->size() / 2;
+        std::vector<InputFile> initial(files->begin(),
+                                       files->begin() + static_cast<std::ptrdiff_t>(half));
+        std::vector<InputFile> added(files->begin() + static_cast<std::ptrdiff_t>(half),
+                                     files->end());
+        auto a = pack_bytes("seed-solid", *plan, initial, red_off, 0);
+        auto b = pack_bytes("explicit-solid", *plan, initial, red_off, 0);
+        auto legacy = pack_bytes("solid", *plan, initial, red_off, 0);
+        if (!a || !b || !legacy) {
+            return fail(bad("solid selftest pack failed"));
+        }
+        auto check_pair = [&](const std::vector<std::byte> &x, const std::vector<std::byte> &y,
+                              const std::vector<InputFile> &original) {
+            auto xm = parse(x), ym = parse(y);
+            return xm && ym && byte_exact(original, *xm, x) && byte_exact(original, *ym, y) &&
+                   same_solid_payload(*xm, x, *ym, y);
+        };
+        if (!check_pair(a->bytes, b->bytes, initial) ||
+            !check_pair(a->bytes, legacy->bytes, initial)) {
+            return fail(bad("solid pack changed the codec payload"));
+        }
+        auto again = pack_bytes("seed-solid", *plan, initial, red_off, 0);
+        if (!again || again->bytes != a->bytes) {
+            return fail(bad("solid pack is not deterministic"));
+        }
+        for (const auto &how : {"segment", "regroup"}) {
+            auto x = append_bytes(a->bytes, added, how, std::nullopt);
+            auto y = append_bytes(b->bytes, added, how, std::nullopt);
+            if (!x || !y || !check_pair(*x, *y, *files)) {
+                return fail(bad("solid append changed payload or roundtrip"));
+            }
+            if (std::string_view{how} == "segment" &&
+                (x->size() < a->bytes.size() ||
+                 !std::equal(a->bytes.begin(), a->bytes.end(), x->begin()))) {
+                return fail(bad("solid append lost old prefix"));
+            }
+            auto repeated = append_bytes(a->bytes, added, how, std::nullopt);
+            if (!repeated || *repeated != *x) {
+                return fail(bad("solid append is not deterministic"));
+            }
+            ++checks;
+        }
+        const auto next = decode_solid_seed(bits == 6 ? 11U : 6U);
+        auto x = append_bytes(a->bytes, added, "segment", next);
+        auto y = append_bytes(b->bytes, added, "segment", next);
+        if (!x || !y || !check_pair(*x, *y, *files)) {
+            return fail(bad("solid new-generation plan mismatch"));
+        }
+        auto model = parse(a->bytes);
+        auto body = gen_body(model->gens.front());
+        body[16] = std::byte{99};
+        if (parse_gen_body(body, model->header)) {
+            return fail(bad("unknown solid seed revision accepted"));
+        }
+        body = gen_body(model->gens.front());
+        body[20] = std::byte{32};
+        if (parse_gen_body(body, model->header)) {
+            return fail(bad("reserved solid seed bits accepted"));
+        }
+        auto invalid = a->bytes;
+        invalid[8] = std::byte{4}; // v4 must still reject the combined seed+solid flags.
+        if (parse(invalid)) {
+            return fail(bad("v4 accepted the new feature flags"));
+        }
+        auto corrupt = a->bytes;
+        corrupt[static_cast<std::size_t>(model->frames.front().offset)] ^= std::byte{1};
+        if (auto parsed = parse(corrupt); parsed && byte_exact(initial, *parsed, corrupt)) {
+            return fail(bad("corrupt solid frame accepted"));
+        }
+        ++checks;
+    }
+    for (auto invalid : {1U, 2U, 3U, 32U, 64U, UINT32_MAX}) {
+        if (decode_solid_seed(invalid)) {
+            return fail(bad("noncanonical solid seed accepted"));
+        }
+    }
+    std::cout << "{\"schema\":\"seedarc.solid-selftest.r1\",\"checks\":" << checks
+              << ",\"payload_equal\":true,\"deterministic\":true,\"strategy_revision\":2}\n";
+    return 0;
+}
+
 std::optional<std::uint32_t> redundancy_arg(std::string_view s, bool &ok) {
     ok = true;
     for (std::uint32_t red = red_off; red <= red_file; ++red) {
@@ -3021,12 +3554,65 @@ std::optional<std::uint32_t> redundancy_arg(std::string_view s, bool &ok) {
     ok = s == "auto";
     return std::nullopt;
 }
+#include "bounded_solid.hpp"
+
 } // namespace
 
 int main(int argc, char *argv[]) {
     const std::vector<std::string_view> a(argv, argv + argc);
+    if (a.size() == 6 && a[1] == "bounded-pack") {
+        const auto cap = number(a[3]);
+        if (!cap || *cap == 0 || *cap > research::max_solid_bytes ||
+            (a[2] != "seed" && a[2] != "explicit")) {
+            std::cerr << usage;
+            return 2;
+        }
+        return cmd_pack(a[2] == "seed" ? "seed-solid" : "explicit-solid", "0x0", native(a[4]),
+                        native(a[5]), red_off, 0, *cap);
+    }
+    if (a.size() == 6 && a[1] == "bounded-append") {
+        const auto cap = number(a[2]);
+        if (!cap || *cap == 0 || *cap > research::max_solid_bytes) {
+            std::cerr << usage;
+            return 2;
+        }
+        return cmd_append(native(a[3]), native(a[4]), native(a[5]), "segment", std::nullopt, *cap,
+                          true);
+    }
+    if (a.size() == 5 && a[1] == "access-profile") {
+        const auto count = number(a[4]);
+        if (!count || *count == 0 || *count > 1000) {
+            return 2;
+        }
+        return cmd_access_profile(native(a[2]), native(a[3]), static_cast<std::size_t>(*count));
+    }
+    if (a.size() == 4 && a[1] == "payload-fault-profile") {
+        return cmd_payload_fault_profile(native(a[2]), native(a[3]));
+    }
+    if ((a.size() == 8 || a.size() == 9) && a[1] == "solid-search" &&
+        (a[2] == "seed" || a[2] == "explicit")) {
+        const bool seeded = a[2] == "seed";
+        const auto bits = hex32(a[3]);
+        const auto start = a[3] == "default" ? std::optional{Plan{}}
+                           : seeded          ? (bits ? decode_solid_seed(*bits) : std::nullopt)
+                                             : parse_solid_explicit(a[3]);
+        const auto budget = number(a[6]), prng = number(a[7]);
+        const std::string policy = a.size() == 9 ? std::string{a[8]} : "near";
+        if (!start || !budget || !prng || (policy != "near" && policy != "enumerate")) {
+            std::cerr << "invalid solid search arguments\n";
+            return 2;
+        }
+        return cmd_solid_search(seeded, *start, native(a[4]), native(a[5]), *budget, *prng, policy);
+    }
+    if (a.size() == 4 && a[1] == "payload-compare") {
+        return cmd_payload_compare(native(a[2]), native(a[3]));
+    }
+    if (a.size() == 3 && a[1] == "solid-selftest") {
+        return cmd_solid_selftest(native(a[2]));
+    }
     if (a.size() >= 6 && a.size() <= 8 && a[1] == "pack" &&
-        (a[2] == "seed" || a[2] == "explicit" || a[2] == "solid")) {
+        (a[2] == "seed" || a[2] == "explicit" || a[2] == "solid" || a[2] == "seed-solid" ||
+         a[2] == "explicit-solid")) {
         bool ok = true;
         const auto wanted = a.size() >= 7 ? redundancy_arg(a[6], ok) : std::nullopt;
         std::uint64_t cpb = default_checkpoint_bytes;

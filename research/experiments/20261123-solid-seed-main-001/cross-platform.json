@@ -1,0 +1,8 @@
+{
+  "archives": 32,
+  "all_archive_bytes_sha256_identical": true,
+  "linux_tool_sha256": "678285ce993ca5a1510db0e1670cf7aaedde8965d85df5fc7d4df00d86f32ec0",
+  "windows_tool_sha256": "b362c9377ddc2b77aae9fd8cab64baf5863eb9cea4f403ba6955073bf1bafb09",
+  "fixture_script_sha256": "d99f798211ced7fed63537dc9032fec67569474d4c2d04d555137ff57f0cf7f5",
+  "coverage": "4 plans x 2 representations x initial/segment/regroup/new-generation; Unicode and empty file"
+}

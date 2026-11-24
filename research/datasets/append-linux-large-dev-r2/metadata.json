@@ -1,0 +1,97 @@
+{
+  "corpus_id": "append-linux-large-dev-r2",
+  "scope": "dev same-source append only",
+  "source": "Linux 6.12",
+  "source_url": "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.tar.xz",
+  "archive_sha256": "b1a2562be56e42afb3f8489d4c2a7ac472ac23098f1ef1c1e40da601f54625eb",
+  "license": "GPL-2.0; per-file SPDX applies",
+  "listing_sha256": "a4bc8fb0844c86773ac4275e058e1aeb5e843d8385ab6c2b56e811d3b4bc4526",
+  "prior_metadata_sha256": "d43bb5a62aa76ddefbd10cd5ae7f8e01a2f12cdc1c386cefff69b43e84f2baf6",
+  "split": "append-r1 content-connected components and original append-r1 salt; dev side only",
+  "dedup": "one path per content SHA256; no duplication or padding",
+  "holdout_contents_read": false,
+  "unique_dev_bytes": 1106567715,
+  "scales": [
+    {
+      "target_mib": 128,
+      "files": 7939,
+      "bytes": 134159235,
+      "groups": 270,
+      "manifest": "dev-linux-128.tsv",
+      "sha256": "67a30bb26d72a31abd0c97485934b3a69ba19607385a0c9e2c6e5b16c47e81c8",
+      "batches": {
+        "initial": {
+          "files": 6334,
+          "bytes": 103851073
+        },
+        "append1": {
+          "files": 314,
+          "bytes": 3529401
+        },
+        "append2": {
+          "files": 694,
+          "bytes": 13387096
+        },
+        "append3": {
+          "files": 597,
+          "bytes": 13391665
+        }
+      },
+      "path_manifest_check": "ok\t10480"
+    },
+    {
+      "target_mib": 256,
+      "files": 14031,
+      "bytes": 265708015,
+      "groups": 299,
+      "manifest": "dev-linux-256.tsv",
+      "sha256": "7b818680586541ee0914631b65f899d80061c0bf8d8194164870f9fb173691b3",
+      "batches": {
+        "initial": {
+          "files": 10178,
+          "bytes": 186067004
+        },
+        "append1": {
+          "files": 1423,
+          "bytes": 28383516
+        },
+        "append2": {
+          "files": 1596,
+          "bytes": 24977864
+        },
+        "append3": {
+          "files": 834,
+          "bytes": 26279631
+        }
+      },
+      "path_manifest_check": "ok\t17150"
+    },
+    {
+      "target_mib": 512,
+      "files": 30134,
+      "bytes": 536864155,
+      "groups": 329,
+      "manifest": "dev-linux-512.tsv",
+      "sha256": "8ea19a4df1e4bb13a9c82595de6e54abad5c8a9e78ec086e7e29c32566f1da91",
+      "batches": {
+        "initial": {
+          "files": 20228,
+          "bytes": 380048893
+        },
+        "append1": {
+          "files": 3409,
+          "bytes": 49713424
+        },
+        "append2": {
+          "files": 3300,
+          "bytes": 53423521
+        },
+        "append3": {
+          "files": 3197,
+          "bytes": 53678317
+        }
+      },
+      "path_manifest_check": "ok\t33906"
+    }
+  ]
+}

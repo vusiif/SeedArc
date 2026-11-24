@@ -1,0 +1,29 @@
+{
+  "tool_sha256": "435ea5b41a664a0aedf166c96a140b13f265f923112533de9875e4e5040ada62",
+  "runner_sha256": "52d6ed4e05deedb3f5a5cd63ae9c3f647c75a0e9191fa2a8a615e6564becb9b3",
+  "manifest_sha256": "5e006ba8ba6b626d0690841fbd2f06c31be0347c164a74773f6ce2016f2a484b",
+  "bytes": 236937106,
+  "files": 7993,
+  "frame_limits": [
+    1073741824,
+    33554432,
+    67108864,
+    134217728
+  ],
+  "modes": [
+    "seed",
+    "explicit"
+  ],
+  "plan": "single group / revision2, Zstd9",
+  "repetitions": 1,
+  "order": "one full history per cap, seed then explicit; not randomized",
+  "sample_count": 12,
+  "selection": "uniform sorted paths plus largest file, deduplicated",
+  "affinity": [
+    0
+  ],
+  "cache": "prewarm each command input; no global cache drop",
+  "scope": "dev one observation; no holdout or statistical superiority",
+  "io": "input and old archive fully loaded; all old archive bytes copied for append",
+  "fault": "one-bit flips at10/50/90 percent of compressed payload; intact metadata only"
+}

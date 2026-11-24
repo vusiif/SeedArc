@@ -1,0 +1,93 @@
+diff --git "a/.sandbox-test\\append-resource\\remote-tested.cpp" b/research/tools/append4_study.cpp
+index ef8b786..f9bec45 100644
+--- "a/.sandbox-test\\append-resource\\remote-tested.cpp"
++++ b/research/tools/append4_study.cpp
+@@ -16,8 +16,8 @@
+ //   off         no per-file records; files are listed only by trailers
+ //   checkpoint  a CKP record after about every N data bytes lists the files since the previous
+ //               one (zstd-compressed listing), so the cost hardly depends on the file count
+-//   file        a FIL record in front of every file
+-// Solid mode writes a FRM record in front of every frame unless the level is off.
++//   file        an FIL record in front of every file
++// Solid mode writes an FRM record in front of every frame unless the level is off.
+ //
+ // Records: tag (8) | body length (4) | body | CRC32C(body) (4). Every body starts with the
+ // record's own offset, so a record is only valid where it claims to be (copies inside stored
+@@ -309,7 +309,7 @@ std::expected<Gen, Error> parse_gen_body(std::span<const std::byte> body, const
+         }
+     }
+     const auto ngroups = r.get(4);
+-    // Distinct ids with the largest equal to nkeys - 1 are exactly 0 .. nkeys - 1.
++    // Distinct ids with the largest equal to nkeys - 1 cover the range [0, nkeys - 1].
+     if (!ngroups || *ngroups == 0 || *ngroups > max_groups || *nkeys != *ngroups - 1 ||
+         (!ids.empty() && *ids.rbegin() != *nkeys - 1) || (g.has_seed && *ngroups > g.plan.k)) {
+         return std::unexpected(bad("key table does not name every group but the last"));
+@@ -1046,8 +1046,7 @@ std::expected<void, Error> visit_decoded(const Model &m, std::span<const std::by
+         }
+         return {};
+     }
+-    DecoderCache cache;
+-    for (const auto &e : m.entries) {
++    for (DecoderCache cache; const auto &e : m.entries) {
+         auto r = visit_blocks(
+             e, m.gens[e.gen].groups[e.group], bytes, cache,
+             [&](std::size_t at, std::span<const std::byte> raw) { return consume(e, at, raw); });
+@@ -1160,9 +1159,8 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
+         if (!m) {
+             continue;
+         }
+-        DecoderCache cache;
+         std::vector<std::optional<std::vector<std::byte>>> frames(m->frames.size());
+-        for (const auto &e : m->entries) {
++        for (DecoderCache cache; const auto &e : m->entries) {
+             std::expected<std::vector<std::byte>, Error> data = std::unexpected(bad("unread"));
+             if (m->header.solid()) {
+                 auto &raw = frames[e.frame];
+@@ -1203,8 +1201,7 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
+     if (!s) {
+         return std::unexpected(s.error());
+     }
+-    DecoderCache cache;
+-    for (const auto &e : s->entries | std::views::values) {
++    for (DecoderCache cache; const auto &e : s->entries | std::views::values) {
+         std::expected<std::vector<std::byte>, Error> data = std::unexpected(bad("unread"));
+         if (header->solid()) {
+             const auto &raw = s->frame_raw[e.frame];
+@@ -1952,7 +1949,7 @@ std::expected<std::vector<Volume>, Error> make_volumes(std::span<const std::byte
+ }
+ 
+ // A volume directory as found: present volumes by index, checked for consistency where
+-// neighbours are both present (same archive, chained CRCs, contiguous logical ranges).
++// neighbors are both present (same archive, chained CRCs, contiguous logical ranges).
+ struct VolumeSet {
+     std::map<std::uint32_t, Volume> volumes;
+     std::uint64_t id = 0, nominal = 0;
+@@ -2090,7 +2087,7 @@ std::expected<void, Error> write_volumes(const fs::path &dir, const std::vector<
+ // in G5: input bytes read by training and trial encoding, cache hits free. The objective is the
+ // part of the container a plan changes: dictionaries + data + key table + Seed record (per-file
+ // metadata is the same for every plan and left out). "restart" re-starts from a random plan when
+-// stuck (G5 behaviour, a cold search); "local" stops instead (a warm search that stays near its
++// stuck (G5 behavior, a cold search); "local" stops instead (a warm search that stays near its
+ // start). The start plan is always the first candidate, so the result is never worse than it.
+ Plan default_start() { // G-dict-r1, the G5 start plan: one group, 64 KiB dictionary
+     Plan p;
+@@ -2417,7 +2414,7 @@ std::expected<void, Error> search_coord(PlanEvaluator &ev, SearchState &s, Rng &
+             }
+         }
+         if (!improved) {
+-            // A full pass over every single-field neighbour found nothing better.
++            // A full pass over every single-field neighbor found nothing better.
+             auto r = stuck(ev, s, rng, restart, current, "local_optimum");
+             if (!r) {
+                 return std::unexpected(r.error());
+@@ -2432,9 +2429,9 @@ std::expected<void, Error> search_coord(PlanEvaluator &ev, SearchState &s, Rng &
+ }
+ 
+ std::string plan_hex(const Plan &p) {
+-    constexpr char digits[] = "0123456789abcdef";
+     std::string out;
+     for (auto v = encode_seed(p); v != 0 || out.empty(); v >>= 4) {
++        constexpr char digits[] = "0123456789abcdef";
+         out.insert(out.begin(), digits[v & 15]);
+     }
+     return "0x" + out;

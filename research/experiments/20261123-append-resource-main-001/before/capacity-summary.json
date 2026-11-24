@@ -1,0 +1,26 @@
+[
+  {
+    "size_mib": 128,
+    "layout": "two-large-files",
+    "peak_memory_bytes": 645718016,
+    "logical_disk_peak": 496689890
+  },
+  {
+    "size_mib": 128,
+    "layout": "four-mib-files",
+    "peak_memory_bytes": 646012928,
+    "logical_disk_peak": 496691540
+  },
+  {
+    "size_mib": 256,
+    "layout": "two-large-files",
+    "peak_memory_bytes": 1276936192,
+    "logical_disk_peak": 993379056
+  },
+  {
+    "size_mib": 256,
+    "layout": "four-mib-files",
+    "peak_memory_bytes": 1277550592,
+    "logical_disk_peak": 993382378
+  }
+]

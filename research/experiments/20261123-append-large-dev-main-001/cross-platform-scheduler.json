@@ -1,0 +1,14 @@
+{
+  "artifacts": 34,
+  "all_history_fields_identical": true,
+  "archive_sha256_identical": true,
+  "source": "Windows and Linux two-pass acceptance",
+  "files_sha256": {
+    "scheduler-histories.jsonl": "99479c32c67f81ba53c1c18f4bacd7d9aa472972205fd1d81347dac0c6ea998d",
+    "scheduler-acceptance.json": "9471ecbeaac9ce1c728680f4b08fbdf31998d1297d7e1c2dec68b6d4ac379916",
+    "targeted-ctest.log": "f489575622f5ec3c222d6932eb1c76008ffcc89240505448bcfcc105e5c3cdd3",
+    "inputs-verified.json": "0879cb3b5afe541b41797f45c4013e0592c1b49fee30d8cb6961c1a066c23d0f",
+    "environment.json": "3353b3a06fff8bf16ff800a61d189586efacf24d167424d065361be17a16126b",
+    "build.log": "a61a0c0a30f2cdbae52c15ca1d17e48ae2bc894f1ad8b07bd3eae464b62685c9"
+  }
+}

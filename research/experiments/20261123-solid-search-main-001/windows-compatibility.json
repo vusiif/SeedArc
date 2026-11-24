@@ -1,0 +1,7 @@
+{
+  "archives": 32,
+  "all_byte_identical": true,
+  "prior": "20261123-solid-seed-main-001/windows-cross",
+  "before_binary_sha256": "b362c9377ddc2b77aae9fd8cab64baf5863eb9cea4f403ba6955073bf1bafb09",
+  "after_binary_sha256": "d98804d11f84181044584632887990f9ac8a25d496f5f77e074eca34085d7574"
+}

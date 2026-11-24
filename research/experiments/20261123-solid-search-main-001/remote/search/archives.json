@@ -1,0 +1,1218 @@
+[
+  {
+    "label": "initial-seed",
+    "bytes": 39074182,
+    "sha256": "f01561ac9356f95b12af74c351db5b2d4118893ea4a85eef4835c3c5f69c5c2f",
+    "result": {
+      "schema": "seedarc.solid-search.r1",
+      "representation": "seed",
+      "policy": "near",
+      "search_revision": "near-r1",
+      "prng_seed": 3,
+      "start_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "best_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "strategy_seed": 0,
+      "input_bytes": 380048893,
+      "accounting_unit_bytes": 380048893,
+      "budget_bytes": 1520195572,
+      "budget_spent_bytes": 1520195572,
+      "evaluations": 4,
+      "cache_hits": 1,
+      "domain_size": 29,
+      "space_exhausted": false,
+      "start_bytes": 39074182,
+      "baseline_bytes": 39074182,
+      "best_bytes": 39074182,
+      "trajectory": [
+        {
+          "evaluations": 1,
+          "spent_bytes": 380048893,
+          "best_bytes": 39074182,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          }
+        }
+      ],
+      "trials": [
+        {
+          "evaluation": 1,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39074182,
+          "spent_bytes": 380048893,
+          "elapsed_wall_ms": 16560.470321
+        },
+        {
+          "evaluation": 2,
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39092650,
+          "spent_bytes": 760097786,
+          "elapsed_wall_ms": 30771.379228
+        },
+        {
+          "evaluation": 3,
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39263350,
+          "spent_bytes": 1140146679,
+          "elapsed_wall_ms": 44982.863908
+        },
+        {
+          "evaluation": 4,
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39686963,
+          "spent_bytes": 1520195572,
+          "elapsed_wall_ms": 59624.681832
+        }
+      ],
+      "evaluated": [
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39074182
+        },
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39092650
+        },
+        {
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39263350
+        },
+        {
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39686963
+        }
+      ],
+      "encode_wall_ms": 42619.3,
+      "verify_wall_ms": 15310.2,
+      "publish_wall_ms": 44.5248,
+      "call_wall_ms": 59830.1,
+      "call_cpu_ms": 59776.3,
+      "byte_exact": true,
+      "container_revision": 5,
+      "strategy_revision": 2,
+      "container_bytes": 39074182,
+      "redundancy": "off",
+      "checkpoint_bytes": 0,
+      "parts": {
+        "header": 32,
+        "generation_records": 64,
+        "dictionaries": 0,
+        "data": 37758210,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 1315852,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "files": 20228,
+      "generations": 1,
+      "peak_memory_bytes": 1161838592,
+      "peak_memory_metric": "ru_maxrss"
+    }
+  },
+  {
+    "label": "initial-explicit",
+    "bytes": 39074182,
+    "sha256": "668bb5574e32e2074f8eb192342966f774a3a9082183ac162c3c66552e0cfb72",
+    "result": {
+      "schema": "seedarc.solid-search.r1",
+      "representation": "explicit",
+      "policy": "near",
+      "search_revision": "near-r1",
+      "prng_seed": 3,
+      "start_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "best_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "strategy_seed": null,
+      "input_bytes": 380048893,
+      "accounting_unit_bytes": 380048893,
+      "budget_bytes": 1520195572,
+      "budget_spent_bytes": 1520195572,
+      "evaluations": 4,
+      "cache_hits": 1,
+      "domain_size": 29,
+      "space_exhausted": false,
+      "start_bytes": 39074182,
+      "baseline_bytes": 39074182,
+      "best_bytes": 39074182,
+      "trajectory": [
+        {
+          "evaluations": 1,
+          "spent_bytes": 380048893,
+          "best_bytes": 39074182,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          }
+        }
+      ],
+      "trials": [
+        {
+          "evaluation": 1,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39074182,
+          "spent_bytes": 380048893,
+          "elapsed_wall_ms": 16522.932424
+        },
+        {
+          "evaluation": 2,
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39092650,
+          "spent_bytes": 760097786,
+          "elapsed_wall_ms": 30750.38176
+        },
+        {
+          "evaluation": 3,
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39263350,
+          "spent_bytes": 1140146679,
+          "elapsed_wall_ms": 44814.748719
+        },
+        {
+          "evaluation": 4,
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39686963,
+          "spent_bytes": 1520195572,
+          "elapsed_wall_ms": 58773.206042
+        }
+      ],
+      "evaluated": [
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39074182
+        },
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39092650
+        },
+        {
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39263350
+        },
+        {
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 39686963
+        }
+      ],
+      "encode_wall_ms": 41805.9,
+      "verify_wall_ms": 15309.3,
+      "publish_wall_ms": 46.3502,
+      "call_wall_ms": 58981.1,
+      "call_cpu_ms": 58969.5,
+      "byte_exact": true,
+      "container_revision": 5,
+      "strategy_revision": 2,
+      "container_bytes": 39074182,
+      "redundancy": "off",
+      "checkpoint_bytes": 0,
+      "parts": {
+        "header": 32,
+        "generation_records": 64,
+        "dictionaries": 0,
+        "data": 37758210,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 1315852,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "files": 20228,
+      "generations": 1,
+      "peak_memory_bytes": 1161838592,
+      "peak_memory_metric": "ru_maxrss"
+    }
+  },
+  {
+    "label": "fixed-seed",
+    "bytes": 56739671,
+    "sha256": "1af3bec8de9c1ff36067c1f16c497d0ca5bd4fe0df50730f302858accbb31402",
+    "result": {
+      "schema": "seedarc.append-study.v4.r1",
+      "mode": "pack",
+      "metadata": "seed-solid",
+      "plan_seed": 0,
+      "rule": "dir1",
+      "k": 1,
+      "input_bytes": 536864155,
+      "container_revision": 5,
+      "strategy_revision": 2,
+      "container_bytes": 56739671,
+      "redundancy": "off",
+      "checkpoint_bytes": 0,
+      "parts": {
+        "header": 32,
+        "generation_records": 64,
+        "dictionaries": 0,
+        "data": 54779357,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 1960194,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "files": 30134,
+      "generations": 1,
+      "redundancy_chosen_by": "user",
+      "recommendation_rule": "rec-r0 (provisional)",
+      "candidate_bytes": {
+        "off": 56739671,
+        "checkpoint": null,
+        "file": null
+      },
+      "pack_wall_ms": 16059.6,
+      "pack_cpu_ms": 16057,
+      "call_wall_ms": 23859.3,
+      "call_cpu_ms": 23854.8,
+      "byte_exact": true,
+      "peak_memory_bytes": 1635680256,
+      "peak_memory_metric": "ru_maxrss"
+    }
+  },
+  {
+    "label": "fixed-explicit",
+    "bytes": 56739671,
+    "sha256": "3e659895597098ac972b93dc9510a3943965eae4c403e7f9e558076b88691d5e",
+    "result": {
+      "schema": "seedarc.append-study.v4.r1",
+      "mode": "pack",
+      "metadata": "explicit-solid",
+      "plan_seed": 0,
+      "rule": "dir1",
+      "k": 1,
+      "input_bytes": 536864155,
+      "container_revision": 5,
+      "strategy_revision": 2,
+      "container_bytes": 56739671,
+      "redundancy": "off",
+      "checkpoint_bytes": 0,
+      "parts": {
+        "header": 32,
+        "generation_records": 64,
+        "dictionaries": 0,
+        "data": 54779357,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 1960194,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "files": 30134,
+      "generations": 1,
+      "redundancy_chosen_by": "user",
+      "recommendation_rule": "rec-r0 (provisional)",
+      "candidate_bytes": {
+        "off": 56739671,
+        "checkpoint": null,
+        "file": null
+      },
+      "pack_wall_ms": 15109.1,
+      "pack_cpu_ms": 15106.7,
+      "call_wall_ms": 22962.5,
+      "call_cpu_ms": 22958.9,
+      "byte_exact": true,
+      "peak_memory_bytes": 1635684352,
+      "peak_memory_metric": "ru_maxrss"
+    }
+  },
+  {
+    "label": "reuse-seed",
+    "bytes": 60711163,
+    "sha256": "9e88d2211bc174a9cd78a020e6d069cdcdda4bdda9f4282459b9db4d35531d83",
+    "result": {
+      "schema": "seedarc.append-study.v4.r1",
+      "mode": "append",
+      "how": "segment",
+      "generation_plan": null,
+      "appended_files": 9906,
+      "appended_bytes": 156815262,
+      "old_container_bytes": 39074182,
+      "old_is_prefix": true,
+      "container_revision": 5,
+      "strategy_revision": 2,
+      "container_bytes": 60711163,
+      "redundancy": "off",
+      "checkpoint_bytes": 0,
+      "parts": {
+        "header": 32,
+        "generation_records": 128,
+        "dictionaries": 0,
+        "data": 57434816,
+        "redundancy_records": 0,
+        "stale_trailers": 1315876,
+        "trailer": 1960287,
+        "footer": 24,
+        "group_metadata": 24
+      },
+      "files": 30134,
+      "generations": 2,
+      "append_wall_ms": 5029.15,
+      "append_cpu_ms": 5028.26,
+      "call_wall_ms": 11134.9,
+      "call_cpu_ms": 11133.3,
+      "appended_byte_exact": true,
+      "peak_memory_bytes": 665370624,
+      "peak_memory_metric": "ru_maxrss"
+    }
+  },
+  {
+    "label": "reuse-explicit",
+    "bytes": 60711163,
+    "sha256": "1859c93213f09cc67f734688a2aba8f75bde33fa6fcf4aa53c508d27717269dc",
+    "result": {
+      "schema": "seedarc.append-study.v4.r1",
+      "mode": "append",
+      "how": "segment",
+      "generation_plan": null,
+      "appended_files": 9906,
+      "appended_bytes": 156815262,
+      "old_container_bytes": 39074182,
+      "old_is_prefix": true,
+      "container_revision": 5,
+      "strategy_revision": 2,
+      "container_bytes": 60711163,
+      "redundancy": "off",
+      "checkpoint_bytes": 0,
+      "parts": {
+        "header": 32,
+        "generation_records": 128,
+        "dictionaries": 0,
+        "data": 57434816,
+        "redundancy_records": 0,
+        "stale_trailers": 1315876,
+        "trailer": 1960287,
+        "footer": 24,
+        "group_metadata": 24
+      },
+      "files": 30134,
+      "generations": 2,
+      "append_wall_ms": 6199.74,
+      "append_cpu_ms": 6198.48,
+      "call_wall_ms": 12733,
+      "call_cpu_ms": 12730.3,
+      "appended_byte_exact": true,
+      "peak_memory_bytes": 665374720,
+      "peak_memory_metric": "ru_maxrss"
+    }
+  },
+  {
+    "label": "warm-seed",
+    "bytes": 56739671,
+    "sha256": "1af3bec8de9c1ff36067c1f16c497d0ca5bd4fe0df50730f302858accbb31402",
+    "result": {
+      "schema": "seedarc.solid-search.r1",
+      "representation": "seed",
+      "policy": "near",
+      "search_revision": "near-r1",
+      "prng_seed": 3,
+      "start_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "best_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "strategy_seed": 0,
+      "input_bytes": 536864155,
+      "accounting_unit_bytes": 536864155,
+      "budget_bytes": 2147456620,
+      "budget_spent_bytes": 2147456620,
+      "evaluations": 4,
+      "cache_hits": 1,
+      "domain_size": 29,
+      "space_exhausted": false,
+      "start_bytes": 56739671,
+      "baseline_bytes": 56739671,
+      "best_bytes": 56739671,
+      "trajectory": [
+        {
+          "evaluations": 1,
+          "spent_bytes": 536864155,
+          "best_bytes": 56739671,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          }
+        }
+      ],
+      "trials": [
+        {
+          "evaluation": 1,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56739671,
+          "spent_bytes": 536864155,
+          "elapsed_wall_ms": 22931.563484
+        },
+        {
+          "evaluation": 2,
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56774859,
+          "spent_bytes": 1073728310,
+          "elapsed_wall_ms": 43986.457384
+        },
+        {
+          "evaluation": 3,
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57035991,
+          "spent_bytes": 1610592465,
+          "elapsed_wall_ms": 64283.237323
+        },
+        {
+          "evaluation": 4,
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57703273,
+          "spent_bytes": 2147456620,
+          "elapsed_wall_ms": 85038.876194
+        }
+      ],
+      "evaluated": [
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56739671
+        },
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56774859
+        },
+        {
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57035991
+        },
+        {
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57703273
+        }
+      ],
+      "encode_wall_ms": 61137.7,
+      "verify_wall_ms": 21640.4,
+      "publish_wall_ms": 59.5351,
+      "call_wall_ms": 85315.5,
+      "call_cpu_ms": 85301.7,
+      "byte_exact": true,
+      "container_revision": 5,
+      "strategy_revision": 2,
+      "container_bytes": 56739671,
+      "redundancy": "off",
+      "checkpoint_bytes": 0,
+      "parts": {
+        "header": 32,
+        "generation_records": 64,
+        "dictionaries": 0,
+        "data": 54779357,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 1960194,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "files": 30134,
+      "generations": 1,
+      "peak_memory_bytes": 1635549184,
+      "peak_memory_metric": "ru_maxrss"
+    }
+  },
+  {
+    "label": "warm-explicit",
+    "bytes": 56739671,
+    "sha256": "3e659895597098ac972b93dc9510a3943965eae4c403e7f9e558076b88691d5e",
+    "result": {
+      "schema": "seedarc.solid-search.r1",
+      "representation": "explicit",
+      "policy": "near",
+      "search_revision": "near-r1",
+      "prng_seed": 3,
+      "start_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "best_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "strategy_seed": null,
+      "input_bytes": 536864155,
+      "accounting_unit_bytes": 536864155,
+      "budget_bytes": 2147456620,
+      "budget_spent_bytes": 2147456620,
+      "evaluations": 4,
+      "cache_hits": 1,
+      "domain_size": 29,
+      "space_exhausted": false,
+      "start_bytes": 56739671,
+      "baseline_bytes": 56739671,
+      "best_bytes": 56739671,
+      "trajectory": [
+        {
+          "evaluations": 1,
+          "spent_bytes": 536864155,
+          "best_bytes": 56739671,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          }
+        }
+      ],
+      "trials": [
+        {
+          "evaluation": 1,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56739671,
+          "spent_bytes": 536864155,
+          "elapsed_wall_ms": 23867.389655
+        },
+        {
+          "evaluation": 2,
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56774859,
+          "spent_bytes": 1073728310,
+          "elapsed_wall_ms": 44288.462559
+        },
+        {
+          "evaluation": 3,
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57035991,
+          "spent_bytes": 1610592465,
+          "elapsed_wall_ms": 65116.558777
+        },
+        {
+          "evaluation": 4,
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57703273,
+          "spent_bytes": 2147456620,
+          "elapsed_wall_ms": 85901.608639
+        }
+      ],
+      "evaluated": [
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56739671
+        },
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56774859
+        },
+        {
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57035991
+        },
+        {
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57703273
+        }
+      ],
+      "encode_wall_ms": 61537,
+      "verify_wall_ms": 21915.4,
+      "publish_wall_ms": 62.8224,
+      "call_wall_ms": 86186,
+      "call_cpu_ms": 86158.6,
+      "byte_exact": true,
+      "container_revision": 5,
+      "strategy_revision": 2,
+      "container_bytes": 56739671,
+      "redundancy": "off",
+      "checkpoint_bytes": 0,
+      "parts": {
+        "header": 32,
+        "generation_records": 64,
+        "dictionaries": 0,
+        "data": 54779357,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 1960194,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "files": 30134,
+      "generations": 1,
+      "peak_memory_bytes": 1635422208,
+      "peak_memory_metric": "ru_maxrss"
+    }
+  },
+  {
+    "label": "cold-seed",
+    "bytes": 56739671,
+    "sha256": "1af3bec8de9c1ff36067c1f16c497d0ca5bd4fe0df50730f302858accbb31402",
+    "result": {
+      "schema": "seedarc.solid-search.r1",
+      "representation": "seed",
+      "policy": "near",
+      "search_revision": "near-r1",
+      "prng_seed": 3,
+      "start_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "best_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "strategy_seed": 0,
+      "input_bytes": 536864155,
+      "accounting_unit_bytes": 536864155,
+      "budget_bytes": 2147456620,
+      "budget_spent_bytes": 2147456620,
+      "evaluations": 4,
+      "cache_hits": 1,
+      "domain_size": 29,
+      "space_exhausted": false,
+      "start_bytes": 56739671,
+      "baseline_bytes": 56739671,
+      "best_bytes": 56739671,
+      "trajectory": [
+        {
+          "evaluations": 1,
+          "spent_bytes": 536864155,
+          "best_bytes": 56739671,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          }
+        }
+      ],
+      "trials": [
+        {
+          "evaluation": 1,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56739671,
+          "spent_bytes": 536864155,
+          "elapsed_wall_ms": 23213.382208
+        },
+        {
+          "evaluation": 2,
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56774859,
+          "spent_bytes": 1073728310,
+          "elapsed_wall_ms": 43452.694652
+        },
+        {
+          "evaluation": 3,
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57035991,
+          "spent_bytes": 1610592465,
+          "elapsed_wall_ms": 63772.472865
+        },
+        {
+          "evaluation": 4,
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57703273,
+          "spent_bytes": 2147456620,
+          "elapsed_wall_ms": 84839.632279
+        }
+      ],
+      "evaluated": [
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56739671
+        },
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56774859
+        },
+        {
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57035991
+        },
+        {
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57703273
+        }
+      ],
+      "encode_wall_ms": 60741.2,
+      "verify_wall_ms": 21495.3,
+      "publish_wall_ms": 59.3723,
+      "call_wall_ms": 85107.2,
+      "call_cpu_ms": 85090.2,
+      "byte_exact": true,
+      "container_revision": 5,
+      "strategy_revision": 2,
+      "container_bytes": 56739671,
+      "redundancy": "off",
+      "checkpoint_bytes": 0,
+      "parts": {
+        "header": 32,
+        "generation_records": 64,
+        "dictionaries": 0,
+        "data": 54779357,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 1960194,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "files": 30134,
+      "generations": 1,
+      "peak_memory_bytes": 1635684352,
+      "peak_memory_metric": "ru_maxrss"
+    }
+  },
+  {
+    "label": "cold-explicit",
+    "bytes": 56739671,
+    "sha256": "3e659895597098ac972b93dc9510a3943965eae4c403e7f9e558076b88691d5e",
+    "result": {
+      "schema": "seedarc.solid-search.r1",
+      "representation": "explicit",
+      "policy": "near",
+      "search_revision": "near-r1",
+      "prng_seed": 3,
+      "start_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "best_plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "strategy_seed": null,
+      "input_bytes": 536864155,
+      "accounting_unit_bytes": 536864155,
+      "budget_bytes": 2147456620,
+      "budget_spent_bytes": 2147456620,
+      "evaluations": 4,
+      "cache_hits": 1,
+      "domain_size": 29,
+      "space_exhausted": false,
+      "start_bytes": 56739671,
+      "baseline_bytes": 56739671,
+      "best_bytes": 56739671,
+      "trajectory": [
+        {
+          "evaluations": 1,
+          "spent_bytes": 536864155,
+          "best_bytes": 56739671,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          }
+        }
+      ],
+      "trials": [
+        {
+          "evaluation": 1,
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56739671,
+          "spent_bytes": 536864155,
+          "elapsed_wall_ms": 23130.562187
+        },
+        {
+          "evaluation": 2,
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56774859,
+          "spent_bytes": 1073728310,
+          "elapsed_wall_ms": 43829.460439
+        },
+        {
+          "evaluation": 3,
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57035991,
+          "spent_bytes": 1610592465,
+          "elapsed_wall_ms": 64427.87142
+        },
+        {
+          "evaluation": 4,
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57703273,
+          "spent_bytes": 2147456620,
+          "elapsed_wall_ms": 85093.559078
+        }
+      ],
+      "evaluated": [
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 1,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56739671
+        },
+        {
+          "plan": {
+            "rule": 0,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 56774859
+        },
+        {
+          "plan": {
+            "rule": 2,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57035991
+        },
+        {
+          "plan": {
+            "rule": 3,
+            "groups": 2,
+            "layout": "solid",
+            "codec": "zstd",
+            "level": 9
+          },
+          "bytes": 57703273
+        }
+      ],
+      "encode_wall_ms": 61330,
+      "verify_wall_ms": 21424.5,
+      "publish_wall_ms": 64.3772,
+      "call_wall_ms": 85379.8,
+      "call_cpu_ms": 85364.7,
+      "byte_exact": true,
+      "container_revision": 5,
+      "strategy_revision": 2,
+      "container_bytes": 56739671,
+      "redundancy": "off",
+      "checkpoint_bytes": 0,
+      "parts": {
+        "header": 32,
+        "generation_records": 64,
+        "dictionaries": 0,
+        "data": 54779357,
+        "redundancy_records": 0,
+        "stale_trailers": 0,
+        "trailer": 1960194,
+        "footer": 24,
+        "group_metadata": 12
+      },
+      "files": 30134,
+      "generations": 1,
+      "peak_memory_bytes": 1635807232,
+      "peak_memory_metric": "ru_maxrss"
+    }
+  }
+]

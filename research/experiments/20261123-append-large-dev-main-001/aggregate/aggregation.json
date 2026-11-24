@@ -1,0 +1,44 @@
+{
+  "scope": "derived analysis input, not task completion",
+  "interrupted_task_has_normal_result": false,
+  "sources": [
+    {
+      "task_id": "20261124T051435Z-cef36683",
+      "raw_sha256": "9fd98387bbec3494ffd45d3004d537c8f9e706bd36640dc9dc5ee829a1780532",
+      "histories_sha256": "070ae7f311662f64566afa9d65f1675f04332cb421f2f2a7d4a0e9bacd1d4e4a",
+      "branches": [
+        "A",
+        "B-new",
+        "C",
+        "C-coord",
+        "D-nearest"
+      ]
+    },
+    {
+      "task_id": "20261124T054749Z-aef206e4",
+      "raw_sha256": "4f23a92986b3de7094a6c97af4f0b2bde46d858cd5d4acaa80e10102f709bebd",
+      "histories_sha256": "511730ba38340e17c7cfb96e82f8d81009427ae77250d47e4897cc3142d74a59",
+      "branches": [
+        "S-segment",
+        "S-regroup",
+        "R-seed",
+        "R-coord"
+      ]
+    }
+  ],
+  "commands": 83,
+  "artifacts": 34,
+  "branches": [
+    "A",
+    "B-new",
+    "C",
+    "C-coord",
+    "D-nearest",
+    "S-segment",
+    "S-regroup",
+    "R-seed",
+    "R-coord"
+  ],
+  "peak_observed_task_disk": 1303214150,
+  "caveat": "Monitor implementation changed after interruption; timing is exploratory and not a statistical comparison."
+}

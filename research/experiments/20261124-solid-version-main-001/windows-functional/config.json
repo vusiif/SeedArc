@@ -1,0 +1,21 @@
+{
+  "tool_sha256": "d98804d11f84181044584632887990f9ac8a25d496f5f77e074eca34085d7574",
+  "runner_sha256": "151c072fe3ba1e86bb96b8c9666abb29393c66867db2c4925b20d738f291ad4a",
+  "v0_manifest_sha256": "12f01636f5a1449e411625dc73cc0ddd16a1fbdfc3ec228498435fa3f39a0bee",
+  "v1_manifest_sha256": "ef34d77af08f169bc8e0ca7ebad813cf568b5460668fbc84f3917f8a02eb2ef5",
+  "bytes": [
+    46560,
+    47440
+  ],
+  "files": 16,
+  "initial_budget_multiple": 29,
+  "update_budget_multiple": 8,
+  "prng_seed": 3,
+  "initial_policy": "enumerate",
+  "update_policy": "near",
+  "affinity": null,
+  "repetitions": 1,
+  "scope": "mixed public dev; fixed-path real Linux6.12 to6.12.5 modifications",
+  "update": "full snapshot re-encoding with inherited concrete plan; not archive append",
+  "cache": "warm each command input tree; no global cache drop"
+}

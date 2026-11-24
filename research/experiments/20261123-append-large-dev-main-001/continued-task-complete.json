@@ -1,0 +1,17 @@
+{
+  "status": "remaining branches complete",
+  "summary": {
+    "scope": "dev only; not frozen evaluation",
+    "commands": 34,
+    "artifacts": 14,
+    "branches": [
+      "S-segment",
+      "S-regroup",
+      "R-seed",
+      "R-coord"
+    ],
+    "stages": 4,
+    "byte_exact": true,
+    "peak_observed_task_disk": 1242815595
+  }
+}

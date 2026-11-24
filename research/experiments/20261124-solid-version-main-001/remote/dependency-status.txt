@@ -1,0 +1,32 @@
+Package: vcpkg-cmake-config
+Version: 2026-07-21
+Architecture: x64-linux
+Multi-Arch: same
+Abi: f91b55dca7cd6fef657ab68aacfdee1b2eaacb48840c4deec03e00872ef5b3ef
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2025-08-07
+Architecture: x64-linux
+Multi-Arch: same
+Abi: d6ab14ee7a1410f811ff285cfbf17b4b69cec6298a4198bbf5a12744f0ff76f8
+Status: install ok installed
+
+Package: liblzma
+Version: 5.8.4
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: bb77c3baca1e0ad6401ce1e1e2b11b56b875d1ace85b690d67abf9176bb68290
+Description: Compression library with an API similar to that of zlib.
+Status: install ok installed
+
+Package: zstd
+Version: 1.5.7
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 64e99e456de4034a91ac8820da79354e749ed233e64ffde6e7a4fa36d86a9a7e
+Description: Zstandard - Fast real-time compression algorithm
+Status: install ok installed
+

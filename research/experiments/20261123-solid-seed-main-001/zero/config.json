@@ -1,0 +1,19 @@
+{
+  "scope": "zero-search equivalence only",
+  "tool_sha256": "678285ce993ca5a1510db0e1670cf7aaedde8965d85df5fc7d4df00d86f32ec0",
+  "manifest_sha256": "8ea19a4df1e4bb13a9c82595de6e54abad5c8a9e78ec086e7e29c32566f1da91",
+  "plan": "0x0",
+  "strategy": "solid-plan-r1 / revision2, one group, Zstd9",
+  "modes": [
+    "solid",
+    "seed-solid",
+    "explicit-solid"
+  ],
+  "bytes": 536864155,
+  "files": 30134,
+  "affinity": [
+    0
+  ],
+  "search_commands": 0,
+  "input": "same Linux 6.12 dev contents and paths as prior large run"
+}

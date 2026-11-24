@@ -1,0 +1,41 @@
+{
+  "files": 7993,
+  "bytes": 236937106,
+  "path_check": "ok\t10536",
+  "v0_sha256": "5e006ba8ba6b626d0690841fbd2f06c31be0347c164a74773f6ce2016f2a484b",
+  "expected_modified_files": 127,
+  "source_manifests": {
+    "research/datasets/append-linux-large-dev-r2/dev-linux-128.tsv": "67a30bb26d72a31abd0c97485934b3a69ba19607385a0c9e2c6e5b16c47e81c8",
+    "research/datasets/append-r1/dev-wiki-text.tsv": "899839acfa9a1b566e668cbeff844b2ec0f9cbf726ee568f45bace465a3ac35a",
+    "research/datasets/append-r1/dev-silesia.tsv": "981733e365cb9ebc20e3964160909554382ae1663b8306c73f19b84dc387633a"
+  },
+  "source_pools": {
+    "linux": {
+      "files": 7939,
+      "bytes": 134159235
+    },
+    "enwik8": {
+      "files": 50,
+      "bytes": 50000000
+    },
+    "silesia": {
+      "files": 4,
+      "bytes": 52777871
+    }
+  },
+  "keys": {
+    "dir1": 3,
+    "dir2": 22,
+    "ext": 61,
+    "size": 3
+  },
+  "scope": "existing dev only; Linux fixed-path real-version projection; no holdout",
+  "excluded": [
+    "silesia/samba: keep source upload below16MiB, before performance observation"
+  ],
+  "v1_sha256": "da84eac7ab2e784f0f0c4e1f4a762bf45c0ea59aa6e3ec213ab6253c4b80ee0d",
+  "v1_bytes": 236963618,
+  "verified_modified_files": 127,
+  "unchanged_files": 7866,
+  "version_verified": true
+}

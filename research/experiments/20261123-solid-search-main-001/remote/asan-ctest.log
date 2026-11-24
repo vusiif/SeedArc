@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan
+Test project /home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan
+    Start 4: research.solid_seed
+1/2 Test #4: research.solid_seed ..............   Passed    9.12 sec
+    Start 5: research.solid_search
+2/2 Test #5: research.solid_search ............   Passed    5.65 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  14.77 sec

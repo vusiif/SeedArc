@@ -1,0 +1,11 @@
+15:seed.archive_integration
+16:seed.adaptive_file
+17:filesystem.safe_output
+18:archive.store_round_trip
+19:archive.store_acceptance
+20:codec.round_trip
+21:archive.store_bounded_memory
+22:codec.zstd_bounded_memory
+23:codec.lzma2_bounded_memory
+38:cli.round_trip
+39:cli.codec_round_trip

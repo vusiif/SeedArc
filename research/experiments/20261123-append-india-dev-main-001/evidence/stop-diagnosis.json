@@ -1,0 +1,7 @@
+{
+  "task_id": "20261123T123105Z-d5596074",
+  "active_task_pids": [],
+  "unit": "LoadState=not-found\nActiveState=inactive\nSubState=dead\n",
+  "journal": "Nov 23 12:31:50 vps-in1 systemd[1]: Starting injob-20261123T123105Z-d5596074.service - /usr/bin/python3 /home/sc/long-tasks/20261123T123105Z-d5596074/runner.py --run 20261123T123105Z-d5596074...\nNov 23 12:31:50 vps-in1 systemd[1]: Started injob-20261123T123105Z-d5596074.service - /usr/bin/python3 /home/sc/long-tasks/20261123T123105Z-d5596074/runner.py --run 20261123T123105Z-d5596074.\nNov 23 12:48:28 vps-in1 systemd[1]: Stopping injob-20261123T123105Z-d5596074.service - /usr/bin/python3 /home/sc/long-tasks/20261123T123105Z-d5596074/runner.py --run 20261123T123105Z-d5596074...\nNov 23 12:48:28 vps-in1 systemd[1]: injob-20261123T123105Z-d5596074.service: Deactivated successfully.\nNov 23 12:48:28 vps-in1 systemd[1]: Stopped injob-20261123T123105Z-d5596074.service - /usr/bin/python3 /home/sc/long-tasks/20261123T123105Z-d5596074/runner.py --run 20261123T123105Z-d5596074.\nNov 23 12:48:28 vps-in1 systemd[1]: injob-20261123T123105Z-d5596074.service: Consumed 22min 52.115s CPU time, 2.7M memory peak, 0B memory swap peak.\n",
+  "completion": "interrupted, not a normal completed experiment; no result.json fabricated"
+}

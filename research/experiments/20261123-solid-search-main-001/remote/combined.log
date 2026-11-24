@@ -1,0 +1,32 @@
+{"step": "release-configure", "argv": ["cmake", "-S", "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/source", "-B", "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/release", "-DCMAKE_BUILD_TYPE=Release", "-G", "Ninja", "-DCMAKE_CXX_COMPILER=/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/g++-14", "-DCMAKE_PREFIX_PATH=/home/sc/long-tasks/20261123T123105Z-d5596074/work/build/vcpkg_installed/x64-linux", "-DSEEDARC_BUILD_RESEARCH_TOOLS=ON", "-DBUILD_TESTING=ON"]}
+{"step": "release-build", "argv": ["cmake", "--build", "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/release", "--parallel", "4"]}
+{"step": "release-ctest", "argv": ["ctest", "--test-dir", "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/release", "--output-on-failure", "--parallel", "1"]}
+{"step": "legacy-compatibility", "argv": ["cmake", "-DTOOL=/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/release/research/tools/seedarc_append4_study", "-DBEFORE_TOOL=/home/sc/long-tasks/20261124T051435Z-cef36683/work/build/research/tools/seedarc_append4_study", "-DWORK=/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/compat", "-P", "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/source/research/tools/check_solid_seed.cmake"]}
+{"step": "asan-configure", "argv": ["cmake", "-S", "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/source", "-B", "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan", "-DCMAKE_BUILD_TYPE=Debug", "-DCMAKE_CXX_FLAGS=-fsanitize=address,undefined -fno-sanitize-recover=undefined -fno-omit-frame-pointer", "-DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address,undefined", "-G", "Ninja", "-DCMAKE_CXX_COMPILER=/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/g++-14", "-DCMAKE_PREFIX_PATH=/home/sc/long-tasks/20261123T123105Z-d5596074/work/build/vcpkg_installed/x64-linux", "-DSEEDARC_BUILD_RESEARCH_TOOLS=ON", "-DBUILD_TESTING=ON"]}
+{"step": "asan-build", "argv": ["cmake", "--build", "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan", "--target", "seedarc_append4_study", "--parallel", "2"]}
+{"step": "asan-ctest", "argv": ["ctest", "--test-dir", "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan", "--output-on-failure", "--parallel", "1", "-R", "^research.solid_(seed|search)$"]}
+{"index": 0, "label": "initial-seed", "returncode": 0, "process_wall_ms": 59909.26912694704}
+{"index": 1, "label": "initial-seed-verify", "returncode": 0, "process_wall_ms": 5612.297429936007}
+{"index": 2, "label": "initial-explicit", "returncode": 0, "process_wall_ms": 59054.01726101991}
+{"index": 3, "label": "initial-explicit-verify", "returncode": 0, "process_wall_ms": 5532.568746944889}
+{"index": 4, "label": "initial-payload", "returncode": 0, "process_wall_ms": 510.0381210213527}
+{"index": 5, "label": "fixed-seed", "returncode": 0, "process_wall_ms": 23954.56220698543}
+{"index": 6, "label": "fixed-seed-verify", "returncode": 0, "process_wall_ms": 8002.296549966559}
+{"index": 7, "label": "fixed-explicit", "returncode": 0, "process_wall_ms": 23054.58938307129}
+{"index": 8, "label": "fixed-explicit-verify", "returncode": 0, "process_wall_ms": 7978.505523991771}
+{"index": 9, "label": "fixed-payload", "returncode": 0, "process_wall_ms": 684.9534490611404}
+{"index": 10, "label": "reuse-seed", "returncode": 0, "process_wall_ms": 11183.528961031698}
+{"index": 11, "label": "reuse-seed-verify", "returncode": 0, "process_wall_ms": 8052.316018030979}
+{"index": 12, "label": "reuse-explicit", "returncode": 0, "process_wall_ms": 12792.21281700302}
+{"index": 13, "label": "reuse-explicit-verify", "returncode": 0, "process_wall_ms": 7680.264802998863}
+{"index": 14, "label": "reuse-payload", "returncode": 0, "process_wall_ms": 799.1818110458553}
+{"index": 15, "label": "warm-seed", "returncode": 0, "process_wall_ms": 85413.79637701903}
+{"index": 16, "label": "warm-seed-verify", "returncode": 0, "process_wall_ms": 7637.42796308361}
+{"index": 17, "label": "warm-explicit", "returncode": 0, "process_wall_ms": 86292.28096001316}
+{"index": 18, "label": "warm-explicit-verify", "returncode": 0, "process_wall_ms": 7876.962005044334}
+{"index": 19, "label": "warm-payload", "returncode": 0, "process_wall_ms": 835.9463330125436}
+{"index": 20, "label": "cold-seed", "returncode": 0, "process_wall_ms": 85211.82318602223}
+{"index": 21, "label": "cold-seed-verify", "returncode": 0, "process_wall_ms": 7940.835066954605}
+{"index": 22, "label": "cold-explicit", "returncode": 0, "process_wall_ms": 85483.96093992051}
+{"index": 23, "label": "cold-explicit-verify", "returncode": 0, "process_wall_ms": 8377.328635076992}
+{"index": 24, "label": "cold-payload", "returncode": 0, "process_wall_ms": 650.035812985152}

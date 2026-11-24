@@ -1,0 +1,15 @@
+{
+  "commit": "479eab9a524ff0cf82ef55f36dc19ea4d06f77fc",
+  "override_paths": [
+    "research/tools/append4_study.cpp",
+    "research/tools/check_append4.cmake"
+  ],
+  "inputs": {
+    "append_history_r2.py": "138156d054a5ffa6ba01cd633ea1d4ef96634f1d96052062a1a744834011ea35",
+    "append_resource_post.py": "0521ac647d3d86191e8b504930fcda45bba1a59d453e6df65130d0f7980a9714",
+    "append_resource_probe.py": "aedac9907a9b55bc57577ac3043930ed109e0c759dc4dabdc21b36e5672156f3",
+    "check_append_history_r2.py": "359ac7b5242ae512709c3da2683a718076daa5e7ab080788dd75be37f3aeab2a",
+    "source-patch.diff": "ad46f404577679507a4e87319039d94d87bdde67ef6e12071c370336fddb3803",
+    "source.zip": "44dd8fcd00387f6d159a68b6597457ab4127730f5cf24f39ee954d7c922d6b92"
+  }
+}

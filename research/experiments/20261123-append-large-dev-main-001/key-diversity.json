@@ -1,0 +1,15 @@
+{
+  "scope": "metadata-only key diversity for existing v4 grouping rules",
+  "files": 30134,
+  "source_groups": 329,
+  "rule_key_counts": {
+    "dir1": 1,
+    "dir2": 25,
+    "ext": 100,
+    "size": 3
+  },
+  "dir1": {
+    "linux": 536864155
+  },
+  "limitation": "All archive paths retain linux/ prefix, so dir1 has one key. Source group count is not candidate group count; do not claim large/hard search space."
+}

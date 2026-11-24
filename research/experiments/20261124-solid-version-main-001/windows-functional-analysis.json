@@ -1,0 +1,222 @@
+{
+  "status": "audited from complete raw command and artifact ledgers",
+  "commands": 25,
+  "archives_verified": 10,
+  "payload_compares": 5,
+  "search_audits": {
+    "initial-seed": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 29,
+      "budget_spent_bytes": 1350240,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    },
+    "initial-explicit": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 29,
+      "budget_spent_bytes": 1350240,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    },
+    "warm-seed": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 8,
+      "budget_spent_bytes": 379520,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    },
+    "warm-explicit": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 8,
+      "budget_spent_bytes": 379520,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    },
+    "cold-seed": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 8,
+      "budget_spent_bytes": 379520,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    },
+    "cold-explicit": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 8,
+      "budget_spent_bytes": 379520,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    }
+  },
+  "table": [
+    {
+      "variant": "initial",
+      "bytes": 1122,
+      "payload_bytes": 135,
+      "metadata_bytes": 987,
+      "seed_tool_seconds": 0.0669174,
+      "explicit_tool_seconds": 0.0424972,
+      "seed_external_verify_seconds": 0.032057000000349944,
+      "explicit_external_verify_seconds": 0.02211189999979979,
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "seed_sha256": "d673d6105d4578572e0ae14c6ae650be0b33bf59a74cc276fe6a78731074b602",
+      "explicit_sha256": "56374d6d8a89ab1fdc83526ff74160ccd97cba6fdcacd8454601de9f53d53977"
+    },
+    {
+      "variant": "fixed",
+      "bytes": 1158,
+      "payload_bytes": 171,
+      "metadata_bytes": 987,
+      "seed_tool_seconds": 0.031947500000000004,
+      "explicit_tool_seconds": 0.005475799999999999,
+      "seed_external_verify_seconds": 0.021717800000260468,
+      "explicit_external_verify_seconds": 0.022098499999628984,
+      "plan": null,
+      "seed_sha256": "abe0573582698215a76afee4d4c8b5c97c2fb8fb6ac5d4b07961c9e5a09faf38",
+      "explicit_sha256": "9f907f8146a6fbf2ad65a5a15fe3b5e6d0aa4f712aed18d5405b2758751d9904"
+    },
+    {
+      "variant": "reuse",
+      "bytes": 1158,
+      "payload_bytes": 171,
+      "metadata_bytes": 987,
+      "seed_tool_seconds": 0.004921999999999999,
+      "explicit_tool_seconds": 0.0048617999999999995,
+      "seed_external_verify_seconds": 0.022219600000426,
+      "explicit_external_verify_seconds": 0.021951699999590346,
+      "plan": null,
+      "seed_sha256": "abe0573582698215a76afee4d4c8b5c97c2fb8fb6ac5d4b07961c9e5a09faf38",
+      "explicit_sha256": "9f907f8146a6fbf2ad65a5a15fe3b5e6d0aa4f712aed18d5405b2758751d9904"
+    },
+    {
+      "variant": "warm",
+      "bytes": 1158,
+      "payload_bytes": 171,
+      "metadata_bytes": 987,
+      "seed_tool_seconds": 0.0154066,
+      "explicit_tool_seconds": 0.0136222,
+      "seed_external_verify_seconds": 0.022691300000587944,
+      "explicit_external_verify_seconds": 0.025735100000019884,
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "seed_sha256": "abe0573582698215a76afee4d4c8b5c97c2fb8fb6ac5d4b07961c9e5a09faf38",
+      "explicit_sha256": "9f907f8146a6fbf2ad65a5a15fe3b5e6d0aa4f712aed18d5405b2758751d9904"
+    },
+    {
+      "variant": "cold",
+      "bytes": 1158,
+      "payload_bytes": 171,
+      "metadata_bytes": 987,
+      "seed_tool_seconds": 0.0142381,
+      "explicit_tool_seconds": 0.0164869,
+      "seed_external_verify_seconds": 0.029201600000305916,
+      "explicit_external_verify_seconds": 0.031403599999975995,
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "seed_sha256": "abe0573582698215a76afee4d4c8b5c97c2fb8fb6ac5d4b07961c9e5a09faf38",
+      "explicit_sha256": "9f907f8146a6fbf2ad65a5a15fe3b5e6d0aa4f712aed18d5405b2758751d9904"
+    }
+  ],
+  "initial_prefix_reference": [
+    {
+      "evaluations": 4,
+      "bytes": 1122,
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "spent_bytes": 186240,
+      "observed_elapsed_ms": 34.7095,
+      "scope": "prefix of one exhaustive enumeration; not an independently timed invocation"
+    },
+    {
+      "evaluations": 8,
+      "bytes": 1122,
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "spent_bytes": 372480,
+      "observed_elapsed_ms": 40.005,
+      "scope": "prefix of one exhaustive enumeration; not an independently timed invocation"
+    },
+    {
+      "evaluations": 29,
+      "bytes": 1122,
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "spent_bytes": 1350240,
+      "observed_elapsed_ms": 65.9818,
+      "scope": "prefix of one exhaustive enumeration; not an independently timed invocation"
+    }
+  ],
+  "initial_nondefault": false,
+  "warm_cold_same_start": true,
+  "warm_cold_same_candidates": true,
+  "warm_evaluations_to_cold8_quality": 1,
+  "peak_memory_bytes": 6590464,
+  "disk_observed_peak_bytes": 99848,
+  "limitations": "One dev observation; v0 exhaustive29, v1 near8. Full snapshot encoding, not incremental archive update."
+}

@@ -1,0 +1,10 @@
+{
+  "research/tools/append4_study.cpp": "a12368f1684322a94d868701986ccdebb77d9738c3d20486c35fa94da155e7fc",
+  "research/tools/solid_plan.hpp": "c00401c101c8e16179aa4690a318bbe50686d692c1a4093131572c8bef3d718c",
+  "research/tools/CMakeLists.txt": "ef5a5d1cbae2cc13f6cb9bdc871412d41807edf62a7702c1d78261e39351f55f",
+  "research/tools/check_solid_seed.cmake": "798d17aefc3fce2b2479e13b6c98f4c21973ecdb80d57c0e5540b94cf5b48813",
+  "research/scripts/solid_seed_zero.py": "c364f3726014d7caaf21cfe9f0718f229c489bb7bff3c5a6d8d34810d94ba85c",
+  "research/scripts/solid_seed_task.py": "a6a594601628f1f690f27240407287c644d396b9bf9c01c6219d82ada0f5231b",
+  "research/scripts/solid_seed_cross.py": "d99f798211ced7fed63537dc9032fec67569474d4c2d04d555137ff57f0cf7f5",
+  "research/scripts/solid_seed_report.py": "c23f17a2084a31865c95b77fa1af976dbf88fd64f917a2a8ba6d08656f47e511"
+}

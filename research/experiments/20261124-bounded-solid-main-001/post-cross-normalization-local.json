@@ -1,0 +1,10 @@
+{
+  "task_id": "20261124T092901Z-14334bcf",
+  "exit_code": 0,
+  "binary_sha256": "435ea5b41a664a0aedf166c96a140b13f265f923112533de9875e4e5040ada62",
+  "test_source_hashes": {
+    "check_bounded_solid.cmake": "e530cdce4aa65a6cfb4a6d9c57a85fe0de7b14502e29e4e47414fc0d823258ea",
+    "bounded_fixture.py": "1357f544729b2109208f6a5b5f94542db34c6deb9a69e58a9d8a8642c8a67434"
+  },
+  "scope": "post-run fixture LF normalization only; benchmark/C++ unchanged"
+}

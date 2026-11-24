@@ -1,0 +1,6 @@
+{
+  "skipped_from_mib": 512,
+  "predicted_with_20pct_margin": 3066121420,
+  "threshold": 2684354560,
+  "reason": "retain headroom below shared 3 GiB; do not raise limits"
+}

@@ -1,0 +1,8 @@
+{
+  "commands": 128,
+  "archives_verified": 40,
+  "payload_compares": 20,
+  "access_profiles": 20,
+  "fault_profiles": 8,
+  "all_byte_exact": true
+}

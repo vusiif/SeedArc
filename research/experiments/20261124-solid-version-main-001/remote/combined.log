@@ -1,0 +1,29 @@
+{"step": "release-configure", "argv": ["cmake", "-S", "/home/sc/long-tasks/20261124T082849Z-65827d9a/work/source", "-B", "/home/sc/long-tasks/20261124T082849Z-65827d9a/work/release", "-DCMAKE_BUILD_TYPE=Release", "-G", "Ninja", "-DCMAKE_CXX_COMPILER=/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/g++-14", "-DCMAKE_PREFIX_PATH=/home/sc/long-tasks/20261123T123105Z-d5596074/work/build/vcpkg_installed/x64-linux", "-DSEEDARC_BUILD_RESEARCH_TOOLS=ON", "-DBUILD_TESTING=ON"]}
+{"step": "release-build", "argv": ["cmake", "--build", "/home/sc/long-tasks/20261124T082849Z-65827d9a/work/release", "--parallel", "4"]}
+{"step": "release-ctest", "argv": ["ctest", "--test-dir", "/home/sc/long-tasks/20261124T082849Z-65827d9a/work/release", "--output-on-failure", "--parallel", "1"]}
+{"step": "legacy-compatibility", "argv": ["cmake", "-DTOOL=/home/sc/long-tasks/20261124T082849Z-65827d9a/work/release/research/tools/seedarc_append4_study", "-DBEFORE_TOOL=/home/sc/long-tasks/20261124T051435Z-cef36683/work/build/research/tools/seedarc_append4_study", "-DWORK=/home/sc/long-tasks/20261124T082849Z-65827d9a/work/compat", "-P", "/home/sc/long-tasks/20261124T082849Z-65827d9a/work/source/research/tools/check_solid_seed.cmake"]}
+{"index": 0, "label": "initial-seed", "returncode": 0, "process_wall_ms": 321122.9725710582}
+{"index": 1, "label": "initial-seed-verify", "returncode": 0, "process_wall_ms": 3296.692049014382}
+{"index": 2, "label": "initial-explicit", "returncode": 0, "process_wall_ms": 318812.0720569277}
+{"index": 3, "label": "initial-explicit-verify", "returncode": 0, "process_wall_ms": 3278.2565619563684}
+{"index": 4, "label": "initial-payload", "returncode": 0, "process_wall_ms": 294.0963329747319}
+{"index": 5, "label": "fixed-seed", "returncode": 0, "process_wall_ms": 11609.92280789651}
+{"index": 6, "label": "fixed-seed-verify", "returncode": 0, "process_wall_ms": 3391.150795039721}
+{"index": 7, "label": "fixed-explicit", "returncode": 0, "process_wall_ms": 12246.314606978558}
+{"index": 8, "label": "fixed-explicit-verify", "returncode": 0, "process_wall_ms": 3247.5291719892994}
+{"index": 9, "label": "fixed-payload", "returncode": 0, "process_wall_ms": 341.37446305248886}
+{"index": 10, "label": "reuse-seed", "returncode": 0, "process_wall_ms": 12255.275191972032}
+{"index": 11, "label": "reuse-seed-verify", "returncode": 0, "process_wall_ms": 3222.2249780315906}
+{"index": 12, "label": "reuse-explicit", "returncode": 0, "process_wall_ms": 12000.880678999238}
+{"index": 13, "label": "reuse-explicit-verify", "returncode": 0, "process_wall_ms": 3206.97865402326}
+{"index": 14, "label": "reuse-payload", "returncode": 0, "process_wall_ms": 310.1854930864647}
+{"index": 15, "label": "warm-seed", "returncode": 0, "process_wall_ms": 86967.15061995201}
+{"index": 16, "label": "warm-seed-verify", "returncode": 0, "process_wall_ms": 3305.4946550400928}
+{"index": 17, "label": "warm-explicit", "returncode": 0, "process_wall_ms": 88656.9930530386}
+{"index": 18, "label": "warm-explicit-verify", "returncode": 0, "process_wall_ms": 3520.498091937043}
+{"index": 19, "label": "warm-payload", "returncode": 0, "process_wall_ms": 327.3948519490659}
+{"index": 20, "label": "cold-seed", "returncode": 0, "process_wall_ms": 89088.7057170039}
+{"index": 21, "label": "cold-seed-verify", "returncode": 0, "process_wall_ms": 3211.7875050753355}
+{"index": 22, "label": "cold-explicit", "returncode": 0, "process_wall_ms": 87071.92062307149}
+{"index": 23, "label": "cold-explicit-verify", "returncode": 0, "process_wall_ms": 3312.865619082004}
+{"index": 24, "label": "cold-payload", "returncode": 0, "process_wall_ms": 292.7990120369941}

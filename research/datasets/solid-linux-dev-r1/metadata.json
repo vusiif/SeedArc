@@ -1,0 +1,40 @@
+{
+  "scope": "same dev contents and original cohorts; relative root changed only",
+  "prior_manifest_sha256": "8ea19a4df1e4bb13a9c82595de6e54abad5c8a9e78ec086e7e29c32566f1da91",
+  "manifest_sha256": "eec9c12fc477dd8852577e0ad1c41c015a7c1c3bd4fd9f5c56eca10d7a517c8e",
+  "files": 30134,
+  "bytes": 536864155,
+  "content_and_batch_preserved": true,
+  "batches": {
+    "initial": {
+      "files": 20228,
+      "bytes": 380048893
+    },
+    "append1": {
+      "files": 3409,
+      "bytes": 49713424
+    },
+    "append2": {
+      "files": 3300,
+      "bytes": 53423521
+    },
+    "append3": {
+      "files": 3197,
+      "bytes": 53678317
+    }
+  },
+  "original_exact_key_counts": {
+    "dir1": 1,
+    "dir2": 22,
+    "ext": 100,
+    "size": 3
+  },
+  "new_exact_key_counts": {
+    "dir1": 22,
+    "dir2": 326,
+    "ext": 100,
+    "size": 3
+  },
+  "path_check": "ok\t33905",
+  "holdout_contents_read": false
+}

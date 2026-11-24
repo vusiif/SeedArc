@@ -1,0 +1,34 @@
+[1/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/version.cpp for CXX dependencies
+[2/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/checked_arithmetic.cpp for CXX dependencies
+[3/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/archive_index.cpp for CXX dependencies
+[4/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/archive.cpp for CXX dependencies
+[5/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/filesystem/archive_path.cpp for CXX dependencies
+[6/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/store_archive.cpp for CXX dependencies
+[7/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/filesystem/unicode_profile.cpp for CXX dependencies
+[8/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/filesystem/safe_output.cpp for CXX dependencies
+[9/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/filesystem/input_tree.cpp for CXX dependencies
+[10/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/codec/codec.cpp for CXX dependencies
+[11/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/filesystem/safe_output_posix.cpp for CXX dependencies
+[12/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/filesystem/input_tree_posix.cpp for CXX dependencies
+[13/34] Generating CXX dyndep file core/CMakeFiles/libseedarc.dir/CXX.dd
+[14/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/core/codec/dictionary.cpp for CXX dependencies
+[15/34] Building CXX object core/CMakeFiles/libseedarc.dir/version.cpp.o
+[16/34] Building CXX object core/CMakeFiles/libseedarc.dir/checked_arithmetic.cpp.o
+[17/34] Building CXX object core/CMakeFiles/libseedarc.dir/archive.cpp.o
+[18/34] Building CXX object core/CMakeFiles/libseedarc.dir/archive_index.cpp.o
+[19/34] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/archive_path.cpp.o
+[20/34] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/unicode_profile.cpp.o
+[21/34] Building CXX object core/CMakeFiles/libseedarc.dir/store_archive.cpp.o
+[22/34] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/safe_output.cpp.o
+[23/34] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/input_tree.cpp.o
+[24/34] Building CXX object core/CMakeFiles/libseedarc.dir/codec/codec.cpp.o
+[25/34] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/input_tree_posix.cpp.o
+[26/34] Generating CXX dyndep file core/CMakeFiles/seedarc_codec_dictionary.dir/CXX.dd
+[27/34] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/safe_output_posix.cpp.o
+[28/34] Linking CXX static library core/liblibseedarc.a
+[29/34] Scanning /home/sc/long-tasks/20261124T092901Z-14334bcf/work/source/research/tools/append4_study.cpp for CXX dependencies
+[30/34] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_append4_study.dir/CXX.dd
+[31/34] Building CXX object core/CMakeFiles/seedarc_codec_dictionary.dir/codec/dictionary.cpp.o
+[32/34] Linking CXX static library core/libseedarc_codec_dictionary.a
+[33/34] Building CXX object research/tools/CMakeFiles/seedarc_append4_study.dir/append4_study.cpp.o
+[34/34] Linking CXX executable research/tools/seedarc_append4_study

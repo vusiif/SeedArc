@@ -1,0 +1,21 @@
+{
+  "scope": "independent read-only hashes after verify and before reclamation",
+  "archives": {
+    "solid": {
+      "bytes": 60705558,
+      "sha256": "9dd57aa7f692595baf156a232d6c1bf9f64ca0f8cd3eaaded19eff73a80ca7f6",
+      "verified_label": "solid-regroup-verify"
+    },
+    "seed-solid": {
+      "bytes": 60705566,
+      "sha256": "e988448101b8944a766cf054ca17fba84af45df674896f7435d2174ad2a334b0",
+      "verified_label": "seed-solid-regroup-verify"
+    },
+    "explicit-solid": {
+      "bytes": 60705566,
+      "sha256": "af28c08bccef5c3b9213ac11fb74319c2b2f2c4bb28f24687d4fe8b246793fc8",
+      "verified_label": "explicit-solid-regroup-verify"
+    }
+  },
+  "complete": true
+}

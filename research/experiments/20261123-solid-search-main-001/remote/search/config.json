@@ -1,0 +1,19 @@
+{
+  "tool_sha256": "03f9aa34f8ed8aaf96a4ce233c24ba78bbfe65bf1a8c5a1db6d92dbd986a75f3",
+  "manifest_sha256": "eec9c12fc477dd8852577e0ad1c41c015a7c1c3bd4fd9f5c56eca10d7a517c8e",
+  "runner_sha256": "0e3cb93ee201dc0a297d383641ad1a85cf7f2c02c926e12c60e0fe47d8ced3d0",
+  "bytes": 536864155,
+  "initial_bytes": 380048893,
+  "files": 30134,
+  "budget_multiple": 4,
+  "prng_seed": 3,
+  "policy": "near",
+  "affinity": [
+    0
+  ],
+  "repetition": 1,
+  "scope": "dev only; three append cohorts merged into one update; no holdout",
+  "cache": "each command warms only its input tree; no system cache dropping",
+  "disk_limit_bytes": 2147483648,
+  "source_root_change": "removed artificial linux/; contents and cohorts unchanged"
+}

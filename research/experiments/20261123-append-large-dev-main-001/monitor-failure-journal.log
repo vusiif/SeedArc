@@ -1,0 +1,22 @@
+Starting injob-20261124T051435Z-cef36683.service - /usr/bin/python3 /home/sc/long-tasks/20261124T051435Z-cef36683/runner.py --run 20261124T051435Z-cef36683...
+Started injob-20261124T051435Z-cef36683.service - /usr/bin/python3 /home/sc/long-tasks/20261124T051435Z-cef36683/runner.py --run 20261124T051435Z-cef36683.
+Traceback (most recent call last):
+  File "/home/sc/long-tasks/20261124T051435Z-cef36683/runner.py", line 264, in <module>
+    sys.exit(run_task(sys.argv[2]))
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sc/long-tasks/20261124T051435Z-cef36683/runner.py", line 241, in run_task
+    size = sum(f.lstat().st_size for f in path.rglob('*') if not f.is_symlink() and f.is_file())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sc/long-tasks/20261124T051435Z-cef36683/runner.py", line 241, in <genexpr>
+    size = sum(f.lstat().st_size for f in path.rglob('*') if not f.is_symlink() and f.is_file())
+               ^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 849, in lstat
+    return self.stat(follow_symlinks=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 842, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/sc/long-tasks/20261124T051435Z-cef36683/work/histories/D-nearest/cumulative/linux/drivers/thermal/intel/int340x_thermal/int3406_thermal.c'
+injob-20261124T051435Z-cef36683.service: Main process exited, code=exited, status=1/FAILURE
+injob-20261124T051435Z-cef36683.service: Failed with result 'exit-code'.
+injob-20261124T051435Z-cef36683.service: Consumed 29min 870ms CPU time, 2.7M memory peak, 0B memory swap peak.

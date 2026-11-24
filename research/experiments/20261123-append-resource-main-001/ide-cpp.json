@@ -1,0 +1,18 @@
+{
+  "id": 5,
+  "result": {
+    "content": [
+      {
+        "text": "{\"filePath\":\"C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/append4_study.cpp\",\"errors\":[],\"timedOut\":true}",
+        "type": "text"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "filePath": "C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/append4_study.cpp",
+      "errors": [],
+      "timedOut": true
+    }
+  },
+  "jsonrpc": "2.0"
+}

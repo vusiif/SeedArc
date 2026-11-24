@@ -1,0 +1,65 @@
+{
+  "scope": "zero-search functional equivalence, not search/ratio improvement",
+  "manifest_sha256": "8ea19a4df1e4bb13a9c82595de6e54abad5c8a9e78ec086e7e29c32566f1da91",
+  "tool_sha256": "678285ce993ca5a1510db0e1670cf7aaedde8965d85df5fc7d4df00d86f32ec0",
+  "input_bytes": 536864155,
+  "files": 30134,
+  "validated": {
+    "commands": 40,
+    "archives_verified": 15,
+    "payload_comparisons": 10,
+    "searches": 0
+  },
+  "stages": [
+    {
+      "stage": 0,
+      "legacy_bytes": 39195542,
+      "seed_bytes": 39195550,
+      "explicit_bytes": 39195550,
+      "payload_bytes": 37758210,
+      "extra_metadata_bytes": 8
+    },
+    {
+      "stage": 1,
+      "legacy_bytes": 48062342,
+      "seed_bytes": 48062362,
+      "explicit_bytes": 48062362,
+      "payload_bytes": 44946143,
+      "extra_metadata_bytes": 20
+    },
+    {
+      "stage": 2,
+      "legacy_bytes": 56885999,
+      "seed_bytes": 56886035,
+      "explicit_bytes": 56886035,
+      "payload_bytes": 51855899,
+      "extra_metadata_bytes": 36
+    },
+    {
+      "stage": 3,
+      "legacy_bytes": 65818218,
+      "seed_bytes": 65818274,
+      "explicit_bytes": 65818274,
+      "payload_bytes": 58646773,
+      "extra_metadata_bytes": 56
+    }
+  ],
+  "regroup_bytes": {
+    "solid": 60705558,
+    "seed-solid": 60705566,
+    "explicit-solid": 60705566
+  },
+  "full_archive_sha256_coverage": {
+    "segment_outputs": 12,
+    "regroup_outputs": 3,
+    "note": "Independent read-only observer hashes after verify when provided; otherwise regroup whole-file hashes were not retained."
+  },
+  "peak_tool_rss_bytes": 1714233344,
+  "peak_observed_task_disk": 1727870358,
+  "limitations": [
+    "Default one-group plan only at large scale; four grouping plans checked in small acceptance.",
+    "One dev run and fixed call order; no timing superiority or statistical conclusion.",
+    "No solid strategy search, B-mix, recovery or volumes in the new profile.",
+    "Input/archive/frame remain memory-resident; no >1 GiB capability claimed."
+  ]
+}

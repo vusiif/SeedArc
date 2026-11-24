@@ -1,0 +1,176 @@
+{
+  "status": "independently audited from raw command JSON and artifact ledger",
+  "commands": 25,
+  "archives_verified": 10,
+  "payload_compares": 5,
+  "search_audits": {
+    "initial-seed": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 4,
+      "budget_spent_bytes": 1520195572,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    },
+    "initial-explicit": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 4,
+      "budget_spent_bytes": 1520195572,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    },
+    "warm-seed": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 4,
+      "budget_spent_bytes": 2147456620,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    },
+    "warm-explicit": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 4,
+      "budget_spent_bytes": 2147456620,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    },
+    "cold-seed": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 4,
+      "budget_spent_bytes": 2147456620,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    },
+    "cold-explicit": {
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "evaluations": 4,
+      "budget_spent_bytes": 2147456620,
+      "gain_from_default_bytes": 0,
+      "gain_from_start_bytes": 0
+    }
+  },
+  "table": [
+    {
+      "variant": "initial",
+      "bytes": 39074182,
+      "payload_bytes": 37758210,
+      "metadata_bytes": 1315972,
+      "seed_tool_seconds": 59.8301,
+      "explicit_tool_seconds": 58.9811,
+      "seed_external_verify_seconds": 5.612297429936007,
+      "explicit_external_verify_seconds": 5.532568746944889,
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "seed_sha256": "f01561ac9356f95b12af74c351db5b2d4118893ea4a85eef4835c3c5f69c5c2f",
+      "explicit_sha256": "668bb5574e32e2074f8eb192342966f774a3a9082183ac162c3c66552e0cfb72"
+    },
+    {
+      "variant": "fixed",
+      "bytes": 56739671,
+      "payload_bytes": 54779357,
+      "metadata_bytes": 1960314,
+      "seed_tool_seconds": 23.859299999999998,
+      "explicit_tool_seconds": 22.9625,
+      "seed_external_verify_seconds": 8.002296549966559,
+      "explicit_external_verify_seconds": 7.978505523991771,
+      "plan": null,
+      "seed_sha256": "1af3bec8de9c1ff36067c1f16c497d0ca5bd4fe0df50730f302858accbb31402",
+      "explicit_sha256": "3e659895597098ac972b93dc9510a3943965eae4c403e7f9e558076b88691d5e"
+    },
+    {
+      "variant": "reuse",
+      "bytes": 60711163,
+      "payload_bytes": 57434816,
+      "metadata_bytes": 3276347,
+      "seed_tool_seconds": 11.1349,
+      "explicit_tool_seconds": 12.733,
+      "seed_external_verify_seconds": 8.052316018030979,
+      "explicit_external_verify_seconds": 7.680264802998863,
+      "plan": null,
+      "seed_sha256": "9e88d2211bc174a9cd78a020e6d069cdcdda4bdda9f4282459b9db4d35531d83",
+      "explicit_sha256": "1859c93213f09cc67f734688a2aba8f75bde33fa6fcf4aa53c508d27717269dc"
+    },
+    {
+      "variant": "warm",
+      "bytes": 56739671,
+      "payload_bytes": 54779357,
+      "metadata_bytes": 1960314,
+      "seed_tool_seconds": 85.3155,
+      "explicit_tool_seconds": 86.186,
+      "seed_external_verify_seconds": 7.63742796308361,
+      "explicit_external_verify_seconds": 7.876962005044334,
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "seed_sha256": "1af3bec8de9c1ff36067c1f16c497d0ca5bd4fe0df50730f302858accbb31402",
+      "explicit_sha256": "3e659895597098ac972b93dc9510a3943965eae4c403e7f9e558076b88691d5e"
+    },
+    {
+      "variant": "cold",
+      "bytes": 56739671,
+      "payload_bytes": 54779357,
+      "metadata_bytes": 1960314,
+      "seed_tool_seconds": 85.10719999999999,
+      "explicit_tool_seconds": 85.3798,
+      "seed_external_verify_seconds": 7.940835066954605,
+      "explicit_external_verify_seconds": 8.377328635076992,
+      "plan": {
+        "rule": 0,
+        "groups": 1,
+        "layout": "solid",
+        "codec": "zstd",
+        "level": 9
+      },
+      "seed_sha256": "1af3bec8de9c1ff36067c1f16c497d0ca5bd4fe0df50730f302858accbb31402",
+      "explicit_sha256": "3e659895597098ac972b93dc9510a3943965eae4c403e7f9e558076b88691d5e"
+    }
+  ],
+  "warm_cold_same_start": true,
+  "warm_cold_same_candidates": true,
+  "peak_memory_bytes": 1635807232,
+  "disk_observed_peak_bytes": 1383426018,
+  "limitations": "one dev observation; 29 concrete plans; single merged update; no holdout/significance"
+}

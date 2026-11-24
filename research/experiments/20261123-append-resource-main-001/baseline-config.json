@@ -1,0 +1,18 @@
+{
+  "scope": "capacity only",
+  "tool_sha256": "e171669b1b984280005e5f9fafe5c43065252ea48b6bda637e032614f5654c24",
+  "platform": "Linux-6.8.0-149-generic-x86_64-with-glibc2.39",
+  "sizes_mib": [
+    128,
+    256,
+    512
+  ],
+  "input": "random.Random(0x5EEDA4C), one MiB generation buffer; two large files or four MiB files",
+  "memory_gate_bytes": 2684354560,
+  "process_memory_limit": "skill shared 3 GiB",
+  "disk_gate_bytes": 2147483648,
+  "plan": "0x0 (one group, no dictionary)",
+  "affinity": [
+    0
+  ]
+}

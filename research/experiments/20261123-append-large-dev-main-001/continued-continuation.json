@@ -1,0 +1,15 @@
+{
+  "previous_task": "20261124T051435Z-cef36683",
+  "reason": "task disk monitor FileNotFoundError during verified-file reclamation",
+  "same_tool_sha256": "b9afd557babd5653881af6451bb37474789e6448c0a463a615bf4c777a3780a9",
+  "same_runner_sha256": "f11cd766169ae59d9efa49b9387dd15d8c85db321205272849fb42671b57790b",
+  "same_manifest_sha256": "8ea19a4df1e4bb13a9c82595de6e54abad5c8a9e78ec086e7e29c32566f1da91",
+  "source_copy": "verified source copied into this task; not shared disk-budget bypass",
+  "skipped_completed_branches": [
+    "A",
+    "B-new",
+    "C",
+    "C-coord",
+    "D-nearest"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "scope": "functional acceptance, not performance",
+  "passes": 2,
+  "artifacts_per_pass": 34,
+  "searches_per_pass": 15,
+  "byte_identical_history": true,
+  "independent_parents": true,
+  "chinese_paths": true,
+  "bad_manifest_rejected": true,
+  "scale_limit_rejected": true,
+  "tool_sha256": "721856649e23914ce36339aec1bbe47d9dde4304017df251c3098252b42325e0"
+}

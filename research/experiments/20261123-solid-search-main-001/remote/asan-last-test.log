@@ -1,0 +1,35 @@
+Start testing: Nov 24 07:57 UTC
+----------------------------------------------------------
+4/45 Testing: research.solid_seed
+4/45 Test: research.solid_seed
+Command: "/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/cmake" "-DTOOL=/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan/research/tools/seedarc_append4_study" "-DWORK=/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan/research/tools/solid-seed-check-Debug" "-P" "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/source/research/tools/check_solid_seed.cmake"
+Directory: /home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan/research/tools
+"research.solid_seed" start time: Nov 24 07:57 UTC
+Output:
+----------------------------------------------------------
+-- solid Seed / explicit / legacy payloads, histories, negative cases and compatibility passed
+<end of output>
+Test time =   9.12 sec
+----------------------------------------------------------
+Test Passed.
+"research.solid_seed" end time: Nov 24 07:57 UTC
+"research.solid_seed" time elapsed: 00:00:09
+----------------------------------------------------------
+
+5/45 Testing: research.solid_search
+5/45 Test: research.solid_search
+Command: "/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/cmake" "-DTOOL=/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan/research/tools/seedarc_append4_study" "-DWORK=/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan/research/tools/solid-search-check-Debug" "-P" "/home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/source/research/tools/check_solid_search.cmake"
+Directory: /home/sc/long-tasks/20261124T075308Z-0ab63a9b/work/asan/research/tools
+"research.solid_search" start time: Nov 24 07:57 UTC
+Output:
+----------------------------------------------------------
+-- solid search budgets, full-domain reference, deterministic outputs and direct-plan equivalence passed
+<end of output>
+Test time =   5.65 sec
+----------------------------------------------------------
+Test Passed.
+"research.solid_search" end time: Nov 24 07:57 UTC
+"research.solid_search" time elapsed: 00:00:05
+----------------------------------------------------------
+
+End testing: Nov 24 07:57 UTC

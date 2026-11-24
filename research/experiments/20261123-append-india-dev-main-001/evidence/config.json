@@ -1,0 +1,23 @@
+{
+  "id": "append-india-dev-r0",
+  "phase": "dev-exploration",
+  "source_commit": "479eab9a524ff0cf82ef55f36dc19ea4d06f77fc",
+  "pools": [
+    "linux-src",
+    "wiki-text"
+  ],
+  "repetitions": 3,
+  "initial_budget_multiple": 8,
+  "search_budget_multiple": 4,
+  "prng_seeds": [
+    3,
+    11,
+    29
+  ],
+  "redundancy": "off",
+  "checkpoint_bytes": 1048576,
+  "thread_count": 1,
+  "cache": "warm each cumulative tree before timing; no cache dropping",
+  "scope": "Public dev files only. No holdout evaluation or native proprietary binaries. Exploratory thresholds are not frozen for holdout.",
+  "limits": "Exclusive skill task, one benchmark child at a time on one selected CPU; 6 hour runtime and skill disk/log limits remain in force."
+}

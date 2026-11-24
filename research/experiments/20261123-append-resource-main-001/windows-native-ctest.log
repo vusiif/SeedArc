@@ -1,0 +1,690 @@
+Start testing: Nov 23 05:52 太平洋标准时间
+----------------------------------------------------------
+1/42 Testing: research.g5_study
+1/42 Test: research.g5_study
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DTOOL=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools/Release/seedarc_g5_study.exe" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools/g5-check-Release" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/check_g5.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools
+"research.g5_study" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   3.10 sec
+----------------------------------------------------------
+Test Passed.
+"research.g5_study" end time: Nov 23 05:52 太平洋标准时间
+"research.g5_study" time elapsed: 00:00:03
+----------------------------------------------------------
+
+2/42 Testing: research.append_study
+2/42 Test: research.append_study
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DTOOL=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools/Release/seedarc_append_study.exe" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools/append-check-Release" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/check_append.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools
+"research.append_study" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   1.13 sec
+----------------------------------------------------------
+Test Passed.
+"research.append_study" end time: Nov 23 05:52 太平洋标准时间
+"research.append_study" time elapsed: 00:00:01
+----------------------------------------------------------
+
+3/42 Testing: research.append4_study
+3/42 Test: research.append4_study
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DTOOL=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools/Release/seedarc_append4_study.exe" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools/append4-check-Release" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/check_append4.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools
+"research.append4_study" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =  13.91 sec
+----------------------------------------------------------
+Test Passed.
+"research.append4_study" end time: Nov 23 05:52 太平洋标准时间
+"research.append4_study" time elapsed: 00:00:13
+----------------------------------------------------------
+
+4/42 Testing: core.boundaries
+4/42 Test: core.boundaries
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_core_tests.exe"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"core.boundaries" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"core.boundaries" end time: Nov 23 05:52 太平洋标准时间
+"core.boundaries" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/42 Testing: seed.candidate_plans
+5/42 Test: seed.candidate_plans
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_seed_strategy_tests.exe"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"seed.candidate_plans" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+all seed candidate checks passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"seed.candidate_plans" end time: Nov 23 05:52 太平洋标准时间
+"seed.candidate_plans" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/42 Testing: seed.file_rank_overrides
+6/42 Test: seed.file_rank_overrides
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_seed_file_override_tests.exe"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"seed.file_rank_overrides" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+all file rank overlay checks passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"seed.file_rank_overrides" end time: Nov 23 05:52 太平洋标准时间
+"seed.file_rank_overrides" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/42 Testing: seed.path_rank_overrides
+7/42 Test: seed.path_rank_overrides
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_seed_path_override_tests.exe"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"seed.path_rank_overrides" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+all path catalog checks passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"seed.path_rank_overrides" end time: Nov 23 05:52 太平洋标准时间
+"seed.path_rank_overrides" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/42 Testing: codec.dictionary_research
+8/42 Test: codec.dictionary_research
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_codec_dictionary_tests.exe"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"codec.dictionary_research" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+all dictionary checks passed
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"codec.dictionary_research" end time: Nov 23 05:52 太平洋标准时间
+"codec.dictionary_research" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/42 Testing: archive.m3_compatibility
+9/42 Test: archive.m3_compatibility
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_m3_compatibility_tests.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"archive.m3_compatibility" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+M3 compatibility fixtures passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"archive.m3_compatibility" end time: Nov 23 05:52 太平洋标准时间
+"archive.m3_compatibility" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/42 Testing: unicode.conformance
+10/42 Test: unicode.conformance
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_unicode_tests.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/third_party/unicode-ucd/17.0.0/NormalizationTest.txt"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"unicode.conformance" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.21 sec
+----------------------------------------------------------
+Test Passed.
+"unicode.conformance" end time: Nov 23 05:52 太平洋标准时间
+"unicode.conformance" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/42 Testing: unicode.tables_current
+11/42 Test: unicode.tables_current
+Command: "C:/Users/IceLolly/AppData/Local/Programs/Python/Python315/python.exe" "-I" "C:/Users/IceLolly/Music/Clion/SeedArc/core/filesystem/unicode_tables_gen.py" "C:/Users/IceLolly/Music/Clion/SeedArc/third_party/unicode-ucd/17.0.0" "C:/Users/IceLolly/Music/Clion/SeedArc/core/filesystem/unicode_tables.inc" "--check"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"unicode.tables_current" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+C:\Users\IceLolly\Music\Clion\SeedArc\core\filesystem\unicode_tables.inc is up to date
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"unicode.tables_current" end time: Nov 23 05:52 太平洋标准时间
+"unicode.tables_current" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/42 Testing: archive.boundaries
+12/42 Test: archive.boundaries
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_archive_tests.exe"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"archive.boundaries" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"archive.boundaries" end time: Nov 23 05:52 太平洋标准时间
+"archive.boundaries" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/42 Testing: path.boundaries
+13/42 Test: path.boundaries
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_path_tests.exe"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"path.boundaries" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"path.boundaries" end time: Nov 23 05:52 太平洋标准时间
+"path.boundaries" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/42 Testing: index.boundaries
+14/42 Test: index.boundaries
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_index_tests.exe"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"index.boundaries" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"index.boundaries" end time: Nov 23 05:52 太平洋标准时间
+"index.boundaries" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/42 Testing: seed.archive_integration
+15/42 Test: seed.archive_integration
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_seed_archive_tests.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/.sandbox-test"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"seed.archive_integration" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+all seed archive checks passed
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"seed.archive_integration" end time: Nov 23 05:52 太平洋标准时间
+"seed.archive_integration" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/42 Testing: seed.adaptive_file
+16/42 Test: seed.adaptive_file
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_seed_adaptive_tests.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/.sandbox-test"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"seed.adaptive_file" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+all seed adaptive checks passed
+<end of output>
+Test time =   0.18 sec
+----------------------------------------------------------
+Test Passed.
+"seed.adaptive_file" end time: Nov 23 05:52 太平洋标准时间
+"seed.adaptive_file" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/42 Testing: filesystem.safe_output
+17/42 Test: filesystem.safe_output
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_safe_output_tests.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/.sandbox-test"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"filesystem.safe_output" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+attributes-only reparse mutation succeeded; relative operation failed closed
+<end of output>
+Test time =   0.16 sec
+----------------------------------------------------------
+Test Passed.
+"filesystem.safe_output" end time: Nov 23 05:52 太平洋标准时间
+"filesystem.safe_output" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/42 Testing: archive.store_round_trip
+18/42 Test: archive.store_round_trip
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_store_archive_tests.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/.sandbox-test"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"archive.store_round_trip" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+many small files (1200 files, 12 directories): 1.43424 s for compress + verify + extract + compare
+high entropy (2.5 MiB): 0.29771 s for compress + verify + extract + compare
+<end of output>
+Test time =   5.34 sec
+----------------------------------------------------------
+Test Passed.
+"archive.store_round_trip" end time: Nov 23 05:52 太平洋标准时间
+"archive.store_round_trip" time elapsed: 00:00:05
+----------------------------------------------------------
+
+19/42 Testing: archive.store_acceptance
+19/42 Test: archive.store_acceptance
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_store_acceptance_tests.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/.sandbox-test"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"archive.store_acceptance" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+ok   P1 content of a committed file: tampering was injected
+ok   P1 content of a committed file: extraction fails with integrity_error
+     (staged output changed before publication: file content: a)
+ok   P1 content of a committed file: target never appears
+ok   P1 foreign entry in the staging root: tampering was injected
+ok   P1 foreign entry in the staging root: extraction fails with integrity_error
+     (staged output changed before publication: unexpected entry foreign.txt; cleanup incomplete (1 objects, first: handle cleanup failed: Windows error 145); a .seedarc-*.tmp directory may remain next to the target)
+ok   P1 foreign entry in the staging root: target never appears
+ok   P1 named stream on a committed file: tampering was injected
+ok   P1 named stream on a committed file: extraction fails with integrity_error
+     (staged output changed before publication: unexpected data streams)
+ok   P1 named stream on a committed file: target never appears
+ok   P1 acceptance scenario (content + foreign): tampering was injected
+ok   P1 acceptance scenario (content + foreign): extraction fails with integrity_error
+     (staged output changed before publication: unexpected entry foreign.txt; cleanup incomplete (1 objects, first: handle cleanup failed: Windows error 145); a .seedarc-*.tmp directory may remain next to the target)
+ok   P1 acceptance scenario (content + foreign): target never appears
+ok   untampered extraction is byte-exact
+ok   published tree carries only the private staging DACL
+ok   empty archive extracts to an empty directory
+ok   archive with one empty file extracts
+ok   P2 pre-cancelled extract of empty archive reports cancelled
+ok   P2 pre-cancelled extract of empty archive leaves nothing
+ok   P2 pre-cancelled verify of empty archive reports cancelled
+ok   P2 pre-cancelled extract of empty-file archive reports cancelled
+ok   P2 pre-cancelled extract of empty-file archive leaves nothing
+ok   P2 pre-cancelled verify of empty-file archive reports cancelled
+all acceptance checks passed
+<end of output>
+Test time =   4.39 sec
+----------------------------------------------------------
+Test Passed.
+"archive.store_acceptance" end time: Nov 23 05:52 太平洋标准时间
+"archive.store_acceptance" time elapsed: 00:00:04
+----------------------------------------------------------
+
+20/42 Testing: codec.round_trip
+20/42 Test: codec.round_trip
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_codec_tests.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/.sandbox-test"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"codec.round_trip" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+all codec checks passed
+<end of output>
+Test time =   0.24 sec
+----------------------------------------------------------
+Test Passed.
+"codec.round_trip" end time: Nov 23 05:52 太平洋标准时间
+"codec.round_trip" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/42 Testing: archive.store_bounded_memory
+21/42 Test: archive.store_bounded_memory
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_store_memory_test.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/.sandbox-test" "64"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"archive.store_bounded_memory" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+compress: 1.92118 s (33.3129 MiB/s)
+verify: 0.760442 s (84.1615 MiB/s)
+extract: 2.62145 s (24.4139 MiB/s)
+codec store; archive 64.0031 MiB
+input 64 MiB; peak working set before 5.01953 MiB, after 6.44922 MiB
+<end of output>
+Test time =   5.54 sec
+----------------------------------------------------------
+Test Passed.
+"archive.store_bounded_memory" end time: Nov 23 05:52 太平洋标准时间
+"archive.store_bounded_memory" time elapsed: 00:00:05
+----------------------------------------------------------
+
+22/42 Testing: codec.zstd_bounded_memory
+22/42 Test: codec.zstd_bounded_memory
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_store_memory_test.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/.sandbox-test" "64" "zstd" "16"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"codec.zstd_bounded_memory" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+compress: 1.76154 s (36.3319 MiB/s)
+verify: 0.676423 s (94.6154 MiB/s)
+extract: 2.66505 s (24.0145 MiB/s)
+codec zstd; archive 33.1042 MiB
+input 64 MiB; peak working set before 5.00391 MiB, after 9.60547 MiB
+<end of output>
+Test time =   5.32 sec
+----------------------------------------------------------
+Test Passed.
+"codec.zstd_bounded_memory" end time: Nov 23 05:52 太平洋标准时间
+"codec.zstd_bounded_memory" time elapsed: 00:00:05
+----------------------------------------------------------
+
+23/42 Testing: codec.lzma2_bounded_memory
+23/42 Test: codec.lzma2_bounded_memory
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/Release/seedarc_store_memory_test.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/.sandbox-test" "64" "lzma2" "32"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"codec.lzma2_bounded_memory" start time: Nov 23 05:52 太平洋标准时间
+Output:
+----------------------------------------------------------
+compress: 26.541 s (2.41137 MiB/s)
+verify: 2.37536 s (26.9433 MiB/s)
+extract: 4.35025 s (14.7118 MiB/s)
+codec lzma2; archive 33.2754 MiB
+input 64 MiB; peak working set before 4.98828 MiB, after 19.8945 MiB
+<end of output>
+Test time =  33.50 sec
+----------------------------------------------------------
+Test Passed.
+"codec.lzma2_bounded_memory" end time: Nov 23 05:53 太平洋标准时间
+"codec.lzma2_bounded_memory" time elapsed: 00:00:33
+----------------------------------------------------------
+
+24/42 Testing: cli.help
+24/42 Test: cli.help
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=help" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.help" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"cli.help" end time: Nov 23 05:53 太平洋标准时间
+"cli.help" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/42 Testing: cli.short_help
+25/42 Test: cli.short_help
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=short_help" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.short_help" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cli.short_help" end time: Nov 23 05:53 太平洋标准时间
+"cli.short_help" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/42 Testing: cli.help_command
+26/42 Test: cli.help_command
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=help_command" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.help_command" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cli.help_command" end time: Nov 23 05:53 太平洋标准时间
+"cli.help_command" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/42 Testing: cli.version
+27/42 Test: cli.version
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=version" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.version" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cli.version" end time: Nov 23 05:53 太平洋标准时间
+"cli.version" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/42 Testing: cli.missing
+28/42 Test: cli.missing
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=missing" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.missing" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cli.missing" end time: Nov 23 05:53 太平洋标准时间
+"cli.missing" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/42 Testing: cli.unknown
+29/42 Test: cli.unknown
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=unknown" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.unknown" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cli.unknown" end time: Nov 23 05:53 太平洋标准时间
+"cli.unknown" time elapsed: 00:00:00
+----------------------------------------------------------
+
+30/42 Testing: cli.extra
+30/42 Test: cli.extra
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=extra" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.extra" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cli.extra" end time: Nov 23 05:53 太平洋标准时间
+"cli.extra" time elapsed: 00:00:00
+----------------------------------------------------------
+
+31/42 Testing: cli.search
+31/42 Test: cli.search
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=search" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.search" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cli.search" end time: Nov 23 05:53 太平洋标准时间
+"cli.search" time elapsed: 00:00:00
+----------------------------------------------------------
+
+32/42 Testing: cli.benchmark
+32/42 Test: cli.benchmark
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=benchmark" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.benchmark" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cli.benchmark" end time: Nov 23 05:53 太平洋标准时间
+"cli.benchmark" time elapsed: 00:00:00
+----------------------------------------------------------
+
+33/42 Testing: cli.compress_usage
+33/42 Test: cli.compress_usage
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=compress_usage" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.compress_usage" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Passed.
+"cli.compress_usage" end time: Nov 23 05:53 太平洋标准时间
+"cli.compress_usage" time elapsed: 00:00:00
+----------------------------------------------------------
+
+34/42 Testing: cli.extract_usage
+34/42 Test: cli.extract_usage
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=extract_usage" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.extract_usage" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"cli.extract_usage" end time: Nov 23 05:53 太平洋标准时间
+"cli.extract_usage" time elapsed: 00:00:00
+----------------------------------------------------------
+
+35/42 Testing: cli.verify_usage
+35/42 Test: cli.verify_usage
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=verify_usage" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.verify_usage" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"cli.verify_usage" end time: Nov 23 05:53 太平洋标准时间
+"cli.verify_usage" time elapsed: 00:00:00
+----------------------------------------------------------
+
+36/42 Testing: cli.verify_missing
+36/42 Test: cli.verify_missing
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=verify_missing" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.verify_missing" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"cli.verify_missing" end time: Nov 23 05:53 太平洋标准时间
+"cli.verify_missing" time elapsed: 00:00:00
+----------------------------------------------------------
+
+37/42 Testing: cli.codec_usage
+37/42 Test: cli.codec_usage
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=codec_usage" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.codec_usage" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.17 sec
+----------------------------------------------------------
+Test Passed.
+"cli.codec_usage" end time: Nov 23 05:53 太平洋标准时间
+"cli.codec_usage" time elapsed: 00:00:00
+----------------------------------------------------------
+
+38/42 Testing: cli.round_trip
+38/42 Test: cli.round_trip
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=round_trip" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.round_trip" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.31 sec
+----------------------------------------------------------
+Test Passed.
+"cli.round_trip" end time: Nov 23 05:53 太平洋标准时间
+"cli.round_trip" time elapsed: 00:00:00
+----------------------------------------------------------
+
+39/42 Testing: cli.codec_round_trip
+39/42 Test: cli.codec_round_trip
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DSEEDARC_CLI=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/cli/Release/seedarc.exe" "-DSEEDARC_VERSION=0.1.0" "-DCASE=codec_round_trip" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests/cli-work-Release" "-DSEEDARC_FIXTURES=C:/Users/IceLolly/Music/Clion/SeedArc/tests/fixtures/m3" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/tests/check_cli.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/tests
+"cli.codec_round_trip" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.52 sec
+----------------------------------------------------------
+Test Passed.
+"cli.codec_round_trip" end time: Nov 23 05:53 太平洋标准时间
+"cli.codec_round_trip" time elapsed: 00:00:00
+----------------------------------------------------------
+
+40/42 Testing: fuzz.replay.header
+40/42 Test: fuzz.replay.header
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/fuzz/Release/seedarc_fuzz_replay_header.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/fuzz/corpus/header"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/fuzz
+"fuzz.replay.header" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+replayed 3 inputs
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"fuzz.replay.header" end time: Nov 23 05:53 太平洋标准时间
+"fuzz.replay.header" time elapsed: 00:00:00
+----------------------------------------------------------
+
+41/42 Testing: fuzz.replay.path
+41/42 Test: fuzz.replay.path
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/fuzz/Release/seedarc_fuzz_replay_path.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/fuzz/corpus/path"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/fuzz
+"fuzz.replay.path" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+replayed 7 inputs
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"fuzz.replay.path" end time: Nov 23 05:53 太平洋标准时间
+"fuzz.replay.path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+42/42 Testing: fuzz.replay.archive
+42/42 Test: fuzz.replay.archive
+Command: "C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/fuzz/Release/seedarc_fuzz_replay_archive.exe" "C:/Users/IceLolly/Music/Clion/SeedArc/fuzz/corpus/archive"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/fuzz
+"fuzz.replay.archive" start time: Nov 23 05:53 太平洋标准时间
+Output:
+----------------------------------------------------------
+replayed 7 inputs
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"fuzz.replay.archive" end time: Nov 23 05:53 太平洋标准时间
+"fuzz.replay.archive" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 23 05:53 太平洋标准时间

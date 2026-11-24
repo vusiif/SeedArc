@@ -1,0 +1,20 @@
+{
+  "status": "strong solid Seed zero-search validated",
+  "summary": {
+    "scope": "zero-search dev payload equivalence, no search benefit conclusion",
+    "stages": 4,
+    "commands": 40,
+    "archives_verified": 15,
+    "payload_comparisons": 10,
+    "search_commands": 0,
+    "all_payloads_equal": true,
+    "byte_exact": true,
+    "final_segment_bytes": {
+      "solid": 65818218,
+      "seed-solid": 65818274,
+      "explicit-solid": 65818274
+    }
+  },
+  "binary_sha256": "678285ce993ca5a1510db0e1670cf7aaedde8965d85df5fc7d4df00d86f32ec0",
+  "source_zip_sha256": "485ff5036f8663bc98041a4b409981863de4b097d6e1ae62c5c40617ae5bc1c7"
+}

@@ -1,0 +1,50 @@
+{
+  "manifest_sha256": "5e006ba8ba6b626d0690841fbd2f06c31be0347c164a74773f6ce2016f2a484b",
+  "reference_sha256": "7732c2dc4025ef2b184556d49ec30600e75be241deefe12a6d055f6ec4f30ca7",
+  "tool_sha256": "435ea5b41a664a0aedf166c96a140b13f265f923112533de9875e4e5040ada62",
+  "runner_sha256": "62ec6153708d6f5868b34f230d168921bfbd06f0680f464c6b9338ad7b748f12",
+  "bytes": 236937106,
+  "files": 7993,
+  "frame_limits": [
+    1073741824,
+    33554432,
+    67108864,
+    134217728
+  ],
+  "orders": [
+    [
+      1073741824,
+      33554432,
+      67108864,
+      134217728
+    ],
+    [
+      33554432,
+      67108864,
+      134217728,
+      1073741824
+    ],
+    [
+      67108864,
+      134217728,
+      1073741824,
+      33554432
+    ],
+    [
+      134217728,
+      1073741824,
+      33554432,
+      67108864
+    ]
+  ],
+  "rounds": 4,
+  "sample_count": 12,
+  "operation_order": "fresh then append on even rounds; reverse on odd rounds",
+  "affinity": [
+    0
+  ],
+  "mode": "seed, concrete single group Zstd9",
+  "cache": "prewarm source tree; verify before access; no global cache dropping",
+  "scope": "same dev, warm-cache stability only; no holdout/statistical significance",
+  "reused_evidence": "DEV-021 same C++ / same archive explicit-plan and payload-fault checks"
+}

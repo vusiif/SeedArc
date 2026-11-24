@@ -1,0 +1,12 @@
+{
+  "scope": "functional scheduler acceptance",
+  "passes": 2,
+  "artifacts_per_pass": 34,
+  "identical_to_reference": true,
+  "repeatable": true,
+  "chinese_paths": true,
+  "independent_parents": true,
+  "invalid_manifests_rejected": true,
+  "branch_files_reclaimed": true,
+  "tool_sha256": "b9afd557babd5653881af6451bb37474789e6448c0a463a615bf4c777a3780a9"
+}

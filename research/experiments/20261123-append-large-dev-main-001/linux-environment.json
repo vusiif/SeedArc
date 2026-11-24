@@ -1,0 +1,21 @@
+{
+  "platform": "Linux-6.8.0-149-generic-x86_64-with-glibc2.39",
+  "cpu_count": 4,
+  "affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "memory_info": [
+    "MemTotal:        6067400 kB",
+    "MemFree:         3634608 kB",
+    "MemAvailable:    5274036 kB",
+    "Buffers:          118756 kB",
+    "Cached:          1679828 kB"
+  ],
+  "cpu_info": "model name\t: AMD EPYC 7K62 48-Core Processor",
+  "packages_sha256": "c894d1796de7f727ca1a2fc680a9f5324a067da90a6a4b68f8c6233687914bec",
+  "compiler": "/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/g++-14",
+  "mode": "exclusive"
+}

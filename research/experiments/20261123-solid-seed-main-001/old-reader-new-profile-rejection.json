@@ -1,0 +1,12 @@
+[
+  {
+    "mode": "seed-solid",
+    "old_reader_exit": 1,
+    "stderr": "research container v4: bad header"
+  },
+  {
+    "mode": "explicit-solid",
+    "old_reader_exit": 1,
+    "stderr": "research container v4: bad header"
+  }
+]

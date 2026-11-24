@@ -1,0 +1,62 @@
+{
+  "schema": "seedarc.research.bounded-options.r0",
+  "revision": 0,
+  "status": "experimental same-dev options",
+  "default_option": null,
+  "formal_cli_or_gui_integration": false,
+  "tool": "seedarc_append4_study",
+  "codec": "zstd",
+  "level": 9,
+  "grouping_seed": "0x0",
+  "seed_mapping_revision": 2,
+  "archive_revision": 5,
+  "frame_limit_is_separate_writer_configuration": true,
+  "evidence": "research/experiments/20261124-bounded-repeat-main-001/analysis.json",
+  "pack_arguments": [
+    "bounded-pack",
+    "seed",
+    "{frame_limit_bytes}",
+    "{input_directory}",
+    "{new_archive}"
+  ],
+  "append_arguments": [
+    "bounded-append",
+    "{frame_limit_bytes}",
+    "{old_archive}",
+    "{new_files_directory}",
+    "{new_archive}"
+  ],
+  "options": [
+    {
+      "id": "solid-reference",
+      "label_zh": "整段体积参考",
+      "frame_limit_bytes": 1073741824,
+      "focus": "smallest measured size in this Zstd9 family"
+    },
+    {
+      "id": "compact-access",
+      "label_zh": "低额外体积兼顾读取",
+      "frame_limit_bytes": 67108864,
+      "focus": "low measured size overhead and single-file read/decode"
+    },
+    {
+      "id": "access-priority",
+      "label_zh": "偏单文件读取与较小帧",
+      "frame_limit_bytes": 33554432,
+      "focus": "single-file read/decode latency and smaller independent frames"
+    },
+    {
+      "id": "custom-128",
+      "label_zh": "128MiB手动取舍",
+      "frame_limit_bytes": 134217728,
+      "focus": "retain an intermediate manual alternative"
+    }
+  ],
+  "constraints": [
+    "Files larger than the chosen cap are rejected; no cross-frame files.",
+    "Existing frames must fit the append cap; changing old layout needs explicit rebuild.",
+    "Whole archive I/O and old archive copying remain; extraction profile does not write output.",
+    "No fast-compression claim, cold-disk guarantee, automatic objective selection or universal default.",
+    "Same-dev four warm-cache observations only; recovery evidence limited to DEV-021 intact-index payload tests."
+  ]
+}

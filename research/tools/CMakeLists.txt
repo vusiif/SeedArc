@@ -65,6 +65,19 @@ if(BUILD_TESTING)
         "-DTOOL=$<TARGET_FILE:seedarc_append4_study>" "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/append4-check-$<CONFIG>"
         -P "${CMAKE_CURRENT_SOURCE_DIR}/check_append4.cmake")
     set_tests_properties(research.append4_study PROPERTIES TIMEOUT 600)
+    add_test(NAME research.solid_seed COMMAND "${CMAKE_COMMAND}"
+        "-DTOOL=$<TARGET_FILE:seedarc_append4_study>" "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/solid-seed-check-$<CONFIG>"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_solid_seed.cmake")
+    set_tests_properties(research.solid_seed PROPERTIES TIMEOUT 600)
+    add_test(NAME research.solid_search COMMAND "${CMAKE_COMMAND}"
+        "-DTOOL=$<TARGET_FILE:seedarc_append4_study>" "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/solid-search-check-$<CONFIG>"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_solid_search.cmake")
+    set_tests_properties(research.solid_search PROPERTIES TIMEOUT 600)
+    add_test(NAME research.bounded_solid COMMAND "${CMAKE_COMMAND}"
+        "-DTOOL=$<TARGET_FILE:seedarc_append4_study>"
+        "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/bounded-solid-check-$<CONFIG>"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_bounded_solid.cmake")
+    set_tests_properties(research.bounded_solid PROPERTIES TIMEOUT 600)
 endif()
 
 # DEV-016: production path-profile check for corpus builders (portable).

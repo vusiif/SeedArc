@@ -1,0 +1,6 @@
+{
+  "status": "balanced bounded solid repeats complete",
+  "binary_sha256": "435ea5b41a664a0aedf166c96a140b13f265f923112533de9875e4e5040ada62",
+  "source_zip_sha256": "a17e8b5fbd8ee58cc7c6b0723d73b0cb6c085e594a07b11d4c99dfe5f24fa0fd",
+  "sanitizer": "not repeated; C++ identical to DEV-021 related ASan4/4"
+}

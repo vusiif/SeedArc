@@ -1,0 +1,15 @@
+{
+  "scope": "zero-search dev payload equivalence, no search benefit conclusion",
+  "stages": 4,
+  "commands": 40,
+  "archives_verified": 15,
+  "payload_comparisons": 10,
+  "search_commands": 0,
+  "all_payloads_equal": true,
+  "byte_exact": true,
+  "final_segment_bytes": {
+    "solid": 65818218,
+    "seed-solid": 65818274,
+    "explicit-solid": 65818274
+  }
+}

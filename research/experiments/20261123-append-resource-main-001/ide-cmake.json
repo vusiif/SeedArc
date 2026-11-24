@@ -1,0 +1,17 @@
+{
+  "id": 7,
+  "result": {
+    "content": [
+      {
+        "text": "{\"filePath\":\"research/tools/check_append4.cmake\",\"errors\":[]}",
+        "type": "text"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "filePath": "research/tools/check_append4.cmake",
+      "errors": []
+    }
+  },
+  "jsonrpc": "2.0"
+}

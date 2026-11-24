@@ -1,0 +1,10 @@
+{
+  "commands": 120,
+  "archives_verified": 44,
+  "repeat_encodes": 32,
+  "access_profiles": 32,
+  "rounds": 4,
+  "all_byte_exact": true,
+  "all_reference_hashes_matched": true,
+  "all_parents_immutable": true
+}

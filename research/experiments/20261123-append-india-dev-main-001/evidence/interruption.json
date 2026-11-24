@@ -1,0 +1,19 @@
+{
+  "status": "interrupted_after_scope_review",
+  "task_id": "20261123T123105Z-d5596074",
+  "completed_command_records": 241,
+  "nonzero_completed_commands": 0,
+  "last_completed_record": {
+    "index": 240,
+    "label": "verify",
+    "rep": 1,
+    "pool": "wiki-text",
+    "stage": 2,
+    "variant": "rebuild-solid"
+  },
+  "limitation": "Only completed command records; the child active at cancellation may not have a row. Repetition IDs present do not mean the repetition completed. No full pilot-complete marker or full performance conclusion.",
+  "observed_repetition_ids": [
+    0,
+    1
+  ]
+}

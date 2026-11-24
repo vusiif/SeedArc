@@ -1,0 +1,18 @@
+Start testing: Nov 23 06:10 太平洋标准时间
+----------------------------------------------------------
+3/42 Testing: research.append4_study
+3/42 Test: research.append4_study
+Command: "C:/Users/IceLolly/Music/Path/CMake/bin/cmake.exe" "-DTOOL=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools/Release/seedarc_append4_study.exe" "-DWORK=C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools/append4-check-Release" "-P" "C:/Users/IceLolly/Music/Clion/SeedArc/research/tools/check_append4.cmake"
+Directory: C:/Users/IceLolly/Music/Clion/SeedArc/build/dictstudy-check/research/tools
+"research.append4_study" start time: Nov 23 06:10 太平洋标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =  16.10 sec
+----------------------------------------------------------
+Test Passed.
+"research.append4_study" end time: Nov 23 06:10 太平洋标准时间
+"research.append4_study" time elapsed: 00:00:16
+----------------------------------------------------------
+
+End testing: Nov 23 06:10 太平洋标准时间
