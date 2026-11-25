@@ -27,10 +27,16 @@
 // the newest intact trailer in the prefix plus every valid record, verifies every file by CRC,
 // refuses conflicting copies and applies the production manifest checks (ADR-0005).
 #include "append_common.hpp"
+#include "seedarc/safe_output.hpp"
 #include "solid_plan.hpp"
 #include "splitmix64/splitmix64.hpp"
 
+#ifdef _WIN32
+#include <shellapi.h>
+#endif
 #include <cstring>
+#include <fstream>
+#include <functional>
 #include <iostream>
 #include <ranges>
 #include <tuple>
@@ -65,7 +71,9 @@ constexpr std::string_view usage =
     "  append4_study bounded-pack seed|explicit FRAME_LIMIT_BYTES INPUT_DIR OUT\n"
     "  append4_study bounded-append FRAME_LIMIT_BYTES OLD NEW_DIR OUT\n"
     "  append4_study access-profile ARCHIVE INPUT_DIR UNIFORM_SAMPLE_COUNT\n"
-    "  append4_study payload-fault-profile ARCHIVE INPUT_DIR\n";
+    "  append4_study payload-fault-profile ARCHIVE INPUT_DIR\n"
+    "  append4_study extract ARCHIVE PATH OUT_DIR BASENAME   (indexed read; revision-5 solid)\n"
+    "  append4_study extract-profile ARCHIVE INPUT_DIR UNIFORM_SAMPLE_COUNT EMPTY_OUT_DIR\n";
 using Tag = std::array<char, 8>;
 constexpr Tag magic{'S', 'A', 'D', 'X', 'R', '0', '0', '4'};
 constexpr Tag footer_magic{'S', 'A', 'D', 'X', 'E', 'N', 'D', '4'};
@@ -219,7 +227,9 @@ struct Record {
     std::span<const std::byte> body;
     std::size_t end;
 };
-std::optional<Record> read_record(std::span<const std::byte> bytes, std::size_t at) {
+// `base` is the absolute container offset of bytes[0] (non-zero when only a window was read).
+std::optional<Record> read_record(std::span<const std::byte> bytes, std::size_t at,
+                                  std::uint64_t base = 0) {
     if (at > bytes.size() || bytes.size() - at < record_overhead) {
         return std::nullopt;
     }
@@ -238,7 +248,7 @@ std::optional<Record> read_record(std::span<const std::byte> bytes, std::size_t 
     const auto body = bytes.subspan(at + 12, static_cast<std::size_t>(*len));
     Reader c{bytes, at + 12 + static_cast<std::size_t>(*len)};
     Reader self{body, 0};
-    if (c.get(4) != seedarc::experimental::crc32c(body) || self.get(8) != at) {
+    if (c.get(4) != seedarc::experimental::crc32c(body) || self.get(8) != base + at) {
         return std::nullopt;
     }
     return Record{*type, body, at + record_overhead + static_cast<std::size_t>(*len)};
@@ -733,38 +743,52 @@ void finish_container(std::vector<std::byte> &out, Model &m) {
     out.insert(out.end(), f.begin(), f.end());
 }
 
-// Bounded, strict parse of the whole container (footer -> trailer -> records), cross-checked
-// against a scan of the records; any difference is an error.
-std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
-    auto header = parse_header(bytes);
-    if (!header) {
-        return std::unexpected(header.error());
-    }
-    if (bytes.size() < header_bytes + footer_bytes ||
-        std::memcmp(bytes.data() + bytes.size() - footer_magic.size(), footer_magic.data(),
+// The footer's view of the trailer.
+struct FooterInfo {
+    std::uint64_t trailer_offset = 0, trailer_size = 0;
+    std::uint32_t trailer_crc = 0;
+};
+// `footer` is the last footer_bytes of a container of `container_size` bytes.
+std::expected<FooterInfo, Error> parse_footer(std::span<const std::byte> footer,
+                                              std::uint64_t container_size) {
+    if (footer.size() != footer_bytes || container_size < header_bytes + footer_bytes ||
+        std::memcmp(footer.data() + footer_bytes - footer_magic.size(), footer_magic.data(),
                     footer_magic.size()) != 0) {
         return std::unexpected(bad("bad footer magic"));
     }
-    Reader f{bytes, bytes.size() - footer_bytes};
+    Reader f{footer, 0};
     const auto toff = f.get(8), tsize = f.get(4), tcrc = f.get(4);
-    const auto footer_at = bytes.size() - footer_bytes;
+    const auto footer_at = container_size - footer_bytes;
     if (!tcrc || *toff < header_bytes || *toff > footer_at || footer_at - *toff != *tsize) {
         return std::unexpected(bad("bad footer"));
     }
-    const auto trailer =
-        bytes.subspan(static_cast<std::size_t>(*toff), static_cast<std::size_t>(*tsize));
-    if (seedarc::experimental::crc32c(trailer) != *tcrc) {
-        return std::unexpected(bad("trailer checksum mismatch"));
-    }
-    const auto body_bytes = bytes.first(static_cast<std::size_t>(*toff));
+    return FooterInfo{*toff, *tsize, static_cast<std::uint32_t>(*tcrc)};
+}
+
+// A GEN record fetched from wherever the container lives (offsets absolute).
+struct GenRecord {
+    std::vector<std::byte> body;
+    std::uint64_t end = 0;
+};
+using GenFetch = std::function<std::optional<GenRecord>(std::uint64_t offset)>;
+
+// Interprets a checksum-verified trailer. Every GEN record is fetched at the offset the trailer
+// names and must equal its trailer copy; dictionaries are checked inside `dict_bytes` (the
+// container prefix before the trailer; an empty span when only an index was read, which fails
+// closed for any generation that has dictionaries). This step needs no payload bytes; parse()
+// adds the cross-check against a scan of every record.
+std::expected<Model, Error> parse_index(const Header &header, std::uint32_t header_crc,
+                                        std::span<const std::byte> trailer,
+                                        std::uint64_t trailer_offset, const GenFetch &fetch_gen,
+                                        std::span<const std::byte> dict_bytes) {
     Model m;
-    m.header = *header;
-    m.trailer_offset = *toff;
+    m.header = header;
+    m.trailer_offset = trailer_offset;
     const auto &h = m.header;
     Reader t{trailer, 0};
     const auto hcrc = t.get(4), count = t.get(4), ngens = t.get(4);
-    if (!ngens || *hcrc != seedarc::experimental::crc32c(bytes.first(header_bytes)) ||
-        *count > max_files || *ngens == 0 || *ngens > max_generations) {
+    if (!ngens || *hcrc != header_crc || *count > max_files || *ngens == 0 ||
+        *ngens > max_generations) {
         return std::unexpected(bad("bad counts"));
     }
     std::uint32_t prev_after = 0;
@@ -775,8 +799,8 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
         }
         const auto copy = trailer.subspan(t.at, static_cast<std::size_t>(*blen));
         t.at += static_cast<std::size_t>(*blen);
-        const auto rec = read_record(body_bytes, static_cast<std::size_t>(*off));
-        if (!rec || rec->type != rec_gen || !std::ranges::equal(rec->body, copy)) {
+        const auto rec = *off < trailer_offset ? fetch_gen(*off) : std::nullopt;
+        if (!rec || !std::ranges::equal(rec->body, copy)) {
             return std::unexpected(bad("generation record differs from its trailer copy"));
         }
         auto g = parse_gen_body(copy, h);
@@ -787,7 +811,7 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
             *after > *count || (!m.gens.empty() && *off < m.data_start.back())) {
             return std::unexpected(bad("bad generation order"));
         }
-        const auto ds = check_gen_dicts(body_bytes, *g, rec->end, &m.gens);
+        const auto ds = check_gen_dicts(dict_bytes, *g, rec->end, &m.gens);
         if (!ds) {
             return std::unexpected(ds.error());
         }
@@ -905,6 +929,43 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
     if (auto ok = check_manifest(paths); !ok) {
         return std::unexpected(ok.error());
     }
+    return m;
+}
+
+// Bounded, strict parse of the whole container (footer -> trailer -> records), cross-checked
+// against a scan of the records; any difference is an error.
+std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
+    auto header = parse_header(bytes);
+    if (!header) {
+        return std::unexpected(header.error());
+    }
+    if (bytes.size() < header_bytes + footer_bytes) {
+        return std::unexpected(bad("bad footer magic"));
+    }
+    const auto footer = parse_footer(bytes.last(footer_bytes), bytes.size());
+    if (!footer) {
+        return std::unexpected(footer.error());
+    }
+    const auto trailer = bytes.subspan(static_cast<std::size_t>(footer->trailer_offset),
+                                       static_cast<std::size_t>(footer->trailer_size));
+    if (seedarc::experimental::crc32c(trailer) != footer->trailer_crc) {
+        return std::unexpected(bad("trailer checksum mismatch"));
+    }
+    const auto body_bytes = bytes.first(static_cast<std::size_t>(footer->trailer_offset));
+    const GenFetch fetch = [&](std::uint64_t off) -> std::optional<GenRecord> {
+        const auto rec = read_record(body_bytes, static_cast<std::size_t>(off));
+        if (!rec || rec->type != rec_gen) {
+            return std::nullopt;
+        }
+        return GenRecord{{rec->body.begin(), rec->body.end()}, rec->end};
+    };
+    auto parsed = parse_index(*header, seedarc::experimental::crc32c(bytes.first(header_bytes)),
+                              trailer, footer->trailer_offset, fetch, body_bytes);
+    if (!parsed) {
+        return std::unexpected(parsed.error());
+    }
+    auto &m = *parsed;
+    const auto &h = m.header;
     // Cross-check: the records must describe exactly what the trailer says.
     auto s = scan(body_bytes, h, false);
     if (!s) {
@@ -952,7 +1013,7 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
         }
     }
     m.record_bytes = s->record_bytes;
-    return m;
+    return std::move(*parsed);
 }
 
 // ---- decoding -----------------------------------------------------------------------------------
@@ -3555,11 +3616,51 @@ std::optional<std::uint32_t> redundancy_arg(std::string_view s, bool &ok) {
     return std::nullopt;
 }
 #include "bounded_solid.hpp"
+#include "bounded_extract.hpp"
+
+// Command-line arguments as UTF-8. On Windows argv is in the ANSI code page, which cannot carry
+// every path (archive-internal paths such as 源/文件.txt included), so the wide command line is
+// converted instead.
+std::optional<std::vector<std::string>> utf8_arguments([[maybe_unused]] int argc,
+                                                       [[maybe_unused]] char *argv[]) {
+#ifdef _WIN32
+    int count = 0;
+    const auto free_args = [](wchar_t **p) { LocalFree(p); };
+    const std::unique_ptr<wchar_t *, decltype(free_args)> wide(
+        CommandLineToArgvW(GetCommandLineW(), &count), free_args);
+    if (!wide || count < 1) {
+        return std::nullopt;
+    }
+    std::vector<std::string> out;
+    for (int i = 0; i < count; ++i) {
+        const int size = WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, wide.get()[i], -1,
+                                             nullptr, 0, nullptr, nullptr);
+        if (size <= 0) {
+            return std::nullopt;
+        }
+        std::string text(static_cast<std::size_t>(size), '\0');
+        if (WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, wide.get()[i], -1, text.data(), size,
+                                nullptr, nullptr) != size) {
+            return std::nullopt;
+        }
+        text.pop_back();
+        out.push_back(std::move(text));
+    }
+    return out;
+#else
+    return std::vector<std::string>(argv, argv + argc);
+#endif
+}
 
 } // namespace
 
 int main(int argc, char *argv[]) {
-    const std::vector<std::string_view> a(argv, argv + argc);
+    const auto owned = utf8_arguments(argc, argv);
+    if (!owned) {
+        std::cerr << "command line is not valid Unicode\n";
+        return 2;
+    }
+    const std::vector<std::string_view> a(owned->begin(), owned->end());
     if (a.size() == 6 && a[1] == "bounded-pack") {
         const auto cap = number(a[3]);
         if (!cap || *cap == 0 || *cap > research::max_solid_bytes ||
@@ -3588,6 +3689,17 @@ int main(int argc, char *argv[]) {
     }
     if (a.size() == 4 && a[1] == "payload-fault-profile") {
         return cmd_payload_fault_profile(native(a[2]), native(a[3]));
+    }
+    if (a.size() == 6 && a[1] == "extract") {
+        return cmd_extract(native(a[2]), a[3], native(a[4]), a[5]);
+    }
+    if (a.size() == 6 && a[1] == "extract-profile") {
+        const auto count = number(a[4]);
+        if (!count || *count == 0 || *count > 1000) {
+            return 2;
+        }
+        return cmd_extract_profile(native(a[2]), native(a[3]), static_cast<std::size_t>(*count),
+                                   native(a[5]));
     }
     if ((a.size() == 8 || a.size() == 9) && a[1] == "solid-search" &&
         (a[2] == "seed" || a[2] == "explicit")) {

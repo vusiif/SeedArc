@@ -17,7 +17,27 @@ seedarc_append4_study bounded-pack seed|explicit FRAME_LIMIT_BYTES INPUT_DIR OUT
 seedarc_append4_study bounded-append FRAME_LIMIT_BYTES OLD NEW_DIR OUT
 seedarc_append4_study access-profile ARCHIVE INPUT_DIR UNIFORM_SAMPLE_COUNT
 seedarc_append4_study payload-fault-profile ARCHIVE INPUT_DIR
+seedarc_append4_study extract ARCHIVE PATH OUT_DIR BASENAME
+seedarc_append4_study extract-profile ARCHIVE INPUT_DIR UNIFORM_SAMPLE_COUNT EMPTY_OUT_DIR
 ```
+
+### 索引式单文件提取（DEV-024，2026-11-25）
+
+`extract` / `extract-profile` 是真实落盘的单文件提取，用来补 access-profile"整包读入内存"的缺口。
+
+- **只读需要的部分**：用定位读取，只读头部 32 B、尾部 footer 24 B、trailer、每个 GEN 记录（与 trailer 副本逐字节比对），再读目标文件所在帧的压缩字节。每个读取的字节都计数。
+- **只解到目标文件为止**：帧只解码到目标文件末尾；空文件不解码。之后校验文件 CRC32C。
+- **安全落盘**：经 SafeOutputDirectory 写出：独占临时文件，commit 时复核大小和 CRC，重命名时不替换已有文件。任何检查失败都不发布输出。
+- **校验范围比全量解析小**：不做全量解析里"逐记录扫描交叉核对"这一步。保护结果的只有：trailer CRC、头部 CRC（存在 trailer 里）、GEN 副本一致、trailer 自身的边界检查、文件 CRC32C。这是有意的取舍：按索引提取本来就不读全部载荷。全包完整性仍用 verify。
+- **适用范围**：只支持修订 5 固实包，v4 等其他格式明确拒绝。
+- **extract-profile**：样本规则与 access-profile 相同（排序路径均匀位置加最大文件，去重）。每个样本都重新打开归档、读索引、提取到空目录，全程计时；计时之外再与参考输入逐字节比对，然后删除输出。分项计时包括索引读取 / 解析、帧读取、解码、写出 + commit。
+- **限制**：没有 fsync，不清 OS 缓存，所以结果仍是热缓存。帧的压缩字节整段读入，没有流式只读前缀。解码缓冲最大等于帧原文大小，受帧上限约束。
+- **Windows 参数编码**：append4_study 在 Windows 上改为从宽字符命令行取 UTF-8 参数。原来的 ANSI argv 传不了中文等非 ASCII 路径；ASCII 参数的行为不变。
+
+测试 `research.bounded_extract` 覆盖：
+- **逐字节一致**：4096 B 和整段两种帧档下，每个文件（含空文件、恰等于上限的文件、中文目录 / 文件名）都逐字节提取一致；4096 B 档下实际读取量小于包大小。
+- **采样一致**：extract-profile 与 access-profile 选中的样本相同，profile 结束后输出目录为空。
+- **失败都不留输出**：不存在的路径、`../` 和带 `/` 的输出名、已存在的输出（原内容保留）、非空的 profile 目录、载荷 / trailer / 头部翻转、截断、v4 包、参数错误。
 
 bounded-pack固定单组 / 无字典 / off冗余，两种表示使用同一帧编码和序列化路径。bounded-append仅接受revision5固实归档，旧帧也必须满足所选上限；新路径追加保留完整旧包前缀，旧原文不重压，但旧压缩包仍完整读取、复制和重写，成本明确计入。旧帧超限时拒绝，改变旧布局需要另行重建，不能声称无成本切换档位。
 

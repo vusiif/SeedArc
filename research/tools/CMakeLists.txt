@@ -57,7 +57,7 @@ add_executable(seedarc_append4_study append4_study.cpp)
 target_link_libraries(seedarc_append4_study PRIVATE seedarc_codec_dictionary SeedArc::core)
 target_include_directories(seedarc_append4_study PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
 if(WIN32)
-    target_link_libraries(seedarc_append4_study PRIVATE psapi)
+    target_link_libraries(seedarc_append4_study PRIVATE psapi shell32)
 endif()
 seedarc_target_defaults(seedarc_append4_study)
 if(BUILD_TESTING)
@@ -78,6 +78,11 @@ if(BUILD_TESTING)
         "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/bounded-solid-check-$<CONFIG>"
         -P "${CMAKE_CURRENT_SOURCE_DIR}/check_bounded_solid.cmake")
     set_tests_properties(research.bounded_solid PROPERTIES TIMEOUT 600)
+    add_test(NAME research.bounded_extract COMMAND "${CMAKE_COMMAND}"
+        "-DTOOL=$<TARGET_FILE:seedarc_append4_study>"
+        "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/bounded-extract-check-$<CONFIG>"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_bounded_extract.cmake")
+    set_tests_properties(research.bounded_extract PROPERTIES TIMEOUT 600)
 endif()
 
 # DEV-016: production path-profile check for corpus builders (portable).
