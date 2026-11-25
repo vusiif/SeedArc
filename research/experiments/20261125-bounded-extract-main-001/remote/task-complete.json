@@ -1,0 +1,10 @@
+{
+  "classes": [
+    "source",
+    "text"
+  ],
+  "analysis_returncode": 0,
+  "tool_sha256": "cca955d051e1db9ed630818b7cffff978d0e75462abc198cf5894df7ba8724dc",
+  "elapsed_s": 449.870480469006,
+  "sanitizer": "WSL Clang ASan+UBSan run separately on the same commit"
+}

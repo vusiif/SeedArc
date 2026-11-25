@@ -1,0 +1,11 @@
+{
+  "bounded_expand_dev.py": "216582508cca1cc291b8b894802b80729909d824edfeca49ed6ae84082b46a20",
+  "bounded_extract_dev.py": "467a0a055139a548016873ff3c2de973dd3c2f46a387646aed29acb1006860eb",
+  "bounded_extract_task.py": "fa69d39991c4e76c7a6f067cbc3c8e95ad99db643542d720321848f717a7ecb6",
+  "bounded-extract-reference-r0.json": "7e4991723c498d90eb88029aa022ce63ec6a4dca414d331e1528e49ce5ebd4d0",
+  "cross-reference.json": "11ecb7755108947e571a5076f4364c72e6d7210df41a5c709be16a23554e32a5",
+  "source.tsv": "c6e0d158505cdde6a19ead15c88f3fadda90ffb608fccd1ca0dc8e38b47f3e15",
+  "source.zip": "87307ae6a2ca97f2ecb987f84e6d6d776f3db09a6c58ef46cfa0890e3bb00816",
+  "task.sh": "f2b3fffce7d791caef7a01a7661d75ff24b2025e7541a26ea86648c9a47c09ce",
+  "text.tsv": "f539c8112709df5ada68783d22e5d779c2a2a63ee556670fa9ff4d0be8a57021"
+}

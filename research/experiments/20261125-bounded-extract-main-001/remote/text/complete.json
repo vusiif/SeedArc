@@ -1,0 +1,8 @@
+{
+  "cls": "text",
+  "commands": 40,
+  "profiles": 32,
+  "all_byte_exact": true,
+  "archives_match_reference": true,
+  "same_samples": true
+}

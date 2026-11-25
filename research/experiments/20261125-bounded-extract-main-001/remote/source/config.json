@@ -1,0 +1,46 @@
+{
+  "cls": "source",
+  "manifest_sha256": "c6e0d158505cdde6a19ead15c88f3fadda90ffb608fccd1ca0dc8e38b47f3e15",
+  "tool_sha256": "cca955d051e1db9ed630818b7cffff978d0e75462abc198cf5894df7ba8724dc",
+  "runner_sha256": "467a0a055139a548016873ff3c2de973dd3c2f46a387646aed29acb1006860eb",
+  "files": 11285,
+  "bytes": 268433674,
+  "frame_limits": [
+    1073741824,
+    33554432,
+    67108864,
+    134217728
+  ],
+  "orders": [
+    [
+      1073741824,
+      33554432,
+      67108864,
+      134217728
+    ],
+    [
+      33554432,
+      67108864,
+      134217728,
+      1073741824
+    ],
+    [
+      67108864,
+      134217728,
+      1073741824,
+      33554432
+    ],
+    [
+      134217728,
+      1073741824,
+      33554432,
+      67108864
+    ]
+  ],
+  "samples": 12,
+  "affinity": [
+    0
+  ],
+  "profile_order": "access then extract on even rounds; reverse on odd rounds",
+  "cache": "archive read once before each profile; no global cache dropping"
+}

@@ -1,0 +1,20 @@
+{
+  "phase": "complete",
+  "classes": [
+    {
+      "cls": "source",
+      "wall_s": 226.22712018199672,
+      "ok": true,
+      "problems": [],
+      "commands": 40
+    },
+    {
+      "cls": "text",
+      "wall_s": 97.48741681899992,
+      "ok": true,
+      "problems": [],
+      "commands": 40
+    }
+  ],
+  "elapsed_s": 449.87096720500267
+}

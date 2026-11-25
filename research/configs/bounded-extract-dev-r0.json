@@ -1,0 +1,35 @@
+{
+  "schema": "seedarc.research.bounded-extract.r0",
+  "task": "DEV-024 measurement",
+  "status": "pre-registered before any measurement command",
+  "registered_at": "2026-11-25",
+  "code_commit": "d3f0098",
+  "question": "How much of the access-profile read/decode advantage remains for a real indexed extraction to disk, and how many archive bytes does it read?",
+  "scope": "existing public dev (DEV-023 final trees); not a holdout; warm cache; one machine",
+  "inputs": {
+    "source": {"manifest": "research/datasets/bounded-expand-dev-r1/source.tsv",
+               "sha256": "c6e0d158505cdde6a19ead15c88f3fadda90ffb608fccd1ca0dc8e38b47f3e15"},
+    "text": {"manifest": "research/datasets/bounded-expand-dev-r1/text.tsv",
+             "sha256": "f539c8112709df5ada68783d22e5d779c2a2a63ee556670fa9ff4d0be8a57021"}
+  },
+  "frame_limits": [1073741824, 33554432, 67108864, 134217728],
+  "archives": "per class and cap: bounded-pack seed CAP FINAL_TREE once, then verify; SHA256 and size must equal research/configs/bounded-extract-reference-r0.json (DEV-023 fresh outputs)",
+  "rounds": 4,
+  "cap_orders": "round r uses frame_limits rotated left by r",
+  "profile_order": "round 0 and 2: access-profile then extract-profile; round 1 and 3: extract then access",
+  "profiles": {
+    "access": ["access-profile", "{archive}", "{final_tree}", 12],
+    "extract": ["extract-profile", "{archive}", "{final_tree}", 12, "{fresh_empty_dir}"]
+  },
+  "cache": "archive file read once before each profile command; no global cache dropping; warm cache",
+  "execution": "India vps-in1 via in-long-task, exclusive; one command at a time; measured child pinned to one CPU; timeout 1800 s per command",
+  "counts": {"per_class": "4 pack + 4 verify + 32 profiles = 40", "total_commands": 80},
+  "checks": ["every profile byte_exact", "extract and access choose the same sample paths",
+             "extract decoded bytes <= cap and >= requested per sample", "extract archive bytes read <= archive size",
+             "extract output directory empty after each profile", "archives equal DEV-023 references"],
+  "analysis": ["per class / cap: extract and access median and p95, min-median-max over rounds",
+               "same-round access/extract ratio and extract whole/cap ratio",
+               "archive bytes read and decoded bytes per sample versus archive size",
+               "extract time split: index, frame read, decode, write+commit"],
+  "not_claimed": ["cold-disk latency", "fsync durability", "production extract command", "Seed-specific gain"]
+}

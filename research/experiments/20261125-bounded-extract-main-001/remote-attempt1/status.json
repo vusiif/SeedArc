@@ -1,0 +1,26 @@
+{
+  "task_id": "20261125T172206Z-e35f7a27",
+  "phase": "finished",
+  "mode": "exclusive",
+  "unit": {
+    "Result": "exit-code",
+    "ExecMainStatus": "1",
+    "CPUQuotaPerSecUSec": "infinity",
+    "MemoryMax": "infinity",
+    "MemorySwapMax": "infinity",
+    "TasksMax": "infinity",
+    "User": "sc",
+    "NoNewPrivileges": "yes",
+    "LoadState": "loaded",
+    "ActiveState": "failed",
+    "SubState": "failed"
+  },
+  "result": {
+    "started_at": "2026-11-25T17:22:42.060109+00:00",
+    "ended_at": "2026-11-25T17:24:56.040179+00:00",
+    "exit_code": 1,
+    "logs_bytes_seen": 1882,
+    "logs_bytes_retained": 1882,
+    "logs_truncated": false
+  }
+}

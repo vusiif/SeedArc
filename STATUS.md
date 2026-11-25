@@ -8,6 +8,8 @@
 
 ## 当前基线
 
+- DEV-024 真实提取首轮测量（2026-11-25，主Agent/Claude，执行者报告通过、未经主模型审计）：DEV-023两棵最终树，四档四轮平衡，access-profile与extract-profile同样本对照；归档SHA与DEV-023完全一致。源码类真实提取32/64/128MiB比整段快3.9–4.4× / 3.0–3.2× / 约2.7×（大于内存诊断的约3.0/2.2/1.6×），每次只读包的23–61%；但约79ms固定花在读取解析752KB索引，占32MiB档121ms的约65%，是下一优化点。文本32MiB约2×；**更正DEV-023**：文本64MiB真实提取0.93–1.10×（噪声内），因整段档也只解到目标文件。热缓存、无fsync、单机，不设默认。见[记录](research/experiments/20261125-bounded-extract-main-001/record.md)。未提交推送。
+
 - DEV-024 索引式真实单文件提取已实现（2026-11-25，主Agent/Claude）：append4_study新增`extract` / `extract-profile`，只做定位读取（头部、footer、trailer、GEN记录、目标帧），帧只解到目标文件末尾，校验文件CRC32C，经SafeOutputDirectory落盘（独占临时、commit复核、不替换）；不做全包记录扫描交叉核对，只支持修订5固实。`parse()`拆出`parse_index()`，全量解析的检查不变；Windows改为宽字符命令行取UTF-8参数（修复非ASCII参数）。新增CTest `research.bounded_extract`（逐文件逐字节、读取量小于包、与access-profile同样本、各类失败不留输出）。MSVC Release 46/46、WSL GCC Release 47/47、Clang ASan+UBSan相关5/5，均0警告 / 0 sanitizer报告。尚未在dev数据上测量真实提取耗时与I/O；无fsync、热缓存的限制见[说明](research/ideas/bounded-solid-r0.md)。未提交推送。
 
 - DEV-023 有界固实扩展dev执行完成（2026-11-25，主Agent/Claude，执行者报告通过、尚未经主模型独立审计）：阶段A复算DEV-022 0数值差异；新登记[bounded-expand-dev-r1](research/datasets/bounded-expand-dev-r1.md)（源码268.4MB / 11,285文件；文本81.6MB / 49文件，低于128MiB目标，按规则排除2个enwik8切段及含NUL的4个Silesia文件）与[预登记配置](research/configs/bounded-expand-dev-r1.json)。印度独占任务`20261125T154526Z-8e750889` exit0，496命令 / 128主编码全部verify、四单元独立审计及本机复算一致，ELF与DEV-022同SHA，CTest46/46，smoke归档Windows/Linux一致；bundle核验后已clean。源码类32/64/128MiB比整段+0.96/+0.57/+0.49%（比mixed dev大），读取 / 解码诊断约3.0×/2.2×/1.6×；文本64MiB重建−0.019%且约1.3×，128MiB与整段同SHA（给出0.87–1.61×噪声带）。追加 / 重建墙钟0.26–0.69，追加包比同档重建大源码3.7–6.7%、文本0.1–0.5%，旧原文重压0但复制整个旧包。32次故障诊断接受错误字节0，3个翻转点不足以给帧档排序。dev / 热缓存 / 单机，不设默认、不改选项表、不归因Seed；未提交推送。见[记录](research/experiments/20261125-bounded-expand-main-001/record.md) / [表](research/experiments/20261125-bounded-expand-main-001/preview.md)。
@@ -94,7 +96,7 @@
 
 | 任务 ID | 任务 | 负责人 | 写入范围 | 状态 | 验收 / 证据 |
 | --- | --- | --- | --- | --- | --- |
-| DEV-024 | 索引式真实单文件提取 | 主Agent（Claude） | append4_study（parse拆分、bounded_extract.hpp、Windows UTF-8参数）、check_bounded_extract.cmake、bounded-solid-r0文档 | 实现与验证完成，未测量 | MSVC 46/46、Linux GCC 47/47、Clang ASan+UBSan相关5/5，0警告；尚未在dev数据上测提取耗时 / I/O，见[说明](research/ideas/bounded-solid-r0.md#索引式单文件提取dev-0242026-11-25) |
+| DEV-024 | 索引式真实单文件提取 | 主Agent（Claude） | append4_study（parse拆分、bounded_extract.hpp、Windows UTF-8参数）、check_bounded_extract.cmake、bounded-solid-r0文档 | 实现、验证与首轮测量完成，执行者报告通过 | MSVC 46/46、Linux GCC 47/47、ASan+UBSan相关5/5，0警告；[测量记录](research/experiments/20261125-bounded-extract-main-001/record.md)：任务`20261125T173431Z-7f6b8cdd` 80命令exit0（第1次运行器目录冲突已修复并保留证据） |
 | DEV-023 | 有界固实扩展dev与批次取舍测试 | 主Agent（2026-11-25领取，Claude） | 本任务Python运行器 / 配置 / 清单 / 实验记录与分析；`research/experiments/20261125-bounded-expand-main-001/` | 执行者报告通过，待主模型审计 | [记录](research/experiments/20261125-bounded-expand-main-001/record.md)：阶段A复算0差异；496命令 / 4单元独立审计通过，128主编码全verify，ELF与DEV-022同SHA，CTest46/46；任务`20261125T154526Z-8e750889` exit0、bundle核验、已clean；未改协议与压缩实现 |
 | DEV-022 | 有界固实平衡顺序稳定性复测 | 主Agent | 轮换运行器 / 分析 / 研究选项与记录 | 复测完成，研究选项已列出 | 四轮120命令 / 44包SHA一致，32/64MiB读取收益均复现；同数据 / 热缓存，下一步扩数据 / I/O，见记录 |
 | DEV-021 | 有界固实分段联合取舍dev | 主Agent | append4私有写入选项 / 计量、测试、研究脚本 / 文档 | 首轮dev完成 | 128命令 / 40包 / 20对载荷，Windows45、Linux46、相关ASan4；小体积代价换提取改善，单遍待轮换复测，见完整记录 |

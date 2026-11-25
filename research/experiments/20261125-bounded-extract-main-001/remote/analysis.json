@@ -1,0 +1,679 @@
+{
+  "schema": "seedarc.dev024.analysis.r0",
+  "classes": [
+    {
+      "cls": "source",
+      "ok": true,
+      "problems": [],
+      "files": 11285,
+      "bytes": 268433674,
+      "caps": {
+        "1073741824": {
+          "archive_bytes": 28141155,
+          "sha256": "002fce09c169983cc9e958ebbdbffb9890a63006d9d9f835ce372876a228a786",
+          "extract_median_ms": {
+            "min": 481.048,
+            "median": 487.21950000000004,
+            "max": 494.297
+          },
+          "extract_p95_ms": {
+            "min": 619.493,
+            "median": 624.4585,
+            "max": 677.416
+          },
+          "access_median_ms": {
+            "min": 468.62,
+            "median": 490.7355,
+            "max": 506.694
+          },
+          "access_p95_ms": {
+            "min": 484.485,
+            "median": 520.264,
+            "max": 556.488
+          },
+          "same_round_access_over_extract": {
+            "min": 0.971114412952613,
+            "median": 0.9952409069240027,
+            "max": 1.0533127671251101
+          },
+          "same_round_extract_speedup_vs_whole": {
+            "min": 1.0,
+            "median": 1.0,
+            "max": 1.0
+          },
+          "extract_parts_median_ms": {
+            "index": {
+              "min": 78.615681,
+              "median": 78.80033399999999,
+              "max": 80.126626
+            },
+            "read_frame": {
+              "min": 10.671345,
+              "median": 11.1165425,
+              "max": 11.949239
+            },
+            "decode": {
+              "min": 338.096848,
+              "median": 348.29703099999995,
+              "max": 352.435134
+            },
+            "write_commit": {
+              "min": 1.884827,
+              "median": 2.0074330000000002,
+              "max": 2.281994
+            }
+          },
+          "archive_bytes_read_per_sample": {
+            "median": 28141155,
+            "max": 28141155
+          },
+          "index_bytes_read": 752383,
+          "decoded_bytes_per_sample": {
+            "median": 187110814,
+            "max": 268433674
+          },
+          "access_decoded_bytes_per_sample": 268433674,
+          "extract_peak_memory_bytes": 732807168,
+          "access_peak_memory_bytes": 580952064
+        },
+        "33554432": {
+          "archive_bytes": 28410983,
+          "sha256": "84d906911c077ef9ec7e007cf36287961133312fba6aed8152de2927f9a04027",
+          "extract_median_ms": {
+            "min": 112.648,
+            "median": 121.0865,
+            "max": 124.034
+          },
+          "extract_p95_ms": {
+            "min": 149.994,
+            "median": 160.285,
+            "max": 184.882
+          },
+          "access_median_ms": {
+            "min": 141.469,
+            "median": 148.118,
+            "max": 155.092
+          },
+          "access_p95_ms": {
+            "min": 188.536,
+            "median": 208.5675,
+            "max": 215.371
+          },
+          "same_round_access_over_extract": {
+            "min": 1.2129496750890885,
+            "median": 1.2421842679460406,
+            "max": 1.255850081670336
+          },
+          "same_round_extract_speedup_vs_whole": {
+            "min": 3.8783559346630763,
+            "median": 4.0266101942317984,
+            "max": 4.387978481641929
+          },
+          "extract_parts_median_ms": {
+            "index": {
+              "min": 75.182149,
+              "median": 78.933089,
+              "max": 83.405807
+            },
+            "read_frame": {
+              "min": 1.634696,
+              "median": 1.7716245,
+              "max": 1.953106
+            },
+            "decode": {
+              "min": 25.401168,
+              "median": 27.184183,
+              "max": 32.497263
+            },
+            "write_commit": {
+              "min": 1.644866,
+              "median": 1.953096,
+              "max": 2.286423
+            }
+          },
+          "archive_bytes_read_per_sample": {
+            "median": 6674145,
+            "max": 7647832
+          },
+          "index_bytes_read": 752615,
+          "decoded_bytes_per_sample": {
+            "median": 16414003,
+            "max": 29856205
+          },
+          "access_decoded_bytes_per_sample": 33471505,
+          "extract_peak_memory_bytes": 361385984,
+          "access_peak_memory_bytes": 345198592
+        },
+        "67108864": {
+          "archive_bytes": 28301832,
+          "sha256": "f3367e111a1229e26c586f0f4d67346695e61605f18d3e3d51e006c25882779e",
+          "extract_median_ms": {
+            "min": 155.06,
+            "median": 157.34,
+            "max": 166.685
+          },
+          "extract_p95_ms": {
+            "min": 238.814,
+            "median": 246.163,
+            "max": 256.267
+          },
+          "access_median_ms": {
+            "min": 201.24,
+            "median": 215.4515,
+            "max": 227.741
+          },
+          "access_p95_ms": {
+            "min": 223.475,
+            "median": 238.09750000000003,
+            "max": 277.125
+          },
+          "same_round_access_over_extract": {
+            "min": 1.2777142857142858,
+            "median": 1.3691225324483933,
+            "max": 1.3882368115568167
+          },
+          "same_round_extract_speedup_vs_whole": {
+            "min": 2.9654557998620152,
+            "median": 3.0621789116511855,
+            "max": 3.1721914097768606
+          },
+          "extract_parts_median_ms": {
+            "index": {
+              "min": 77.70613,
+              "median": 78.9824165,
+              "max": 85.015868
+            },
+            "read_frame": {
+              "min": 2.384217,
+              "median": 2.488904,
+              "max": 2.534461
+            },
+            "decode": {
+              "min": 64.782837,
+              "median": 66.951003,
+              "max": 67.289915
+            },
+            "write_commit": {
+              "min": 1.729815,
+              "median": 1.8096860000000001,
+              "max": 2.047153
+            }
+          },
+          "archive_bytes_read_per_sample": {
+            "median": 8228383,
+            "max": 13570257
+          },
+          "index_bytes_read": 752499,
+          "decoded_bytes_per_sample": {
+            "median": 25529174,
+            "max": 65594914
+          },
+          "access_decoded_bytes_per_sample": 67091523,
+          "extract_peak_memory_bytes": 431665152,
+          "access_peak_memory_bytes": 379752448
+        },
+        "134217728": {
+          "archive_bytes": 28279054,
+          "sha256": "6a6ade220692b09c1b19caeb8e1f11068503d66f9fed4ef43593bfbc043bc70b",
+          "extract_median_ms": {
+            "min": 179.064,
+            "median": 179.9425,
+            "max": 187.711
+          },
+          "extract_p95_ms": {
+            "min": 392.052,
+            "median": 393.54650000000004,
+            "max": 395.576
+          },
+          "access_median_ms": {
+            "min": 294.89,
+            "median": 303.81,
+            "max": 310.18
+          },
+          "access_p95_ms": {
+            "min": 312.282,
+            "median": 320.509,
+            "max": 323.215
+          },
+          "same_round_access_over_extract": {
+            "min": 1.5709787918662197,
+            "median": 1.6883905830141073,
+            "max": 1.732229817272037
+          },
+          "same_round_extract_speedup_vs_whole": {
+            "min": 2.633287340645993,
+            "median": 2.689166814919428,
+            "max": 2.723286457756616
+          },
+          "extract_parts_median_ms": {
+            "index": {
+              "min": 73.805669,
+              "median": 76.7897805,
+              "max": 79.337019
+            },
+            "read_frame": {
+              "min": 6.060426,
+              "median": 6.1675275,
+              "max": 6.607696
+            },
+            "decode": {
+              "min": 66.647837,
+              "median": 69.77507800000001,
+              "max": 71.908959
+            },
+            "write_commit": {
+              "min": 1.628455,
+              "median": 1.7454299999999998,
+              "max": 1.892943
+            }
+          },
+          "archive_bytes_read_per_sample": {
+            "median": 17253555,
+            "max": 17253555
+          },
+          "index_bytes_read": 752441,
+          "decoded_bytes_per_sample": {
+            "median": 38801387,
+            "max": 123844623
+          },
+          "access_decoded_bytes_per_sample": 134187269,
+          "extract_peak_memory_bytes": 549978112,
+          "access_peak_memory_bytes": 446832640
+        }
+      },
+      "samples": [
+        {
+          "path": "linux/Documentation/features/list-arch.sh",
+          "requested_bytes": 334
+        },
+        {
+          "path": "linux/arch/mips/include/asm/mach-loongson2ef/cs5536/cs5536_mfgpt.h",
+          "requested_bytes": 795
+        },
+        {
+          "path": "linux/arch/sh/kernel/cpu/sh4a/clock-sh7770.c",
+          "requested_bytes": 1639
+        },
+        {
+          "path": "linux/drivers/clk/hisilicon/clk-hi3519.c",
+          "requested_bytes": 5424
+        },
+        {
+          "path": "linux/drivers/gpu/drm/amd/include/asic_reg/nbio/nbio_7_2_0_sh_mask.h",
+          "requested_bytes": 16414003
+        },
+        {
+          "path": "linux/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c",
+          "requested_bytes": 48949
+        },
+        {
+          "path": "linux/drivers/gpu/drm/vc4/vc4_qpu_defines.h",
+          "requested_bytes": 7086
+        },
+        {
+          "path": "linux/drivers/media/pci/smipcie/smipcie.h",
+          "requested_bytes": 12331
+        },
+        {
+          "path": "linux/drivers/tty/serial/8250/8250_ingenic.c",
+          "requested_bytes": 9195
+        },
+        {
+          "path": "linux/include/linux/mfd/si476x-core.h",
+          "requested_bytes": 15192
+        },
+        {
+          "path": "linux/net/appletalk/ddp.c",
+          "requested_bytes": 50107
+        },
+        {
+          "path": "linux/tools/perf/arch/s390/util/perf_regs.c",
+          "requested_bytes": 378
+        },
+        {
+          "path": "linux/virt/lib/irqbypass.c",
+          "requested_bytes": 5929
+        }
+      ]
+    },
+    {
+      "cls": "text",
+      "ok": true,
+      "problems": [],
+      "files": 49,
+      "bytes": 81553445,
+      "caps": {
+        "1073741824": {
+          "archive_bytes": 17006369,
+          "sha256": "4515cd7e9226571e4183768928bcfad5b0a6d09bce551159cb4057175b7710ba",
+          "extract_median_ms": {
+            "min": 126.906,
+            "median": 130.599,
+            "max": 137.932
+          },
+          "extract_p95_ms": {
+            "min": 192.587,
+            "median": 197.31,
+            "max": 211.558
+          },
+          "access_median_ms": {
+            "min": 192.971,
+            "median": 202.303,
+            "max": 227.694
+          },
+          "access_p95_ms": {
+            "min": 206.815,
+            "median": 210.93400000000003,
+            "max": 254.694
+          },
+          "same_round_access_over_extract": {
+            "min": 1.4881011135445266,
+            "median": 1.5655275105059072,
+            "max": 1.6507699446103878
+          },
+          "same_round_extract_speedup_vs_whole": {
+            "min": 1.0,
+            "median": 1.0,
+            "max": 1.0
+          },
+          "extract_parts_median_ms": {
+            "index": {
+              "min": 0.15155000000000002,
+              "median": 0.15518975000000002,
+              "max": 0.1664185
+            },
+            "read_frame": {
+              "min": 6.165494000000001,
+              "median": 6.740400749999999,
+              "max": 7.5381025
+            },
+            "decode": {
+              "min": 82.149292,
+              "median": 86.72438050000001,
+              "max": 92.602135
+            },
+            "write_commit": {
+              "min": 18.1493235,
+              "median": 18.5511225,
+              "max": 18.9056375
+            }
+          },
+          "archive_bytes_read_per_sample": {
+            "median": 17006369.0,
+            "max": 17006369
+          },
+          "index_bytes_read": 2426,
+          "decoded_bytes_per_sample": {
+            "median": 24500000.0,
+            "max": 81553445
+          },
+          "access_decoded_bytes_per_sample": 81553445.0,
+          "extract_peak_memory_bytes": 204701696,
+          "access_peak_memory_bytes": 184180736
+        },
+        "33554432": {
+          "archive_bytes": 17065581,
+          "sha256": "6b1e8ba09c8618f0781c40913e9d83d515964566e666d8feea2ed4cac042e635",
+          "extract_median_ms": {
+            "min": 64.2114,
+            "median": 65.55924999999999,
+            "max": 88.8538
+          },
+          "extract_p95_ms": {
+            "min": 146.255,
+            "median": 151.72449999999998,
+            "max": 175.785
+          },
+          "access_median_ms": {
+            "min": 84.4985,
+            "median": 91.5359,
+            "max": 99.0572
+          },
+          "access_p95_ms": {
+            "min": 112.554,
+            "median": 123.405,
+            "max": 129.407
+          },
+          "same_round_access_over_extract": {
+            "min": 1.0032885481543838,
+            "median": 1.3642530864454283,
+            "max": 1.5390945095376527
+          },
+          "same_round_extract_speedup_vs_whole": {
+            "min": 1.5523477892898219,
+            "median": 1.9602540642278534,
+            "max": 2.0435141320712797
+          },
+          "extract_parts_median_ms": {
+            "index": {
+              "min": 0.1585885,
+              "median": 0.1645295,
+              "max": 0.1697395
+            },
+            "read_frame": {
+              "min": 3.4321995,
+              "median": 3.5429955,
+              "max": 4.328016
+            },
+            "decode": {
+              "min": 30.561384,
+              "median": 31.94339525,
+              "max": 37.951162499999995
+            },
+            "write_commit": {
+              "min": 18.7156245,
+              "median": 18.788401750000002,
+              "max": 19.188234
+            }
+          },
+          "archive_bytes_read_per_sample": {
+            "median": 10197445.0,
+            "max": 10197445
+          },
+          "index_bytes_read": 2484,
+          "decoded_bytes_per_sample": {
+            "median": 12500000.0,
+            "max": 33553445
+          },
+          "access_decoded_bytes_per_sample": 33000000.0,
+          "extract_peak_memory_bytes": 157855744,
+          "access_peak_memory_bytes": 169271296
+        },
+        "67108864": {
+          "archive_bytes": 17003161,
+          "sha256": "7dff1127b916447fd2c48daed98ed0e7cd249985cc3524496b4742ffdaf05eed",
+          "extract_median_ms": {
+            "min": 119.713,
+            "median": 128.823,
+            "max": 147.579
+          },
+          "extract_p95_ms": {
+            "min": 191.119,
+            "median": 202.349,
+            "max": 253.74
+          },
+          "access_median_ms": {
+            "min": 137.681,
+            "median": 151.09550000000002,
+            "max": 159.629
+          },
+          "access_p95_ms": {
+            "min": 155.545,
+            "median": 169.61700000000002,
+            "max": 193.567
+          },
+          "same_round_access_over_extract": {
+            "min": 1.0498038338788038,
+            "median": 1.1523892162734655,
+            "max": 1.2301253832081729
+          },
+          "same_round_extract_speedup_vs_whole": {
+            "min": 0.9346316210300922,
+            "median": 0.9970821481979155,
+            "max": 1.0986442575158921
+          },
+          "extract_parts_median_ms": {
+            "index": {
+              "min": 0.16052650000000002,
+              "median": 0.1709695,
+              "max": 0.18002400000000002
+            },
+            "read_frame": {
+              "min": 4.927549,
+              "median": 5.529314,
+              "max": 6.0445915
+            },
+            "decode": {
+              "min": 66.00017349999999,
+              "median": 69.958974,
+              "max": 96.28168550000001
+            },
+            "write_commit": {
+              "min": 18.109554,
+              "median": 18.52429675,
+              "max": 19.6730665
+            }
+          },
+          "archive_bytes_read_per_sample": {
+            "median": 14797620.0,
+            "max": 14797620
+          },
+          "index_bytes_read": 2455,
+          "decoded_bytes_per_sample": {
+            "median": 24500000.0,
+            "max": 44000000
+          },
+          "access_decoded_bytes_per_sample": 48000000.0,
+          "extract_peak_memory_bytes": 202555392,
+          "access_peak_memory_bytes": 150487040
+        },
+        "134217728": {
+          "archive_bytes": 17006369,
+          "sha256": "4515cd7e9226571e4183768928bcfad5b0a6d09bce551159cb4057175b7710ba",
+          "extract_median_ms": {
+            "min": 131.118,
+            "median": 139.2385,
+            "max": 142.495
+          },
+          "extract_p95_ms": {
+            "min": 186.278,
+            "median": 200.101,
+            "max": 216.464
+          },
+          "access_median_ms": {
+            "min": 190.892,
+            "median": 216.1295,
+            "max": 233.528
+          },
+          "access_p95_ms": {
+            "min": 214.152,
+            "median": 236.4965,
+            "max": 272.617
+          },
+          "same_round_access_over_extract": {
+            "min": 1.4046718325903218,
+            "median": 1.5473649614125566,
+            "max": 1.7062225255571946
+          },
+          "same_round_extract_speedup_vs_whole": {
+            "min": 0.9100389487350432,
+            "median": 0.9463468963209312,
+            "max": 1.012248372632336
+          },
+          "extract_parts_median_ms": {
+            "index": {
+              "min": 0.1658315,
+              "median": 0.168399,
+              "max": 0.1705055
+            },
+            "read_frame": {
+              "min": 6.7753215,
+              "median": 6.92668425,
+              "max": 7.0063215
+            },
+            "decode": {
+              "min": 84.1593855,
+              "median": 89.77087675,
+              "max": 92.60469499999999
+            },
+            "write_commit": {
+              "min": 18.241417,
+              "median": 18.766004499999998,
+              "max": 19.2650385
+            }
+          },
+          "archive_bytes_read_per_sample": {
+            "median": 17006369.0,
+            "max": 17006369
+          },
+          "index_bytes_read": 2426,
+          "decoded_bytes_per_sample": {
+            "median": 24500000.0,
+            "max": 81553445
+          },
+          "access_decoded_bytes_per_sample": 81553445.0,
+          "extract_peak_memory_bytes": 204898304,
+          "access_peak_memory_bytes": 184045568
+        }
+      },
+      "samples": [
+        {
+          "path": "enwik8/part-000.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-005.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-009.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-014.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-018.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-022.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-027.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-031.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-036.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-041.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-045.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "silesia/nci",
+          "requested_bytes": 33553445
+        }
+      ]
+    }
+  ],
+  "all_ok": true,
+  "limitations": [
+    "warm cache, archive pre-read before every profile",
+    "no fsync",
+    "one machine, one CPU",
+    "existing public dev, not a holdout",
+    "four rounds, no statistical significance"
+  ]
+}

@@ -1,0 +1,13 @@
+{"step": "release-configure", "argv": ["cmake", "-S", "/home/sc/long-tasks/20261125T172206Z-e35f7a27/work/source", "-B", "/home/sc/long-tasks/20261125T172206Z-e35f7a27/work/release", "-DCMAKE_BUILD_TYPE=Release", "-G", "Ninja", "-DCMAKE_CXX_COMPILER=/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/g++-14", "-DCMAKE_PREFIX_PATH=/home/sc/long-tasks/20261123T123105Z-d5596074/work/build/vcpkg_installed/x64-linux", "-DSEEDARC_BUILD_RESEARCH_TOOLS=ON", "-DBUILD_TESTING=ON"]}
+{"step": "release-build", "argv": ["cmake", "--build", "/home/sc/long-tasks/20261125T172206Z-e35f7a27/work/release", "--parallel", "4"]}
+{"step": "release-ctest", "argv": ["ctest", "--test-dir", "/home/sc/long-tasks/20261125T172206Z-e35f7a27/work/release", "--output-on-failure", "--parallel", "1"]}
+{"step": "bounded-cross", "argv": ["cmake", "-DTOOL=/home/sc/long-tasks/20261125T172206Z-e35f7a27/work/release/research/tools/seedarc_append4_study", "-DWORK=/home/sc/long-tasks/20261125T172206Z-e35f7a27/work/bounded-cross", "-DREPORT=/home/sc/long-tasks/20261125T172206Z-e35f7a27/results/linux-cross-hashes.json", "-P", "/home/sc/long-tasks/20261125T172206Z-e35f7a27/work/source/research/tools/check_bounded_solid.cmake"]}
+Traceback (most recent call last):
+  File "/home/sc/long-tasks/20261125T172206Z-e35f7a27/work/bounded_extract_task.py", line 123, in <module>
+    complete = run_class(tool, data, manifest, cls, reference[cls], work / cls, results / cls, task_root)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sc/long-tasks/20261125T172206Z-e35f7a27/work/bounded_extract_dev.py", line 27, in run_class
+    work.mkdir()
+  File "/usr/lib/python3.12/pathlib.py", line 1313, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/home/sc/long-tasks/20261125T172206Z-e35f7a27/work/source'
