@@ -4,6 +4,8 @@
 
 接续阅读：[HANDOFF.md](HANDOFF.md)（2026-11-24交接快照，非独立进度台账；当前状态仍以本文件为准）。
 
+用户思想统一阅读入口：[用户思想汇总](docs/user-vision.md)（2026-11-25，保留原稿及测试后方向演变，最新明确意见优先）。本次原稿两份SHA与已读快照一致；新增汇总采用联合取舍、用户选择、追加/单文件提取并列及中文支持要求，早期位宽、搜索、外置Seed和加密设想保留其候选/修正边界。仅整理文档，没有新增实验或独立审计DEV-023结果。
+
 ## 当前基线
 
 - DEV-023 有界固实扩展dev执行完成（2026-11-25，主Agent/Claude，执行者报告通过、尚未经主模型独立审计）：阶段A复算DEV-022 0数值差异；新登记[bounded-expand-dev-r1](research/datasets/bounded-expand-dev-r1.md)（源码268.4MB / 11,285文件；文本81.6MB / 49文件，低于128MiB目标，按规则排除2个enwik8切段及含NUL的4个Silesia文件）与[预登记配置](research/configs/bounded-expand-dev-r1.json)。印度独占任务`20261125T154526Z-8e750889` exit0，496命令 / 128主编码全部verify、四单元独立审计及本机复算一致，ELF与DEV-022同SHA，CTest46/46，smoke归档Windows/Linux一致；bundle核验后已clean。源码类32/64/128MiB比整段+0.96/+0.57/+0.49%（比mixed dev大），读取 / 解码诊断约3.0×/2.2×/1.6×；文本64MiB重建−0.019%且约1.3×，128MiB与整段同SHA（给出0.87–1.61×噪声带）。追加 / 重建墙钟0.26–0.69，追加包比同档重建大源码3.7–6.7%、文本0.1–0.5%，旧原文重压0但复制整个旧包。32次故障诊断接受错误字节0，3个翻转点不足以给帧档排序。dev / 热缓存 / 单机，不设默认、不改选项表、不归因Seed；未提交推送。见[记录](research/experiments/20261125-bounded-expand-main-001/record.md) / [表](research/experiments/20261125-bounded-expand-main-001/preview.md)。

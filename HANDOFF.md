@@ -7,7 +7,7 @@
 ## 1. 接手先读
 
 1. [AGENTS.md](AGENTS.md)、[STATUS.md](STATUS.md)、`git status --short`。
-2. 用户最新方向：[速度 / 体积 / 恢复性联合目标](research/ideas/speed-resilience-r1.md)。
+2. 用户最新方向：先读[用户思想汇总](docs/user-vision.md)，再读[速度 / 体积 / 恢复性联合目标](research/ideas/speed-resilience-r1.md)。
 3. 当前实现：[有界固实帧说明](research/ideas/bounded-solid-r0.md)。
 4. 最新证据：[DEV-022记录](research/experiments/20261124-bounded-repeat-main-001/record.md)、[复测表](research/experiments/20261124-bounded-repeat-main-001/preview.md)。
 5. 按任务读取相关代码 / 详细规范；研究开始前读 [research/README.md](research/README.md)。

@@ -89,6 +89,7 @@ CLion 诊断需要前台焦点时，先提醒用户将 IDE 放到前台并保持
 | 具体 Agent 交付格式、审批判断、ADR 与 Git 约束 | [docs/agent-workflow.md](docs/agent-workflow.md) |
 | 任务领取、里程碑、当前进度、阻塞和协作交接 | [STATUS.md](STATUS.md) |
 | 开发 / 规划前检查用户新增或更新的想法 | [docs/users_idea/](docs/users_idea/)（已读快照见 STATUS） |
+| 一次读懂用户方向及其演变（原稿 + 测试后决定的汇总，不替代原稿） | [docs/user-vision.md](docs/user-vision.md) |
 | 研究假设、实验配置、数据集、原始结果和分析脚本 | [research/README.md](research/README.md) |
 | 引入、修改或升级随仓库保存的第三方源码 | [third_party/README.md](third_party/README.md) |
 
