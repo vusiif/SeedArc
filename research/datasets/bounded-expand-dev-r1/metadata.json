@@ -1,0 +1,445 @@
+{
+  "dataset": "bounded-expand-dev-r1",
+  "task": "DEV-023",
+  "scope": "existing public dev only; not a holdout",
+  "rules": "DEV-023: build the source / text dev trees and the 10% / 40% added batches.\n\nEvery rule here depends only on paths, sizes and file bytes, never on compression\nresults. The rules are fixed before any DEV-023 compression command runs:\n\n* source: Linux 6.12 files from the existing 512 MiB dev manifest whose extension is a\n  programming-language source extension (SOURCE_EXTENSIONS). Order them by\n  sha256(\"dev023-select:\" + path) and take the longest prefix whose total is at most\n  256 MiB (stop at the first file that does not fit; no truncation, no padding).\n* text: the existing enwik8 dev slices and the Silesia dev files that pass is_text().\n  All qualifying files are used; the class may stay below 128 MiB.\n* per-file limit 32 MiB, applied by size before anything is measured; excluded rows are\n  listed in metadata.json with the reason.\n* added batch for ratio r: order the final tree by sha256(\"dev023-batch:\" + path) and\n  take the prefix k (1 <= k < n) whose cumulative bytes are closest to r * total\n  (ties: smaller k). The parent is the rest. Whole files only.\n",
+  "source_extensions": [
+    ".c",
+    ".h",
+    ".S",
+    ".rs",
+    ".asm",
+    ".py",
+    ".sh",
+    ".pl"
+  ],
+  "file_limit": 33554432,
+  "source_limit": 268435456,
+  "inputs": {
+    "linux_manifest": {
+      "path": "research/datasets/append-linux-large-dev-r2/dev-linux-512.tsv",
+      "sha256": "8ea19a4df1e4bb13a9c82595de6e54abad5c8a9e78ec086e7e29c32566f1da91"
+    },
+    "mixed_manifest": {
+      "path": "research/datasets/solid-mixed-version-dev-r1/v0.tsv",
+      "sha256": "5e006ba8ba6b626d0690841fbd2f06c31be0347c164a74773f6ce2016f2a484b"
+    }
+  },
+  "text_decisions": [
+    {
+      "rel": "enwik8/part-000.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-001.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-002.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-003.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-004.xml",
+      "size": 1000000,
+      "text": false,
+      "reason": "6 invalid UTF-8 sequences"
+    },
+    {
+      "rel": "enwik8/part-005.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-006.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-007.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-008.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-009.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-010.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-011.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-012.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-013.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-014.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-015.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-016.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-017.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-018.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-019.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-020.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-021.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-022.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-023.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-024.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-025.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-026.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-027.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-028.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-029.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-030.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-031.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-032.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-033.xml",
+      "size": 1000000,
+      "text": false,
+      "reason": "8 invalid UTF-8 sequences"
+    },
+    {
+      "rel": "enwik8/part-034.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-035.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-036.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-037.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-038.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-039.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-040.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-041.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-042.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-043.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-044.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-045.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-046.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-047.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-048.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "enwik8/part-049.xml",
+      "size": 1000000,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "silesia/nci",
+      "size": 33553445,
+      "text": true,
+      "reason": "text"
+    },
+    {
+      "rel": "silesia/reymont",
+      "size": 6627202,
+      "text": false,
+      "reason": "contains NUL"
+    },
+    {
+      "rel": "silesia/samba",
+      "size": 21606400,
+      "text": false,
+      "reason": "contains NUL"
+    },
+    {
+      "rel": "silesia/sao",
+      "size": 7251944,
+      "text": false,
+      "reason": "contains NUL"
+    },
+    {
+      "rel": "silesia/xml",
+      "size": 5345280,
+      "text": false,
+      "reason": "contains NUL"
+    }
+  ],
+  "excluded": [
+    {
+      "cls": "text",
+      "rel": "enwik8/part-004.xml",
+      "size": 1000000,
+      "reason": "not text: 6 invalid UTF-8 sequences"
+    },
+    {
+      "cls": "text",
+      "rel": "enwik8/part-033.xml",
+      "size": 1000000,
+      "reason": "not text: 8 invalid UTF-8 sequences"
+    },
+    {
+      "cls": "text",
+      "rel": "silesia/reymont",
+      "size": 6627202,
+      "reason": "not text: contains NUL"
+    },
+    {
+      "cls": "text",
+      "rel": "silesia/samba",
+      "size": 21606400,
+      "reason": "not text: contains NUL"
+    },
+    {
+      "cls": "text",
+      "rel": "silesia/sao",
+      "size": 7251944,
+      "reason": "not text: contains NUL"
+    },
+    {
+      "cls": "text",
+      "rel": "silesia/xml",
+      "size": 5345280,
+      "reason": "not text: contains NUL"
+    }
+  ],
+  "classes": {
+    "source": {
+      "files": 11285,
+      "bytes": 268433674,
+      "max_file": 16414003,
+      "manifest": "source.tsv",
+      "sha256": "c6e0d158505cdde6a19ead15c88f3fadda90ffb608fccd1ca0dc8e38b47f3e15",
+      "batches": {
+        "added10": {
+          "target_ratio": 0.1,
+          "files": 553,
+          "bytes": 26841670,
+          "actual_ratio": 0.09999367665027004
+        },
+        "added40": {
+          "target_ratio": 0.4,
+          "files": 3723,
+          "bytes": 107364961,
+          "actual_ratio": 0.3999683027845456
+        }
+      },
+      "path_manifest_check": "ok\t13669",
+      "candidates": 21008
+    },
+    "text": {
+      "files": 49,
+      "bytes": 81553445,
+      "max_file": 33553445,
+      "manifest": "text.tsv",
+      "sha256": "f539c8112709df5ada68783d22e5d779c2a2a63ee556670fa9ff4d0be8a57021",
+      "batches": {
+        "added10": {
+          "target_ratio": 0.1,
+          "files": 8,
+          "bytes": 8000000,
+          "actual_ratio": 0.09809518163211867
+        },
+        "added40": {
+          "target_ratio": 0.4,
+          "files": 33,
+          "bytes": 33000000,
+          "actual_ratio": 0.4046426242324895
+        }
+      },
+      "path_manifest_check": "ok\t51"
+    }
+  }
+}

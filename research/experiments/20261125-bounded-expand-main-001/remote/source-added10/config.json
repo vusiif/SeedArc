@@ -1,0 +1,56 @@
+{
+  "cls": "source",
+  "batch": "added10",
+  "manifest_sha256": "c6e0d158505cdde6a19ead15c88f3fadda90ffb608fccd1ca0dc8e38b47f3e15",
+  "tool_sha256": "435ea5b41a664a0aedf166c96a140b13f265f923112533de9875e4e5040ada62",
+  "runner_sha256": "216582508cca1cc291b8b894802b80729909d824edfeca49ed6ae84082b46a20",
+  "files": 11285,
+  "bytes": 268433674,
+  "added_files": 553,
+  "added_bytes": 26841670,
+  "added_ratio": 0.09999367665027004,
+  "parent_files": 10732,
+  "parent_bytes": 241592004,
+  "frame_limits": [
+    1073741824,
+    33554432,
+    67108864,
+    134217728
+  ],
+  "orders": [
+    [
+      1073741824,
+      33554432,
+      67108864,
+      134217728
+    ],
+    [
+      33554432,
+      67108864,
+      134217728,
+      1073741824
+    ],
+    [
+      67108864,
+      134217728,
+      1073741824,
+      33554432
+    ],
+    [
+      134217728,
+      1073741824,
+      33554432,
+      67108864
+    ]
+  ],
+  "rounds": 4,
+  "sample_count": 12,
+  "operation_order": "fresh then append on even rounds; reverse on odd rounds",
+  "affinity": [
+    0
+  ],
+  "mode": "seed (explicit only in preparation control)",
+  "plan": "single group, Zstd 9, no dictionary, redundancy off",
+  "cache": "prewarm command input tree; verify before access; no global cache dropping",
+  "scope": "existing public dev extension; warm cache; not a holdout"
+}

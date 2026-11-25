@@ -1,0 +1,13 @@
+{
+  "cls": "source",
+  "batch": "added40",
+  "commands": 124,
+  "archives_verified": 40,
+  "repeat_encodes": 32,
+  "access_profiles": 32,
+  "fault_profiles": 8,
+  "fault_reuse": "later outputs with the same SHA reuse the first fault profile",
+  "all_byte_exact": true,
+  "all_parents_immutable": true,
+  "repeat_sha_stable": true
+}

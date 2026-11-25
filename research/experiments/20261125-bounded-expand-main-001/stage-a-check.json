@@ -1,0 +1,14 @@
+{
+  "stage": "A",
+  "commit": "d03cdaaad5e4dca56e6789c6969f9603145c3baa",
+  "commands": 120,
+  "archives": 44,
+  "original_analysis_sha256": "58fe2d485b7beb16beec40e6a9e4a567a0d0b0e26746b6e4ccf628b3f9bf4003",
+  "recomputed_sha256": "58fe2d485b7beb16beec40e6a9e4a567a0d0b0e26746b6e4ccf628b3f9bf4003",
+  "numeric_differences": 0,
+  "preview_identical": true,
+  "scripts": {
+    "preview": "9694b5d101ef40d124a096c2371d0ed09eb8f94cf045b98aec38dc19f96ed49b",
+    "report": "09484794315bc362f8c09acb9ae57714300023e4fd31037548a9fc04e0d5a6b5"
+  }
+}

@@ -6,6 +6,10 @@
 
 ## 当前基线
 
+- DEV-023 有界固实扩展dev执行完成（2026-11-25，主Agent/Claude，执行者报告通过、尚未经主模型独立审计）：阶段A复算DEV-022 0数值差异；新登记[bounded-expand-dev-r1](research/datasets/bounded-expand-dev-r1.md)（源码268.4MB / 11,285文件；文本81.6MB / 49文件，低于128MiB目标，按规则排除2个enwik8切段及含NUL的4个Silesia文件）与[预登记配置](research/configs/bounded-expand-dev-r1.json)。印度独占任务`20261125T154526Z-8e750889` exit0，496命令 / 128主编码全部verify、四单元独立审计及本机复算一致，ELF与DEV-022同SHA，CTest46/46，smoke归档Windows/Linux一致；bundle核验后已clean。源码类32/64/128MiB比整段+0.96/+0.57/+0.49%（比mixed dev大），读取 / 解码诊断约3.0×/2.2×/1.6×；文本64MiB重建−0.019%且约1.3×，128MiB与整段同SHA（给出0.87–1.61×噪声带）。追加 / 重建墙钟0.26–0.69，追加包比同档重建大源码3.7–6.7%、文本0.1–0.5%，旧原文重压0但复制整个旧包。32次故障诊断接受错误字节0，3个翻转点不足以给帧档排序。dev / 热缓存 / 单机，不设默认、不改选项表、不归因Seed；未提交推送。见[记录](research/experiments/20261125-bounded-expand-main-001/record.md) / [表](research/experiments/20261125-bounded-expand-main-001/preview.md)。
+
+- DEV-023 测试执行任务书已准备（2026-11-24）：见[廉价模型测试计划](docs/test-execution-plan.md)。先复算DEV-022，再登记源码/文本dev分层、10%/40%新批次和四帧档平衡矩阵；只授权本任务运行器、清单与分析，不改协议或压缩实现。尚未委派、未启动远端测试。代码检查点 `d03cdaa` 已提交并推送 `origin/main`，下方各历史条目中的“未提交”描述其当时状态。用户原稿两份SHA与已读快照一致；采用最新联合取舍方向，真实落盘提取/多codec与恢复设计留待后续实现。
+
 - DEV-022 四轮平衡复测完成（2026-11-24，主Agent）：同C++ / mixed dev四档各占一次第1/2/3/4位置，重建 / 固定第3代父包末批追加顺序交替，120命令 / 44包verify / 32提取profile通过，所有归档SHA与DEV-021一致。64MiB体积+0.050%，四轮同轮读取诊断快2.07–2.33×；32MiB+0.470%、快2.90–3.33×，改善均复现；压缩调用约11–12s，无吞吐大突破结论。32MiB追加中位3.410s vs同档重建11.906s，第4代包大4.699%，仍复制40.05MB旧包。已建立无通用默认的[研究选项表](research/configs/bounded-solid-options-r0.json)，未接正式CLI / GUI。Linux46/46、13固定包一致，ELF与DEV-021同SHA；ASan沿用同源4/4未重跑。任务`20261124T102611Z-2912f5b3` exit0、输入 / bundle及独立审计通过、已clean，无运行任务。四轮仍是同数据 / 热缓存，下一步扩数据、真实提取落盘与I/O边界，再同时间多codec比较；未提交推送。见[记录](research/experiments/20261124-bounded-repeat-main-001/record.md) / [复测表](research/experiments/20261124-bounded-repeat-main-001/preview.md)。
 
 
@@ -86,6 +90,7 @@
 
 | 任务 ID | 任务 | 负责人 | 写入范围 | 状态 | 验收 / 证据 |
 | --- | --- | --- | --- | --- | --- |
+| DEV-023 | 有界固实扩展dev与批次取舍测试 | 主Agent（2026-11-25领取，Claude） | 本任务Python运行器 / 配置 / 清单 / 实验记录与分析；`research/experiments/20261125-bounded-expand-main-001/` | 执行者报告通过，待主模型审计 | [记录](research/experiments/20261125-bounded-expand-main-001/record.md)：阶段A复算0差异；496命令 / 4单元独立审计通过，128主编码全verify，ELF与DEV-022同SHA，CTest46/46；任务`20261125T154526Z-8e750889` exit0、bundle核验、已clean；未改协议与压缩实现 |
 | DEV-022 | 有界固实平衡顺序稳定性复测 | 主Agent | 轮换运行器 / 分析 / 研究选项与记录 | 复测完成，研究选项已列出 | 四轮120命令 / 44包SHA一致，32/64MiB读取收益均复现；同数据 / 热缓存，下一步扩数据 / I/O，见记录 |
 | DEV-021 | 有界固实分段联合取舍dev | 主Agent | append4私有写入选项 / 计量、测试、研究脚本 / 文档 | 首轮dev完成 | 128命令 / 40包 / 20对载荷，Windows45、Linux46、相关ASan4；小体积代价换提取改善，单遍待轮换复测，见完整记录 |
 | DEV-020 | 异构与正式版本变化策略复用dev | 主Agent | 新数据清单 / Python运行器 / 分析 / 研究文档 | 完成机制基线，转速度 / 恢复目标 | 25命令 / 10包 / 5对载荷、Linux45/45；237MB正式版本127修改，按速度优先不主推87s只省5KB；详见DEV-020记录 |

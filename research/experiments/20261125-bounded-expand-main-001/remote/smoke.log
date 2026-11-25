@@ -1,0 +1,284 @@
+{"index": 0, "label": "prepare-1073741824-seed", "returncode": 0, "process_wall_ms": 8.517551003023982}
+{"index": 1, "label": "prepare-1073741824-seed-verify", "returncode": 0, "process_wall_ms": 6.387241010088474}
+{"index": 2, "label": "prepare-1073741824-explicit", "returncode": 0, "process_wall_ms": 6.432477006455883}
+{"index": 3, "label": "prepare-1073741824-explicit-verify", "returncode": 0, "process_wall_ms": 4.752263994305395}
+{"index": 4, "label": "prepare-1073741824-payload", "returncode": 0, "process_wall_ms": 2.997371004312299}
+{"index": 5, "label": "prepare-4096-seed", "returncode": 0, "process_wall_ms": 5.43777400162071}
+{"index": 6, "label": "prepare-4096-seed-verify", "returncode": 0, "process_wall_ms": 5.197031001443975}
+{"index": 7, "label": "prepare-4096-explicit", "returncode": 0, "process_wall_ms": 7.8553539933636785}
+{"index": 8, "label": "prepare-4096-explicit-verify", "returncode": 0, "process_wall_ms": 5.334289991878904}
+{"index": 9, "label": "prepare-4096-payload", "returncode": 0, "process_wall_ms": 3.3537220006110147}
+{"index": 10, "label": "prepare-8192-seed", "returncode": 0, "process_wall_ms": 7.632926004589535}
+{"index": 11, "label": "prepare-8192-seed-verify", "returncode": 0, "process_wall_ms": 5.481346001033671}
+{"index": 12, "label": "prepare-8192-explicit", "returncode": 0, "process_wall_ms": 6.4472439989913255}
+{"index": 13, "label": "prepare-8192-explicit-verify", "returncode": 0, "process_wall_ms": 6.706823012791574}
+{"index": 14, "label": "prepare-8192-payload", "returncode": 0, "process_wall_ms": 4.205274992273189}
+{"index": 15, "label": "prepare-16384-seed", "returncode": 0, "process_wall_ms": 7.5134099897695705}
+{"index": 16, "label": "prepare-16384-seed-verify", "returncode": 0, "process_wall_ms": 6.712001995765604}
+{"index": 17, "label": "prepare-16384-explicit", "returncode": 0, "process_wall_ms": 9.348955005407333}
+{"index": 18, "label": "prepare-16384-explicit-verify", "returncode": 0, "process_wall_ms": 6.580215005669743}
+{"index": 19, "label": "prepare-16384-payload", "returncode": 0, "process_wall_ms": 4.464272002223879}
+{"index": 20, "label": "round-0-1073741824-fresh", "returncode": 0, "process_wall_ms": 7.660207003937103}
+{"index": 21, "label": "round-0-1073741824-fresh-verify", "returncode": 0, "process_wall_ms": 5.937814989010803}
+{"index": 22, "label": "round-0-1073741824-fresh-access", "returncode": 0, "process_wall_ms": 6.498319999082014}
+{"index": 23, "label": "round-0-1073741824-fresh-fault", "returncode": 0, "process_wall_ms": 8.618570005637594}
+{"index": 24, "label": "round-0-1073741824-append", "returncode": 0, "process_wall_ms": 5.468542003654875}
+{"index": 25, "label": "round-0-1073741824-append-verify", "returncode": 0, "process_wall_ms": 5.967400997178629}
+{"index": 26, "label": "round-0-1073741824-append-access", "returncode": 0, "process_wall_ms": 8.064919005846605}
+{"index": 27, "label": "round-0-1073741824-append-fault", "returncode": 0, "process_wall_ms": 8.33844399312511}
+{"index": 28, "label": "round-0-4096-fresh", "returncode": 0, "process_wall_ms": 7.749784999759868}
+{"index": 29, "label": "round-0-4096-fresh-verify", "returncode": 0, "process_wall_ms": 6.281701993430033}
+{"index": 30, "label": "round-0-4096-fresh-access", "returncode": 0, "process_wall_ms": 6.1833479994675145}
+{"index": 31, "label": "round-0-4096-fresh-fault", "returncode": 0, "process_wall_ms": 7.42557599733118}
+{"index": 32, "label": "round-0-4096-append", "returncode": 0, "process_wall_ms": 5.296599003486335}
+{"index": 33, "label": "round-0-4096-append-verify", "returncode": 0, "process_wall_ms": 6.220036011654884}
+{"index": 34, "label": "round-0-4096-append-access", "returncode": 0, "process_wall_ms": 7.160356006352231}
+{"index": 35, "label": "round-0-4096-append-fault", "returncode": 0, "process_wall_ms": 7.499304003431462}
+{"index": 36, "label": "round-0-8192-fresh", "returncode": 0, "process_wall_ms": 6.461469994974323}
+{"index": 37, "label": "round-0-8192-fresh-verify", "returncode": 0, "process_wall_ms": 5.794155003968626}
+{"index": 38, "label": "round-0-8192-fresh-access", "returncode": 0, "process_wall_ms": 7.500114996219054}
+{"index": 39, "label": "round-0-8192-fresh-fault", "returncode": 0, "process_wall_ms": 8.30051199591253}
+{"index": 40, "label": "round-0-8192-append", "returncode": 0, "process_wall_ms": 5.76598200132139}
+{"index": 41, "label": "round-0-8192-append-verify", "returncode": 0, "process_wall_ms": 6.320175001746975}
+{"index": 42, "label": "round-0-8192-append-access", "returncode": 0, "process_wall_ms": 7.588420994579792}
+{"index": 43, "label": "round-0-8192-append-fault", "returncode": 0, "process_wall_ms": 7.70365800417494}
+{"index": 44, "label": "round-0-16384-fresh", "returncode": 0, "process_wall_ms": 7.5679830042645335}
+{"index": 45, "label": "round-0-16384-fresh-verify", "returncode": 0, "process_wall_ms": 7.499685001675971}
+{"index": 46, "label": "round-0-16384-fresh-access", "returncode": 0, "process_wall_ms": 6.952615003683604}
+{"index": 47, "label": "round-0-16384-fresh-fault", "returncode": 0, "process_wall_ms": 7.481741005904041}
+{"index": 48, "label": "round-0-16384-append", "returncode": 0, "process_wall_ms": 5.778676000772975}
+{"index": 49, "label": "round-0-16384-append-verify", "returncode": 0, "process_wall_ms": 7.218715996714309}
+{"index": 50, "label": "round-0-16384-append-access", "returncode": 0, "process_wall_ms": 8.117667995975353}
+{"index": 51, "label": "round-0-16384-append-fault", "returncode": 0, "process_wall_ms": 7.494774996303022}
+{"index": 52, "label": "round-1-4096-append", "returncode": 0, "process_wall_ms": 5.801197999971919}
+{"index": 53, "label": "round-1-4096-append-verify", "returncode": 0, "process_wall_ms": 5.804202999570407}
+{"index": 54, "label": "round-1-4096-append-access", "returncode": 0, "process_wall_ms": 7.726552008534782}
+{"index": 55, "label": "round-1-4096-fresh", "returncode": 0, "process_wall_ms": 6.568242009961978}
+{"index": 56, "label": "round-1-4096-fresh-verify", "returncode": 0, "process_wall_ms": 6.439398988732137}
+{"index": 57, "label": "round-1-4096-fresh-access", "returncode": 0, "process_wall_ms": 6.90083799418062}
+{"index": 58, "label": "round-1-8192-append", "returncode": 0, "process_wall_ms": 5.302108998876065}
+{"index": 59, "label": "round-1-8192-append-verify", "returncode": 0, "process_wall_ms": 7.385970005998388}
+{"index": 60, "label": "round-1-8192-append-access", "returncode": 0, "process_wall_ms": 7.0716199988964945}
+{"index": 61, "label": "round-1-8192-fresh", "returncode": 0, "process_wall_ms": 7.768030001898296}
+{"index": 62, "label": "round-1-8192-fresh-verify", "returncode": 0, "process_wall_ms": 5.7785550015978515}
+{"index": 63, "label": "round-1-8192-fresh-access", "returncode": 0, "process_wall_ms": 7.146770003600977}
+{"index": 64, "label": "round-1-16384-append", "returncode": 0, "process_wall_ms": 5.824831998324953}
+{"index": 65, "label": "round-1-16384-append-verify", "returncode": 0, "process_wall_ms": 5.191591000766493}
+{"index": 66, "label": "round-1-16384-append-access", "returncode": 0, "process_wall_ms": 6.781693999073468}
+{"index": 67, "label": "round-1-16384-fresh", "returncode": 0, "process_wall_ms": 6.845644005807117}
+{"index": 68, "label": "round-1-16384-fresh-verify", "returncode": 0, "process_wall_ms": 5.851793001056649}
+{"index": 69, "label": "round-1-16384-fresh-access", "returncode": 0, "process_wall_ms": 6.837328008259647}
+{"index": 70, "label": "round-1-1073741824-append", "returncode": 0, "process_wall_ms": 5.308389998390339}
+{"index": 71, "label": "round-1-1073741824-append-verify", "returncode": 0, "process_wall_ms": 5.950468999799341}
+{"index": 72, "label": "round-1-1073741824-append-access", "returncode": 0, "process_wall_ms": 7.013879992882721}
+{"index": 73, "label": "round-1-1073741824-fresh", "returncode": 0, "process_wall_ms": 7.619919997523539}
+{"index": 74, "label": "round-1-1073741824-fresh-verify", "returncode": 0, "process_wall_ms": 9.213541008648463}
+{"index": 75, "label": "round-1-1073741824-fresh-access", "returncode": 0, "process_wall_ms": 7.3973319958895445}
+{"index": 76, "label": "round-2-8192-fresh", "returncode": 0, "process_wall_ms": 9.692510997410864}
+{"index": 77, "label": "round-2-8192-fresh-verify", "returncode": 0, "process_wall_ms": 5.862404010258615}
+{"index": 78, "label": "round-2-8192-fresh-access", "returncode": 0, "process_wall_ms": 6.301931003690697}
+{"index": 79, "label": "round-2-8192-append", "returncode": 0, "process_wall_ms": 4.652255986002274}
+{"index": 80, "label": "round-2-8192-append-verify", "returncode": 0, "process_wall_ms": 6.021662993589416}
+{"index": 81, "label": "round-2-8192-append-access", "returncode": 0, "process_wall_ms": 6.811809987993911}
+{"index": 82, "label": "round-2-16384-fresh", "returncode": 0, "process_wall_ms": 7.410966994939372}
+{"index": 83, "label": "round-2-16384-fresh-verify", "returncode": 0, "process_wall_ms": 5.767124006524682}
+{"index": 84, "label": "round-2-16384-fresh-access", "returncode": 0, "process_wall_ms": 6.620931002544239}
+{"index": 85, "label": "round-2-16384-append", "returncode": 0, "process_wall_ms": 5.159580992767587}
+{"index": 86, "label": "round-2-16384-append-verify", "returncode": 0, "process_wall_ms": 5.71778099401854}
+{"index": 87, "label": "round-2-16384-append-access", "returncode": 0, "process_wall_ms": 6.8542499939212576}
+{"index": 88, "label": "round-2-1073741824-fresh", "returncode": 0, "process_wall_ms": 8.032427009311505}
+{"index": 89, "label": "round-2-1073741824-fresh-verify", "returncode": 0, "process_wall_ms": 6.269979989156127}
+{"index": 90, "label": "round-2-1073741824-fresh-access", "returncode": 0, "process_wall_ms": 7.902262994321063}
+{"index": 91, "label": "round-2-1073741824-append", "returncode": 0, "process_wall_ms": 5.9045030066045}
+{"index": 92, "label": "round-2-1073741824-append-verify", "returncode": 0, "process_wall_ms": 6.8831139942631125}
+{"index": 93, "label": "round-2-1073741824-append-access", "returncode": 0, "process_wall_ms": 7.707226002821699}
+{"index": 94, "label": "round-2-4096-fresh", "returncode": 0, "process_wall_ms": 7.845586005714722}
+{"index": 95, "label": "round-2-4096-fresh-verify", "returncode": 0, "process_wall_ms": 6.445039005484432}
+{"index": 96, "label": "round-2-4096-fresh-access", "returncode": 0, "process_wall_ms": 6.907810005941428}
+{"index": 97, "label": "round-2-4096-append", "returncode": 0, "process_wall_ms": 4.775408000568859}
+{"index": 98, "label": "round-2-4096-append-verify", "returncode": 0, "process_wall_ms": 5.7194940018234774}
+{"index": 99, "label": "round-2-4096-append-access", "returncode": 0, "process_wall_ms": 7.073501998092979}
+{"index": 100, "label": "round-3-16384-append", "returncode": 0, "process_wall_ms": 5.091251994599588}
+{"index": 101, "label": "round-3-16384-append-verify", "returncode": 0, "process_wall_ms": 6.988152003032155}
+{"index": 102, "label": "round-3-16384-append-access", "returncode": 0, "process_wall_ms": 8.378387996344827}
+{"index": 103, "label": "round-3-16384-fresh", "returncode": 0, "process_wall_ms": 7.3227109969593585}
+{"index": 104, "label": "round-3-16384-fresh-verify", "returncode": 0, "process_wall_ms": 6.035429003532045}
+{"index": 105, "label": "round-3-16384-fresh-access", "returncode": 0, "process_wall_ms": 7.483544002752751}
+{"index": 106, "label": "round-3-1073741824-append", "returncode": 0, "process_wall_ms": 4.9169229896506295}
+{"index": 107, "label": "round-3-1073741824-append-verify", "returncode": 0, "process_wall_ms": 5.848938002600335}
+{"index": 108, "label": "round-3-1073741824-append-access", "returncode": 0, "process_wall_ms": 7.543086001533084}
+{"index": 109, "label": "round-3-1073741824-fresh", "returncode": 0, "process_wall_ms": 7.189301002654247}
+{"index": 110, "label": "round-3-1073741824-fresh-verify", "returncode": 0, "process_wall_ms": 6.153651003842242}
+{"index": 111, "label": "round-3-1073741824-fresh-access", "returncode": 0, "process_wall_ms": 7.040309996227734}
+{"index": 112, "label": "round-3-4096-append", "returncode": 0, "process_wall_ms": 4.665891989134252}
+{"index": 113, "label": "round-3-4096-append-verify", "returncode": 0, "process_wall_ms": 5.704184994101524}
+{"index": 114, "label": "round-3-4096-append-access", "returncode": 0, "process_wall_ms": 7.88139300129842}
+{"index": 115, "label": "round-3-4096-fresh", "returncode": 0, "process_wall_ms": 7.38945699413307}
+{"index": 116, "label": "round-3-4096-fresh-verify", "returncode": 0, "process_wall_ms": 5.800515995360911}
+{"index": 117, "label": "round-3-4096-fresh-access", "returncode": 0, "process_wall_ms": 7.42393200926017}
+{"index": 118, "label": "round-3-8192-append", "returncode": 0, "process_wall_ms": 5.095038999570534}
+{"index": 119, "label": "round-3-8192-append-verify", "returncode": 0, "process_wall_ms": 6.732651003403589}
+{"index": 120, "label": "round-3-8192-append-access", "returncode": 0, "process_wall_ms": 7.0811070036143064}
+{"index": 121, "label": "round-3-8192-fresh", "returncode": 0, "process_wall_ms": 8.152973998221569}
+{"index": 122, "label": "round-3-8192-fresh-verify", "returncode": 0, "process_wall_ms": 6.662928994046524}
+{"index": 123, "label": "round-3-8192-fresh-access", "returncode": 0, "process_wall_ms": 6.982851991779171}
+{"index": 0, "label": "prepare-1073741824-seed", "returncode": 0, "process_wall_ms": 6.768579012714326}
+{"index": 1, "label": "prepare-1073741824-seed-verify", "returncode": 0, "process_wall_ms": 5.783414992038161}
+{"index": 2, "label": "prepare-1073741824-explicit", "returncode": 0, "process_wall_ms": 6.705760999466293}
+{"index": 3, "label": "prepare-1073741824-explicit-verify", "returncode": 0, "process_wall_ms": 5.655304004903883}
+{"index": 4, "label": "prepare-1073741824-payload", "returncode": 0, "process_wall_ms": 3.9416090003214777}
+{"index": 5, "label": "prepare-4096-seed", "returncode": 0, "process_wall_ms": 6.022415007464588}
+{"index": 6, "label": "prepare-4096-seed-verify", "returncode": 0, "process_wall_ms": 5.580311990343034}
+{"index": 7, "label": "prepare-4096-explicit", "returncode": 0, "process_wall_ms": 6.498399990960024}
+{"index": 8, "label": "prepare-4096-explicit-verify", "returncode": 0, "process_wall_ms": 5.681412003468722}
+{"index": 9, "label": "prepare-4096-payload", "returncode": 0, "process_wall_ms": 4.15370799601078}
+{"index": 10, "label": "prepare-8192-seed", "returncode": 0, "process_wall_ms": 6.936684992979281}
+{"index": 11, "label": "prepare-8192-seed-verify", "returncode": 0, "process_wall_ms": 7.71526999596972}
+{"index": 12, "label": "prepare-8192-explicit", "returncode": 0, "process_wall_ms": 7.159072993090376}
+{"index": 13, "label": "prepare-8192-explicit-verify", "returncode": 0, "process_wall_ms": 5.552871007239446}
+{"index": 14, "label": "prepare-8192-payload", "returncode": 0, "process_wall_ms": 6.101994003984146}
+{"index": 15, "label": "prepare-16384-seed", "returncode": 0, "process_wall_ms": 6.544628005940467}
+{"index": 16, "label": "prepare-16384-seed-verify", "returncode": 0, "process_wall_ms": 5.538052995689213}
+{"index": 17, "label": "prepare-16384-explicit", "returncode": 0, "process_wall_ms": 6.790870989789255}
+{"index": 18, "label": "prepare-16384-explicit-verify", "returncode": 0, "process_wall_ms": 5.864977996679954}
+{"index": 19, "label": "prepare-16384-payload", "returncode": 0, "process_wall_ms": 5.208102011238225}
+{"index": 20, "label": "round-0-1073741824-fresh", "returncode": 0, "process_wall_ms": 8.785854995949194}
+{"index": 21, "label": "round-0-1073741824-fresh-verify", "returncode": 0, "process_wall_ms": 7.29658298951108}
+{"index": 22, "label": "round-0-1073741824-fresh-access", "returncode": 0, "process_wall_ms": 9.084267003345303}
+{"index": 23, "label": "round-0-1073741824-fresh-fault", "returncode": 0, "process_wall_ms": 7.067101003485732}
+{"index": 24, "label": "round-0-1073741824-append", "returncode": 0, "process_wall_ms": 5.7531269994797185}
+{"index": 25, "label": "round-0-1073741824-append-verify", "returncode": 0, "process_wall_ms": 6.172056004288606}
+{"index": 26, "label": "round-0-1073741824-append-access", "returncode": 0, "process_wall_ms": 7.77744701190386}
+{"index": 27, "label": "round-0-1073741824-append-fault", "returncode": 0, "process_wall_ms": 8.169004999217577}
+{"index": 28, "label": "round-0-4096-fresh", "returncode": 0, "process_wall_ms": 7.504032997530885}
+{"index": 29, "label": "round-0-4096-fresh-verify", "returncode": 0, "process_wall_ms": 7.02882900077384}
+{"index": 30, "label": "round-0-4096-fresh-access", "returncode": 0, "process_wall_ms": 8.930287993280217}
+{"index": 31, "label": "round-0-4096-fresh-fault", "returncode": 0, "process_wall_ms": 8.289069999591447}
+{"index": 32, "label": "round-0-4096-append", "returncode": 0, "process_wall_ms": 5.477087994222529}
+{"index": 33, "label": "round-0-4096-append-verify", "returncode": 0, "process_wall_ms": 5.7018410007003695}
+{"index": 34, "label": "round-0-4096-append-access", "returncode": 0, "process_wall_ms": 6.987211003433913}
+{"index": 35, "label": "round-0-4096-append-fault", "returncode": 0, "process_wall_ms": 7.884869002737105}
+{"index": 36, "label": "round-0-8192-fresh", "returncode": 0, "process_wall_ms": 8.077623002463952}
+{"index": 37, "label": "round-0-8192-fresh-verify", "returncode": 0, "process_wall_ms": 6.495884998003021}
+{"index": 38, "label": "round-0-8192-fresh-access", "returncode": 0, "process_wall_ms": 7.271786002092995}
+{"index": 39, "label": "round-0-8192-fresh-fault", "returncode": 0, "process_wall_ms": 10.082725988468155}
+{"index": 40, "label": "round-0-8192-append", "returncode": 0, "process_wall_ms": 6.029847994796}
+{"index": 41, "label": "round-0-8192-append-verify", "returncode": 0, "process_wall_ms": 6.55929499771446}
+{"index": 42, "label": "round-0-8192-append-access", "returncode": 0, "process_wall_ms": 8.297326014144346}
+{"index": 43, "label": "round-0-8192-append-fault", "returncode": 0, "process_wall_ms": 8.54223700298462}
+{"index": 44, "label": "round-0-16384-fresh", "returncode": 0, "process_wall_ms": 7.956394998473115}
+{"index": 45, "label": "round-0-16384-fresh-verify", "returncode": 0, "process_wall_ms": 5.963353003608063}
+{"index": 46, "label": "round-0-16384-fresh-access", "returncode": 0, "process_wall_ms": 8.07790299586486}
+{"index": 47, "label": "round-0-16384-fresh-fault", "returncode": 0, "process_wall_ms": 8.183922996977344}
+{"index": 48, "label": "round-0-16384-append", "returncode": 0, "process_wall_ms": 6.313012010650709}
+{"index": 49, "label": "round-0-16384-append-verify", "returncode": 0, "process_wall_ms": 5.957683009910397}
+{"index": 50, "label": "round-0-16384-append-access", "returncode": 0, "process_wall_ms": 6.570285986526869}
+{"index": 51, "label": "round-0-16384-append-fault", "returncode": 0, "process_wall_ms": 8.117056000628509}
+{"index": 52, "label": "round-1-4096-append", "returncode": 0, "process_wall_ms": 6.677457000478171}
+{"index": 53, "label": "round-1-4096-append-verify", "returncode": 0, "process_wall_ms": 6.597236002562568}
+{"index": 54, "label": "round-1-4096-append-access", "returncode": 0, "process_wall_ms": 7.361313997535035}
+{"index": 55, "label": "round-1-4096-fresh", "returncode": 0, "process_wall_ms": 6.634356002905406}
+{"index": 56, "label": "round-1-4096-fresh-verify", "returncode": 0, "process_wall_ms": 5.65403098880779}
+{"index": 57, "label": "round-1-4096-fresh-access", "returncode": 0, "process_wall_ms": 6.912869997904636}
+{"index": 58, "label": "round-1-8192-append", "returncode": 0, "process_wall_ms": 6.096713987062685}
+{"index": 59, "label": "round-1-8192-append-verify", "returncode": 0, "process_wall_ms": 8.187398998416029}
+{"index": 60, "label": "round-1-8192-append-access", "returncode": 0, "process_wall_ms": 7.212423995952122}
+{"index": 61, "label": "round-1-8192-fresh", "returncode": 0, "process_wall_ms": 7.428990997141227}
+{"index": 62, "label": "round-1-8192-fresh-verify", "returncode": 0, "process_wall_ms": 5.907327999011613}
+{"index": 63, "label": "round-1-8192-fresh-access", "returncode": 0, "process_wall_ms": 7.329535001190379}
+{"index": 64, "label": "round-1-16384-append", "returncode": 0, "process_wall_ms": 6.380467995768413}
+{"index": 65, "label": "round-1-16384-append-verify", "returncode": 0, "process_wall_ms": 6.2264680018415675}
+{"index": 66, "label": "round-1-16384-append-access", "returncode": 0, "process_wall_ms": 9.565132000716403}
+{"index": 67, "label": "round-1-16384-fresh", "returncode": 0, "process_wall_ms": 7.986351003637537}
+{"index": 68, "label": "round-1-16384-fresh-verify", "returncode": 0, "process_wall_ms": 6.1889579956186935}
+{"index": 69, "label": "round-1-16384-fresh-access", "returncode": 0, "process_wall_ms": 6.546049989992753}
+{"index": 70, "label": "round-1-1073741824-append", "returncode": 0, "process_wall_ms": 13.47612300014589}
+{"index": 71, "label": "round-1-1073741824-append-verify", "returncode": 0, "process_wall_ms": 6.999463003012352}
+{"index": 72, "label": "round-1-1073741824-append-access", "returncode": 0, "process_wall_ms": 8.007721000467427}
+{"index": 73, "label": "round-1-1073741824-fresh", "returncode": 0, "process_wall_ms": 8.576010004617274}
+{"index": 74, "label": "round-1-1073741824-fresh-verify", "returncode": 0, "process_wall_ms": 6.3780439959373325}
+{"index": 75, "label": "round-1-1073741824-fresh-access", "returncode": 0, "process_wall_ms": 7.540951992268674}
+{"index": 76, "label": "round-2-8192-fresh", "returncode": 0, "process_wall_ms": 7.038466996164061}
+{"index": 77, "label": "round-2-8192-fresh-verify", "returncode": 0, "process_wall_ms": 6.302631998551078}
+{"index": 78, "label": "round-2-8192-fresh-access", "returncode": 0, "process_wall_ms": 6.965859996853396}
+{"index": 79, "label": "round-2-8192-append", "returncode": 0, "process_wall_ms": 6.142419995740056}
+{"index": 80, "label": "round-2-8192-append-verify", "returncode": 0, "process_wall_ms": 6.193716995767318}
+{"index": 81, "label": "round-2-8192-append-access", "returncode": 0, "process_wall_ms": 7.960642004036345}
+{"index": 82, "label": "round-2-16384-fresh", "returncode": 0, "process_wall_ms": 6.793565989937633}
+{"index": 83, "label": "round-2-16384-fresh-verify", "returncode": 0, "process_wall_ms": 6.638934995862655}
+{"index": 84, "label": "round-2-16384-fresh-access", "returncode": 0, "process_wall_ms": 7.515114004490897}
+{"index": 85, "label": "round-2-16384-append", "returncode": 0, "process_wall_ms": 6.646448993706144}
+{"index": 86, "label": "round-2-16384-append-verify", "returncode": 0, "process_wall_ms": 7.361804993706755}
+{"index": 87, "label": "round-2-16384-append-access", "returncode": 0, "process_wall_ms": 7.240998005727306}
+{"index": 88, "label": "round-2-1073741824-fresh", "returncode": 0, "process_wall_ms": 6.760964010027237}
+{"index": 89, "label": "round-2-1073741824-fresh-verify", "returncode": 0, "process_wall_ms": 6.3285509968409315}
+{"index": 90, "label": "round-2-1073741824-fresh-access", "returncode": 0, "process_wall_ms": 8.268261008197442}
+{"index": 91, "label": "round-2-1073741824-append", "returncode": 0, "process_wall_ms": 6.166405000840314}
+{"index": 92, "label": "round-2-1073741824-append-verify", "returncode": 0, "process_wall_ms": 6.407540000509471}
+{"index": 93, "label": "round-2-1073741824-append-access", "returncode": 0, "process_wall_ms": 9.993697996833362}
+{"index": 94, "label": "round-2-4096-fresh", "returncode": 0, "process_wall_ms": 8.243103991844691}
+{"index": 95, "label": "round-2-4096-fresh-verify", "returncode": 0, "process_wall_ms": 7.719487999565899}
+{"index": 96, "label": "round-2-4096-fresh-access", "returncode": 0, "process_wall_ms": 7.691435996093787}
+{"index": 97, "label": "round-2-4096-append", "returncode": 0, "process_wall_ms": 7.35477200942114}
+{"index": 98, "label": "round-2-4096-append-verify", "returncode": 0, "process_wall_ms": 6.428428998333402}
+{"index": 99, "label": "round-2-4096-append-access", "returncode": 0, "process_wall_ms": 7.370490988250822}
+{"index": 100, "label": "round-3-16384-append", "returncode": 0, "process_wall_ms": 6.8436200090218335}
+{"index": 101, "label": "round-3-16384-append-verify", "returncode": 0, "process_wall_ms": 6.460167991463095}
+{"index": 102, "label": "round-3-16384-append-access", "returncode": 0, "process_wall_ms": 8.49441699392628}
+{"index": 103, "label": "round-3-16384-fresh", "returncode": 0, "process_wall_ms": 8.282387992949225}
+{"index": 104, "label": "round-3-16384-fresh-verify", "returncode": 0, "process_wall_ms": 6.077147991163656}
+{"index": 105, "label": "round-3-16384-fresh-access", "returncode": 0, "process_wall_ms": 8.057864994043484}
+{"index": 106, "label": "round-3-1073741824-append", "returncode": 0, "process_wall_ms": 6.0025070124538615}
+{"index": 107, "label": "round-3-1073741824-append-verify", "returncode": 0, "process_wall_ms": 6.096835000789724}
+{"index": 108, "label": "round-3-1073741824-append-access", "returncode": 0, "process_wall_ms": 7.708917997661047}
+{"index": 109, "label": "round-3-1073741824-fresh", "returncode": 0, "process_wall_ms": 8.465392005746253}
+{"index": 110, "label": "round-3-1073741824-fresh-verify", "returncode": 0, "process_wall_ms": 7.766957991407253}
+{"index": 111, "label": "round-3-1073741824-fresh-access", "returncode": 0, "process_wall_ms": 8.099172991933301}
+{"index": 112, "label": "round-3-4096-append", "returncode": 0, "process_wall_ms": 6.650605995673686}
+{"index": 113, "label": "round-3-4096-append-verify", "returncode": 0, "process_wall_ms": 7.451232988387346}
+{"index": 114, "label": "round-3-4096-append-access", "returncode": 0, "process_wall_ms": 7.597998992423527}
+{"index": 115, "label": "round-3-4096-fresh", "returncode": 0, "process_wall_ms": 7.05421699967701}
+{"index": 116, "label": "round-3-4096-fresh-verify", "returncode": 0, "process_wall_ms": 6.633645010879263}
+{"index": 117, "label": "round-3-4096-fresh-access", "returncode": 0, "process_wall_ms": 7.3910600040107965}
+{"index": 118, "label": "round-3-8192-append", "returncode": 0, "process_wall_ms": 6.323181005427614}
+{"index": 119, "label": "round-3-8192-append-verify", "returncode": 0, "process_wall_ms": 7.370481005636975}
+{"index": 120, "label": "round-3-8192-append-access", "returncode": 0, "process_wall_ms": 7.688519996008836}
+{"index": 121, "label": "round-3-8192-fresh", "returncode": 0, "process_wall_ms": 8.420628000749275}
+{"index": 122, "label": "round-3-8192-fresh-verify", "returncode": 0, "process_wall_ms": 8.405991000472568}
+{"index": 123, "label": "round-3-8192-fresh-access", "returncode": 0, "process_wall_ms": 9.531960007734597}
+{
+ "units": [
+  {
+   "cls": "smoke",
+   "batch": "added10",
+   "commands": 124,
+   "archives_verified": 40,
+   "repeat_encodes": 32,
+   "access_profiles": 32,
+   "fault_profiles": 8,
+   "fault_reuse": "later outputs with the same SHA reuse the first fault profile",
+   "all_byte_exact": true,
+   "all_parents_immutable": true,
+   "repeat_sha_stable": true
+  },
+  {
+   "cls": "smoke",
+   "batch": "added40",
+   "commands": 124,
+   "archives_verified": 40,
+   "repeat_encodes": 32,
+   "access_profiles": 32,
+   "fault_profiles": 8,
+   "fault_reuse": "later outputs with the same SHA reuse the first fault profile",
+   "all_byte_exact": true,
+   "all_parents_immutable": true,
+   "repeat_sha_stable": true
+  }
+ ],
+ "over_cap": {
+  "returncode": 1,
+  "stderr": "file exceeds the requested solid frame limit",
+  "output_exists": false,
+  "stdout": ""
+ }
+}

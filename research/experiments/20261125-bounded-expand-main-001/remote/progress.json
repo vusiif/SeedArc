@@ -1,0 +1,34 @@
+{
+  "phase": "complete",
+  "units": [
+    {
+      "unit": "source-added10",
+      "wall_s": 845.1285588239989,
+      "audit_ok": true,
+      "problems": [],
+      "commands": 124
+    },
+    {
+      "unit": "source-added40",
+      "wall_s": 865.206973856999,
+      "audit_ok": true,
+      "problems": [],
+      "commands": 124
+    },
+    {
+      "unit": "text-added10",
+      "wall_s": 261.4652512050088,
+      "audit_ok": true,
+      "problems": [],
+      "commands": 124
+    },
+    {
+      "unit": "text-added40",
+      "wall_s": 272.41922061200603,
+      "audit_ok": true,
+      "problems": [],
+      "commands": 124
+    }
+  ],
+  "elapsed_s": 2377.4453050650045
+}

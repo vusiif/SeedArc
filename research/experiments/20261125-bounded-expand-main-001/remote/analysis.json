@@ -1,0 +1,3811 @@
+{
+  "schema": "seedarc.dev023.analysis.r1",
+  "units": [
+    "source-added10",
+    "source-added40",
+    "text-added10",
+    "text-added40"
+  ],
+  "audits": [
+    {
+      "unit": "source-added10",
+      "ok": true,
+      "problems": [],
+      "commands": 124,
+      "archives": 40,
+      "sha_by_cap_operation": {
+        "1073741824-fresh": "002fce09c169983cc9e958ebbdbffb9890a63006d9d9f835ce372876a228a786",
+        "1073741824-append": "df8875a320fb5ab2e1d4f10df319862e21c17b3d1e819d6ab93f77bdd273cd3f",
+        "33554432-fresh": "84d906911c077ef9ec7e007cf36287961133312fba6aed8152de2927f9a04027",
+        "33554432-append": "08da4f66a28570911ef3dd805bfe1e7a7d2f84e0e5e2dc0cf410f2659be28b56",
+        "67108864-fresh": "f3367e111a1229e26c586f0f4d67346695e61605f18d3e3d51e006c25882779e",
+        "67108864-append": "62d37e0ccc2bc64e69909781542b7895cf6bd34b34a21390f0f3323223078a76",
+        "134217728-fresh": "6a6ade220692b09c1b19caeb8e1f11068503d66f9fed4ef43593bfbc043bc70b",
+        "134217728-append": "588e741f6267da9ec6bcddb47d0096be5cb6c6ce6f9ab8076240c8ab6905ef3f"
+      },
+      "sample_paths": [
+        "linux/Documentation/features/list-arch.sh",
+        "linux/arch/mips/include/asm/mach-loongson2ef/cs5536/cs5536_mfgpt.h",
+        "linux/arch/sh/kernel/cpu/sh4a/clock-sh7770.c",
+        "linux/drivers/clk/hisilicon/clk-hi3519.c",
+        "linux/drivers/gpu/drm/amd/include/asic_reg/nbio/nbio_7_2_0_sh_mask.h",
+        "linux/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c",
+        "linux/drivers/gpu/drm/vc4/vc4_qpu_defines.h",
+        "linux/drivers/media/pci/smipcie/smipcie.h",
+        "linux/drivers/tty/serial/8250/8250_ingenic.c",
+        "linux/include/linux/mfd/si476x-core.h",
+        "linux/net/appletalk/ddp.c",
+        "linux/tools/perf/arch/s390/util/perf_regs.c",
+        "linux/virt/lib/irqbypass.c"
+      ]
+    },
+    {
+      "unit": "source-added40",
+      "ok": true,
+      "problems": [],
+      "commands": 124,
+      "archives": 40,
+      "sha_by_cap_operation": {
+        "1073741824-fresh": "002fce09c169983cc9e958ebbdbffb9890a63006d9d9f835ce372876a228a786",
+        "1073741824-append": "56083d656dc644bf9a810a800dc1b91ec9c2138f903d43c109590a17d272c8d0",
+        "33554432-fresh": "84d906911c077ef9ec7e007cf36287961133312fba6aed8152de2927f9a04027",
+        "33554432-append": "6ff0e0af8fb29425ce83194ad2629fc674d0f5b7b1565efdbd5b7881b76664b9",
+        "67108864-fresh": "f3367e111a1229e26c586f0f4d67346695e61605f18d3e3d51e006c25882779e",
+        "67108864-append": "74b914964a9696e95f8946d057a398b05c735390b6b2cf6fabbdba0fb073b932",
+        "134217728-fresh": "6a6ade220692b09c1b19caeb8e1f11068503d66f9fed4ef43593bfbc043bc70b",
+        "134217728-append": "5136e75f516ab512f453630a2ec2ae8a6a78fa2e56e1eb7b97d98ddb0b96caa0"
+      },
+      "sample_paths": [
+        "linux/Documentation/features/list-arch.sh",
+        "linux/arch/mips/include/asm/mach-loongson2ef/cs5536/cs5536_mfgpt.h",
+        "linux/arch/sh/kernel/cpu/sh4a/clock-sh7770.c",
+        "linux/drivers/clk/hisilicon/clk-hi3519.c",
+        "linux/drivers/gpu/drm/amd/include/asic_reg/nbio/nbio_7_2_0_sh_mask.h",
+        "linux/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c",
+        "linux/drivers/gpu/drm/vc4/vc4_qpu_defines.h",
+        "linux/drivers/media/pci/smipcie/smipcie.h",
+        "linux/drivers/tty/serial/8250/8250_ingenic.c",
+        "linux/include/linux/mfd/si476x-core.h",
+        "linux/net/appletalk/ddp.c",
+        "linux/tools/perf/arch/s390/util/perf_regs.c",
+        "linux/virt/lib/irqbypass.c"
+      ]
+    },
+    {
+      "unit": "text-added10",
+      "ok": true,
+      "problems": [],
+      "commands": 124,
+      "archives": 40,
+      "sha_by_cap_operation": {
+        "1073741824-fresh": "4515cd7e9226571e4183768928bcfad5b0a6d09bce551159cb4057175b7710ba",
+        "1073741824-append": "913344a0cf5c361a68d83653544540d0fb30489b3ef7e5d6c96c9c04686ce2c7",
+        "33554432-fresh": "6b1e8ba09c8618f0781c40913e9d83d515964566e666d8feea2ed4cac042e635",
+        "33554432-append": "ca70a965fd365633a67df104af8995620947cca3f2e39eb33d9c87f694892a58",
+        "67108864-fresh": "7dff1127b916447fd2c48daed98ed0e7cd249985cc3524496b4742ffdaf05eed",
+        "67108864-append": "29b2e7e1875eb7fb2286a2c167313b991107a6b2e6a2a081732fb55a144f6a61",
+        "134217728-fresh": "4515cd7e9226571e4183768928bcfad5b0a6d09bce551159cb4057175b7710ba",
+        "134217728-append": "913344a0cf5c361a68d83653544540d0fb30489b3ef7e5d6c96c9c04686ce2c7"
+      },
+      "sample_paths": [
+        "enwik8/part-000.xml",
+        "enwik8/part-005.xml",
+        "enwik8/part-009.xml",
+        "enwik8/part-014.xml",
+        "enwik8/part-018.xml",
+        "enwik8/part-022.xml",
+        "enwik8/part-027.xml",
+        "enwik8/part-031.xml",
+        "enwik8/part-036.xml",
+        "enwik8/part-041.xml",
+        "enwik8/part-045.xml",
+        "silesia/nci"
+      ]
+    },
+    {
+      "unit": "text-added40",
+      "ok": true,
+      "problems": [],
+      "commands": 124,
+      "archives": 40,
+      "sha_by_cap_operation": {
+        "1073741824-fresh": "4515cd7e9226571e4183768928bcfad5b0a6d09bce551159cb4057175b7710ba",
+        "1073741824-append": "ae65d3fc59286b4c88a54de3c54863db176901771ca645de3a9172c7587459d7",
+        "33554432-fresh": "6b1e8ba09c8618f0781c40913e9d83d515964566e666d8feea2ed4cac042e635",
+        "33554432-append": "aa79d7284d703fb603e21d27385305791debabb4788bd1ed6834e0335f51641d",
+        "67108864-fresh": "7dff1127b916447fd2c48daed98ed0e7cd249985cc3524496b4742ffdaf05eed",
+        "67108864-append": "ae65d3fc59286b4c88a54de3c54863db176901771ca645de3a9172c7587459d7",
+        "134217728-fresh": "4515cd7e9226571e4183768928bcfad5b0a6d09bce551159cb4057175b7710ba",
+        "134217728-append": "ae65d3fc59286b4c88a54de3c54863db176901771ca645de3a9172c7587459d7"
+      },
+      "sample_paths": [
+        "enwik8/part-000.xml",
+        "enwik8/part-005.xml",
+        "enwik8/part-009.xml",
+        "enwik8/part-014.xml",
+        "enwik8/part-018.xml",
+        "enwik8/part-022.xml",
+        "enwik8/part-027.xml",
+        "enwik8/part-031.xml",
+        "enwik8/part-036.xml",
+        "enwik8/part-041.xml",
+        "enwik8/part-045.xml",
+        "silesia/nci"
+      ]
+    }
+  ],
+  "all_audits_ok": true,
+  "cross_batch": {
+    "source": {
+      "fresh_identical_across_batches": true,
+      "same_access_samples": true
+    },
+    "text": {
+      "fresh_identical_across_batches": true,
+      "same_access_samples": true
+    }
+  },
+  "analysis": [
+    {
+      "unit": "source-added10",
+      "cls": "source",
+      "batch": "added10",
+      "files": 11285,
+      "bytes": 268433674,
+      "added_bytes": 26841670,
+      "added_ratio": 0.09999367665027004,
+      "preparation": {
+        "1073741824": {
+          "parent_bytes": 26775553,
+          "seed_pack_process_ms": 10546.46161699202,
+          "explicit_pack_process_ms": 10539.94683099154,
+          "verify_process_ms": 7014.748209010577
+        },
+        "33554432": {
+          "parent_bytes": 27002998,
+          "seed_pack_process_ms": 9939.882644001045,
+          "explicit_pack_process_ms": 9806.021318989224,
+          "verify_process_ms": 6989.602836998529
+        },
+        "67108864": {
+          "parent_bytes": 26916721,
+          "seed_pack_process_ms": 9832.576624001376,
+          "explicit_pack_process_ms": 10005.011487999582,
+          "verify_process_ms": 6966.034783006762
+        },
+        "134217728": {
+          "parent_bytes": 26881402,
+          "seed_pack_process_ms": 10417.960859995219,
+          "explicit_pack_process_ms": 10465.833334004856,
+          "verify_process_ms": 6892.56551800645
+        }
+      },
+      "caps": {
+        "1073741824": {
+          "fresh": {
+            "container_bytes": 28141155,
+            "sha256": "002fce09c169983cc9e958ebbdbffb9890a63006d9d9f835ce372876a228a786",
+            "vs_reference_percent": 0.0,
+            "frame_count": 1,
+            "max_frame_raw_bytes": 268433674,
+            "process_wall_ms": {
+              "min": 10777.141923012096,
+              "median": 11030.350880508195,
+              "max": 11249.103770998772
+            },
+            "call_wall_ms": {
+              "min": 10725.8,
+              "median": 10983.2,
+              "max": 11203.4
+            },
+            "verify_process_ms": {
+              "min": 3685.1973269949667,
+              "median": 3758.3309854962863,
+              "max": 3840.1227750000544
+            },
+            "access_median_ms": {
+              "min": 479.836,
+              "median": 496.1655,
+              "max": 511.378
+            },
+            "access_p95_ms": {
+              "min": 531.276,
+              "median": 566.0165,
+              "max": 613.803
+            },
+            "access_decoded_bytes_total": 3489637762,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 580820992,
+            "encode_peak_memory_bytes": 823967744,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            }
+          },
+          "append": {
+            "container_bytes": 29227210,
+            "sha256": "df8875a320fb5ab2e1d4f10df319862e21c17b3d1e819d6ab93f77bdd273cd3f",
+            "vs_reference_percent": 0.0,
+            "frame_count": 2,
+            "max_frame_raw_bytes": 241592004,
+            "process_wall_ms": {
+              "min": 3436.472841000068,
+              "median": 3500.663849998091,
+              "max": 4363.1520029885
+            },
+            "call_wall_ms": {
+              "min": 3413.71,
+              "median": 3478.835,
+              "max": 4333.42
+            },
+            "verify_process_ms": {
+              "min": 3680.0401200016495,
+              "median": 3847.5439850008115,
+              "max": 4029.3491689953953
+            },
+            "access_median_ms": {
+              "min": 448.364,
+              "median": 459.769,
+              "max": 488.392
+            },
+            "access_p95_ms": {
+              "min": 483.596,
+              "median": 522.3030000000001,
+              "max": 549.463
+            },
+            "access_decoded_bytes_total": 2711195384,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 580947968,
+            "encode_peak_memory_bytes": 346034176,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "old_archive_bytes_read": 26775553,
+            "old_archive_bytes_copied": 26775553,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 29227210
+          },
+          "append_vs_fresh": {
+            "size_percent": 3.8593121000186414,
+            "same_round_wall_ratio": {
+              "min": 0.3054885892207353,
+              "median": 0.317422975589592,
+              "max": 0.40485242137082716
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2738973,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 268433674,
+                  "verified_files": 11284,
+                  "verified_bytes": 268429819,
+                  "unavailable_bytes": 3855,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2559.204964
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13694482,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 268433674,
+                  "verified_files": 0,
+                  "verified_bytes": 0,
+                  "unavailable_bytes": 268433674,
+                  "rejected_files": 11285,
+                  "decode_validate_wall_ms": 314.411279
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 24649990,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 268433674,
+                  "verified_files": 11156,
+                  "verified_bytes": 263504003,
+                  "unavailable_bytes": 4929671,
+                  "rejected_files": 129,
+                  "decode_validate_wall_ms": 2547.436321
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 610902016,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2776032,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 241592004,
+                  "verified_files": 11284,
+                  "verified_bytes": 268433137,
+                  "unavailable_bytes": 537,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2622.981061
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13879780,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 241592004,
+                  "verified_files": 11250,
+                  "verified_bytes": 266830367,
+                  "unavailable_bytes": 1603307,
+                  "rejected_files": 35,
+                  "decode_validate_wall_ms": 2534.92987
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 24983527,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 241592004,
+                  "verified_files": 11283,
+                  "verified_bytes": 268393542,
+                  "unavailable_bytes": 40132,
+                  "rejected_files": 2,
+                  "decode_validate_wall_ms": 2536.938408
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 612028416,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "33554432": {
+          "fresh": {
+            "container_bytes": 28410983,
+            "sha256": "84d906911c077ef9ec7e007cf36287961133312fba6aed8152de2927f9a04027",
+            "vs_reference_percent": 0.9588376880764082,
+            "frame_count": 9,
+            "max_frame_raw_bytes": 33544089,
+            "process_wall_ms": {
+              "min": 10402.686568006175,
+              "median": 10492.190283504897,
+              "max": 10750.416809998569
+            },
+            "call_wall_ms": {
+              "min": 10353.8,
+              "median": 10439.5,
+              "max": 10700.5
+            },
+            "verify_process_ms": {
+              "min": 3646.640209990437,
+              "median": 3729.159674498078,
+              "max": 3756.5225639991695
+            },
+            "access_median_ms": {
+              "min": 145.098,
+              "median": 163.9215,
+              "max": 193.098
+            },
+            "access_p95_ms": {
+              "min": 204.02,
+              "median": 207.974,
+              "max": 210.296
+            },
+            "access_decoded_bytes_total": 406878664,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 345174016,
+            "encode_peak_memory_bytes": 601542656,
+            "same_round_access_speedup_vs_reference": {
+              "min": 2.6482822193911897,
+              "median": 3.0275236349283863,
+              "max": 3.306978731615873
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9443063801672434,
+              "median": 0.9569926535961844,
+              "max": 0.9652546697741488
+            }
+          },
+          "append": {
+            "container_bytes": 29454858,
+            "sha256": "08da4f66a28570911ef3dd805bfe1e7a7d2f84e0e5e2dc0cf410f2659be28b56",
+            "vs_reference_percent": 0.7788906296564146,
+            "frame_count": 9,
+            "max_frame_raw_bytes": 33549704,
+            "process_wall_ms": {
+              "min": 3323.2572059932863,
+              "median": 3359.7713865019614,
+              "max": 3491.7792240012204
+            },
+            "call_wall_ms": {
+              "min": 3302.39,
+              "median": 3336.9300000000003,
+              "max": 3469.32
+            },
+            "verify_process_ms": {
+              "min": 3715.906562996679,
+              "median": 3758.479873504257,
+              "max": 3814.937244998873
+            },
+            "access_median_ms": {
+              "min": 146.919,
+              "median": 153.8665,
+              "max": 164.382
+            },
+            "access_p95_ms": {
+              "min": 184.361,
+              "median": 189.2205,
+              "max": 235.257
+            },
+            "access_decoded_bytes_total": 399383250,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 379768832,
+            "encode_peak_memory_bytes": 163348480,
+            "same_round_access_speedup_vs_reference": {
+              "min": 2.8229915684198996,
+              "median": 2.9708442190013047,
+              "max": 3.2573147388569863
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.8002882369464918,
+              "median": 0.9539584337026077,
+              "max": 0.9788854839380993
+            },
+            "old_archive_bytes_read": 27002998,
+            "old_archive_bytes_copied": 27002998,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 29454858
+          },
+          "append_vs_fresh": {
+            "size_percent": 3.674195292714799,
+            "same_round_wall_ratio": {
+              "min": 0.31291004241564235,
+              "median": 0.31830528885096926,
+              "max": 0.33566129299139985
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2765932,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33471505,
+                  "verified_files": 7738,
+                  "verified_bytes": 234962169,
+                  "unavailable_bytes": 33471505,
+                  "rejected_files": 3547,
+                  "decode_validate_wall_ms": 2145.204043
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13829280,
+                  "frame": 6,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33544089,
+                  "verified_files": 8998,
+                  "verified_bytes": 234889585,
+                  "unavailable_bytes": 33544089,
+                  "rejected_files": 2287,
+                  "decode_validate_wall_ms": 2120.784757
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 24892627,
+                  "frame": 8,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 23931864,
+                  "verified_files": 11284,
+                  "verified_bytes": 268386144,
+                  "unavailable_bytes": 47530,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2393.935743
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 375984128,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2798757,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33509299,
+                  "verified_files": 11281,
+                  "verified_bytes": 268338604,
+                  "unavailable_bytes": 95070,
+                  "rejected_files": 4,
+                  "decode_validate_wall_ms": 2405.582203
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13993401,
+                  "frame": 5,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33539950,
+                  "verified_files": 11228,
+                  "verified_bytes": 266173037,
+                  "unavailable_bytes": 2260637,
+                  "rejected_files": 57,
+                  "decode_validate_wall_ms": 2378.229804
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 25188045,
+                  "frame": 7,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 25827802,
+                  "verified_files": 9010,
+                  "verified_bytes": 242605872,
+                  "unavailable_bytes": 25827802,
+                  "rejected_files": 2275,
+                  "decode_validate_wall_ms": 2174.287113
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 377978880,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "67108864": {
+          "fresh": {
+            "container_bytes": 28301832,
+            "sha256": "f3367e111a1229e26c586f0f4d67346695e61605f18d3e3d51e006c25882779e",
+            "vs_reference_percent": 0.570968035960151,
+            "frame_count": 5,
+            "max_frame_raw_bytes": 67095746,
+            "process_wall_ms": {
+              "min": 10495.474009003374,
+              "median": 10766.804673003207,
+              "max": 10887.455417992896
+            },
+            "call_wall_ms": {
+              "min": 10447.6,
+              "median": 10715.7,
+              "max": 10839
+            },
+            "verify_process_ms": {
+              "min": 3620.4636040056357,
+              "median": 3752.167337501305,
+              "max": 3868.1991859921254
+            },
+            "access_median_ms": {
+              "min": 203.785,
+              "median": 210.79649999999998,
+              "max": 235.726
+            },
+            "access_p95_ms": {
+              "min": 234.956,
+              "median": 253.00099999999998,
+              "max": 299.377
+            },
+            "access_decoded_bytes_total": 750596272,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 379617280,
+            "encode_peak_memory_bytes": 622641152,
+            "same_round_access_speedup_vs_reference": {
+              "min": 2.1545565614314923,
+              "median": 2.3506658132895457,
+              "max": 2.377240719385627
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9494110702878076,
+              "median": 0.9719576705097184,
+              "max": 1.0014191251991789
+            }
+          },
+          "append": {
+            "container_bytes": 29368465,
+            "sha256": "62d37e0ccc2bc64e69909781542b7895cf6bd34b34a21390f0f3323223078a76",
+            "vs_reference_percent": 0.48329963756377214,
+            "frame_count": 5,
+            "max_frame_raw_bytes": 67096873,
+            "process_wall_ms": {
+              "min": 3442.9491629998665,
+              "median": 3478.6572369921487,
+              "max": 3531.110528012505
+            },
+            "call_wall_ms": {
+              "min": 3420.72,
+              "median": 3457.25,
+              "max": 3509.18
+            },
+            "verify_process_ms": {
+              "min": 3676.7426950100344,
+              "median": 3731.654361501569,
+              "max": 3825.2572970086476
+            },
+            "access_median_ms": {
+              "min": 213.263,
+              "median": 217.144,
+              "max": 222.301
+            },
+            "access_p95_ms": {
+              "min": 236.567,
+              "median": 259.5095,
+              "max": 274.329
+            },
+            "access_decoded_bytes_total": 714163031,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 408072192,
+            "encode_peak_memory_bytes": 171692032,
+            "same_round_access_speedup_vs_reference": {
+              "min": 2.0826638622802403,
+              "median": 2.09493993648206,
+              "max": 2.265447646614065
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.8093026613773493,
+              "median": 0.990920754987759,
+              "max": 1.0076118113558348
+            },
+            "old_archive_bytes_read": 26916721,
+            "old_archive_bytes_copied": 26916721,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 29368465
+          },
+          "append_vs_fresh": {
+            "size_percent": 3.768777229686049,
+            "same_round_wall_ratio": {
+              "min": 0.3172176697867444,
+              "median": 0.3225991209997326,
+              "max": 0.33644126267983687
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2755029,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 63870483,
+                  "verified_files": 7287,
+                  "verified_bytes": 204563191,
+                  "unavailable_bytes": 63870483,
+                  "rejected_files": 3998,
+                  "decode_validate_wall_ms": 2006.089157
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13774762,
+                  "frame": 3,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 67091523,
+                  "verified_files": 6753,
+                  "verified_bytes": 201342151,
+                  "unavailable_bytes": 67091523,
+                  "rejected_files": 4532,
+                  "decode_validate_wall_ms": 1938.470003
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 24794495,
+                  "frame": 3,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 67091523,
+                  "verified_files": 11279,
+                  "verified_bytes": 268129654,
+                  "unavailable_bytes": 304020,
+                  "rejected_files": 6,
+                  "decode_validate_wall_ms": 2589.226292
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 421445632,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2790140,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 57962625,
+                  "verified_files": 7487,
+                  "verified_bytes": 210471049,
+                  "unavailable_bytes": 57962625,
+                  "rejected_files": 3798,
+                  "decode_validate_wall_ms": 2072.513431
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13950320,
+                  "frame": 2,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 67096873,
+                  "verified_files": 9095,
+                  "verified_bytes": 201336801,
+                  "unavailable_bytes": 67096873,
+                  "rejected_files": 2190,
+                  "decode_validate_wall_ms": 1993.32892
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 25110500,
+                  "frame": 3,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 58887089,
+                  "verified_files": 11250,
+                  "verified_bytes": 267737167,
+                  "unavailable_bytes": 696507,
+                  "rejected_files": 35,
+                  "decode_validate_wall_ms": 2510.822542
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 437694464,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "134217728": {
+          "fresh": {
+            "container_bytes": 28279054,
+            "sha256": "6a6ade220692b09c1b19caeb8e1f11068503d66f9fed4ef43593bfbc043bc70b",
+            "vs_reference_percent": 0.49002608457258123,
+            "frame_count": 3,
+            "max_frame_raw_bytes": 134187269,
+            "process_wall_ms": {
+              "min": 10911.14452300826,
+              "median": 10918.157496504136,
+              "max": 11116.081765008857
+            },
+            "call_wall_ms": {
+              "min": 10862.7,
+              "median": 10868.75,
+              "max": 11066
+            },
+            "verify_process_ms": {
+              "min": 3702.7991950017167,
+              "median": 3820.5859455047175,
+              "max": 3845.8311680005863
+            },
+            "access_median_ms": {
+              "min": 289.729,
+              "median": 296.2745,
+              "max": 308.679
+            },
+            "access_p95_ms": {
+              "min": 296.363,
+              "median": 316.60900000000004,
+              "max": 358.286
+            },
+            "access_decoded_bytes_total": 1450835493,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 446828544,
+            "encode_peak_memory_bytes": 689778688,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.5694167727639394,
+              "median": 1.6828842219519577,
+              "max": 1.7308557407218075
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9699567845696471,
+              "median": 0.9900341204417172,
+              "max": 1.0314498820204858
+            }
+          },
+          "append": {
+            "container_bytes": 29333088,
+            "sha256": "588e741f6267da9ec6bcddb47d0096be5cb6c6ce6f9ab8076240c8ab6905ef3f",
+            "vs_reference_percent": 0.36225832024336935,
+            "frame_count": 3,
+            "max_frame_raw_bytes": 128356388,
+            "process_wall_ms": {
+              "min": 3425.0017249869416,
+              "median": 3495.8556960118585,
+              "max": 3612.0355219900375
+            },
+            "call_wall_ms": {
+              "min": 3404.28,
+              "median": 3473.4300000000003,
+              "max": 3589.46
+            },
+            "verify_process_ms": {
+              "min": 3756.1624369991478,
+              "median": 3778.2558375038207,
+              "max": 3844.4378359999973
+            },
+            "access_median_ms": {
+              "min": 283.799,
+              "median": 292.10450000000003,
+              "max": 305.899
+            },
+            "access_p95_ms": {
+              "min": 299.996,
+              "median": 310.428,
+              "max": 316.877
+            },
+            "access_decoded_bytes_total": 1359758204,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 454041600,
+            "encode_peak_memory_bytes": 232996864,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.5179637880367807,
+              "median": 1.6007748411476233,
+              "max": 1.6066120337768361
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.7955126467364625,
+              "median": 1.000219720084693,
+              "max": 1.0338390035449312
+            },
+            "old_archive_bytes_read": 26881402,
+            "old_archive_bytes_copied": 26881402,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 29333088
+          },
+          "append_vs_fresh": {
+            "size_percent": 3.7272604663508124,
+            "same_round_wall_ratio": {
+              "min": 0.3122451481903177,
+              "median": 0.3182011165501309,
+              "max": 0.33079373874106655
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2752757,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 121515900,
+                  "verified_files": 11284,
+                  "verified_bytes": 268414319,
+                  "unavailable_bytes": 19355,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2544.425814
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13763402,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 134187269,
+                  "verified_files": 11271,
+                  "verified_bytes": 267499641,
+                  "unavailable_bytes": 934033,
+                  "rejected_files": 14,
+                  "decode_validate_wall_ms": 2532.698363
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 24774047,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 134187269,
+                  "verified_files": 11280,
+                  "verified_bytes": 268243731,
+                  "unavailable_bytes": 189943,
+                  "rejected_files": 5,
+                  "decode_validate_wall_ms": 2546.289702
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 488996864,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2786614,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 128356388,
+                  "verified_files": 7456,
+                  "verified_bytes": 140077286,
+                  "unavailable_bytes": 128356388,
+                  "rejected_files": 3829,
+                  "decode_validate_wall_ms": 1449.791444
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13932690,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 113235616,
+                  "verified_files": 11284,
+                  "verified_bytes": 268323552,
+                  "unavailable_bytes": 110122,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2508.99422
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 25078765,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 113235616,
+                  "verified_files": 4382,
+                  "verified_bytes": 155198058,
+                  "unavailable_bytes": 113235616,
+                  "rejected_files": 6903,
+                  "decode_validate_wall_ms": 1592.794213
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 498987008,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        }
+      },
+      "access_samples": [
+        {
+          "path": "linux/Documentation/features/list-arch.sh",
+          "requested_bytes": 334
+        },
+        {
+          "path": "linux/arch/mips/include/asm/mach-loongson2ef/cs5536/cs5536_mfgpt.h",
+          "requested_bytes": 795
+        },
+        {
+          "path": "linux/arch/sh/kernel/cpu/sh4a/clock-sh7770.c",
+          "requested_bytes": 1639
+        },
+        {
+          "path": "linux/drivers/clk/hisilicon/clk-hi3519.c",
+          "requested_bytes": 5424
+        },
+        {
+          "path": "linux/drivers/gpu/drm/amd/include/asic_reg/nbio/nbio_7_2_0_sh_mask.h",
+          "requested_bytes": 16414003
+        },
+        {
+          "path": "linux/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c",
+          "requested_bytes": 48949
+        },
+        {
+          "path": "linux/drivers/gpu/drm/vc4/vc4_qpu_defines.h",
+          "requested_bytes": 7086
+        },
+        {
+          "path": "linux/drivers/media/pci/smipcie/smipcie.h",
+          "requested_bytes": 12331
+        },
+        {
+          "path": "linux/drivers/tty/serial/8250/8250_ingenic.c",
+          "requested_bytes": 9195
+        },
+        {
+          "path": "linux/include/linux/mfd/si476x-core.h",
+          "requested_bytes": 15192
+        },
+        {
+          "path": "linux/net/appletalk/ddp.c",
+          "requested_bytes": 50107
+        },
+        {
+          "path": "linux/tools/perf/arch/s390/util/perf_regs.c",
+          "requested_bytes": 378
+        },
+        {
+          "path": "linux/virt/lib/irqbypass.c",
+          "requested_bytes": 5929
+        }
+      ]
+    },
+    {
+      "unit": "source-added40",
+      "cls": "source",
+      "batch": "added40",
+      "files": 11285,
+      "bytes": 268433674,
+      "added_bytes": 107364961,
+      "added_ratio": 0.3999683027845456,
+      "preparation": {
+        "1073741824": {
+          "parent_bytes": 19034314,
+          "seed_pack_process_ms": 7177.176616998622,
+          "explicit_pack_process_ms": 7475.670779007487,
+          "verify_process_ms": 4708.07448598498
+        },
+        "33554432": {
+          "parent_bytes": 19102796,
+          "seed_pack_process_ms": 6979.6783050114755,
+          "explicit_pack_process_ms": 6507.646295998711,
+          "verify_process_ms": 4848.7617560022045
+        },
+        "67108864": {
+          "parent_bytes": 19067698,
+          "seed_pack_process_ms": 7180.034566001268,
+          "explicit_pack_process_ms": 7242.080691008596,
+          "verify_process_ms": 4849.3445240019355
+        },
+        "134217728": {
+          "parent_bytes": 19050549,
+          "seed_pack_process_ms": 7267.879033999634,
+          "explicit_pack_process_ms": 7096.0207270109095,
+          "verify_process_ms": 4708.5759390029125
+        }
+      },
+      "caps": {
+        "1073741824": {
+          "fresh": {
+            "container_bytes": 28141155,
+            "sha256": "002fce09c169983cc9e958ebbdbffb9890a63006d9d9f835ce372876a228a786",
+            "vs_reference_percent": 0.0,
+            "frame_count": 1,
+            "max_frame_raw_bytes": 268433674,
+            "process_wall_ms": {
+              "min": 10932.633035990875,
+              "median": 11225.191561003157,
+              "max": 11448.885820995201
+            },
+            "call_wall_ms": {
+              "min": 10884.1,
+              "median": 11175.4,
+              "max": 11396.7
+            },
+            "verify_process_ms": {
+              "min": 3726.6284319921397,
+              "median": 3882.1579275027034,
+              "max": 3956.140376001713
+            },
+            "access_median_ms": {
+              "min": 464.659,
+              "median": 482.1085,
+              "max": 493.755
+            },
+            "access_p95_ms": {
+              "min": 509.881,
+              "median": 559.3665000000001,
+              "max": 583.808
+            },
+            "access_decoded_bytes_total": 3489637762,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 580952064,
+            "encode_peak_memory_bytes": 824102912,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            }
+          },
+          "append": {
+            "container_bytes": 30035647,
+            "sha256": "56083d656dc644bf9a810a800dc1b91ec9c2138f903d43c109590a17d272c8d0",
+            "vs_reference_percent": 0.0,
+            "frame_count": 2,
+            "max_frame_raw_bytes": 161068713,
+            "process_wall_ms": {
+              "min": 6086.045259988168,
+              "median": 6286.244355505914,
+              "max": 6467.139049011166
+            },
+            "call_wall_ms": {
+              "min": 6051.77,
+              "median": 6252.639999999999,
+              "max": 6431.53
+            },
+            "verify_process_ms": {
+              "min": 3754.5039749966236,
+              "median": 3924.1862115013646,
+              "max": 4039.582708996022
+            },
+            "access_median_ms": {
+              "min": 325.517,
+              "median": 340.701,
+              "max": 380.499
+            },
+            "access_p95_ms": {
+              "min": 344.36,
+              "median": 389.13,
+              "max": 664.378
+            },
+            "access_decoded_bytes_total": 1825374509,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 475369472,
+            "encode_peak_memory_bytes": 361795584,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "old_archive_bytes_read": 19034314,
+            "old_archive_bytes_copied": 19034314,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 30035647
+          },
+          "append_vs_fresh": {
+            "size_percent": 6.732104634653413,
+            "same_round_wall_ratio": {
+              "min": 0.5315840646106762,
+              "median": 0.5600470897090513,
+              "max": 0.5915445097005416
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2738973,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 268433674,
+                  "verified_files": 11284,
+                  "verified_bytes": 268429819,
+                  "unavailable_bytes": 3855,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2581.163176
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13694482,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 268433674,
+                  "verified_files": 0,
+                  "verified_bytes": 0,
+                  "unavailable_bytes": 268433674,
+                  "rejected_files": 11285,
+                  "decode_validate_wall_ms": 345.900843
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 24649990,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 268433674,
+                  "verified_files": 11156,
+                  "verified_bytes": 263504003,
+                  "unavailable_bytes": 4929671,
+                  "rejected_files": 129,
+                  "decode_validate_wall_ms": 2575.995209
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 610897920,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2877876,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 161068713,
+                  "verified_files": 3723,
+                  "verified_bytes": 107364961,
+                  "unavailable_bytes": 161068713,
+                  "rejected_files": 7562,
+                  "decode_validate_wall_ms": 1132.808385
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 14388998,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 161068713,
+                  "verified_files": 11284,
+                  "verified_bytes": 268403164,
+                  "unavailable_bytes": 30510,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2528.19631
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 26405486,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 107364961,
+                  "verified_files": 7562,
+                  "verified_bytes": 161068713,
+                  "unavailable_bytes": 107364961,
+                  "rejected_files": 3723,
+                  "decode_validate_wall_ms": 1671.843649
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 506687488,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "33554432": {
+          "fresh": {
+            "container_bytes": 28410983,
+            "sha256": "84d906911c077ef9ec7e007cf36287961133312fba6aed8152de2927f9a04027",
+            "vs_reference_percent": 0.9588376880764082,
+            "frame_count": 9,
+            "max_frame_raw_bytes": 33544089,
+            "process_wall_ms": {
+              "min": 10670.26928300038,
+              "median": 10820.3153824943,
+              "max": 11447.862143992097
+            },
+            "call_wall_ms": {
+              "min": 10620,
+              "median": 10767.4,
+              "max": 11393.6
+            },
+            "verify_process_ms": {
+              "min": 3705.2830699976766,
+              "median": 3908.1668525032,
+              "max": 4146.038364997366
+            },
+            "access_median_ms": {
+              "min": 142.636,
+              "median": 153.253,
+              "max": 170.668
+            },
+            "access_p95_ms": {
+              "min": 181.702,
+              "median": 216.0365,
+              "max": 243.079
+            },
+            "access_decoded_bytes_total": 406878664,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 345174016,
+            "encode_peak_memory_bytes": 601538560,
+            "same_round_access_speedup_vs_reference": {
+              "min": 2.7225900578901725,
+              "median": 3.159854161419865,
+              "max": 3.436544771305982
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9401383264353359,
+              "median": 0.9822461465532384,
+              "max": 0.9999105871943254
+            }
+          },
+          "append": {
+            "container_bytes": 30191139,
+            "sha256": "6ff0e0af8fb29425ce83194ad2629fc674d0f5b7b1565efdbd5b7881b76664b9",
+            "vs_reference_percent": 0.517691528336317,
+            "frame_count": 9,
+            "max_frame_raw_bytes": 33550407,
+            "process_wall_ms": {
+              "min": 5886.429752994445,
+              "median": 6003.836133000732,
+              "max": 6103.277942995192
+            },
+            "call_wall_ms": {
+              "min": 5848.37,
+              "median": 5971.860000000001,
+              "max": 6070.04
+            },
+            "verify_process_ms": {
+              "min": 3681.214830998215,
+              "median": 3698.2985440045013,
+              "max": 3921.6863610054133
+            },
+            "access_median_ms": {
+              "min": 156.96,
+              "median": 164.587,
+              "max": 170.655
+            },
+            "access_p95_ms": {
+              "min": 180.425,
+              "median": 188.31650000000002,
+              "max": 200.141
+            },
+            "access_decoded_bytes_total": 408713669,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 378941440,
+            "encode_peak_memory_bytes": 292700160,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.907456564413583,
+              "median": 2.0699871754469017,
+              "max": 2.424178134556575
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9258949737472574,
+              "median": 0.9470915237202601,
+              "max": 1.002831507534181
+            },
+            "old_archive_bytes_read": 19102796,
+            "old_archive_bytes_copied": 19102796,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 30191139
+          },
+          "append_vs_fresh": {
+            "size_percent": 6.2657318122361305,
+            "same_round_wall_ratio": {
+              "min": 0.5331369181623336,
+              "median": 0.5520791716917294,
+              "max": 0.5572499239815922
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2765932,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33471505,
+                  "verified_files": 7738,
+                  "verified_bytes": 234962169,
+                  "unavailable_bytes": 33471505,
+                  "rejected_files": 3547,
+                  "decode_validate_wall_ms": 2155.917812
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13829280,
+                  "frame": 6,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33544089,
+                  "verified_files": 8998,
+                  "verified_bytes": 234889585,
+                  "unavailable_bytes": 33544089,
+                  "rejected_files": 2287,
+                  "decode_validate_wall_ms": 2113.781709
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 24892627,
+                  "frame": 8,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 23931864,
+                  "verified_files": 11284,
+                  "verified_bytes": 268386144,
+                  "unavailable_bytes": 47530,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2436.894485
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 375853056,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2893393,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 31913737,
+                  "verified_files": 8588,
+                  "verified_bytes": 236519937,
+                  "unavailable_bytes": 31913737,
+                  "rejected_files": 2697,
+                  "decode_validate_wall_ms": 2116.931126
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 14466584,
+                  "frame": 4,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 28942827,
+                  "verified_files": 11284,
+                  "verified_bytes": 268408611,
+                  "unavailable_bytes": 25063,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2359.976982
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 26545258,
+                  "frame": 8,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 18645064,
+                  "verified_files": 11279,
+                  "verified_bytes": 268174488,
+                  "unavailable_bytes": 259186,
+                  "rejected_files": 6,
+                  "decode_validate_wall_ms": 2381.530417
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 379506688,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "67108864": {
+          "fresh": {
+            "container_bytes": 28301832,
+            "sha256": "f3367e111a1229e26c586f0f4d67346695e61605f18d3e3d51e006c25882779e",
+            "vs_reference_percent": 0.570968035960151,
+            "frame_count": 5,
+            "max_frame_raw_bytes": 67095746,
+            "process_wall_ms": {
+              "min": 10718.816281005275,
+              "median": 10893.843441495846,
+              "max": 11327.24216999486
+            },
+            "call_wall_ms": {
+              "min": 10667.3,
+              "median": 10844.8,
+              "max": 11271.3
+            },
+            "verify_process_ms": {
+              "min": 3753.626374003943,
+              "median": 3803.7079794958117,
+              "max": 3880.5705700069666
+            },
+            "access_median_ms": {
+              "min": 206.848,
+              "median": 214.9745,
+              "max": 229.253
+            },
+            "access_p95_ms": {
+              "min": 235.277,
+              "median": 244.1105,
+              "max": 261.273
+            },
+            "access_decoded_bytes_total": 750596272,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 379617280,
+            "encode_peak_memory_bytes": 622768128,
+            "same_round_access_speedup_vs_reference": {
+              "min": 2.0677679245200715,
+              "median": 2.257846329087429,
+              "max": 2.308117907425719
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9515431546201405,
+              "median": 0.962705812052129,
+              "max": 1.0360946107589004
+            }
+          },
+          "append": {
+            "container_bytes": 30148806,
+            "sha256": "74b914964a9696e95f8946d057a398b05c735390b6b2cf6fabbdba0fb073b932",
+            "vs_reference_percent": 0.37674900094544217,
+            "frame_count": 5,
+            "max_frame_raw_bytes": 67095775,
+            "process_wall_ms": {
+              "min": 5760.443741004565,
+              "median": 6135.962316991936,
+              "max": 6282.081410987303
+            },
+            "call_wall_ms": {
+              "min": 5729.12,
+              "median": 6102.35,
+              "max": 6248.83
+            },
+            "verify_process_ms": {
+              "min": 3752.6803640066646,
+              "median": 3778.334270500636,
+              "max": 3832.9903819976607
+            },
+            "access_median_ms": {
+              "min": 179.736,
+              "median": 189.4355,
+              "max": 198.549
+            },
+            "access_p95_ms": {
+              "min": 200.83,
+              "median": 209.2375,
+              "max": 260.305
+            },
+            "access_decoded_bytes_total": 640461182,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 381370368,
+            "encode_peak_memory_bytes": 309866496,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.7845813880778136,
+              "median": 1.8117045926419348,
+              "max": 1.9163984709064261
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9113672683306212,
+              "median": 0.9783375666691974,
+              "max": 1.0048392106107353
+            },
+            "old_archive_bytes_read": 19067698,
+            "old_archive_bytes_copied": 19067698,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 30148806
+          },
+          "append_vs_fresh": {
+            "size_percent": 6.525987434311675,
+            "same_round_wall_ratio": {
+              "min": 0.5287926305194365,
+              "median": 0.5524105894434631,
+              "max": 0.5860797728308608
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2755029,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 63870483,
+                  "verified_files": 7287,
+                  "verified_bytes": 204563191,
+                  "unavailable_bytes": 63870483,
+                  "rejected_files": 3998,
+                  "decode_validate_wall_ms": 1972.983419
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13774762,
+                  "frame": 3,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 67091523,
+                  "verified_files": 6753,
+                  "verified_bytes": 201342151,
+                  "unavailable_bytes": 67091523,
+                  "rejected_files": 4532,
+                  "decode_validate_wall_ms": 1920.62604
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 24794495,
+                  "frame": 3,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 67091523,
+                  "verified_files": 11279,
+                  "verified_bytes": 268129654,
+                  "unavailable_bytes": 304020,
+                  "rejected_files": 6,
+                  "decode_validate_wall_ms": 2490.949639
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 421441536,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2889177,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 66477719,
+                  "verified_files": 8558,
+                  "verified_bytes": 201955955,
+                  "unavailable_bytes": 66477719,
+                  "rejected_files": 2727,
+                  "decode_validate_wall_ms": 1996.286818
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 14445505,
+                  "frame": 2,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 27495219,
+                  "verified_files": 8691,
+                  "verified_bytes": 240938455,
+                  "unavailable_bytes": 27495219,
+                  "rejected_files": 2594,
+                  "decode_validate_wall_ms": 2285.968734
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 26507257,
+                  "frame": 4,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 52195471,
+                  "verified_files": 11277,
+                  "verified_bytes": 267657032,
+                  "unavailable_bytes": 776642,
+                  "rejected_files": 8,
+                  "decode_validate_wall_ms": 2524.191162
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 440041472,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "134217728": {
+          "fresh": {
+            "container_bytes": 28279054,
+            "sha256": "6a6ade220692b09c1b19caeb8e1f11068503d66f9fed4ef43593bfbc043bc70b",
+            "vs_reference_percent": 0.49002608457258123,
+            "frame_count": 3,
+            "max_frame_raw_bytes": 134187269,
+            "process_wall_ms": {
+              "min": 10456.674225002644,
+              "median": 10776.236338497256,
+              "max": 11318.567673995858
+            },
+            "call_wall_ms": {
+              "min": 10408.7,
+              "median": 10722.5,
+              "max": 11266.3
+            },
+            "verify_process_ms": {
+              "min": 3715.4467680084053,
+              "median": 3827.626791498915,
+              "max": 3980.030998995062
+            },
+            "access_median_ms": {
+              "min": 283.077,
+              "median": 298.66499999999996,
+              "max": 332.846
+            },
+            "access_p95_ms": {
+              "min": 305.464,
+              "median": 345.06899999999996,
+              "max": 404.027
+            },
+            "access_decoded_bytes_total": 1450835493,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 446828544,
+            "encode_peak_memory_bytes": 689905664,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.4242081923772554,
+              "median": 1.6395104757095638,
+              "max": 1.656907093336197
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9509763834417713,
+              "median": 0.9584521265644279,
+              "max": 0.9972587371931257
+            }
+          },
+          "append": {
+            "container_bytes": 30051911,
+            "sha256": "5136e75f516ab512f453630a2ec2ae8a6a78fa2e56e1eb7b97d98ddb0b96caa0",
+            "vs_reference_percent": 0.05414899169642329,
+            "frame_count": 3,
+            "max_frame_raw_bytes": 134197702,
+            "process_wall_ms": {
+              "min": 5958.328310007346,
+              "median": 6146.187186001043,
+              "max": 6547.463113005506
+            },
+            "call_wall_ms": {
+              "min": 5926.43,
+              "median": 6112.245,
+              "max": 6512.3
+            },
+            "verify_process_ms": {
+              "min": 3832.605176998186,
+              "median": 3943.679523996252,
+              "max": 3951.475035006297
+            },
+            "access_median_ms": {
+              "min": 237.076,
+              "median": 266.793,
+              "max": 287.391
+            },
+            "access_p95_ms": {
+              "min": 304.445,
+              "median": 330.782,
+              "max": 348.686
+            },
+            "access_decoded_bytes_total": 1181099657,
+            "access_requested_bytes_total": 16571362,
+            "access_peak_memory_bytes": 448409600,
+            "encode_peak_memory_bytes": 361807872,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.2250053626466262,
+              "median": 1.2906082794786613,
+              "max": 1.4537068281901164
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9426748424004959,
+              "median": 0.98015586786418,
+              "max": 1.0472878709385223
+            },
+            "old_archive_bytes_read": 19050549,
+            "old_archive_bytes_copied": 19050549,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 30051911
+          },
+          "append_vs_fresh": {
+            "size_percent": 6.269152426385971,
+            "same_round_wall_ratio": {
+              "min": 0.5264206992989462,
+              "median": 0.5733488447843549,
+              "max": 0.6202301096803158
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2752757,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 121515900,
+                  "verified_files": 11284,
+                  "verified_bytes": 268414319,
+                  "unavailable_bytes": 19355,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2501.232883
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 13763402,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 134187269,
+                  "verified_files": 11271,
+                  "verified_bytes": 267499641,
+                  "unavailable_bytes": 934033,
+                  "rejected_files": 14,
+                  "decode_validate_wall_ms": 2497.900861
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 24774047,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 134187269,
+                  "verified_files": 11280,
+                  "verified_bytes": 268243731,
+                  "unavailable_bytes": 189943,
+                  "rejected_files": 5,
+                  "decode_validate_wall_ms": 2486.760936
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 488861696,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 2879497,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 134197702,
+                  "verified_files": 11284,
+                  "verified_bytes": 268393232,
+                  "unavailable_bytes": 40442,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 2552.033522
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 14397101,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 26871011,
+                  "verified_files": 8723,
+                  "verified_bytes": 241562663,
+                  "unavailable_bytes": 26871011,
+                  "rejected_files": 2562,
+                  "decode_validate_wall_ms": 2321.449181
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 26420101,
+                  "frame": 2,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 107364961,
+                  "verified_files": 7562,
+                  "verified_bytes": 161068713,
+                  "unavailable_bytes": 107364961,
+                  "rejected_files": 3723,
+                  "decode_validate_wall_ms": 1656.33521
+                }
+              ],
+              "input_bytes": 268433674,
+              "files": 11285,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 506187776,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        }
+      },
+      "access_samples": [
+        {
+          "path": "linux/Documentation/features/list-arch.sh",
+          "requested_bytes": 334
+        },
+        {
+          "path": "linux/arch/mips/include/asm/mach-loongson2ef/cs5536/cs5536_mfgpt.h",
+          "requested_bytes": 795
+        },
+        {
+          "path": "linux/arch/sh/kernel/cpu/sh4a/clock-sh7770.c",
+          "requested_bytes": 1639
+        },
+        {
+          "path": "linux/drivers/clk/hisilicon/clk-hi3519.c",
+          "requested_bytes": 5424
+        },
+        {
+          "path": "linux/drivers/gpu/drm/amd/include/asic_reg/nbio/nbio_7_2_0_sh_mask.h",
+          "requested_bytes": 16414003
+        },
+        {
+          "path": "linux/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.c",
+          "requested_bytes": 48949
+        },
+        {
+          "path": "linux/drivers/gpu/drm/vc4/vc4_qpu_defines.h",
+          "requested_bytes": 7086
+        },
+        {
+          "path": "linux/drivers/media/pci/smipcie/smipcie.h",
+          "requested_bytes": 12331
+        },
+        {
+          "path": "linux/drivers/tty/serial/8250/8250_ingenic.c",
+          "requested_bytes": 9195
+        },
+        {
+          "path": "linux/include/linux/mfd/si476x-core.h",
+          "requested_bytes": 15192
+        },
+        {
+          "path": "linux/net/appletalk/ddp.c",
+          "requested_bytes": 50107
+        },
+        {
+          "path": "linux/tools/perf/arch/s390/util/perf_regs.c",
+          "requested_bytes": 378
+        },
+        {
+          "path": "linux/virt/lib/irqbypass.c",
+          "requested_bytes": 5929
+        }
+      ]
+    },
+    {
+      "unit": "text-added10",
+      "cls": "text",
+      "batch": "added10",
+      "files": 49,
+      "bytes": 81553445,
+      "added_bytes": 8000000,
+      "added_ratio": 0.09809518163211867,
+      "preparation": {
+        "1073741824": {
+          "parent_bytes": 14557584,
+          "seed_pack_process_ms": 3990.2246540004853,
+          "explicit_pack_process_ms": 3891.2180390034337,
+          "verify_process_ms": 1719.0036249958212
+        },
+        "33554432": {
+          "parent_bytes": 14606767,
+          "seed_pack_process_ms": 3854.760162997991,
+          "explicit_pack_process_ms": 3594.099776004441,
+          "verify_process_ms": 1719.649903010577
+        },
+        "67108864": {
+          "parent_bytes": 14554786,
+          "seed_pack_process_ms": 3754.510106999078,
+          "explicit_pack_process_ms": 3959.272370993858,
+          "verify_process_ms": 1732.215622003423
+        },
+        "134217728": {
+          "parent_bytes": 14557584,
+          "seed_pack_process_ms": 3842.2104340133956,
+          "explicit_pack_process_ms": 3927.0318519993452,
+          "verify_process_ms": 1708.118418988306
+        }
+      },
+      "caps": {
+        "1073741824": {
+          "fresh": {
+            "container_bytes": 17006369,
+            "sha256": "4515cd7e9226571e4183768928bcfad5b0a6d09bce551159cb4057175b7710ba",
+            "vs_reference_percent": 0.0,
+            "frame_count": 1,
+            "max_frame_raw_bytes": 81553445,
+            "process_wall_ms": {
+              "min": 4384.921464996296,
+              "median": 4411.834672500845,
+              "max": 4690.825362995383
+            },
+            "call_wall_ms": {
+              "min": 4362.47,
+              "median": 4389.1,
+              "max": 4667.63
+            },
+            "verify_process_ms": {
+              "min": 952.0898740011035,
+              "median": 973.1365445040865,
+              "max": 1020.8484510076232
+            },
+            "access_median_ms": {
+              "min": 191.057,
+              "median": 203.6165,
+              "max": 214.296
+            },
+            "access_p95_ms": {
+              "min": 209.548,
+              "median": 216.8305,
+              "max": 255.57
+            },
+            "access_decoded_bytes_total": 978641340,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 184045568,
+            "encode_peak_memory_bytes": 259551232,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            }
+          },
+          "append": {
+            "container_bytes": 17075052,
+            "sha256": "913344a0cf5c361a68d83653544540d0fb30489b3ef7e5d6c96c9c04686ce2c7",
+            "vs_reference_percent": 0.0,
+            "frame_count": 2,
+            "max_frame_raw_bytes": 73553445,
+            "process_wall_ms": {
+              "min": 1284.8509879986523,
+              "median": 1323.338728499948,
+              "max": 1392.7353419858264
+            },
+            "call_wall_ms": {
+              "min": 1272.02,
+              "median": 1309.435,
+              "max": 1379.87
+            },
+            "verify_process_ms": {
+              "min": 943.271016003564,
+              "median": 954.0180580006563,
+              "max": 959.1983129939763
+            },
+            "access_median_ms": {
+              "min": 175.074,
+              "median": 178.01850000000002,
+              "max": 184.62
+            },
+            "access_p95_ms": {
+              "min": 182.473,
+              "median": 195.22899999999998,
+              "max": 201.925
+            },
+            "access_decoded_bytes_total": 751534450,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 184180736,
+            "encode_peak_memory_bytes": 117207040,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "old_archive_bytes_read": 14557584,
+            "old_archive_bytes_copied": 14557584,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 17075052
+          },
+          "append_vs_fresh": {
+            "size_percent": 0.40386633972249175,
+            "same_round_wall_ratio": {
+              "min": 0.291036385313558,
+              "median": 0.29754943682785095,
+              "max": 0.3037610309868229
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1700490,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 836.015065
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8502067,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 0,
+                  "verified_bytes": 0,
+                  "unavailable_bytes": 81553445,
+                  "rejected_files": 49,
+                  "decode_validate_wall_ms": 106.143117
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15303644,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 48,
+                  "verified_bytes": 48000000,
+                  "unavailable_bytes": 33553445,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 823.653128
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 201048064,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1707145,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 73553445,
+                  "verified_files": 8,
+                  "verified_bytes": 8000000,
+                  "unavailable_bytes": 73553445,
+                  "rejected_files": 41,
+                  "decode_validate_wall_ms": 142.196892
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8535345,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 73553445,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 817.973179
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15365579,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 8000000,
+                  "verified_files": 41,
+                  "verified_bytes": 73553445,
+                  "unavailable_bytes": 8000000,
+                  "rejected_files": 8,
+                  "decode_validate_wall_ms": 746.930703
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 201187328,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "33554432": {
+          "fresh": {
+            "container_bytes": 17065581,
+            "sha256": "6b1e8ba09c8618f0781c40913e9d83d515964566e666d8feea2ed4cac042e635",
+            "vs_reference_percent": 0.34817543944860585,
+            "frame_count": 3,
+            "max_frame_raw_bytes": 33553445,
+            "process_wall_ms": {
+              "min": 4229.984714998864,
+              "median": 4368.184909995762,
+              "max": 5078.414354997221
+            },
+            "call_wall_ms": {
+              "min": 4205.07,
+              "median": 4340.945,
+              "max": 5050.28
+            },
+            "verify_process_ms": {
+              "min": 946.29782300035,
+              "median": 965.3479460030212,
+              "max": 1024.4863869884284
+            },
+            "access_median_ms": {
+              "min": 88.1706,
+              "median": 93.46525,
+              "max": 105.827
+            },
+            "access_p95_ms": {
+              "min": 118.29,
+              "median": 131.43099999999998,
+              "max": 133.255
+            },
+            "access_decoded_bytes_total": 342553445,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 169263104,
+            "encode_peak_memory_bytes": 211521536,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.9343267786103737,
+              "median": 2.1871544536252143,
+              "max": 2.25407651187923
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9502736156321147,
+              "median": 0.9676064761253058,
+              "max": 1.1503305603594445
+            }
+          },
+          "append": {
+            "container_bytes": 17124293,
+            "sha256": "ca70a965fd365633a67df104af8995620947cca3f2e39eb33d9c87f694892a58",
+            "vs_reference_percent": 0.28837979527089885,
+            "frame_count": 4,
+            "max_frame_raw_bytes": 33553445,
+            "process_wall_ms": {
+              "min": 1264.2576899961568,
+              "median": 1271.9165639937273,
+              "max": 1321.847095998237
+            },
+            "call_wall_ms": {
+              "min": 1252.92,
+              "median": 1260.21,
+              "max": 1308.64
+            },
+            "verify_process_ms": {
+              "min": 941.9805569923483,
+              "median": 948.9111764996778,
+              "max": 956.9340199959697
+            },
+            "access_median_ms": {
+              "min": 85.6399,
+              "median": 89.1661,
+              "max": 92.2333
+            },
+            "access_p95_ms": {
+              "min": 113.968,
+              "median": 121.9965,
+              "max": 124.812
+            },
+            "access_decoded_bytes_total": 320553445,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 169201664,
+            "encode_peak_memory_bytes": 84307968,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.9025124331450787,
+              "median": 2.040567484848335,
+              "max": 2.0585680564026685
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.908189560397334,
+              "median": 0.9609162430573004,
+              "max": 1.0287940845632315
+            },
+            "old_archive_bytes_read": 14606767,
+            "old_archive_bytes_copied": 14606767,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 17124293
+          },
+          "append_vs_fresh": {
+            "size_percent": 0.3440375103548998,
+            "same_round_wall_ratio": {
+              "min": 0.26028736601563895,
+              "median": 0.29131867335880823,
+              "max": 0.2989073478193698
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1706405,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 817.137796
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8531644,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 16,
+                  "verified_bytes": 48553445,
+                  "unavailable_bytes": 33000000,
+                  "rejected_files": 33,
+                  "decode_validate_wall_ms": 507.87607
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15356883,
+                  "frame": 2,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33553445,
+                  "verified_files": 48,
+                  "verified_bytes": 48000000,
+                  "unavailable_bytes": 33553445,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 758.988046
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 186204160,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1712058,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 807.816774
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8559908,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 47,
+                  "verified_bytes": 79553445,
+                  "unavailable_bytes": 2000000,
+                  "rejected_files": 2,
+                  "decode_validate_wall_ms": 781.457164
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15409849,
+                  "frame": 3,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 8000000,
+                  "verified_files": 41,
+                  "verified_bytes": 73553445,
+                  "unavailable_bytes": 8000000,
+                  "rejected_files": 8,
+                  "decode_validate_wall_ms": 715.608523
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 186318848,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "67108864": {
+          "fresh": {
+            "container_bytes": 17003161,
+            "sha256": "7dff1127b916447fd2c48daed98ed0e7cd249985cc3524496b4742ffdaf05eed",
+            "vs_reference_percent": -0.01886352107260958,
+            "frame_count": 2,
+            "max_frame_raw_bytes": 48000000,
+            "process_wall_ms": {
+              "min": 4136.101172000053,
+              "median": 4213.6106039979495,
+              "max": 4751.674523009569
+            },
+            "call_wall_ms": {
+              "min": 4114.31,
+              "median": 4190.9400000000005,
+              "max": 4729.06
+            },
+            "verify_process_ms": {
+              "min": 941.1987860075897,
+              "median": 981.5837425048812,
+              "max": 993.9587529952405
+            },
+            "access_median_ms": {
+              "min": 140.631,
+              "median": 148.862,
+              "max": 170.513
+            },
+            "access_p95_ms": {
+              "min": 169.721,
+              "median": 178.297,
+              "max": 199.485
+            },
+            "access_decoded_bytes_total": 561553445,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 150618112,
+            "encode_peak_memory_bytes": 225939456,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.2567722109164696,
+              "median": 1.3292605851427788,
+              "max": 1.440144776045111
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9055043068766504,
+              "median": 0.9456544299170756,
+              "max": 1.0763195034136368
+            }
+          },
+          "append": {
+            "container_bytes": 17072283,
+            "sha256": "29b2e7e1875eb7fb2286a2c167313b991107a6b2e6a2a081732fb55a144f6a61",
+            "vs_reference_percent": -0.016216641682853528,
+            "frame_count": 3,
+            "max_frame_raw_bytes": 40000000,
+            "process_wall_ms": {
+              "min": 1260.2322040038416,
+              "median": 1305.0444724940462,
+              "max": 1330.1616440003272
+            },
+            "call_wall_ms": {
+              "min": 1248.66,
+              "median": 1292.65,
+              "max": 1317.34
+            },
+            "verify_process_ms": {
+              "min": 933.3991369931027,
+              "median": 944.4650590012316,
+              "max": 967.7373029990122
+            },
+            "access_median_ms": {
+              "min": 113.352,
+              "median": 124.46000000000001,
+              "max": 133.766
+            },
+            "access_p95_ms": {
+              "min": 130.068,
+              "median": 138.7395,
+              "max": 141.627
+            },
+            "access_decoded_bytes_total": 409553445,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 150626304,
+            "encode_peak_memory_bytes": 83648512,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.3801713439887566,
+              "median": 1.4309753373992922,
+              "max": 1.5445161973322041
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9048612223819525,
+              "median": 0.9861713141471056,
+              "max": 1.0352653003538201
+            },
+            "old_archive_bytes_read": 14554786,
+            "old_archive_bytes_copied": 14554786,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 17072283
+          },
+          "append_vs_fresh": {
+            "size_percent": 0.4065244103728771,
+            "same_round_wall_ratio": {
+              "min": 0.279935344384203,
+              "median": 0.3049744185643498,
+              "max": 0.3144852440166166
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1700166,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 48000000,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 886.667274
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8500449,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 48000000,
+                  "verified_files": 47,
+                  "verified_bytes": 79553445,
+                  "unavailable_bytes": 2000000,
+                  "rejected_files": 2,
+                  "decode_validate_wall_ms": 849.5724
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15300731,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33553445,
+                  "verified_files": 48,
+                  "verified_bytes": 48000000,
+                  "unavailable_bytes": 33553445,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 551.501204
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 167489536,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1706863,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 40000000,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 824.691473
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8533932,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 40000000,
+                  "verified_files": 9,
+                  "verified_bytes": 41553445,
+                  "unavailable_bytes": 40000000,
+                  "rejected_files": 40,
+                  "decode_validate_wall_ms": 461.742093
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15363063,
+                  "frame": 2,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 8000000,
+                  "verified_files": 44,
+                  "verified_bytes": 76553445,
+                  "unavailable_bytes": 5000000,
+                  "rejected_files": 5,
+                  "decode_validate_wall_ms": 813.8453
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 167632896,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "134217728": {
+          "fresh": {
+            "container_bytes": 17006369,
+            "sha256": "4515cd7e9226571e4183768928bcfad5b0a6d09bce551159cb4057175b7710ba",
+            "vs_reference_percent": 0.0,
+            "frame_count": 1,
+            "max_frame_raw_bytes": 81553445,
+            "process_wall_ms": {
+              "min": 4370.250373001909,
+              "median": 4496.947879502841,
+              "max": 4760.748811997473
+            },
+            "call_wall_ms": {
+              "min": 4346.73,
+              "median": 4474.435,
+              "max": 4732.72
+            },
+            "verify_process_ms": {
+              "min": 953.6148130137008,
+              "median": 963.8645589948283,
+              "max": 999.5312109967927
+            },
+            "access_median_ms": {
+              "min": 201.896,
+              "median": 212.031,
+              "max": 224.465
+            },
+            "access_p95_ms": {
+              "min": 212.627,
+              "median": 234.9135,
+              "max": 255.964
+            },
+            "access_decoded_bytes_total": 978641340,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 184176640,
+            "encode_peak_memory_bytes": 259551232,
+            "same_round_access_speedup_vs_reference": {
+              "min": 0.8726096031495918,
+              "median": 0.9496830347374416,
+              "max": 1.0614177596386258
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9408750001270219,
+              "median": 1.0143774423585263,
+              "max": 1.08570902580612
+            }
+          },
+          "append": {
+            "container_bytes": 17075052,
+            "sha256": "913344a0cf5c361a68d83653544540d0fb30489b3ef7e5d6c96c9c04686ce2c7",
+            "vs_reference_percent": 0.0,
+            "frame_count": 2,
+            "max_frame_raw_bytes": 73553445,
+            "process_wall_ms": {
+              "min": 1282.9667210025946,
+              "median": 1311.9771010024124,
+              "max": 1351.156639007968
+            },
+            "call_wall_ms": {
+              "min": 1270.51,
+              "median": 1298.8,
+              "max": 1337.25
+            },
+            "verify_process_ms": {
+              "min": 935.6876940000802,
+              "median": 947.4495004906203,
+              "max": 1019.8891350009944
+            },
+            "access_median_ms": {
+              "min": 177.08,
+              "median": 178.7595,
+              "max": 190.205
+            },
+            "access_p95_ms": {
+              "min": 186.234,
+              "median": 193.0385,
+              "max": 203.395
+            },
+            "access_decoded_bytes_total": 751534450,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 184115200,
+            "encode_peak_memory_bytes": 117207040,
+            "same_round_access_speedup_vs_reference": {
+              "min": 0.922557240871691,
+              "median": 0.9946861165157078,
+              "max": 1.0425796250282358
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.921184867164555,
+              "median": 0.9913196413624654,
+              "max": 1.0516057127469673
+            },
+            "old_archive_bytes_read": 14557584,
+            "old_archive_bytes_copied": 14557584,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 17075052
+          },
+          "append_vs_fresh": {
+            "size_percent": 0.40386633972249175,
+            "same_round_wall_ratio": {
+              "min": 0.2814191724672907,
+              "median": 0.2922702458242861,
+              "max": 0.2949856088889131
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1700490,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 829.830796
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8502067,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 0,
+                  "verified_bytes": 0,
+                  "unavailable_bytes": 81553445,
+                  "rejected_files": 49,
+                  "decode_validate_wall_ms": 106.21872
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15303644,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 48,
+                  "verified_bytes": 48000000,
+                  "unavailable_bytes": 33553445,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 809.660234
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 201043968,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1707145,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 73553445,
+                  "verified_files": 8,
+                  "verified_bytes": 8000000,
+                  "unavailable_bytes": 73553445,
+                  "rejected_files": 41,
+                  "decode_validate_wall_ms": 163.865093
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8535345,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 73553445,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 822.333806
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15365579,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 8000000,
+                  "verified_files": 41,
+                  "verified_bytes": 73553445,
+                  "unavailable_bytes": 8000000,
+                  "rejected_files": 8,
+                  "decode_validate_wall_ms": 735.873704
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 201187328,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        }
+      },
+      "access_samples": [
+        {
+          "path": "enwik8/part-000.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-005.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-009.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-014.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-018.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-022.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-027.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-031.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-036.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-041.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-045.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "silesia/nci",
+          "requested_bytes": 33553445
+        }
+      ]
+    },
+    {
+      "unit": "text-added40",
+      "cls": "text",
+      "batch": "added40",
+      "files": 49,
+      "bytes": 81553445,
+      "added_bytes": 33000000,
+      "added_ratio": 0.4046426242324895,
+      "preparation": {
+        "1073741824": {
+          "parent_bytes": 6852555,
+          "seed_pack_process_ms": 2070.197321008891,
+          "explicit_pack_process_ms": 2080.2364150003996,
+          "verify_process_ms": 1102.6044790050946
+        },
+        "33554432": {
+          "parent_bytes": 6849978,
+          "seed_pack_process_ms": 2101.8277519906405,
+          "explicit_pack_process_ms": 2098.2492869952694,
+          "verify_process_ms": 1085.8283170091454
+        },
+        "67108864": {
+          "parent_bytes": 6852555,
+          "seed_pack_process_ms": 2083.889260000433,
+          "explicit_pack_process_ms": 2170.498193008825,
+          "verify_process_ms": 1103.2861419953406
+        },
+        "134217728": {
+          "parent_bytes": 6852555,
+          "seed_pack_process_ms": 2125.0163329968927,
+          "explicit_pack_process_ms": 2199.768952006707,
+          "verify_process_ms": 1113.3268609992228
+        }
+      },
+      "caps": {
+        "1073741824": {
+          "fresh": {
+            "container_bytes": 17006369,
+            "sha256": "4515cd7e9226571e4183768928bcfad5b0a6d09bce551159cb4057175b7710ba",
+            "vs_reference_percent": 0.0,
+            "frame_count": 1,
+            "max_frame_raw_bytes": 81553445,
+            "process_wall_ms": {
+              "min": 4536.3173999940045,
+              "median": 4673.76264550694,
+              "max": 5169.489356005215
+            },
+            "call_wall_ms": {
+              "min": 4511.04,
+              "median": 4649.57,
+              "max": 5142.16
+            },
+            "verify_process_ms": {
+              "min": 966.2719229963841,
+              "median": 968.3065574936336,
+              "max": 1038.1737319985405
+            },
+            "access_median_ms": {
+              "min": 193.847,
+              "median": 203.235,
+              "max": 245.864
+            },
+            "access_p95_ms": {
+              "min": 211.082,
+              "median": 222.562,
+              "max": 278.811
+            },
+            "access_decoded_bytes_total": 978641340,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 184176640,
+            "encode_peak_memory_bytes": 259551232,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            }
+          },
+          "append": {
+            "container_bytes": 17084467,
+            "sha256": "ae65d3fc59286b4c88a54de3c54863db176901771ca645de3a9172c7587459d7",
+            "vs_reference_percent": 0.0,
+            "frame_count": 2,
+            "max_frame_raw_bytes": 48553445,
+            "process_wall_ms": {
+              "min": 2663.777651003329,
+              "median": 2752.194304994191,
+              "max": 3569.0584299882175
+            },
+            "call_wall_ms": {
+              "min": 2645.04,
+              "median": 2732.5,
+              "max": 3544.89
+            },
+            "verify_process_ms": {
+              "min": 961.0404259874485,
+              "median": 973.138706998725,
+              "max": 1143.815169998561
+            },
+            "access_median_ms": {
+              "min": 101.455,
+              "median": 106.422,
+              "max": 155.921
+            },
+            "access_p95_ms": {
+              "min": 121.312,
+              "median": 126.11250000000001,
+              "max": 196.209
+            },
+            "access_decoded_bytes_total": 442660335,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 184139776,
+            "encode_peak_memory_bytes": 140304384,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0
+            },
+            "old_archive_bytes_read": 6852555,
+            "old_archive_bytes_copied": 6852555,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 17084467
+          },
+          "append_vs_fresh": {
+            "size_percent": 0.4592279515986064,
+            "same_round_wall_ratio": {
+              "min": 0.5726900932616248,
+              "median": 0.5964995749077723,
+              "max": 0.6904083138970326
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1700490,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 845.425476
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8502067,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 0,
+                  "verified_bytes": 0,
+                  "unavailable_bytes": 81553445,
+                  "rejected_files": 49,
+                  "decode_validate_wall_ms": 109.657421
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15303644,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 48,
+                  "verified_bytes": 48000000,
+                  "unavailable_bytes": 33553445,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 804.267084
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 201043968,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1708199,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 48553445,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 815.461221
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8541524,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 16,
+                  "verified_bytes": 48553445,
+                  "unavailable_bytes": 33000000,
+                  "rejected_files": 33,
+                  "decode_validate_wall_ms": 482.878253
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15373940,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 44,
+                  "verified_bytes": 76553445,
+                  "unavailable_bytes": 5000000,
+                  "rejected_files": 5,
+                  "decode_validate_wall_ms": 802.102709
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 201076736,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "33554432": {
+          "fresh": {
+            "container_bytes": 17065581,
+            "sha256": "6b1e8ba09c8618f0781c40913e9d83d515964566e666d8feea2ed4cac042e635",
+            "vs_reference_percent": 0.34817543944860585,
+            "frame_count": 3,
+            "max_frame_raw_bytes": 33553445,
+            "process_wall_ms": {
+              "min": 4164.713197998935,
+              "median": 4655.813462995866,
+              "max": 4980.831480002962
+            },
+            "call_wall_ms": {
+              "min": 4139.5,
+              "median": 4629.715,
+              "max": 4948.17
+            },
+            "verify_process_ms": {
+              "min": 956.1984759930056,
+              "median": 964.8372740048217,
+              "max": 1048.056130995974
+            },
+            "access_median_ms": {
+              "min": 82.1781,
+              "median": 93.12389999999999,
+              "max": 102.524
+            },
+            "access_p95_ms": {
+              "min": 109.601,
+              "median": 123.03999999999999,
+              "max": 143.081
+            },
+            "access_decoded_bytes_total": 342553445,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 169267200,
+            "encode_peak_memory_bytes": 211521536,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.905446529593071,
+              "median": 2.2577551416242567,
+              "max": 2.7826236547456964
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.8868294099448244,
+              "median": 0.9488195436422242,
+              "max": 1.0979900745061502
+            }
+          },
+          "append": {
+            "container_bytes": 17081919,
+            "sha256": "aa79d7284d703fb603e21d27385305791debabb4788bd1ed6834e0335f51641d",
+            "vs_reference_percent": -0.014914132234855604,
+            "frame_count": 3,
+            "max_frame_raw_bytes": 33553445,
+            "process_wall_ms": {
+              "min": 2538.9555389992893,
+              "median": 2852.4804129992845,
+              "max": 3074.8922849888913
+            },
+            "call_wall_ms": {
+              "min": 2517.81,
+              "median": 2833.12,
+              "max": 3056.5
+            },
+            "verify_process_ms": {
+              "min": 936.692454997683,
+              "median": 967.4164465031936,
+              "max": 1006.962986997678
+            },
+            "access_median_ms": {
+              "min": 90.8753,
+              "median": 105.735,
+              "max": 111.473
+            },
+            "access_p95_ms": {
+              "min": 117.431,
+              "median": 131.62099999999998,
+              "max": 147.935
+            },
+            "access_decoded_bytes_total": 360553445,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 169263104,
+            "encode_peak_memory_bytes": 120619008,
+            "same_round_access_speedup_vs_reference": {
+              "min": 0.9599751063553104,
+              "median": 1.091094177189671,
+              "max": 1.3987333255586554
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.8168105684423203,
+              "median": 0.9895374793817585,
+              "max": 1.1040144291046317
+            },
+            "old_archive_bytes_read": 6849978,
+            "old_archive_bytes_copied": 6849978,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 17081919
+          },
+          "append_vs_fresh": {
+            "size_percent": 0.09573655886665478,
+            "same_round_wall_ratio": {
+              "min": 0.5677115599986051,
+              "median": 0.6098738234040126,
+              "max": 0.669845928967316
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1706405,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 803.327996
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8531644,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 16,
+                  "verified_bytes": 48553445,
+                  "unavailable_bytes": 33000000,
+                  "rejected_files": 33,
+                  "decode_validate_wall_ms": 533.224036
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15356883,
+                  "frame": 2,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33553445,
+                  "verified_files": 48,
+                  "verified_bytes": 48000000,
+                  "unavailable_bytes": 33553445,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 783.175298
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 186073088,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1707939,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 15000000,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 826.147734
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8540250,
+                  "frame": 2,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 16,
+                  "verified_bytes": 48553445,
+                  "unavailable_bytes": 33000000,
+                  "rejected_files": 33,
+                  "decode_validate_wall_ms": 498.356253
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15371623,
+                  "frame": 2,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 16,
+                  "verified_bytes": 48553445,
+                  "unavailable_bytes": 33000000,
+                  "rejected_files": 33,
+                  "decode_validate_wall_ms": 512.63673
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 186236928,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "67108864": {
+          "fresh": {
+            "container_bytes": 17003161,
+            "sha256": "7dff1127b916447fd2c48daed98ed0e7cd249985cc3524496b4742ffdaf05eed",
+            "vs_reference_percent": -0.01886352107260958,
+            "frame_count": 2,
+            "max_frame_raw_bytes": 48000000,
+            "process_wall_ms": {
+              "min": 4436.207437000121,
+              "median": 4507.718772503722,
+              "max": 5442.348338008742
+            },
+            "call_wall_ms": {
+              "min": 4414.23,
+              "median": 4484.605,
+              "max": 5412.08
+            },
+            "verify_process_ms": {
+              "min": 964.5615960034775,
+              "median": 993.7718024957576,
+              "max": 1042.3437599965837
+            },
+            "access_median_ms": {
+              "min": 141.665,
+              "median": 163.2245,
+              "max": 166.541
+            },
+            "access_p95_ms": {
+              "min": 158.417,
+              "median": 183.7825,
+              "max": 193.791
+            },
+            "access_decoded_bytes_total": 561553445,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 150601728,
+            "encode_peak_memory_bytes": 226070528,
+            "same_round_access_speedup_vs_reference": {
+              "min": 1.1639596255576705,
+              "median": 1.336081552145652,
+              "max": 1.525561077914906
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.8649719084557355,
+              "median": 0.9606683380062185,
+              "max": 1.199728294588896
+            }
+          },
+          "append": {
+            "container_bytes": 17084467,
+            "sha256": "ae65d3fc59286b4c88a54de3c54863db176901771ca645de3a9172c7587459d7",
+            "vs_reference_percent": 0.0,
+            "frame_count": 2,
+            "max_frame_raw_bytes": 48553445,
+            "process_wall_ms": {
+              "min": 2571.0897270037094,
+              "median": 2711.3830350062926,
+              "max": 3077.513818992884
+            },
+            "call_wall_ms": {
+              "min": 2552.2,
+              "median": 2691.945,
+              "max": 3054.88
+            },
+            "verify_process_ms": {
+              "min": 935.5975950020365,
+              "median": 955.9378549893154,
+              "max": 961.2902779917931
+            },
+            "access_median_ms": {
+              "min": 85.8909,
+              "median": 95.01765,
+              "max": 105.651
+            },
+            "access_p95_ms": {
+              "min": 113.816,
+              "median": 124.666,
+              "max": 137.23
+            },
+            "access_decoded_bytes_total": 442660335,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 184143872,
+            "encode_peak_memory_bytes": 140304384,
+            "same_round_access_speedup_vs_reference": {
+              "min": 0.9602843323773557,
+              "median": 1.1517030565013395,
+              "max": 1.7227374024530508
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.7203831983810356,
+              "median": 1.0070816053260283,
+              "max": 1.1049556690241324
+            },
+            "old_archive_bytes_read": 6852555,
+            "old_archive_bytes_copied": 6852555,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 17084467
+          },
+          "append_vs_fresh": {
+            "size_percent": 0.47818167457216454,
+            "same_round_wall_ratio": {
+              "min": 0.565475347746464,
+              "median": 0.5808002394009131,
+              "max": 0.6207084025230707
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1700166,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 48000000,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 810.589242
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8500449,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 48000000,
+                  "verified_files": 47,
+                  "verified_bytes": 79553445,
+                  "unavailable_bytes": 2000000,
+                  "rejected_files": 2,
+                  "decode_validate_wall_ms": 815.768118
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15300731,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33553445,
+                  "verified_files": 48,
+                  "verified_bytes": 48000000,
+                  "unavailable_bytes": 33553445,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 555.512615
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 167493632,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1708199,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 48553445,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 808.101651
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8541524,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 16,
+                  "verified_bytes": 48553445,
+                  "unavailable_bytes": 33000000,
+                  "rejected_files": 33,
+                  "decode_validate_wall_ms": 485.543519
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15373940,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 44,
+                  "verified_bytes": 76553445,
+                  "unavailable_bytes": 5000000,
+                  "rejected_files": 5,
+                  "decode_validate_wall_ms": 797.362799
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 201211904,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        },
+        "134217728": {
+          "fresh": {
+            "container_bytes": 17006369,
+            "sha256": "4515cd7e9226571e4183768928bcfad5b0a6d09bce551159cb4057175b7710ba",
+            "vs_reference_percent": 0.0,
+            "frame_count": 1,
+            "max_frame_raw_bytes": 81553445,
+            "process_wall_ms": {
+              "min": 4462.53493099357,
+              "median": 4658.565487501619,
+              "max": 4774.8392000066815
+            },
+            "call_wall_ms": {
+              "min": 4438.91,
+              "median": 4634.265,
+              "max": 4752.07
+            },
+            "verify_process_ms": {
+              "min": 967.0483060035622,
+              "median": 1010.5776814962155,
+              "max": 1094.9739110074006
+            },
+            "access_median_ms": {
+              "min": 203.957,
+              "median": 214.1445,
+              "max": 274.49
+            },
+            "access_p95_ms": {
+              "min": 226.698,
+              "median": 243.7935,
+              "max": 351.81
+            },
+            "access_decoded_bytes_total": 978641340,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 184156160,
+            "encode_peak_memory_bytes": 259682304,
+            "same_round_access_speedup_vs_reference": {
+              "min": 0.895712047797734,
+              "median": 0.9088375165357043,
+              "max": 1.0351005358972725
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.9236578066380807,
+              "median": 0.981467540609817,
+              "max": 1.014129342490834
+            }
+          },
+          "append": {
+            "container_bytes": 17084467,
+            "sha256": "ae65d3fc59286b4c88a54de3c54863db176901771ca645de3a9172c7587459d7",
+            "vs_reference_percent": 0.0,
+            "frame_count": 2,
+            "max_frame_raw_bytes": 48553445,
+            "process_wall_ms": {
+              "min": 2657.0026300032623,
+              "median": 2942.3709485054133,
+              "max": 3083.961382988491
+            },
+            "call_wall_ms": {
+              "min": 2638.35,
+              "median": 2921.575,
+              "max": 3059.09
+            },
+            "verify_process_ms": {
+              "min": 960.2261959953466,
+              "median": 981.1929245042847,
+              "max": 1004.6705179993296
+            },
+            "access_median_ms": {
+              "min": 96.875,
+              "median": 107.536,
+              "max": 110.475
+            },
+            "access_p95_ms": {
+              "min": 126.43,
+              "median": 138.17950000000002,
+              "max": 152.8
+            },
+            "access_decoded_bytes_total": 442660335,
+            "access_requested_bytes_total": 44553445,
+            "access_peak_memory_bytes": 184229888,
+            "encode_peak_memory_bytes": 140304384,
+            "same_round_access_speedup_vs_reference": {
+              "min": 0.9183525684544015,
+              "median": 0.9910166077824112,
+              "max": 1.6095070967741936
+            },
+            "same_round_encode_ratio_vs_reference": {
+              "min": 0.8250559100589796,
+              "median": 1.0265319585984776,
+              "max": 1.1341443661511357
+            },
+            "old_archive_bytes_read": 6852555,
+            "old_archive_bytes_copied": 6852555,
+            "old_plaintext_bytes_recompressed": 0,
+            "archive_bytes_written": 17084467
+          },
+          "append_vs_fresh": {
+            "size_percent": 0.4592279515986064,
+            "same_round_wall_ratio": {
+              "min": 0.5833676132638027,
+              "median": 0.632126039793295,
+              "max": 0.6588338671779601
+            }
+          },
+          "fault": {
+            "fresh": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1700490,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 810.838781
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8502067,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 0,
+                  "verified_bytes": 0,
+                  "unavailable_bytes": 81553445,
+                  "rejected_files": 49,
+                  "decode_validate_wall_ms": 107.8874
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15303644,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 81553445,
+                  "verified_files": 48,
+                  "verified_bytes": 48000000,
+                  "unavailable_bytes": 33553445,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 798.421753
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 201043968,
+              "peak_memory_metric": "ru_maxrss"
+            },
+            "append": {
+              "schema": "seedarc.bounded-payload-fault.r0",
+              "verified_source": true,
+              "fault": "one-bit payload flips; intact metadata",
+              "cases": [
+                {
+                  "payload_percent": 10,
+                  "damage_offset": 1708199,
+                  "frame": 0,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 48553445,
+                  "verified_files": 48,
+                  "verified_bytes": 80553445,
+                  "unavailable_bytes": 1000000,
+                  "rejected_files": 1,
+                  "decode_validate_wall_ms": 865.39009
+                },
+                {
+                  "payload_percent": 50,
+                  "damage_offset": 8541524,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 16,
+                  "verified_bytes": 48553445,
+                  "unavailable_bytes": 33000000,
+                  "rejected_files": 33,
+                  "decode_validate_wall_ms": 500.152123
+                },
+                {
+                  "payload_percent": 90,
+                  "damage_offset": 15373940,
+                  "frame": 1,
+                  "index_usable": true,
+                  "frame_file_bytes_at_risk": 33000000,
+                  "verified_files": 44,
+                  "verified_bytes": 76553445,
+                  "unavailable_bytes": 5000000,
+                  "rejected_files": 5,
+                  "decode_validate_wall_ms": 837.575872
+                }
+              ],
+              "input_bytes": 81553445,
+              "files": 49,
+              "wrong_bytes_accepted": 0,
+              "outputs_written": 0,
+              "peak_memory_bytes": 201211904,
+              "peak_memory_metric": "ru_maxrss"
+            }
+          }
+        }
+      },
+      "access_samples": [
+        {
+          "path": "enwik8/part-000.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-005.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-009.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-014.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-018.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-022.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-027.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-031.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-036.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-041.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "enwik8/part-045.xml",
+          "requested_bytes": 1000000
+        },
+        {
+          "path": "silesia/nci",
+          "requested_bytes": 33553445
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "existing public dev, not a holdout",
+    "warm cache, one machine, one CPU per measured command",
+    "read/decode diagnostic, no file written to disk",
+    "append copies the whole old archive",
+    "fault diagnostic assumes intact header and index",
+    "four rounds give no statistical significance",
+    "text class 77.8 MiB < 128 MiB: 128 MiB and 1 GiB may share one layout"
+  ]
+}

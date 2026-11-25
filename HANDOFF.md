@@ -12,6 +12,8 @@
 4. 最新证据：[DEV-022记录](research/experiments/20261124-bounded-repeat-main-001/record.md)、[复测表](research/experiments/20261124-bounded-repeat-main-001/preview.md)。
 5. 按任务读取相关代码 / 详细规范；研究开始前读 [research/README.md](research/README.md)。
 
+廉价模型执行下一轮时另读[DEV-023测试任务书](docs/test-execution-plan.md)，其中给出可复制的启动指令、预登记矩阵与停止条件；领取与实际结果仍写入STATUS，不把本计划当作已执行证据。DEV-023已于2026-11-25执行完成（[记录](research/experiments/20261125-bounded-expand-main-001/record.md)，执行者报告通过，待主模型审计）。
+
 `docs/users_idea/` 原稿两份哈希最近复核未变，已读快照在 STATUS。**最新聊天决定及测试后形成的 Markdown 优先于早期构想**，不能只通读原稿后忽略新方向。关键设计或交接前继续核对新增 / 变化文件，不擅改原稿。
 
 ## 2. 用户已经明确的方向
