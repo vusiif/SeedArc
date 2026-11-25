@@ -127,3 +127,7 @@ python -B research/scripts/bounded_expand_preview.py <analysis.json> <preview.md
 远端任务入口为 `task.sh` → `bounded_expand_task.py`，输入清单见 input-hashes.json。完整 bundle 和回执在 `research/local/india-append/artifacts/20261125T154526Z-8e750889.*`，该目录被 git 忽略。[peek_progress.py](peek_progress.py) 是运行期间只读查看远端进度的辅助脚本。
 
 尚未提交 / 推送。
+
+## 后续更正（2026-11-25，DEV-024）
+
+上文"解读与限制"第 2 条所说的文本 64 MiB 支配点，只对读取 / 解码诊断成立。在 DEV-024 的真实索引式提取中（只解码到目标文件为止），文本 64 MiB 对整段只有 0.93–1.10×，落在噪声带内，见 [DEV-024 记录](../20261125-bounded-extract-main-001/record.md)。本文其余事实不变。
