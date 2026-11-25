@@ -102,8 +102,13 @@ std::expected<Model, Error> parse_indexed(ArchiveReader &in) {
         if (!len || *len > max_record_body || limit - off - record_overhead < *len) {
             return std::nullopt;
         }
-        auto whole = in.read(off, record_overhead + *len);
-        const auto rec = whole ? read_record(*whole, 0, off) : std::nullopt;
+        auto rest = in.read(off + 12, *len + 4); // body and CRC; the first 12 bytes are read
+        if (!rest) {
+            return std::nullopt;
+        }
+        auto whole = std::move(*front);
+        whole.insert(whole.end(), rest->begin(), rest->end());
+        const auto rec = read_record(whole, 0, off);
         if (!rec || rec->type != rec_gen) {
             return std::nullopt;
         }
