@@ -1,0 +1,1 @@
+{"schema":"seedarc.append-study.v4.r1","mode":"verify","byte_exact":true,"files":49,"generations":1,"redundancy":"off","decode_wall_ms":861.602,"decode_cpu_ms":861.428,"input_read_wall_ms":90.002,"input_read_cpu_ms":90.005,"verification_mode":"incremental_crc_and_compare","peak_memory_bytes":153550848,"peak_memory_metric":"ru_maxrss"}

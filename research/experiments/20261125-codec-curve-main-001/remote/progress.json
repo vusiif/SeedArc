@@ -1,0 +1,23 @@
+{
+  "phase": "complete",
+  "stages": [
+    {
+      "stage": "curve",
+      "cls": "source",
+      "wall_s": 4540.244512249003,
+      "commands": 231
+    },
+    {
+      "stage": "lifecycle",
+      "wall_s": 870.2642587750161,
+      "commands": 160
+    },
+    {
+      "stage": "curve",
+      "cls": "text",
+      "wall_s": 2426.764525439008,
+      "commands": 231
+    }
+  ],
+  "elapsed_s": 8036.964235299005
+}

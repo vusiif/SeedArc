@@ -1,0 +1,42 @@
+{
+  "schema": "seedarc.research.codec-curve.r0",
+  "tasks": ["DEV-026 codec / level curve", "DEV-027 multi-generation append lifecycle"],
+  "status": "pre-registered before any measurement command",
+  "registered_at": "2026-11-25",
+  "scope": "existing public dev trees (bounded-expand-dev-r1); not a holdout; warm cache; one machine",
+  "inputs": {
+    "source": {"manifest": "research/datasets/bounded-expand-dev-r1/source.tsv",
+               "sha256": "c6e0d158505cdde6a19ead15c88f3fadda90ffb608fccd1ca0dc8e38b47f3e15"},
+    "text": {"manifest": "research/datasets/bounded-expand-dev-r1/text.tsv",
+             "sha256": "f539c8112709df5ada68783d22e5d779c2a2a63ee556670fa9ff4d0be8a57021"}
+  },
+  "dev026": {
+    "codecs": [["zstd", 1], ["zstd", 3], ["zstd", 6], ["zstd", 9], ["zstd", 12], ["zstd", 15], ["zstd", 19],
+               ["lzma2", 1], ["lzma2", 3], ["lzma2", 6], ["lzma2", 9]],
+    "layouts": ["whole", "32MiB", "64MiB"],
+    "grouping": "g1-r0",
+    "rounds": 2,
+    "order": "round 0: layouts in listed order, codecs in listed order; round 1: the whole point list reversed",
+    "per_point": ["recipe-pack seed RECIPE TREE OUT (timed)", "verify OUT TREE (timed: full decode + byte check)",
+                  "extract-profile OUT TREE 12 EMPTY_DIR (timed)", "describe OUT (round 0 only)"],
+    "checks": ["verify byte exact", "extract-profile byte exact", "describe returns the recipe",
+               "same archive SHA in both rounds", "max frame raw bytes <= frame limit"],
+    "analysis": ["per class and layout: size, encode / verify / extract wall per round",
+                 "size-time Pareto set (non-dominated by size and encode wall)",
+                 "smallest archive within the encode-time budget of each Zstd level on the whole layout",
+                 "extract index split: index_read / index_manifest from extract-profile"]
+  },
+  "dev027": {
+    "class": "source",
+    "batches": "order by sha256('dev027-batch:' + path); cumulative byte shares 40 / 55 / 70 / 85 / 100 % (closest prefix, whole files)",
+    "recipes": ["solid/zstd-9/g1-r0/frame-whole", "solid/zstd-9/g1-r0/frame-32MiB",
+                "solid/zstd-9/g1-r0/frame-64MiB", "solid/zstd-3/g1-r0/frame-32MiB"],
+    "rounds": 2,
+    "per_recipe": ["recipe-pack generation 0", "verify", "then 4x: recipe-append (keep recipe) + verify, recipe-pack of the cumulative tree (fresh rebuild) + verify"],
+    "checks": ["every verify byte exact", "old archive is a byte prefix of each append", "same SHA in both rounds"],
+    "analysis": ["append size / fresh size per generation", "cumulative append wall vs one fresh rebuild per step",
+                 "old archive bytes copied per append and in total"]
+  },
+  "execution": "India vps-in1 via in-long-task, exclusive; one command at a time; measured child pinned to one CPU; timeout 3600 s per command",
+  "not_claimed": ["multi-thread speed", "cold-disk latency", "holdout result", "Seed-specific gain", "default preset"]
+}

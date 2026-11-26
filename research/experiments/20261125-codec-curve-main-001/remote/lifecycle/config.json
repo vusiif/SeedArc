@@ -1,0 +1,29 @@
+{
+  "manifest_sha256": "c6e0d158505cdde6a19ead15c88f3fadda90ffb608fccd1ca0dc8e38b47f3e15",
+  "tool_sha256": "64dd4686ae11851d3f504c3f2bf0bfc2ac68fab98966872e7aa95b3512ae937f",
+  "runner_sha256": "506c4150b5e047bfb95667eb9c7c52bf9d92b06834a0bc6610c5e1fa24eaeb6f",
+  "recipes": [
+    "solid/zstd-9/g1-r0/frame-whole",
+    "solid/zstd-9/g1-r0/frame-32MiB",
+    "solid/zstd-9/g1-r0/frame-64MiB",
+    "solid/zstd-3/g1-r0/frame-32MiB"
+  ],
+  "rounds": 2,
+  "batch_files": [
+    4726,
+    1790,
+    1945,
+    921,
+    1903
+  ],
+  "cumulative_shares": [
+    0.399942653990572,
+    0.5505495521400195,
+    0.6826911216809557,
+    0.8499908472735056,
+    1.0
+  ],
+  "affinity": [
+    0
+  ]
+}

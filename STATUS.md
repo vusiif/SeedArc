@@ -8,6 +8,8 @@
 
 ## 当前基线
 
+- DEV-026 / 027 完成（2026-11-26，主Agent/Claude，执行者报告通过、未经审计）：(1) 提取索引开销源码类78.9→30.7ms（清单检查提速，规则不变，新增全码位CaseFolding与ASCII快路线等价测试），32MiB单文件提取121→69ms；(2) 固实帧新增LZMA2与Zstd 1–19（ADR-0006允许集扩大），单CPU曲线：LZMA2-9比Zstd-19小3.4%（文本2.8%）且更快，Zstd-15几乎无价值，低档LZMA2被Zstd压过，LZMA2提取约慢2倍，32MiB分帧对各算法都约+1–2.5%体积换6.5–6.9×提取；(3) 多代追加漂移累积：Zstd-9每批15%，4次后比重建大约15%（Zstd-3约12%），下一步优先研究用旧数据训练字典降低漂移。MSVC 47/47、WSL GCC 48/48、ASan+UBSan 19/19、印度48/48，0警告。见[记录](research/experiments/20261125-codec-curve-main-001/record.md)。未提交推送。
+
 - 2026-11-25 用户明确Seed定位：Seed是表示工具，让人知道自己在用什么压缩并固定该方式，是重要特征而非全部（已记入[user-vision §4](docs/user-vision.md#4-seed-应承担什么作用)）。据此发现现行修订2 Seed只编码分组规则 / 组数，帧上限与Zstd-9不在Seed内。已起草[ADR-0006 Seed配方r1](docs/decisions/0006-seed-solid-recipe.md)（候选，未实现）：配方含分组、帧上限档位、算法 / 级别，新映射修订3，读包时核对帧边界与配方一致，新增describe。新修订属C级；用户同日确认三项均按推荐（固定帧档、现在加入算法 / 级别字段且只允许Zstd-9、严格核对帧边界），授权在研究工具实现映射修订3。**已实现（DEV-025）**：新增recipe-pack / recipe-append / describe；读取时按配方重算帧划分、不符即拒绝（全量解析、索引提取、describe均经过）；bounded-pack / bounded-append仍写修订2且字节不变。新CTest `research.solid_recipe`含互换标签伪造包的拒绝测试。MSVC 47/47、WSL GCC 48/48、Clang ASan+UBSan相关6/6，0警告。未经独立审计；未提交推送。
 
 - DEV-024 真实提取首轮测量（2026-11-25，主Agent/Claude，执行者报告通过、未经主模型审计）：DEV-023两棵最终树，四档四轮平衡，access-profile与extract-profile同样本对照；归档SHA与DEV-023完全一致。源码类真实提取32/64/128MiB比整段快3.9–4.4× / 3.0–3.2× / 约2.7×（大于内存诊断的约3.0/2.2/1.6×），每次只读包的23–61%；但约79ms固定花在读取解析752KB索引，占32MiB档121ms的约65%，是下一优化点。文本32MiB约2×；**更正DEV-023**：文本64MiB真实提取0.93–1.10×（噪声内），因整段档也只解到目标文件。热缓存、无fsync、单机，不设默认。见[记录](research/experiments/20261125-bounded-extract-main-001/record.md)。未提交推送。
@@ -98,6 +100,7 @@
 
 | 任务 ID | 任务 | 负责人 | 写入范围 | 状态 | 验收 / 证据 |
 | --- | --- | --- | --- | --- | --- |
+| DEV-026 / 027 | 多算法 / 级别曲线；多代追加生命周期 | 主Agent（Claude） | dictionary.{hpp,cpp}（LZMA2固实帧）、solid_plan.hpp（允许集Zstd1–19 / LZMA2 0–9）、append4_study（按配方codec编解码）、archive_path / unicode_profile（清单检查提速）、codec_curve_dev / task、配置 | 完成，执行者报告通过 | 印度任务`20261126T030601Z-7c37b24c` 622命令exit0；[记录](research/experiments/20261125-codec-curve-main-001/record.md)；未提交 | 用户2026-11-25指示"先做234"；MSVC 47/47、WSL GCC 48/48、ASan+UBSan 19/19，0警告；清单检查本机29→约10ms（9.2k条目） |
 | DEV-025 | Seed配方r1（ADR-0006） | 主Agent（Claude） | solid_plan.hpp、append4_study.cpp、recipe_commands.hpp、recipe_fixture.py、check_solid_recipe.cmake、ADR-0006 | 实现与验证完成，执行者报告通过 | 用户确认三项推荐方案；MSVC 47/47、Linux GCC 48/48、ASan+UBSan相关6/6，0警告；未提交 |
 | DEV-024 | 索引式真实单文件提取 | 主Agent（Claude） | append4_study（parse拆分、bounded_extract.hpp、Windows UTF-8参数）、check_bounded_extract.cmake、bounded-solid-r0文档 | 实现、验证与首轮测量完成，执行者报告通过 | MSVC 46/46、Linux GCC 47/47、ASan+UBSan相关5/5，0警告；[测量记录](research/experiments/20261125-bounded-extract-main-001/record.md)：任务`20261125T173431Z-7f6b8cdd` 80命令exit0（第1次运行器目录冲突已修复并保留证据） |
 | DEV-023 | 有界固实扩展dev与批次取舍测试 | 主Agent（2026-11-25领取，Claude） | 本任务Python运行器 / 配置 / 清单 / 实验记录与分析；`research/experiments/20261125-bounded-expand-main-001/` | 执行者报告通过，待主模型审计 | [记录](research/experiments/20261125-bounded-expand-main-001/record.md)：阶段A复算0差异；496命令 / 4单元独立审计通过，128主编码全verify，ELF与DEV-022同SHA，CTest46/46；任务`20261125T154526Z-8e750889` exit0、bundle核验、已clean；未改协议与压缩实现 |

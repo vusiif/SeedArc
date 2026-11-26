@@ -1,0 +1,8 @@
+{
+  "commands": 160,
+  "recipes": 4,
+  "generations": 5,
+  "rounds": 2,
+  "all_byte_exact": true,
+  "sha_stable": true
+}

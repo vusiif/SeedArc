@@ -1,0 +1,6 @@
+{
+  "analysis_returncode": 0,
+  "tool_sha256": "64dd4686ae11851d3f504c3f2bf0bfc2ac68fab98966872e7aa95b3512ae937f",
+  "elapsed_s": 8036.963853399997,
+  "sanitizer": "WSL Clang ASan+UBSan run separately on the same sources"
+}
