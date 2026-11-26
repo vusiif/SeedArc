@@ -107,7 +107,109 @@ int cmd_describe(const fs::path &archive) {
                 ",\"max_frame_raw_bytes\":" + std::to_string(largest) +
                 ",\"check\":" + json_string(check) + "}";
     }
-    std::cout << "{\"schema\":\"seedarc.solid-describe.r0\",\"archive_bytes\":" << bytes->size()
-              << ",\"files\":" << m->entries.size() << ",\"generations\":[" << gens << "]}\n";
+    // Facts only: how much of the plaintext arrived after generation 0. The size cost of that
+    // depends on the data (DEV-027 / DEV-028), so the advice is to measure, not a guessed figure.
+    std::uint64_t raw_total = 0, raw_appended = 0;
+    for (const auto &f : m->frames) {
+        raw_total += f.raw;
+        raw_appended += f.gen == 0 ? 0 : f.raw;
+    }
+    const double share =
+        raw_total == 0 ? 0.0 : static_cast<double>(raw_appended) / static_cast<double>(raw_total);
+    std::cout << "{\"schema\":\"seedarc.solid-describe.r1\",\"archive_bytes\":" << bytes->size()
+              << ",\"files\":" << m->entries.size() << ",\"generations\":[" << gens
+              << "],\"consolidation\":{\"generation_count\":" << m->gens.size()
+              << ",\"raw_bytes\":" << raw_total << ",\"appended_raw_bytes\":" << raw_appended
+              << ",\"appended_raw_share\":" << share << ",\"hint\":"
+              << json_string(m->gens.size() == 1
+                                 ? "one generation: nothing to consolidate"
+                                 : "appended generations cannot reference older data; measure "
+                                   "the saving with consolidate-check")
+              << "}}\n";
+    return std::cout ? 0 : 1;
+}
+
+// Rebuild a revision-5 solid archive as one generation: decode every file, re-encode the whole
+// tree with one recipe (default: the last generation's), check the result byte for byte, and
+// report the saving. Without OUT nothing is written. The rebuild of a tree equals recipe-pack
+// of that tree, so consolidation never invents a layout of its own.
+int cmd_consolidate(const fs::path &archive, const std::optional<fs::path> &out,
+                    std::optional<std::string_view> recipe_arg) {
+    const auto w = wall_ms(), c = cpu_ms();
+    auto bytes = read_file(archive);
+    if (!bytes) {
+        return fail(bytes.error());
+    }
+    auto m = parse(*bytes);
+    if (!m) {
+        return fail(m.error());
+    }
+    if (m->header.revision != 5 || !m->header.solid()) {
+        return fail(bad("consolidate covers revision-5 solid archives"));
+    }
+    const Gen &last = m->gens.back();
+    std::optional<SolidRecipe> recipe;
+    if (recipe_arg) {
+        recipe = parse_recipe(*recipe_arg);
+        if (!recipe) {
+            std::cerr << "not a solid-recipe-r1 recipe (text form or 0x Seed)\n";
+            return 2;
+        }
+    } else if (last.recipe) {
+        recipe = SolidRecipe{last.plan, *last.recipe};
+    } else {
+        return fail(bad("the last generation records no recipe; give RECIPE"));
+    }
+    if (out && fs::exists(*out)) {
+        return fail(Error{ErrorCode::output_conflict, "output exists"});
+    }
+    const auto dw = wall_ms();
+    auto decoded = decode_all(*m, *bytes);
+    if (!decoded) {
+        return fail(decoded.error());
+    }
+    if (decoded->size() != m->entries.size()) {
+        return fail(bad("decoded file count differs from the index"));
+    }
+    std::vector<InputFile> files; // std::map order is read_tree's path order
+    files.reserve(decoded->size());
+    for (auto &[path, data] : *decoded) {
+        files.push_back({path, std::move(data)});
+    }
+    decoded->clear();
+    const auto decode_wall = wall_ms() - dw;
+    const auto pw = wall_ms();
+    auto packed = pack_bytes(last.has_seed ? "seed-solid" : "explicit-solid", recipe->plan, files,
+                             red_off, 0, recipe_frame_limit(recipe->fields), recipe->fields);
+    if (!packed) {
+        return fail(packed.error());
+    }
+    const auto pack_wall = wall_ms() - pw;
+    auto rebuilt = parse(packed->bytes);
+    if (!rebuilt) {
+        return fail(rebuilt.error());
+    }
+    if (auto checked = byte_exact(files, *rebuilt, packed->bytes); !checked) {
+        return fail(checked.error());
+    }
+    if (out) {
+        if (auto r = write_new(*out, packed->bytes); !r) {
+            return fail(r.error());
+        }
+    }
+    const auto before = bytes->size(), after = packed->bytes.size();
+    const auto saved = static_cast<std::int64_t>(before) - static_cast<std::int64_t>(after);
+    std::cout << "{\"schema\":\"seedarc.solid-consolidate.r0\",\"written\":"
+              << (out ? "true" : "false") << ",\"files\":" << files.size()
+              << ",\"input_bytes\":" << input_bytes_of(files)
+              << ",\"generations_before\":" << m->gens.size()
+              << ",\"recipe\":" << json_string(recipe_text(*recipe))
+              << ",\"recipe_from\":" << (recipe_arg ? "\"argument\"" : "\"last generation\"")
+              << ",\"archive_bytes_before\":" << before << ",\"archive_bytes_after\":" << after
+              << ",\"saved_bytes\":" << saved << ",\"saved_share\":"
+              << static_cast<double>(saved) / static_cast<double>(before)
+              << ",\"decode_wall_ms\":" << decode_wall << ",\"pack_wall_ms\":" << pack_wall
+              << ",\"call_wall_ms\":" << wall_ms() - w << ",\"call_cpu_ms\":" << cpu_ms() - c
+              << ",\"byte_exact\":true," << peak_memory_json() << "}\n";
     return std::cout ? 0 : 1;
 }

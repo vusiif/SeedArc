@@ -77,6 +77,8 @@ constexpr std::string_view usage =
     "  append4_study recipe-pack seed|explicit RECIPE INPUT_DIR OUT   (ADR-0006, mapping rev 3)\n"
     "  append4_study recipe-append OLD NEW_DIR OUT [RECIPE]   (no RECIPE: keep the last one)\n"
     "  append4_study describe ARCHIVE\n"
+    "  append4_study consolidate-check ARCHIVE [RECIPE]   (measure a one-generation rebuild)\n"
+    "  append4_study consolidate ARCHIVE OUT [RECIPE]   (write it; default: last recipe)\n"
     "  append4_study drift-probe OLD_DIR NEW_DIR ZSTD_LEVEL   (append-drift references; no format)\n"
     "      RECIPE: solid/zstd-9/g<k>-r<rule>/frame-<whole|16MiB|32MiB|64MiB|128MiB|256MiB>"
     " or 0x Seed\n";
@@ -3855,6 +3857,14 @@ int main(int argc, char *argv[]) {
             return 2;
         }
         return cmd_drift_probe(native(a[2]), native(a[3]), static_cast<std::uint32_t>(*zstd_level));
+    }
+    if ((a.size() == 3 || a.size() == 4) && a[1] == "consolidate-check") {
+        return cmd_consolidate(native(a[2]), std::nullopt,
+                               a.size() == 4 ? std::optional{a[3]} : std::nullopt);
+    }
+    if ((a.size() == 4 || a.size() == 5) && a[1] == "consolidate") {
+        return cmd_consolidate(native(a[2]), native(a[3]),
+                               a.size() == 5 ? std::optional{a[4]} : std::nullopt);
     }
     if (a.size() == 3 && a[1] == "describe") {
         return cmd_describe(native(a[2]));
