@@ -248,15 +248,16 @@ inline std::expected<void, Error> write_new(const fs::path &path, std::span<cons
 // directories added: per-path profile, duplicates, case collisions, a file used as a directory.
 inline std::expected<void, Error> check_manifest(const std::vector<std::string> &paths) {
     std::vector<seedarc::experimental::PathEntry> entries;
-    std::set<std::string> directories;
+    entries.reserve(paths.size());
+    std::set<std::string_view> directories; // views into `paths`, which outlive this function
     for (const auto &p : paths) {
         entries.push_back({p, false});
         for (auto slash = p.find('/'); slash != std::string::npos; slash = p.find('/', slash + 1)) {
-            directories.insert(p.substr(0, slash));
+            directories.insert(std::string_view{p}.substr(0, slash));
         }
     }
-    for (const auto &d : directories) {
-        entries.push_back({d, true});
+    for (const auto d : directories) {
+        entries.push_back({std::string{d}, true});
     }
     seedarc::experimental::PathLimits limits;
     limits.max_entries = entries.size();

@@ -3,6 +3,7 @@
 
 #include <array>
 #include <iostream>
+#include <string>
 
 using namespace seedarc::experimental;
 
@@ -44,6 +45,38 @@ int main() {
         const auto result = validate_archive_path(longest + "a");
         check(!result && result.error().code == seedarc::ErrorCode::resource_limit,
               "256 UTF-8 bytes per component is the limit");
+    }
+    // The manifest's ASCII fast path must give the same answer as the general path, error code
+    // and message included, so its checks stay in step with components_of.
+    {
+        std::string long_part(255, 'a'), too_long_part(256, 'a'), deep;
+        for (int i = 0; i < 64; ++i) {
+            deep += (i == 0 ? "" : "/") + std::string{"d"};
+        }
+        const std::string too_deep = deep + "/d", too_long(4097, 'a');
+        const std::array<std::string, 40> cases{
+            "a", "A/B/c.txt", "dir/file", ".config", "x.y.z", "a b", " lead", "",
+            "/abs", "trail/", "a//b", ".", "..", "a/./b", "a/../b", "end.", "end ",
+            "a\\b", "c:x", "a<b", "a>b", "a\"b", "a|b", "a?b", "a*b", "a~b",
+            std::string{"ctl\x01"}, std::string{"del\x7f"}, "CON", "con.txt", "Com1.tar.gz",
+            "lpt9", "COM0", "nul  .x", "CLOCK$", "conout$/x", long_part, too_long_part,
+            too_deep, too_long};
+        for (const auto &name : cases) {
+            const auto single = validate_archive_path(name);
+            const std::array<PathEntry, 1> one{{{name, false}}};
+            const auto manifest = validate_manifest_paths(one);
+            const bool same =
+                single.has_value() == manifest.has_value() &&
+                (single || (single.error().code == manifest.error().code &&
+                            single.error().message == manifest.error().message));
+            check(same, ("ASCII fast path agrees with components_of: " + name).c_str());
+        }
+        check(validate_manifest_paths(std::array<PathEntry, 1>{{{deep, false}}}).has_value(),
+              "64 components accepted");
+        const std::array<PathEntry, 2> kelvin{{{"K", false}, {"\xe2\x84\xaa", false}}};
+        check(!validate_manifest_paths(kelvin), "ASCII K collides with U+212A KELVIN SIGN");
+        const std::array<PathEntry, 2> mixed{{{"Dir/x", false}, {"dir", false}}};
+        check(!validate_manifest_paths(mixed), "ASCII case-folded file used as an ancestor");
     }
     {
         const std::array<PathEntry, 2> umlaut{{{"\xc3\x84", false}, {"\xc3\xa4", false}}};

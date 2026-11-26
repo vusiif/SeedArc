@@ -40,7 +40,7 @@ int cmd_access_profile(const fs::path &archive, const fs::path &input, std::size
             return fail(bad("requested file is missing"));
         }
         const auto &frame = model->frames[entry->frame];
-        auto raw = decode_frame(frame, *bytes);
+        auto raw = decode_frame(*model, frame, *bytes);
         if (!raw) {
             return fail(raw.error());
         }
@@ -121,7 +121,7 @@ int cmd_payload_fault_profile(const fs::path &archive, const fs::path &input) {
                 members[e.frame].push_back(&e);
             }
             for (std::size_t fi = 0; fi < model->frames.size(); ++fi) {
-                auto raw = decode_frame(model->frames[fi], damaged);
+                auto raw = decode_frame(*model, model->frames[fi], damaged);
                 for (const auto *member : members[fi]) {
                     const auto &e = *member;
                     if (!raw) {

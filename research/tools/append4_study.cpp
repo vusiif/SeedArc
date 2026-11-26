@@ -702,11 +702,12 @@ std::expected<Scan, Error> scan(std::span<const std::byte> bytes, const Header &
                 auto &out = s.frame_raw.back();
                 out.resize(static_cast<std::size_t>(*raw));
                 const auto in = bytes.subspan(r->end, static_cast<std::size_t>(avail));
+                const auto codec = g.recipe ? g.recipe->codec : research::solid_zstd;
                 if (avail == *stored) {
-                    if (research::decompress_solid(in, out)) {
+                    if (research::decompress_solid_codec(codec, in, out)) {
                         s.frame_produced.back() = out.size();
                     }
-                } else if (auto n = research::decompress_solid_prefix(in, out)) {
+                } else if (auto n = research::decompress_solid_prefix_codec(codec, in, out)) {
                     s.frame_produced.back() = *n;
                 }
             }
@@ -876,7 +877,8 @@ using GenFetch = std::function<std::optional<GenRecord>(std::uint64_t offset)>;
 std::expected<Model, Error> parse_index(const Header &header, std::uint32_t header_crc,
                                         std::span<const std::byte> trailer,
                                         std::uint64_t trailer_offset, const GenFetch &fetch_gen,
-                                        std::span<const std::byte> dict_bytes) {
+                                        std::span<const std::byte> dict_bytes,
+                                        double *manifest_ms = nullptr) {
     Model m;
     m.header = header;
     m.trailer_offset = trailer_offset;
@@ -1029,8 +1031,12 @@ std::expected<Model, Error> parse_index(const Header &header, std::uint32_t head
     if (t.at != trailer.size()) {
         return std::unexpected(bad("trailing bytes in the trailer"));
     }
+    const auto manifest_start = wall_ms();
     if (auto ok = check_manifest(paths); !ok) {
         return std::unexpected(ok.error());
+    }
+    if (manifest_ms != nullptr) {
+        *manifest_ms = wall_ms() - manifest_start;
     }
     return m;
 }
@@ -1200,12 +1206,16 @@ std::expected<std::vector<std::byte>, Error> decode_blocks(const Entry &e, const
     return file;
 }
 
-std::expected<std::vector<std::byte>, Error> decode_frame(const Frame &f,
+// The codec of a solid frame: its generation's recipe, or Zstd for mapping revision 2.
+std::uint32_t gen_codec(const Gen &g) { return g.recipe ? g.recipe->codec : research::solid_zstd; }
+std::uint32_t frame_codec(const Model &m, const Frame &f) { return gen_codec(m.gens[f.gen]); }
+
+std::expected<std::vector<std::byte>, Error> decode_frame(const Model &m, const Frame &f,
                                                           std::span<const std::byte> bytes) {
     std::vector<std::byte> raw(static_cast<std::size_t>(f.raw));
     const auto frame =
         bytes.subspan(static_cast<std::size_t>(f.offset), static_cast<std::size_t>(f.stored));
-    if (auto r = research::decompress_solid(frame, raw); !r) {
+    if (auto r = research::decompress_solid_codec(frame_codec(m, f), frame, raw); !r) {
         return std::unexpected(r.error());
     }
     return raw;
@@ -1225,7 +1235,7 @@ std::expected<void, Error> visit_decoded(const Model &m, std::span<const std::by
             entries[e.frame].push_back(&e);
         }
         for (std::size_t frame = 0; frame < m.frames.size(); ++frame) {
-            auto r = decode_frame(m.frames[frame], bytes);
+            auto r = decode_frame(m, m.frames[frame], bytes);
             if (!r) {
                 return std::unexpected(r.error());
             }
@@ -1370,7 +1380,7 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
                     const auto &fr = m->frames[e.frame];
                     raw = std::vector<std::byte>{};
                     if (covered(presence, fr.offset, fr.stored)) {
-                        if (auto r = decode_frame(fr, bytes)) {
+                        if (auto r = decode_frame(*m, fr, bytes)) {
                             raw = std::move(*r);
                         }
                     }
@@ -1483,7 +1493,10 @@ std::expected<void, Error> encode_pending(Pending &p, const Header &h,
             if (joined.empty()) {
                 joined.push_back(std::byte{0}); // retain a frame for all-empty files
             }
-            auto frame = research::compress_solid(joined, level);
+            // Recipe generations use their own codec and level; revision 2 keeps Zstd 9.
+            auto frame = p.gen.recipe ? research::compress_solid_codec(p.gen.recipe->codec,
+                                                                       p.gen.recipe->level, joined)
+                                      : research::compress_solid(joined, level);
             if (!frame) {
                 return std::unexpected(frame.error());
             }
@@ -3085,7 +3098,7 @@ int cmd_peek(const fs::path &container, const fs::path &input, std::size_t n) {
         }
         std::vector<std::byte> data;
         if (m->header.solid()) {
-            auto raw = decode_frame(m->frames[it->frame], *bytes);
+            auto raw = decode_frame(*m, m->frames[it->frame], *bytes);
             if (!raw) {
                 return fail(raw.error());
             }

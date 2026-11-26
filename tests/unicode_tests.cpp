@@ -5,7 +5,9 @@
 
 #include <charconv>
 #include <cstdint>
+#include <filesystem>
 #include <fstream>
+#include <map>
 #include <iostream>
 #include <optional>
 #include <set>
@@ -148,6 +150,39 @@ int main(int argc, char *argv[]) {
               unicode::simple_fold(0x212A) == U'k' && unicode::simple_fold(0x00DF) == 0x00DF &&
               unicode::simple_fold(0x1E9E) == 0x00DF && unicode::simple_fold(U'a') == U'a',
           "simple case folding (C + S, no F)");
+    // simple_fold against CaseFolding.txt (status C and S) for every scalar value, so the ASCII
+    // fast path and the table agree with the pinned data; every ASCII code point is assigned.
+    {
+        std::ifstream folding{std::filesystem::path{argv[1]}.parent_path() / "CaseFolding.txt"};
+        check(folding.good(), "CaseFolding.txt opened");
+        std::map<char32_t, char32_t> folds;
+        for (std::string row; std::getline(folding, row);) {
+            if (row.empty() || row[0] == '#') {
+                continue;
+            }
+            const auto first = row.find(';'), second = row.find(';', first + 1);
+            const auto status = row.substr(first + 2, 1);
+            if (status == "C" || status == "S") {
+                const auto from = static_cast<char32_t>(std::stoul(row.substr(0, first), nullptr, 16));
+                const auto to =
+                    static_cast<char32_t>(std::stoul(row.substr(second + 2), nullptr, 16));
+                folds[from] = to;
+            }
+        }
+        check(folds.size() > 1400, "CaseFolding.txt has its C and S mappings");
+        std::size_t wrong = 0;
+        for (char32_t c = 0; c <= 0x10FFFF; ++c) {
+            const auto it = folds.find(c);
+            wrong += unicode::simple_fold(c) != (it == folds.end() ? c : it->second) ? 1 : 0;
+        }
+        check(wrong == 0, "simple_fold equals CaseFolding.txt C+S everywhere (" +
+                              std::to_string(wrong) + " differences)");
+        bool ascii = true;
+        for (char32_t c = 0; c < 0x80; ++c) {
+            ascii = ascii && unicode::is_assigned(c);
+        }
+        check(ascii, "every ASCII code point is assigned");
+    }
     // UTF-8 round trip of boundary scalar values.
     const std::u32string edges{0x7F, 0x80, 0x7FF, 0x800, 0xD7FF, 0xE000, 0xFFFD, 0x10000, 0x10FFFF};
     const auto decoded = unicode::decode_utf8(unicode::encode_utf8(edges));

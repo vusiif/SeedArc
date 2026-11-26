@@ -63,6 +63,41 @@ file(SHA256 "${root}/hex.sadx" hex_hash)
 if(NOT text_hash STREQUAL hex_hash)
     message(FATAL_ERROR "Seed value and text form disagree")
 endif()
+# Other codecs and levels: round trip, readable label, and indexed extraction through the
+# codec's own prefix decoder (the 16 MiB step splits the 21 MiB input into two frames).
+foreach(codec zstd-1 zstd-19 lzma2-0 lzma2-6 lzma2-9)
+    set(recipe "solid/${codec}/g1-r0/frame-16MiB")
+    run(0 packed recipe-pack seed "${recipe}" "${big}" "${root}/big-${codec}.sadx")
+    string(JSON frames GET "${packed}" frame_count)
+    run(0 ignored verify "${root}/big-${codec}.sadx" "${big}")
+    run(0 described describe "${root}/big-${codec}.sadx")
+    string(JSON label GET "${described}" generations 0 recipe)
+    if(NOT frames EQUAL 2 OR NOT label STREQUAL recipe)
+        message(FATAL_ERROR "${codec}: frames ${frames}, label ${label}")
+    endif()
+    foreach(name a c)
+        run(0 ignored extract "${root}/big-${codec}.sadx" "${name}" "${root}" "${codec}-${name}.out")
+        file(SHA256 "${big}/${name}" want)
+        file(SHA256 "${root}/${codec}-${name}.out" got)
+        if(NOT want STREQUAL got)
+            message(FATAL_ERROR "${codec}: extracted ${name} differs")
+        endif()
+    endforeach()
+    run(0 ignored recipe-append "${root}/big-${codec}.sadx" "${added}" "${root}/big-${codec}-next.sadx")
+endforeach()
+# Damaged LZMA2 payloads must never yield wrong bytes.
+run(0 fault payload-fault-profile "${root}/big-lzma2-6.sadx" "${big}")
+string(JSON accepted GET "${fault}" wrong_bytes_accepted)
+string(JSON cases LENGTH "${fault}" cases)
+if(NOT accepted EQUAL 0 OR NOT cases EQUAL 3)
+    message(FATAL_ERROR "LZMA2 payload fault profile accepted wrong bytes")
+endif()
+# Different codecs give different payloads; the same codec at another level may too.
+execute_process(COMMAND "${TOOL}" payload-compare "${root}/big-zstd-19.sadx" "${root}/big-lzma2-6.sadx"
+    RESULT_VARIABLE differ OUTPUT_QUIET ERROR_QUIET)
+if(differ EQUAL 0)
+    message(FATAL_ERROR "Zstd and LZMA2 payloads compared equal")
+endif()
 # A whole-frame recipe encodes the same frames as the revision-2 writer.
 run(0 ignored bounded-pack seed 1073741824 "${first}" "${root}/legacy.sadx")
 run(0 ignored payload-compare "${root}/legacy.sadx" "${root}/g1-r0-whole-seed.sadx")
@@ -136,7 +171,13 @@ run(0 ignored recipe-append "${root}/g1-r0-whole-explicit.sadx" "${added}" "${ro
 run(0 ignored verify "${root}/explicit-next.sadx" "${all}")
 
 # 4. Refusals publish nothing.
-foreach(bad "solid/zstd-3/g1-r0/frame-32MiB" "solid/zstd-9/g1-r0/frame-48MiB" "solid/zstd-9/g9-r0/frame-32MiB" "0x8000" "0x2520" "0x24e0")
+# Zstd 0 / 20, LZMA2 10, leading zero, unknown codec, frame 48 MiB, k 9; Seeds: bit 15, frame
+# code 7, codec 2, LZMA2 level 10.
+foreach(bad "solid/zstd-0/g1-r0/frame-32MiB" "solid/zstd-20/g1-r0/frame-32MiB"
+        "solid/lzma2-10/g1-r0/frame-32MiB" "solid/zstd-09/g1-r0/frame-32MiB"
+        "solid/brotli-5/g1-r0/frame-32MiB" "solid/zstd-9/g1-r0/frame-48MiB"
+        "solid/zstd-9/g9-r0/frame-32MiB" "solid/zstd-9/g1-r0/frame-32MiB/" "0x8000" "0x24e0"
+        "0x2620" "0x2920")
     run(2 ignored recipe-pack seed "${bad}" "${first}" "${root}/bad.sadx")
 endforeach()
 run(2 ignored recipe-pack other "solid/zstd-9/g1-r0/frame-32MiB" "${first}" "${root}/bad.sadx")

@@ -68,6 +68,24 @@ compress_solid(std::span<const std::byte> input, std::uint32_t level);
 [[nodiscard]] std::expected<std::size_t, Error>
 decompress_solid_prefix(std::span<const std::byte> prefix, std::span<std::byte> output);
 
+// Solid frames by recipe codec (ADR-0006): solid_zstd = the functions above (levels 1-19);
+// solid_lzma2 = one raw LZMA2 stream (liblzma preset 0-9, dictionary capped at the input size,
+// end marker required). Decoding needs no recorded parameters: the LZMA2 dictionary is sized
+// to the output, which bounds every match distance, and memory is checked before allocation.
+inline constexpr std::uint32_t solid_zstd = 0;
+inline constexpr std::uint32_t solid_lzma2 = 1;
+[[nodiscard]] bool valid_solid_codec(std::uint32_t codec, std::uint32_t level) noexcept;
+[[nodiscard]] std::expected<std::vector<std::byte>, Error>
+compress_solid_codec(std::uint32_t codec, std::uint32_t level, std::span<const std::byte> input);
+[[nodiscard]] std::expected<void, Error>
+decompress_solid_codec(std::uint32_t codec, std::span<const std::byte> frame,
+                       std::span<std::byte> output);
+// As decompress_solid_prefix: stops when `output` is full, the stream ends or no progress is
+// possible; returns the leading bytes produced, which callers must verify themselves.
+[[nodiscard]] std::expected<std::size_t, Error>
+decompress_solid_prefix_codec(std::uint32_t codec, std::span<const std::byte> prefix,
+                              std::span<std::byte> output);
+
 // Decodes exactly one frame made with the same dictionary into exactly output.size() bytes.
 // Rejects a missing / different dictionary ID, trailing input, a wrong content size and a
 // declared window larger than the dictionary plus the block needs.

@@ -164,6 +164,9 @@ std::string encode_utf8(std::u32string_view text) {
 }
 
 bool is_assigned(char32_t code_point) noexcept {
+    if (code_point < 0x80) {
+        return true; // all of ASCII is assigned (controls are Cc)
+    }
     const auto it = std::ranges::upper_bound(tables::assigned_ranges, code_point, {},
                                              &tables::CodeRange::first);
     return it != std::begin(tables::assigned_ranges) && code_point <= std::prev(it)->last;
@@ -234,6 +237,11 @@ bool is_nfc(std::u32string_view text) {
 }
 
 char32_t simple_fold(char32_t code_point) noexcept {
+    if (code_point < 0x80) {
+        // CaseFolding.txt folds exactly A-Z in ASCII (status C); checked against the table in
+        // tests/path_tests.cpp.
+        return code_point >= U'A' && code_point <= U'Z' ? code_point - U'A' + U'a' : code_point;
+    }
     const auto *row = find_row(tables::simple_folds, code_point, &tables::SimpleFold::code_point);
     return row == nullptr ? code_point : row->folded;
 }

@@ -55,7 +55,12 @@ class ArchiveReader {
 
 constexpr std::uint64_t max_trailer_read = 256ULL << 20;
 
-std::expected<Model, Error> parse_indexed(ArchiveReader &in) {
+struct IndexTiming {
+    double read_ms = 0, manifest_ms = 0; // the rest of index_ms is trailer interpretation
+};
+std::expected<Model, Error> parse_indexed(ArchiveReader &in, IndexTiming *timing = nullptr) {
+    const auto read_start = wall_ms();
+    double reading = 0;
     auto head = in.read(0, header_bytes);
     if (!head) {
         return std::unexpected(head.error());
@@ -88,6 +93,7 @@ std::expected<Model, Error> parse_indexed(ArchiveReader &in) {
     if (seedarc::experimental::crc32c(*trailer) != footer->trailer_crc) {
         return std::unexpected(bad("trailer checksum mismatch"));
     }
+    reading = wall_ms() - read_start; // header, footer, trailer and its CRC
     const auto limit = footer->trailer_offset;
     const GenFetch fetch = [&](std::uint64_t off) -> std::optional<GenRecord> {
         if (off > limit || limit - off < record_overhead) {
@@ -114,7 +120,13 @@ std::expected<Model, Error> parse_indexed(ArchiveReader &in) {
         }
         return GenRecord{{rec->body.begin(), rec->body.end()}, off + rec->end};
     };
-    return parse_index(*header, seedarc::experimental::crc32c(*head), *trailer, limit, fetch, {});
+    double manifest = 0;
+    auto model = parse_index(*header, seedarc::experimental::crc32c(*head), *trailer, limit, fetch,
+                             {}, &manifest);
+    if (timing != nullptr) {
+        *timing = {reading, manifest};
+    }
+    return model;
 }
 
 struct ExtractStats {
@@ -150,7 +162,8 @@ std::expected<ExtractStats, Error> extract_one(ArchiveReader &in, const Model &m
         s.read_ms = wall_ms() - t0;
         t0 = wall_ms();
         decoded.resize(static_cast<std::size_t>(e->frame_offset + e->size)); // <= f.raw (parse)
-        const auto produced = research::decompress_solid_prefix(*stored, decoded);
+        const auto produced =
+            research::decompress_solid_prefix_codec(frame_codec(m, f), *stored, decoded);
         if (!produced) {
             return std::unexpected(produced.error());
         }
@@ -286,7 +299,8 @@ int cmd_extract_profile(const fs::path &archive, const fs::path &input, std::siz
         if (!in) {
             return fail(in.error());
         }
-        auto model = parse_indexed(*in);
+        IndexTiming timing;
+        auto model = parse_indexed(*in, &timing);
         if (!model) {
             return fail(model.error());
         }
@@ -317,6 +331,8 @@ int cmd_extract_profile(const fs::path &archive, const fs::path &input, std::siz
                    ",\"archive_bytes_read\":" + std::to_string(in->bytes_read()) +
                    ",\"reads\":" + std::to_string(in->reads()) +
                    ",\"index_ms\":" + std::to_string(index_ms) +
+                   ",\"index_read_ms\":" + std::to_string(timing.read_ms) +
+                   ",\"index_manifest_ms\":" + std::to_string(timing.manifest_ms) +
                    ",\"wall_ms\":" + std::to_string(elapsed) + "}";
     }
     auto sorted = times;

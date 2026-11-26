@@ -3,11 +3,13 @@
 
 #include "codec/codec.hpp"
 
+#include <lzma.h>
 #include <zdict.h>
 #include <zstd.h>
 #include <zstd_errors.h>
 
 #include <algorithm>
+#include <array>
 #include <numeric>
 #include <string>
 #include <utility>
@@ -249,6 +251,143 @@ std::expected<std::size_t, Error> decompress_solid_prefix(std::span<const std::b
         }
     }
     return out.pos;
+}
+
+namespace {
+// The LZMA2 dictionary that covers every match distance of `size` decoded bytes.
+std::uint32_t lzma2_solid_dictionary(std::size_t size) noexcept {
+    return static_cast<std::uint32_t>(std::clamp<std::size_t>(size, LZMA_DICT_SIZE_MIN, max_solid_bytes));
+}
+// Raw LZMA2 decoder filter chain for `size` output bytes, with the memory check of codec.cpp.
+std::expected<void, Error> lzma2_solid_filters(std::size_t size, lzma_options_lzma &options,
+                                               std::array<lzma_filter, 2> &filters) {
+    options = {};
+    options.dict_size = lzma2_solid_dictionary(size);
+    filters = {{{LZMA_FILTER_LZMA2, &options}, {LZMA_VLI_UNKNOWN, nullptr}}};
+    const auto memory = lzma_raw_decoder_memusage(filters.data());
+    if (memory == UINT64_MAX || memory > std::uint64_t{options.dict_size} + (1U << 20)) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "LZMA2 frame needs too much memory"});
+    }
+    return {};
+}
+struct LzmaStreamEnd {
+    lzma_stream *stream;
+    ~LzmaStreamEnd() { lzma_end(stream); }
+};
+} // namespace
+
+bool valid_solid_codec(std::uint32_t codec, std::uint32_t level) noexcept {
+    return (codec == solid_zstd && valid_block_codec(zstd_id, level)) ||
+           (codec == solid_lzma2 && valid_block_codec(lzma2_id, level));
+}
+
+std::expected<std::vector<std::byte>, Error>
+compress_solid_codec(std::uint32_t codec, std::uint32_t level, std::span<const std::byte> input) {
+    if (!valid_solid_codec(codec, level) || input.empty() || input.size() > max_solid_bytes) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid solid codec or input"});
+    }
+    if (codec == solid_zstd) {
+        return compress_solid(input, level);
+    }
+    lzma_options_lzma options{};
+    if (lzma_lzma_preset(&options, level) != 0) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid LZMA2 preset"});
+    }
+    options.dict_size = (std::min)(options.dict_size, lzma2_solid_dictionary(input.size()));
+    const std::array<lzma_filter, 2> filters{
+        {{LZMA_FILTER_LZMA2, &options}, {LZMA_VLI_UNKNOWN, nullptr}}};
+    std::vector<std::byte> out(lzma_block_buffer_bound(input.size()));
+    std::size_t written = 0;
+    const auto result = lzma_raw_buffer_encode(
+        filters.data(), nullptr, reinterpret_cast<const std::uint8_t *>(input.data()), input.size(),
+        reinterpret_cast<std::uint8_t *>(out.data()), &written, out.size());
+    if (result == LZMA_MEM_ERROR || result == LZMA_MEMLIMIT_ERROR) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "LZMA2 encoder out of memory"});
+    }
+    if (result != LZMA_OK) {
+        return std::unexpected(Error{ErrorCode::io_error, "LZMA2 solid compression failed: code " +
+                                                              std::to_string(static_cast<int>(result))});
+    }
+    out.resize(written);
+    return out;
+}
+
+std::expected<void, Error> decompress_solid_codec(std::uint32_t codec,
+                                                  std::span<const std::byte> frame,
+                                                  std::span<std::byte> output) {
+    if (codec == solid_zstd) {
+        return decompress_solid(frame, output);
+    }
+    if (codec != solid_lzma2) {
+        return std::unexpected(corrupt("unknown solid codec"));
+    }
+    if (frame.empty() || output.empty() || output.size() > max_solid_bytes) {
+        return std::unexpected(corrupt("empty or oversized solid frame"));
+    }
+    lzma_options_lzma options{};
+    std::array<lzma_filter, 2> filters{};
+    if (auto ok = lzma2_solid_filters(output.size(), options, filters); !ok) {
+        return ok;
+    }
+    std::size_t consumed = 0, produced = 0;
+    const auto result = lzma_raw_buffer_decode(
+        filters.data(), nullptr, reinterpret_cast<const std::uint8_t *>(frame.data()), &consumed,
+        frame.size(), reinterpret_cast<std::uint8_t *>(output.data()), &produced, output.size());
+    if (result == LZMA_MEM_ERROR || result == LZMA_MEMLIMIT_ERROR) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "LZMA2 frame needs too much memory"});
+    }
+    // LZMA_OK: the end marker was reached; the whole frame must be used and fill the output.
+    if (result != LZMA_OK || consumed != frame.size() || produced != output.size()) {
+        return std::unexpected(corrupt("LZMA2 solid frame is invalid, truncated or has trailing "
+                                       "bytes (code " + std::to_string(static_cast<int>(result)) + ")"));
+    }
+    return {};
+}
+
+std::expected<std::size_t, Error> decompress_solid_prefix_codec(std::uint32_t codec,
+                                                                std::span<const std::byte> prefix,
+                                                                std::span<std::byte> output) {
+    if (codec == solid_zstd) {
+        return decompress_solid_prefix(prefix, output);
+    }
+    if (codec != solid_lzma2) {
+        return std::unexpected(corrupt("unknown solid codec"));
+    }
+    if (prefix.empty() || output.empty() || output.size() > max_solid_bytes) {
+        return std::unexpected(corrupt("empty or oversized solid frame"));
+    }
+    lzma_options_lzma options{};
+    std::array<lzma_filter, 2> filters{};
+    if (auto ok = lzma2_solid_filters(output.size(), options, filters); !ok) {
+        return std::unexpected(ok.error());
+    }
+    lzma_stream stream = LZMA_STREAM_INIT;
+    if (lzma_raw_decoder(&stream, filters.data()) != LZMA_OK) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "cannot create LZMA2 decoder"});
+    }
+    const LzmaStreamEnd end{&stream};
+    stream.next_in = reinterpret_cast<const std::uint8_t *>(prefix.data());
+    stream.avail_in = prefix.size();
+    stream.next_out = reinterpret_cast<std::uint8_t *>(output.data());
+    stream.avail_out = output.size();
+    while (stream.avail_in > 0 && stream.avail_out > 0) {
+        const auto before_in = stream.avail_in, before_out = stream.avail_out;
+        const auto result = lzma_code(&stream, LZMA_RUN);
+        if (result == LZMA_STREAM_END) {
+            break;
+        }
+        if (result == LZMA_MEM_ERROR || result == LZMA_MEMLIMIT_ERROR) {
+            return std::unexpected(Error{ErrorCode::resource_limit, "LZMA2 frame needs too much memory"});
+        }
+        if (result != LZMA_OK) {
+            return std::unexpected(corrupt("LZMA2 solid frame is invalid (code " +
+                                           std::to_string(static_cast<int>(result)) + ")"));
+        }
+        if (stream.avail_in == before_in && stream.avail_out == before_out) {
+            break; // no progress possible with this input
+        }
+    }
+    return output.size() - stream.avail_out;
 }
 
 struct DictionaryDecoder::Impl {
