@@ -1,0 +1,11 @@
+{
+  "xcpu-tool.tar.gz": "d80c200dd6db0c134ef2d2ae3b6bc732442c2f5b7eaa261a21768fbf3bda0a3a",
+  "xcpu-data.tar.xz": "153756043c085dd3a4a500922bd4fee3c8bca8b1b3e4026a6aecb4025734437a",
+  "linux_files": 3919,
+  "linux_bytes": 41943033,
+  "silesia": [
+    "silesia/xml",
+    "silesia/reymont",
+    "silesia/sao"
+  ]
+}

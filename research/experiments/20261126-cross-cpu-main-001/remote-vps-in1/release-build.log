@@ -1,0 +1,164 @@
+[1/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/version.cpp for CXX dependencies
+[2/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/checked_arithmetic.cpp for CXX dependencies
+[3/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/archive_index.cpp for CXX dependencies
+[4/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/archive.cpp for CXX dependencies
+[5/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/filesystem/unicode_profile.cpp for CXX dependencies
+[6/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/filesystem/archive_path.cpp for CXX dependencies
+[7/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/store_archive.cpp for CXX dependencies
+[8/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/filesystem/safe_output.cpp for CXX dependencies
+[9/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/filesystem/input_tree.cpp for CXX dependencies
+[10/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/codec/codec.cpp for CXX dependencies
+[11/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/filesystem/safe_output_posix.cpp for CXX dependencies
+[12/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/seed/strategy.cpp for CXX dependencies
+[13/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/filesystem/input_tree_posix.cpp for CXX dependencies
+[14/164] Generating CXX dyndep file core/CMakeFiles/libseedarc.dir/CXX.dd
+[15/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/seed/file_overrides.cpp for CXX dependencies
+[16/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/seed/path_overrides.cpp for CXX dependencies
+[17/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/seed/archive_study.cpp for CXX dependencies
+[18/164] Building CXX object core/CMakeFiles/libseedarc.dir/version.cpp.o
+[19/164] Building CXX object core/CMakeFiles/libseedarc.dir/checked_arithmetic.cpp.o
+[20/164] Building CXX object core/CMakeFiles/libseedarc.dir/archive.cpp.o
+[21/164] Building CXX object core/CMakeFiles/libseedarc.dir/archive_index.cpp.o
+[22/164] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/archive_path.cpp.o
+[23/164] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/unicode_profile.cpp.o
+[24/164] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/safe_output.cpp.o
+[25/164] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/input_tree.cpp.o
+[26/164] Building CXX object core/CMakeFiles/libseedarc.dir/codec/codec.cpp.o
+[27/164] Building CXX object core/CMakeFiles/libseedarc.dir/store_archive.cpp.o
+[28/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/seed/adaptive_file.cpp for CXX dependencies
+[29/164] Generating CXX dyndep file core/CMakeFiles/seedarc_seed_study.dir/CXX.dd
+[30/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/core/codec/dictionary.cpp for CXX dependencies
+[31/164] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/strategy.cpp.o
+[32/164] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/file_overrides.cpp.o
+[33/164] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/safe_output_posix.cpp.o
+[34/164] Building CXX object core/CMakeFiles/libseedarc.dir/filesystem/input_tree_posix.cpp.o
+[35/164] Linking CXX static library core/liblibseedarc.a
+[36/164] Generating CXX dyndep file core/CMakeFiles/seedarc_codec_dictionary.dir/CXX.dd
+[37/164] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/path_overrides.cpp.o
+[38/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/cli/main.cpp for CXX dependencies
+[39/164] Generating CXX dyndep file cli/CMakeFiles/seedarc_cli.dir/CXX.dd
+[40/164] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/archive_study.cpp.o
+[41/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/research/tools/seed_plan.cpp for CXX dependencies
+[42/164] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_plan.dir/CXX.dd
+[43/164] Building CXX object core/CMakeFiles/seedarc_codec_dictionary.dir/codec/dictionary.cpp.o
+[44/164] Linking CXX static library core/libseedarc_codec_dictionary.a
+[45/164] Building CXX object cli/CMakeFiles/seedarc_cli.dir/main.cpp.o
+[46/164] Building CXX object research/tools/CMakeFiles/seedarc_seed_plan.dir/seed_plan.cpp.o
+[47/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/research/tools/seed_scope_plan.cpp for CXX dependencies
+[48/164] Linking CXX executable cli/seedarc
+[49/164] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_scope_plan.dir/CXX.dd
+[50/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/research/tools/seed_scope_contract.cpp for CXX dependencies
+[51/164] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_seed_scope_contract.dir/CXX.dd
+[52/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/research/tools/g5_study.cpp for CXX dependencies
+[53/164] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_g5_study.dir/CXX.dd
+[54/164] Building CXX object core/CMakeFiles/seedarc_seed_study.dir/seed/adaptive_file.cpp.o
+[55/164] Linking CXX static library core/libseedarc_seed_study.a
+[56/164] Linking CXX executable research/tools/seedarc_seed_plan
+[57/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/research/tools/append_study.cpp for CXX dependencies
+[58/164] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_append_study.dir/CXX.dd
+[59/164] Building CXX object research/tools/CMakeFiles/seedarc_seed_scope_plan.dir/seed_scope_plan.cpp.o
+[60/164] Linking CXX executable research/tools/seedarc_seed_scope_plan
+[61/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/research/tools/append4_study.cpp for CXX dependencies
+[62/164] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_append4_study.dir/CXX.dd
+[63/164] Building CXX object research/tools/CMakeFiles/seedarc_seed_scope_contract.dir/seed_scope_contract.cpp.o
+[64/164] Linking CXX executable research/tools/seedarc_seed_scope_contract
+[65/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/research/tools/path_check.cpp for CXX dependencies
+[66/164] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_path_check.dir/CXX.dd
+[67/164] Building CXX object research/tools/CMakeFiles/seedarc_path_check.dir/path_check.cpp.o
+[68/164] Linking CXX executable research/tools/seedarc_path_check
+[69/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/research/tools/dict_study.cpp for CXX dependencies
+[70/164] Generating CXX dyndep file research/tools/CMakeFiles/seedarc_dict_study.dir/CXX.dd
+[71/164] Building CXX object research/tools/CMakeFiles/seedarc_g5_study.dir/g5_study.cpp.o
+[72/164] Linking CXX executable research/tools/seedarc_g5_study
+[73/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/core_tests.cpp for CXX dependencies
+[74/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_core_tests.dir/CXX.dd
+[75/164] Building CXX object tests/CMakeFiles/seedarc_core_tests.dir/core_tests.cpp.o
+[76/164] Linking CXX executable tests/seedarc_core_tests
+[77/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/seed_strategy_tests.cpp for CXX dependencies
+[78/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_strategy_tests.dir/CXX.dd
+[79/164] Building CXX object research/tools/CMakeFiles/seedarc_dict_study.dir/dict_study.cpp.o
+[80/164] Linking CXX executable research/tools/seedarc_dict_study
+[81/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/seed_file_override_tests.cpp for CXX dependencies
+[82/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_file_override_tests.dir/CXX.dd
+[83/164] Building CXX object tests/CMakeFiles/seedarc_seed_strategy_tests.dir/seed_strategy_tests.cpp.o
+[84/164] Linking CXX executable tests/seedarc_seed_strategy_tests
+[85/164] Building CXX object research/tools/CMakeFiles/seedarc_append_study.dir/append_study.cpp.o
+[86/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/seed_path_override_tests.cpp for CXX dependencies
+[87/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_path_override_tests.dir/CXX.dd
+[88/164] Linking CXX executable research/tools/seedarc_append_study
+[89/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/codec_dictionary_tests.cpp for CXX dependencies
+[90/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_codec_dictionary_tests.dir/CXX.dd
+[91/164] Building CXX object tests/CMakeFiles/seedarc_seed_file_override_tests.dir/seed_file_override_tests.cpp.o
+[92/164] Linking CXX executable tests/seedarc_seed_file_override_tests
+[93/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/m3_compatibility_tests.cpp for CXX dependencies
+[94/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_m3_compatibility_tests.dir/CXX.dd
+[95/164] Building CXX object tests/CMakeFiles/seedarc_m3_compatibility_tests.dir/m3_compatibility_tests.cpp.o
+[96/164] Building CXX object tests/CMakeFiles/seedarc_seed_path_override_tests.dir/seed_path_override_tests.cpp.o
+[97/164] Linking CXX executable tests/seedarc_seed_path_override_tests
+[98/164] Linking CXX executable tests/seedarc_m3_compatibility_tests
+[99/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/archive_tests.cpp for CXX dependencies
+[100/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/unicode_tests.cpp for CXX dependencies
+[101/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_archive_tests.dir/CXX.dd
+[102/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_unicode_tests.dir/CXX.dd
+[103/164] Building CXX object tests/CMakeFiles/seedarc_codec_dictionary_tests.dir/codec_dictionary_tests.cpp.o
+[104/164] Linking CXX executable tests/seedarc_codec_dictionary_tests
+[105/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/path_tests.cpp for CXX dependencies
+[106/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_path_tests.dir/CXX.dd
+[107/164] Building CXX object tests/CMakeFiles/seedarc_archive_tests.dir/archive_tests.cpp.o
+[108/164] Linking CXX executable tests/seedarc_archive_tests
+[109/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/index_tests.cpp for CXX dependencies
+[110/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_index_tests.dir/CXX.dd
+[111/164] Building CXX object tests/CMakeFiles/seedarc_path_tests.dir/path_tests.cpp.o
+[112/164] Linking CXX executable tests/seedarc_path_tests
+[113/164] Building CXX object tests/CMakeFiles/seedarc_unicode_tests.dir/unicode_tests.cpp.o
+[114/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/seed_archive_tests.cpp for CXX dependencies
+[115/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_archive_tests.dir/CXX.dd
+[116/164] Linking CXX executable tests/seedarc_unicode_tests
+[117/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/seed_adaptive_tests.cpp for CXX dependencies
+[118/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/CXX.dd
+[119/164] Building CXX object tests/CMakeFiles/seedarc_index_tests.dir/index_tests.cpp.o
+[120/164] Linking CXX executable tests/seedarc_index_tests
+[121/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/safe_output_posix_tests.cpp for CXX dependencies
+[122/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_safe_output_tests.dir/CXX.dd
+[123/164] Building CXX object tests/CMakeFiles/seedarc_seed_archive_tests.dir/seed_archive_tests.cpp.o
+[124/164] Linking CXX executable tests/seedarc_seed_archive_tests
+[125/164] Building CXX object tests/CMakeFiles/seedarc_seed_adaptive_tests.dir/seed_adaptive_tests.cpp.o
+[126/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/store_archive_tests.cpp for CXX dependencies
+[127/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_archive_tests.dir/CXX.dd
+[128/164] Linking CXX executable tests/seedarc_seed_adaptive_tests
+[129/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/store_acceptance_tests.cpp for CXX dependencies
+[130/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_acceptance_tests.dir/CXX.dd
+[131/164] Building CXX object tests/CMakeFiles/seedarc_safe_output_tests.dir/safe_output_posix_tests.cpp.o
+[132/164] Linking CXX executable tests/seedarc_safe_output_tests
+[133/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/codec_tests.cpp for CXX dependencies
+[134/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_codec_tests.dir/CXX.dd
+[135/164] Building CXX object tests/CMakeFiles/seedarc_store_acceptance_tests.dir/store_acceptance_tests.cpp.o
+[136/164] Linking CXX executable tests/seedarc_store_acceptance_tests
+[137/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/tests/store_memory_test.cpp for CXX dependencies
+[138/164] Generating CXX dyndep file tests/CMakeFiles/seedarc_store_memory_test.dir/CXX.dd
+[139/164] Building CXX object tests/CMakeFiles/seedarc_store_memory_test.dir/store_memory_test.cpp.o
+[140/164] Linking CXX executable tests/seedarc_store_memory_test
+[141/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/fuzz/header_fuzz.cpp for CXX dependencies
+[142/164] Building CXX object research/tools/CMakeFiles/seedarc_append4_study.dir/append4_study.cpp.o
+[143/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/fuzz/replay_main.cpp for CXX dependencies
+[144/164] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_header.dir/CXX.dd
+[145/164] Linking CXX executable research/tools/seedarc_append4_study
+[146/164] Building CXX object tests/CMakeFiles/seedarc_store_archive_tests.dir/store_archive_tests.cpp.o
+[147/164] Linking CXX executable tests/seedarc_store_archive_tests
+[148/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/fuzz/path_fuzz.cpp for CXX dependencies
+[149/164] Building CXX object fuzz/CMakeFiles/seedarc_fuzz_replay_header.dir/header_fuzz.cpp.o
+[150/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/fuzz/replay_main.cpp for CXX dependencies
+[151/164] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_path.dir/CXX.dd
+[152/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/fuzz/archive_fuzz.cpp for CXX dependencies
+[153/164] Building CXX object tests/CMakeFiles/seedarc_codec_tests.dir/codec_tests.cpp.o
+[154/164] Building CXX object fuzz/CMakeFiles/seedarc_fuzz_replay_path.dir/path_fuzz.cpp.o
+[155/164] Linking CXX executable tests/seedarc_codec_tests
+[156/164] Scanning /home/sc/long-tasks/20261126T091214Z-b0e1234e/work/source/fuzz/replay_main.cpp for CXX dependencies
+[157/164] Generating CXX dyndep file fuzz/CMakeFiles/seedarc_fuzz_replay_archive.dir/CXX.dd
+[158/164] Building CXX object fuzz/CMakeFiles/seedarc_fuzz_replay_header.dir/replay_main.cpp.o
+[159/164] Linking CXX executable fuzz/seedarc_fuzz_replay_header
+[160/164] Building CXX object fuzz/CMakeFiles/seedarc_fuzz_replay_path.dir/replay_main.cpp.o
+[161/164] Linking CXX executable fuzz/seedarc_fuzz_replay_path
+[162/164] Building CXX object fuzz/CMakeFiles/seedarc_fuzz_replay_archive.dir/archive_fuzz.cpp.o
+[163/164] Building CXX object fuzz/CMakeFiles/seedarc_fuzz_replay_archive.dir/replay_main.cpp.o
+[164/164] Linking CXX executable fuzz/seedarc_fuzz_replay_archive

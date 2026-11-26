@@ -1,0 +1,104 @@
+[1/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/version.cpp for CXX dependencies
+[2/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/checked_arithmetic.cpp for CXX dependencies
+[3/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp for CXX dependencies
+[4/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive_index.cpp for CXX dependencies
+[5/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/store_archive.cpp for CXX dependencies
+[6/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/filesystem/archive_path.cpp for CXX dependencies
+[7/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/filesystem/unicode_profile.cpp for CXX dependencies
+[8/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/filesystem/safe_output.cpp for CXX dependencies
+[9/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/filesystem/input_tree.cpp for CXX dependencies
+[10/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/filesystem/safe_output_posix.cpp for CXX dependencies
+[11/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/codec/codec.cpp for CXX dependencies
+[12/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/filesystem/input_tree_posix.cpp for CXX dependencies
+[13/164] Generating CXX dyndep file core/CMakeFiles/libseedarc.dir/CXX.dd
+[14/164] Scanning /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/seed/strategy.cpp for CXX dependencies
+[15/164] Building CXX object core/CMakeFiles/libseedarc.dir/version.cpp.o
+[16/164] Building CXX object core/CMakeFiles/libseedarc.dir/checked_arithmetic.cpp.o
+FAILED: core/CMakeFiles/libseedarc.dir/checked_arithmetic.cpp.o 
+/usr/bin/clang++-18  -I/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/include -I/home/sc/long-tasks/20261126T090816Z-07621354/work/asan/core/generated -I/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core -isystem /home/sc/seedarc-env/installed/x64-linux/include -fsanitize=address,undefined -fno-sanitize-recover=undefined -fno-omit-frame-pointer -g -std=c++23 -Wall -Wextra -Wpedantic -MD -MT core/CMakeFiles/libseedarc.dir/checked_arithmetic.cpp.o -MF core/CMakeFiles/libseedarc.dir/checked_arithmetic.cpp.o.d @core/CMakeFiles/libseedarc.dir/checked_arithmetic.cpp.o.modmap -o core/CMakeFiles/libseedarc.dir/checked_arithmetic.cpp.o -c /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/checked_arithmetic.cpp
+In file included from /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/checked_arithmetic.cpp:2:
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/include/seedarc/checked_arithmetic.hpp:10:20: error: no template named 'expected' in namespace 'std'
+   10 | [[nodiscard]] std::expected<std::uint64_t, Error> checked_add(std::uint64_t left,
+      |               ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/include/seedarc/checked_arithmetic.hpp:12:20: error: no template named 'expected' in namespace 'std'
+   12 | [[nodiscard]] std::expected<std::uint64_t, Error> checked_multiply(std::uint64_t left,
+      |               ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/checked_arithmetic.cpp:7:6: error: no template named 'expected' in namespace 'std'
+    7 | std::expected<std::uint64_t, Error> checked_add(std::uint64_t left, std::uint64_t right) {
+      | ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/checked_arithmetic.cpp:9:21: error: no member named 'unexpected' in namespace 'std'
+    9 |         return std::unexpected(Error{ErrorCode::arithmetic_overflow, "uint64 addition overflow"});
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/checked_arithmetic.cpp:14:6: error: no template named 'expected' in namespace 'std'
+   14 | std::expected<std::uint64_t, Error> checked_multiply(std::uint64_t left, std::uint64_t right) {
+      | ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/checked_arithmetic.cpp:16:21: error: no member named 'unexpected' in namespace 'std'
+   16 |         return std::unexpected(
+      |                ~~~~~^
+6 errors generated.
+[17/164] Building CXX object core/CMakeFiles/libseedarc.dir/archive.cpp.o
+FAILED: core/CMakeFiles/libseedarc.dir/archive.cpp.o 
+/usr/bin/clang++-18  -I/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/include -I/home/sc/long-tasks/20261126T090816Z-07621354/work/asan/core/generated -I/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core -isystem /home/sc/seedarc-env/installed/x64-linux/include -fsanitize=address,undefined -fno-sanitize-recover=undefined -fno-omit-frame-pointer -g -std=c++23 -Wall -Wextra -Wpedantic -MD -MT core/CMakeFiles/libseedarc.dir/archive.cpp.o -MF core/CMakeFiles/libseedarc.dir/archive.cpp.o.d @core/CMakeFiles/libseedarc.dir/archive.cpp.o.modmap -o core/CMakeFiles/libseedarc.dir/archive.cpp.o -c /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp
+In file included from /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:2:
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/include/seedarc/archive.hpp:87:20: error: no template named 'expected' in namespace 'std'
+   87 | [[nodiscard]] std::expected<void, Error> validate_header(const ArchiveHeader &header,
+      |               ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/include/seedarc/archive.hpp:90:20: error: no template named 'expected' in namespace 'std'
+   90 | [[nodiscard]] std::expected<std::array<std::byte, archive_header_bytes>, Error>
+      |               ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/include/seedarc/archive.hpp:93:20: error: no template named 'expected' in namespace 'std'
+   93 | [[nodiscard]] std::expected<ArchiveHeader, Error> decode_header(std::span<const std::byte> bytes,
+      |               ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/include/seedarc/archive.hpp:97:20: error: no template named 'expected' in namespace 'std'
+   97 | [[nodiscard]] std::expected<void, Error>
+      |               ~~~~~^
+In file included from /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:3:
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/codec/codec.hpp:33:31: error: no template named 'expected' in namespace 'std'
+   33 |     [[nodiscard]] static std::expected<Encoder, Error> create(std::uint32_t id,
+      |                          ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/codec/codec.hpp:42:24: error: no template named 'expected' in namespace 'std'
+   42 |     [[nodiscard]] std::expected<std::size_t, Error> encode(std::span<const std::byte> input,
+      |                   ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/codec/codec.hpp:61:24: error: no template named 'expected' in namespace 'std'
+   61 |     [[nodiscard]] std::expected<void, Error>
+      |                   ~~~~~^
+In file included from /home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:4:
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/include/seedarc/checked_arithmetic.hpp:10:20: error: no template named 'expected' in namespace 'std'
+   10 | [[nodiscard]] std::expected<std::uint64_t, Error> checked_add(std::uint64_t left,
+      |               ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/include/seedarc/checked_arithmetic.hpp:12:20: error: no template named 'expected' in namespace 'std'
+   12 | [[nodiscard]] std::expected<std::uint64_t, Error> checked_multiply(std::uint64_t left,
+      |               ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:48:6: error: no template named 'expected' in namespace 'std'
+   48 | std::expected<void, Error> validate_header(const ArchiveHeader &header,
+      | ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:52:21: error: no member named 'unexpected' in namespace 'std'
+   52 |         return std::unexpected(Error{ErrorCode::unsupported_feature,
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:56:21: error: no member named 'unexpected' in namespace 'std'
+   56 |         return std::unexpected(Error{ErrorCode::malformed_archive, "invalid seed length"});
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:59:21: error: no member named 'unexpected' in namespace 'std'
+   59 |         return std::unexpected(
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:63:21: error: no member named 'unexpected' in namespace 'std'
+   63 |         return std::unexpected(
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:67:21: error: no member named 'unexpected' in namespace 'std'
+   67 |         return std::unexpected(Error{ErrorCode::malformed_archive, "zero archive chunk size"});
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:73:21: error: no member named 'unexpected' in namespace 'std'
+   73 |         return std::unexpected(
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:80:21: error: no member named 'unexpected' in namespace 'std'
+   80 |         return std::unexpected(
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:85:21: error: no member named 'unexpected' in namespace 'std'
+   85 |         return std::unexpected(
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:89:21: error: no member named 'unexpected' in namespace 'std'
+   89 |         return std::unexpected(
+      |                ~~~~~^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+ninja: build stopped: subcommand failed.

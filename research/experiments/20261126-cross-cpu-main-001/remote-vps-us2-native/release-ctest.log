@@ -1,0 +1,104 @@
+Internal ctest changing into directory: /home/sc/long-tasks/20261126T085832Z-79a30e4d/work/release
+Test project /home/sc/long-tasks/20261126T085832Z-79a30e4d/work/release
+      Start  1: research.g5_study
+ 1/49 Test  #1: research.g5_study ................   Passed    4.67 sec
+      Start  2: research.append_study
+ 2/49 Test  #2: research.append_study ............   Passed    0.82 sec
+      Start  3: research.append4_study
+ 3/49 Test  #3: research.append4_study ...........   Passed   13.97 sec
+      Start  4: research.solid_seed
+ 4/49 Test  #4: research.solid_seed ..............   Passed    1.31 sec
+      Start  5: research.solid_search
+ 5/49 Test  #5: research.solid_search ............   Passed    0.77 sec
+      Start  6: research.bounded_solid
+ 6/49 Test  #6: research.bounded_solid ...........   Passed    0.80 sec
+      Start  7: research.bounded_extract
+ 7/49 Test  #7: research.bounded_extract .........   Passed    1.11 sec
+      Start  8: research.solid_recipe
+ 8/49 Test  #8: research.solid_recipe ............   Passed   74.97 sec
+      Start  9: research.drift_probe
+ 9/49 Test  #9: research.drift_probe .............   Passed    0.58 sec
+      Start 10: core.boundaries
+10/49 Test #10: core.boundaries ..................   Passed    0.01 sec
+      Start 11: seed.candidate_plans
+11/49 Test #11: seed.candidate_plans .............   Passed    0.01 sec
+      Start 12: seed.file_rank_overrides
+12/49 Test #12: seed.file_rank_overrides .........   Passed    0.04 sec
+      Start 13: seed.path_rank_overrides
+13/49 Test #13: seed.path_rank_overrides .........   Passed    0.03 sec
+      Start 14: codec.dictionary_research
+14/49 Test #14: codec.dictionary_research ........   Passed    0.10 sec
+      Start 15: archive.m3_compatibility
+15/49 Test #15: archive.m3_compatibility .........   Passed    0.02 sec
+      Start 16: unicode.conformance
+16/49 Test #16: unicode.conformance ..............   Passed    0.36 sec
+      Start 17: unicode.tables_current
+17/49 Test #17: unicode.tables_current ...........   Passed    0.30 sec
+      Start 18: archive.boundaries
+18/49 Test #18: archive.boundaries ...............   Passed    0.01 sec
+      Start 19: path.boundaries
+19/49 Test #19: path.boundaries ..................   Passed    0.01 sec
+      Start 20: index.boundaries
+20/49 Test #20: index.boundaries .................   Passed    0.01 sec
+      Start 21: seed.archive_integration
+21/49 Test #21: seed.archive_integration .........   Passed    0.18 sec
+      Start 22: seed.adaptive_file
+22/49 Test #22: seed.adaptive_file ...............   Passed    0.39 sec
+      Start 23: filesystem.safe_output
+23/49 Test #23: filesystem.safe_output ...........   Passed    0.17 sec
+      Start 24: archive.store_round_trip
+24/49 Test #24: archive.store_round_trip .........   Passed    5.37 sec
+      Start 25: archive.store_acceptance
+25/49 Test #25: archive.store_acceptance .........   Passed    0.09 sec
+      Start 26: codec.round_trip
+26/49 Test #26: codec.round_trip .................   Passed    0.31 sec
+      Start 27: archive.store_bounded_memory
+27/49 Test #27: archive.store_bounded_memory .....   Passed    5.62 sec
+      Start 28: codec.zstd_bounded_memory
+28/49 Test #28: codec.zstd_bounded_memory ........   Passed    6.64 sec
+      Start 29: codec.lzma2_bounded_memory
+29/49 Test #29: codec.lzma2_bounded_memory .......   Passed   52.84 sec
+      Start 30: cli.help
+30/49 Test #30: cli.help .........................   Passed    0.03 sec
+      Start 31: cli.short_help
+31/49 Test #31: cli.short_help ...................   Passed    0.03 sec
+      Start 32: cli.help_command
+32/49 Test #32: cli.help_command .................   Passed    0.03 sec
+      Start 33: cli.version
+33/49 Test #33: cli.version ......................   Passed    0.03 sec
+      Start 34: cli.missing
+34/49 Test #34: cli.missing ......................   Passed    0.02 sec
+      Start 35: cli.unknown
+35/49 Test #35: cli.unknown ......................   Passed    0.02 sec
+      Start 36: cli.extra
+36/49 Test #36: cli.extra ........................   Passed    0.02 sec
+      Start 37: cli.search
+37/49 Test #37: cli.search .......................   Passed    0.02 sec
+      Start 38: cli.benchmark
+38/49 Test #38: cli.benchmark ....................   Passed    0.02 sec
+      Start 39: cli.compress_usage
+39/49 Test #39: cli.compress_usage ...............   Passed    0.04 sec
+      Start 40: cli.extract_usage
+40/49 Test #40: cli.extract_usage ................   Passed    0.03 sec
+      Start 41: cli.verify_usage
+41/49 Test #41: cli.verify_usage .................   Passed    0.03 sec
+      Start 42: cli.verify_missing
+42/49 Test #42: cli.verify_missing ...............   Passed    0.12 sec
+      Start 43: cli.codec_usage
+43/49 Test #43: cli.codec_usage ..................   Passed    0.05 sec
+      Start 44: cli.round_trip
+44/49 Test #44: cli.round_trip ...................   Passed    0.67 sec
+      Start 45: cli.codec_round_trip
+45/49 Test #45: cli.codec_round_trip .............   Passed    1.56 sec
+      Start 46: cli.posix_refusals
+46/49 Test #46: cli.posix_refusals ...............   Passed    0.67 sec
+      Start 47: fuzz.replay.header
+47/49 Test #47: fuzz.replay.header ...............   Passed    0.01 sec
+      Start 48: fuzz.replay.path
+48/49 Test #48: fuzz.replay.path .................   Passed    0.01 sec
+      Start 49: fuzz.replay.archive
+49/49 Test #49: fuzz.replay.archive ..............   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 49
+
+Total Test time (real) = 174.91 sec

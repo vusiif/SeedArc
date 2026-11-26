@@ -1,0 +1,627 @@
+{
+ "schema": "seedarc.cross-cpu.r0",
+ "host": "vps-hk1",
+ "machine": "x86_64",
+ "cpu": "AMD EPYC 7R13 48-Core Processor",
+ "cpu_flags_avx2": true,
+ "tool_sha256": "6d7ba2026c8f75cfb911d245a650e1ea44dd3678b857cf2a58cdaf3d2c30d9e0",
+ "script_sha256": "043e31bbb2ed54f88a03e797fcdc30c6228b3950c63f9d8beb562fc242dac4cc",
+ "inputs": {
+  "small-all": "212e60c7a844e24987a5b71c7570f88c6bd9f70f9c0a3d42e871f9b80e889059",
+  "big": "6d43117cf8cf0bb56e991662ccf2fd0042215c0a2400d0ece0f293d8bacc54ae",
+  "linux": "e1a19e8135a6a804fa1c353d49bb0084c133850c17886343486a3269c6f73bee",
+  "silesia": "83144f3f1d39e16b93270671fbd7765a59cd5fac2f17a119938818bbfc92a64e"
+ },
+ "archives": {
+  "small-all|pack|solid/zstd-1/g1-r0/frame-16MiB": {
+   "sha256": "ce7c48ccc28f8a56758f028aea49fb3d81d1256f2eec37aaef9a2c7a35533344",
+   "bytes": 1180
+  },
+  "small-all|pack|solid/zstd-3/g1-r0/frame-16MiB": {
+   "sha256": "1d42da74afeabdd6395499fe977582ba89b11e3d7c5b83d90f64f6e35a7fad75",
+   "bytes": 1158
+  },
+  "small-all|pack|solid/zstd-9/g1-r0/frame-16MiB": {
+   "sha256": "1503eff119bb992104822fe9532c2bca7d50753778138f479e40b429ef76d38a",
+   "bytes": 1151
+  },
+  "small-all|pack|solid/zstd-19/g1-r0/frame-16MiB": {
+   "sha256": "c115d2238918cbb99401a56d8c499f8015f6764d0ac7b330f7f922065bc7cf22",
+   "bytes": 1145
+  },
+  "small-all|pack|solid/lzma2-0/g1-r0/frame-16MiB": {
+   "sha256": "08556ee1ae5d4b3d3706a8773446ed6f6fbbb96ae2d23d5453e37c7ecd607536",
+   "bytes": 1201
+  },
+  "small-all|pack|solid/lzma2-6/g1-r0/frame-16MiB": {
+   "sha256": "aeb57818a04e6c38a665aafebc98b853f7898d9d75766855d422197f9ed658e1",
+   "bytes": 1202
+  },
+  "small-all|pack|solid/lzma2-9/g1-r0/frame-16MiB": {
+   "sha256": "b830abe322b156d2771a0b57dccea9919a2d83625323914420fe3b3faf3ea7f5",
+   "bytes": 1202
+  },
+  "small-all|pack|solid/zstd-9/g2-r1/frame-whole": {
+   "sha256": "edf62d465414b35ebd4af6a9b1973503ec4c8607af089d2f634ff1fdc73fdfa8",
+   "bytes": 1231
+  },
+  "small-all|pack|solid/lzma2-6/g2-r1/frame-whole": {
+   "sha256": "198b3108d7890ed342e1f900581989f3e0a8cc5c0b95ac9e2d814dae5aa3a762",
+   "bytes": 1294
+  },
+  "small-all|pack-explicit|solid/zstd-9/g1-r0/frame-16MiB": {
+   "sha256": "05ab4a60b44ca0efbd1fd8dec9983cf0581b7194bba81fa47deff2588157784c",
+   "bytes": 1159
+  },
+  "big|pack|solid/zstd-1/g1-r0/frame-16MiB": {
+   "sha256": "f5cdfca3c984f8faa175b18adc91b5722c42d0314cfbc4d46167b2ebad6cd85e",
+   "bytes": 256097
+  },
+  "big|pack|solid/zstd-3/g1-r0/frame-16MiB": {
+   "sha256": "3d9c1410a3bb0524d85e5a2e3358287ff3af40f7ec0370bced8096a6e99390fa",
+   "bytes": 256027
+  },
+  "big|pack|solid/zstd-9/g1-r0/frame-16MiB": {
+   "sha256": "915d2f7fba62b223045fa4fbc25d3540f5491339501a2042d0cf466100d1cef3",
+   "bytes": 321349
+  },
+  "big|pack|solid/zstd-19/g1-r0/frame-16MiB": {
+   "sha256": "e9556484fb47850b3bbd6e001b8f53cb079a10e39007082d1271a1fbc368ea47",
+   "bytes": 199425
+  },
+  "big|pack|solid/lzma2-0/g1-r0/frame-16MiB": {
+   "sha256": "33032557ed4504f2b8af1b4670fe77e3491ef645d91ba17d7180fed6f44a27d0",
+   "bytes": 93903
+  },
+  "big|pack|solid/lzma2-6/g1-r0/frame-16MiB": {
+   "sha256": "8ebac332e14ea7092dd7ae6380b7e727acba404675f228fe1fadba7d338530b5",
+   "bytes": 134124
+  },
+  "big|pack|solid/lzma2-9/g1-r0/frame-16MiB": {
+   "sha256": "9ca5f4886069476485fc46ff1320d91e83880c3376af3e1bbdc69779f9f00cc1",
+   "bytes": 134124
+  },
+  "big|pack|solid/zstd-9/g2-r1/frame-whole": {
+   "sha256": "66ce99c0ba57e22461a36372c31d07e4413d56312d4c102c64094ed2a99b6f6e",
+   "bytes": 321666
+  },
+  "big|pack|solid/lzma2-6/g2-r1/frame-whole": {
+   "sha256": "00aa4017ffbafabbcf8fc05970ae1e6a7b77d52a13043e711eac5faaf9ab18df",
+   "bytes": 132387
+  },
+  "big|pack-explicit|solid/zstd-9/g1-r0/frame-16MiB": {
+   "sha256": "79e8e8e55eb56739d4f6b29320f3b450d02bef33028d93a93d5e83902d2cb737",
+   "bytes": 321357
+  },
+  "linux|pack|solid/zstd-1/g1-r0/frame-16MiB": {
+   "sha256": "98302e0687801187524b2851223b9421b201ed54bfc79b16771c24274e5eff66",
+   "bytes": 8125091
+  },
+  "linux|pack|solid/zstd-3/g1-r0/frame-16MiB": {
+   "sha256": "3cea36b33de8075ea7f7d2021fa6669cc3469c650cfb311d6b2399b34b6acec1",
+   "bytes": 7379427
+  },
+  "linux|pack|solid/zstd-9/g1-r0/frame-16MiB": {
+   "sha256": "69db6c2c36f0da66b1b699682319b6d07c1985225e68e40d545004bacad41202",
+   "bytes": 6375749
+  },
+  "linux|pack|solid/zstd-19/g1-r0/frame-16MiB": {
+   "sha256": "f7e2068e6d1b16881390e1e7484388034eca3fd9e5272f5952c7733ea3012c3a",
+   "bytes": 5659892
+  },
+  "linux|pack|solid/lzma2-0/g1-r0/frame-16MiB": {
+   "sha256": "21c21178663a2e7b8d375c996c74e2bdb58ea4f1ebe0a60d3a5488cda1d041f4",
+   "bytes": 7058055
+  },
+  "linux|pack|solid/lzma2-6/g1-r0/frame-16MiB": {
+   "sha256": "6f92bcc5b2b45bf49dfe638fa815b0fb93b29c17b264e520e579e96ddb27b495",
+   "bytes": 5470435
+  },
+  "linux|pack|solid/lzma2-9/g1-r0/frame-16MiB": {
+   "sha256": "c3942fbf20017cb51ac8a9e650a12d614e6013d5e04b1feee56beebd02a83676",
+   "bytes": 5469832
+  },
+  "linux|pack|solid/zstd-9/g2-r1/frame-whole": {
+   "sha256": "4785836490b940445a0f5d5b61bacd00e0517d16107489e1bfa1311d75afb450",
+   "bytes": 6348142
+  },
+  "linux|pack|solid/lzma2-6/g2-r1/frame-whole": {
+   "sha256": "646fcb1482581294adbbc87df9a35d724666b25e06dc9039a8fa0662571d9bf4",
+   "bytes": 5434948
+  },
+  "linux|pack-explicit|solid/zstd-9/g1-r0/frame-16MiB": {
+   "sha256": "7e7c318723358ce5fb099efc2863d3662e264fcac9f9111e4fb2b53558420a89",
+   "bytes": 6375757
+  },
+  "silesia|pack|solid/zstd-1/g1-r0/frame-16MiB": {
+   "sha256": "7bcd88e6d89062c8836880c29d462136f6d65ca06bead6f4a0c77f8090db3510",
+   "bytes": 9085152
+  },
+  "silesia|pack|solid/zstd-3/g1-r0/frame-16MiB": {
+   "sha256": "71667f2203bcfb58d2d52f4827bdc9df7993509214dd88bd2673a4e11211bb9d",
+   "bytes": 8098920
+  },
+  "silesia|pack|solid/zstd-9/g1-r0/frame-16MiB": {
+   "sha256": "bfe0871072a8e18cae252d8137f61048d58b2a72d1fe11faedb46a73f197063e",
+   "bytes": 7399469
+  },
+  "silesia|pack|solid/zstd-19/g1-r0/frame-16MiB": {
+   "sha256": "3688bb4f295081d82106f820bd9d6a0ee124c7fdfb9bb1feb404e86e0ac24fca",
+   "bytes": 6799494
+  },
+  "silesia|pack|solid/lzma2-0/g1-r0/frame-16MiB": {
+   "sha256": "5052c0291609feb6e534896445947baac3cd74a3ac68ab37a313d826157d5ec6",
+   "bytes": 7639620
+  },
+  "silesia|pack|solid/lzma2-6/g1-r0/frame-16MiB": {
+   "sha256": "b53b2ac484e9f93b144a1b647b76c89cc70997dda4a43630b17d68119f1ec0d4",
+   "bytes": 6214494
+  },
+  "silesia|pack|solid/lzma2-9/g1-r0/frame-16MiB": {
+   "sha256": "9e1a68a4390e8ddcb093d160357ebf6f5b6adb1de0355465621bc7c0eedce1ed",
+   "bytes": 6214494
+  },
+  "silesia|pack|solid/zstd-9/g2-r1/frame-whole": {
+   "sha256": "6e609f55bac58ee4b6f6975651090c58d25f52aa8ee533b15018dfef9d983902",
+   "bytes": 7399315
+  },
+  "silesia|pack|solid/lzma2-6/g2-r1/frame-whole": {
+   "sha256": "da53cff48c6307db8930cdae07eea1101bf1e49953d2c04ea9885708ff8ba065",
+   "bytes": 6214922
+  },
+  "silesia|pack-explicit|solid/zstd-9/g1-r0/frame-16MiB": {
+   "sha256": "954569cb6df46fc095505e77099f64977ce857f2ed4921997351d7c0a20e6034",
+   "bytes": 7399477
+  },
+  "linux|chain-g0|solid/zstd-9/g1-r0/frame-32MiB": {
+   "sha256": "e0859b3eb5926f782ec3b98ef23e0e50b294b903cf4d745d60afd900f0d1bd4e",
+   "bytes": 4630350
+  },
+  "linux|chain-g1|solid/zstd-9/g1-r0/frame-32MiB": {
+   "sha256": "ba9afcd392ed2b060816a370d67227f68e940c7abd3a415107192ff2eedf2a80",
+   "bytes": 6577242
+  },
+  "linux|consolidated|solid/zstd-9/g1-r0/frame-32MiB": {
+   "sha256": "578a902ea9f85bda9c91a7f98869ce263cdd43b30911a54de6deaa128e409b03",
+   "bytes": 6356823
+  },
+  "linux|chain-g0|solid/lzma2-9/g1-r0/frame-32MiB": {
+   "sha256": "6226c65674f277cdd23b0efd8f09accf4b8a4214ca31fb9da16df6856b8322b4",
+   "bytes": 3932728
+  },
+  "linux|chain-g1|solid/lzma2-9/g1-r0/frame-32MiB": {
+   "sha256": "f7aead80ccec87557abb2d5be8a0ede0f5e6d5fbf871f8a7c376a991826ed70e",
+   "bytes": 5628250
+  },
+  "linux|consolidated|solid/lzma2-9/g1-r0/frame-32MiB": {
+   "sha256": "f426a574f17c6910a2475230a449ce9c230c66786ead052db7ae07214419b49f",
+   "bytes": 5422037
+  }
+ },
+ "probes": {
+  "linux|drift-probe|zstd-3": {
+   "schema": "seedarc.drift-probe.r0",
+   "level": 3,
+   "old_files": 1807,
+   "old_bytes": 32008797,
+   "new_files": 794,
+   "new_bytes": 9934236,
+   "baseline_bytes": 2058323,
+   "rebuild_all_bytes": 7217809,
+   "old_only_bytes": 5251824,
+   "ideal_marginal_bytes": 1965985,
+   "variants": [
+    {
+     "name": "none",
+     "compressed_bytes": 2058323,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2058323,
+     "dependency_raw_bytes": 0
+    },
+    {
+     "name": "dict-112KiB",
+     "compressed_bytes": 2082982,
+     "stored_extra_bytes": 114688,
+     "total_bytes": 2197670,
+     "dependency_raw_bytes": 0
+    },
+    {
+     "name": "dict-1024KiB",
+     "compressed_bytes": 2070134,
+     "stored_extra_bytes": 1048576,
+     "total_bytes": 3118710,
+     "dependency_raw_bytes": 0
+    },
+    {
+     "name": "tail-8MiB",
+     "compressed_bytes": 2073925,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2073925,
+     "dependency_raw_bytes": 8388608
+    },
+    {
+     "name": "related-8MiB",
+     "compressed_bytes": 2069704,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2069704,
+     "dependency_raw_bytes": 8388590
+    },
+    {
+     "name": "related-8MiB-ldm",
+     "compressed_bytes": 2041861,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2041861,
+     "dependency_raw_bytes": 8388590
+    },
+    {
+     "name": "tail-32MiB",
+     "compressed_bytes": 2073925,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2073925,
+     "dependency_raw_bytes": 32008797
+    },
+    {
+     "name": "related-32MiB",
+     "compressed_bytes": 2073925,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2073925,
+     "dependency_raw_bytes": 31985490
+    },
+    {
+     "name": "related-32MiB-ldm",
+     "compressed_bytes": 2029524,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2029524,
+     "dependency_raw_bytes": 31985490
+    },
+    {
+     "name": "none-ldm",
+     "compressed_bytes": 2053860,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2053860,
+     "dependency_raw_bytes": 0
+    },
+    {
+     "name": "per-group-d2-none",
+     "compressed_bytes": 2150805,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2150805,
+     "dependency_raw_bytes": 0,
+     "dependency_total_bytes": 0,
+     "groups": 125
+    },
+    {
+     "name": "per-group-d2-8MiB",
+     "compressed_bytes": 2059242,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2059242,
+     "dependency_raw_bytes": 8314863,
+     "dependency_total_bytes": 24279207,
+     "groups": 125
+    },
+    {
+     "name": "per-group-d2-32MiB",
+     "compressed_bytes": 2059242,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2059242,
+     "dependency_raw_bytes": 14478868,
+     "dependency_total_bytes": 30443212,
+     "groups": 125
+    },
+    {
+     "name": "per-group-d3-none",
+     "compressed_bytes": 2213827,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2213827,
+     "dependency_raw_bytes": 0,
+     "dependency_total_bytes": 0,
+     "groups": 309
+    },
+    {
+     "name": "per-group-d3-8MiB",
+     "compressed_bytes": 2109993,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2109993,
+     "dependency_raw_bytes": 8304071,
+     "dependency_total_bytes": 20952812,
+     "groups": 309
+    },
+    {
+     "name": "per-group-d3-32MiB",
+     "compressed_bytes": 2109993,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2109993,
+     "dependency_raw_bytes": 14468076,
+     "dependency_total_bytes": 27116817,
+     "groups": 309
+    },
+    {
+     "name": "per-group-d4-none",
+     "compressed_bytes": 2245818,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2245818,
+     "dependency_raw_bytes": 0,
+     "dependency_total_bytes": 0,
+     "groups": 407
+    },
+    {
+     "name": "per-group-d4-8MiB",
+     "compressed_bytes": 2134660,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2134660,
+     "dependency_raw_bytes": 6033920,
+     "dependency_total_bytes": 18547832,
+     "groups": 407
+    },
+    {
+     "name": "per-group-d4-32MiB",
+     "compressed_bytes": 2134660,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2134660,
+     "dependency_raw_bytes": 12197925,
+     "dependency_total_bytes": 24711837,
+     "groups": 407
+    }
+   ]
+  },
+  "linux|drift-probe|zstd-9": {
+   "schema": "seedarc.drift-probe.r0",
+   "level": 9,
+   "old_files": 1807,
+   "old_bytes": 32008797,
+   "new_files": 794,
+   "new_bytes": 9934236,
+   "baseline_bytes": 1788683,
+   "rebuild_all_bytes": 6184197,
+   "old_only_bytes": 4520334,
+   "ideal_marginal_bytes": 1663863,
+   "variants": [
+    {
+     "name": "none",
+     "compressed_bytes": 1788683,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1788683,
+     "dependency_raw_bytes": 0
+    },
+    {
+     "name": "dict-112KiB",
+     "compressed_bytes": 1827031,
+     "stored_extra_bytes": 114688,
+     "total_bytes": 1941719,
+     "dependency_raw_bytes": 0
+    },
+    {
+     "name": "dict-1024KiB",
+     "compressed_bytes": 1768260,
+     "stored_extra_bytes": 1048576,
+     "total_bytes": 2816836,
+     "dependency_raw_bytes": 0
+    },
+    {
+     "name": "tail-8MiB",
+     "compressed_bytes": 1766769,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1766769,
+     "dependency_raw_bytes": 8388608
+    },
+    {
+     "name": "related-8MiB",
+     "compressed_bytes": 1769587,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1769587,
+     "dependency_raw_bytes": 8388590
+    },
+    {
+     "name": "related-8MiB-ldm",
+     "compressed_bytes": 1784456,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1784456,
+     "dependency_raw_bytes": 8388590
+    },
+    {
+     "name": "tail-32MiB",
+     "compressed_bytes": 1759221,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1759221,
+     "dependency_raw_bytes": 32008797
+    },
+    {
+     "name": "related-32MiB",
+     "compressed_bytes": 1759231,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1759231,
+     "dependency_raw_bytes": 31985490
+    },
+    {
+     "name": "related-32MiB-ldm",
+     "compressed_bytes": 1756542,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1756542,
+     "dependency_raw_bytes": 31985490
+    },
+    {
+     "name": "none-ldm",
+     "compressed_bytes": 1810815,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1810815,
+     "dependency_raw_bytes": 0
+    },
+    {
+     "name": "per-group-d2-none",
+     "compressed_bytes": 1926123,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1926123,
+     "dependency_raw_bytes": 0,
+     "dependency_total_bytes": 0,
+     "groups": 125
+    },
+    {
+     "name": "per-group-d2-8MiB",
+     "compressed_bytes": 1755268,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1755268,
+     "dependency_raw_bytes": 8314863,
+     "dependency_total_bytes": 24279207,
+     "groups": 125
+    },
+    {
+     "name": "per-group-d2-32MiB",
+     "compressed_bytes": 1756982,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1756982,
+     "dependency_raw_bytes": 14478868,
+     "dependency_total_bytes": 30443212,
+     "groups": 125
+    },
+    {
+     "name": "per-group-d3-none",
+     "compressed_bytes": 1999454,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1999454,
+     "dependency_raw_bytes": 0,
+     "dependency_total_bytes": 0,
+     "groups": 309
+    },
+    {
+     "name": "per-group-d3-8MiB",
+     "compressed_bytes": 1825955,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1825955,
+     "dependency_raw_bytes": 8304071,
+     "dependency_total_bytes": 20952812,
+     "groups": 309
+    },
+    {
+     "name": "per-group-d3-32MiB",
+     "compressed_bytes": 1827676,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1827676,
+     "dependency_raw_bytes": 14468076,
+     "dependency_total_bytes": 27116817,
+     "groups": 309
+    },
+    {
+     "name": "per-group-d4-none",
+     "compressed_bytes": 2036932,
+     "stored_extra_bytes": 0,
+     "total_bytes": 2036932,
+     "dependency_raw_bytes": 0,
+     "dependency_total_bytes": 0,
+     "groups": 407
+    },
+    {
+     "name": "per-group-d4-8MiB",
+     "compressed_bytes": 1864167,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1864167,
+     "dependency_raw_bytes": 6033920,
+     "dependency_total_bytes": 18547832,
+     "groups": 407
+    },
+    {
+     "name": "per-group-d4-32MiB",
+     "compressed_bytes": 1865358,
+     "stored_extra_bytes": 0,
+     "total_bytes": 1865358,
+     "dependency_raw_bytes": 12197925,
+     "dependency_total_bytes": 24711837,
+     "groups": 407
+    }
+   ]
+  }
+ },
+ "seconds": {
+  "small-all|pack|solid/zstd-1/g1-r0/frame-16MiB": 0.004328734939917922,
+  "small-all|pack|solid/zstd-1/g1-r0/frame-16MiB-verify": 0.0032095799688249826,
+  "small-all|pack|solid/zstd-3/g1-r0/frame-16MiB": 0.0037056589499115944,
+  "small-all|pack|solid/zstd-3/g1-r0/frame-16MiB-verify": 0.0032663160236552358,
+  "small-all|pack|solid/zstd-9/g1-r0/frame-16MiB": 0.003852813970297575,
+  "small-all|pack|solid/zstd-9/g1-r0/frame-16MiB-verify": 0.0031126979738473892,
+  "small-all|pack|solid/zstd-19/g1-r0/frame-16MiB": 0.003934678039513528,
+  "small-all|pack|solid/zstd-19/g1-r0/frame-16MiB-verify": 0.0032044799299910665,
+  "small-all|pack|solid/lzma2-0/g1-r0/frame-16MiB": 0.004908030037768185,
+  "small-all|pack|solid/lzma2-0/g1-r0/frame-16MiB-verify": 0.0037193449679762125,
+  "small-all|pack|solid/lzma2-6/g1-r0/frame-16MiB": 0.005212871008552611,
+  "small-all|pack|solid/lzma2-6/g1-r0/frame-16MiB-verify": 0.0033503330778330564,
+  "small-all|pack|solid/lzma2-9/g1-r0/frame-16MiB": 0.005202632048167288,
+  "small-all|pack|solid/lzma2-9/g1-r0/frame-16MiB-verify": 0.003480665967799723,
+  "small-all|pack|solid/zstd-9/g2-r1/frame-whole": 0.003786258981563151,
+  "small-all|pack|solid/zstd-9/g2-r1/frame-whole-verify": 0.0030284299282357097,
+  "small-all|pack|solid/lzma2-6/g2-r1/frame-whole": 0.0047906499821692705,
+  "small-all|pack|solid/lzma2-6/g2-r1/frame-whole-verify": 0.0036005600122734904,
+  "small-all|pack-explicit": 0.004569043987430632,
+  "small-all|pack-explicit|solid/zstd-9/g1-r0/frame-16MiB-verify": 0.00397320999763906,
+  "big|pack|solid/zstd-1/g1-r0/frame-16MiB": 0.388927427935414,
+  "big|pack|solid/zstd-1/g1-r0/frame-16MiB-verify": 0.2023468849947676,
+  "big|pack|solid/zstd-3/g1-r0/frame-16MiB": 0.4058887460269034,
+  "big|pack|solid/zstd-3/g1-r0/frame-16MiB-verify": 0.23748347500804812,
+  "big|pack|solid/zstd-9/g1-r0/frame-16MiB": 0.6883555770618841,
+  "big|pack|solid/zstd-9/g1-r0/frame-16MiB-verify": 0.24582862993702292,
+  "big|pack|solid/zstd-19/g1-r0/frame-16MiB": 22.368358275969513,
+  "big|pack|solid/zstd-19/g1-r0/frame-16MiB-verify": 0.203772614011541,
+  "big|pack|solid/lzma2-0/g1-r0/frame-16MiB": 0.6567296420689672,
+  "big|pack|solid/lzma2-0/g1-r0/frame-16MiB-verify": 0.2478731870651245,
+  "big|pack|solid/lzma2-6/g1-r0/frame-16MiB": 10.407284058979712,
+  "big|pack|solid/lzma2-6/g1-r0/frame-16MiB-verify": 0.2515476270345971,
+  "big|pack|solid/lzma2-9/g1-r0/frame-16MiB": 10.76677757606376,
+  "big|pack|solid/lzma2-9/g1-r0/frame-16MiB-verify": 0.327119879075326,
+  "big|pack|solid/zstd-9/g2-r1/frame-whole": 0.767239919048734,
+  "big|pack|solid/zstd-9/g2-r1/frame-whole-verify": 0.21396060101687908,
+  "big|pack|solid/lzma2-6/g2-r1/frame-whole": 10.48178726003971,
+  "big|pack|solid/lzma2-6/g2-r1/frame-whole-verify": 0.42505001404788345,
+  "big|pack-explicit": 0.597632595920004,
+  "big|pack-explicit|solid/zstd-9/g1-r0/frame-16MiB-verify": 0.20413024304434657,
+  "linux|pack|solid/zstd-1/g1-r0/frame-16MiB": 1.0422706480603665,
+  "linux|pack|solid/zstd-1/g1-r0/frame-16MiB-verify": 0.7523548901081085,
+  "linux|pack|solid/zstd-3/g1-r0/frame-16MiB": 1.2146761000622064,
+  "linux|pack|solid/zstd-3/g1-r0/frame-16MiB-verify": 0.7189678750000894,
+  "linux|pack|solid/zstd-9/g1-r0/frame-16MiB": 1.8432533770101145,
+  "linux|pack|solid/zstd-9/g1-r0/frame-16MiB-verify": 0.712432287982665,
+  "linux|pack|solid/zstd-19/g1-r0/frame-16MiB": 26.74384739191737,
+  "linux|pack|solid/zstd-19/g1-r0/frame-16MiB-verify": 0.6513016070239246,
+  "linux|pack|solid/lzma2-0/g1-r0/frame-16MiB": 3.007759077940136,
+  "linux|pack|solid/lzma2-0/g1-r0/frame-16MiB-verify": 0.9108520890586078,
+  "linux|pack|solid/lzma2-6/g1-r0/frame-16MiB": 20.48182257602457,
+  "linux|pack|solid/lzma2-6/g1-r0/frame-16MiB-verify": 1.0699646020075306,
+  "linux|pack|solid/lzma2-9/g1-r0/frame-16MiB": 19.59562649205327,
+  "linux|pack|solid/lzma2-9/g1-r0/frame-16MiB-verify": 0.8401746529852971,
+  "linux|pack|solid/zstd-9/g2-r1/frame-whole": 2.036129910033196,
+  "linux|pack|solid/zstd-9/g2-r1/frame-whole-verify": 0.6323571249376982,
+  "linux|pack|solid/lzma2-6/g2-r1/frame-whole": 24.042567174998112,
+  "linux|pack|solid/lzma2-6/g2-r1/frame-whole-verify": 1.1373101699864492,
+  "linux|pack-explicit": 2.030555180972442,
+  "linux|pack-explicit|solid/zstd-9/g1-r0/frame-16MiB-verify": 0.7085902849212289,
+  "silesia|pack|solid/zstd-1/g1-r0/frame-16MiB": 0.4329662350937724,
+  "silesia|pack|solid/zstd-1/g1-r0/frame-16MiB-verify": 0.28321372903883457,
+  "silesia|pack|solid/zstd-3/g1-r0/frame-16MiB": 0.5136240080464631,
+  "silesia|pack|solid/zstd-3/g1-r0/frame-16MiB-verify": 0.20745990797877312,
+  "silesia|pack|solid/zstd-9/g1-r0/frame-16MiB": 0.9428167809965089,
+  "silesia|pack|solid/zstd-9/g1-r0/frame-16MiB-verify": 0.20682560105342418,
+  "silesia|pack|solid/zstd-19/g1-r0/frame-16MiB": 11.9176276269136,
+  "silesia|pack|solid/zstd-19/g1-r0/frame-16MiB-verify": 0.30527356499806046,
+  "silesia|pack|solid/lzma2-0/g1-r0/frame-16MiB": 2.47413005202543,
+  "silesia|pack|solid/lzma2-0/g1-r0/frame-16MiB-verify": 0.5644454070134088,
+  "silesia|pack|solid/lzma2-6/g1-r0/frame-16MiB": 12.216511546983384,
+  "silesia|pack|solid/lzma2-6/g1-r0/frame-16MiB-verify": 0.4020759869599715,
+  "silesia|pack|solid/lzma2-9/g1-r0/frame-16MiB": 12.522658276953734,
+  "silesia|pack|solid/lzma2-9/g1-r0/frame-16MiB-verify": 0.4179062279872596,
+  "silesia|pack|solid/zstd-9/g2-r1/frame-whole": 0.8916853119153529,
+  "silesia|pack|solid/zstd-9/g2-r1/frame-whole-verify": 0.20356675796210766,
+  "silesia|pack|solid/lzma2-6/g2-r1/frame-whole": 12.414248398970813,
+  "silesia|pack|solid/lzma2-6/g2-r1/frame-whole-verify": 0.5147104639327154,
+  "silesia|pack-explicit": 1.0213140780106187,
+  "silesia|pack-explicit|solid/zstd-9/g1-r0/frame-16MiB-verify": 0.22035265900194645,
+  "chain|solid/zstd-9/g1-r0/frame-32MiB|pack": 1.7258409659843892,
+  "chain|solid/zstd-9/g1-r0/frame-32MiB|append": 0.8565849490696564,
+  "chain|solid/zstd-9/g1-r0/frame-32MiB|consolidate": 2.331949322950095,
+  "linux|chain-g1|solid/zstd-9/g1-r0/frame-32MiB-verify": 0.8135061379289255,
+  "linux|consolidated|solid/zstd-9/g1-r0/frame-32MiB-verify": 0.898938533035107,
+  "chain|solid/lzma2-9/g1-r0/frame-32MiB|pack": 17.8881193860434,
+  "chain|solid/lzma2-9/g1-r0/frame-32MiB|append": 5.759644279023632,
+  "chain|solid/lzma2-9/g1-r0/frame-32MiB|consolidate": 23.013469933066517,
+  "linux|chain-g1|solid/lzma2-9/g1-r0/frame-32MiB-verify": 0.8623716059373692,
+  "linux|consolidated|solid/lzma2-9/g1-r0/frame-32MiB-verify": 1.1477335769450292,
+  "probe-3": 5.814591652015224,
+  "probe-9": 12.167014478938654
+ }
+}

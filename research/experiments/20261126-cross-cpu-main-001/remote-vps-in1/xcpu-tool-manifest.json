@@ -1,0 +1,10 @@
+{
+  "ldd": "\tlinux-vdso.so.1 (0x00007fffaf9e8000)\n\tlibgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x000078d988a9d000)\n\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000078d988200000)\n\t/lib64/ld-linux-x86-64.so.2 (0x000078d988ad3000)\n",
+  "shipped": [],
+  "files": {
+    "bounded_fixture.py": "1357f544729b2109208f6a5b5f94542db34c6deb9a69e58a9d8a8642c8a67434",
+    "cross_cpu_check.py": "043e31bbb2ed54f88a03e797fcdc30c6228b3950c63f9d8beb562fc242dac4cc",
+    "recipe_fixture.py": "c2a0d919de4041513aa8a2a4dc89232e2a723113f7f91579bab98dce3ee681ae",
+    "seedarc_append4_study": "6d7ba2026c8f75cfb911d245a650e1ea44dd3678b857cf2a58cdaf3d2c30d9e0"
+  }
+}

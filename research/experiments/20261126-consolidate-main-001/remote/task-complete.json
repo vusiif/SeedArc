@@ -1,0 +1,52 @@
+{
+  "runs": {
+    "source": {
+      "commands": 60,
+      "consolidated": [
+        {
+          "cls": "source",
+          "recipe": "solid/zstd-9/g1-r0/frame-32MiB",
+          "sha256": "d51c7cd7e91908a0dd07215b53dca8a9f7f629d1211bc60fb13bab11f7d99c86",
+          "bytes": 28410983
+        },
+        {
+          "cls": "source",
+          "recipe": "solid/zstd-3/g1-r0/frame-32MiB",
+          "sha256": "9404fea9d6d018d8a8c33d1af3e461697115f808a6d146a53a481e35b059f5db",
+          "bytes": 33547059
+        },
+        {
+          "cls": "source",
+          "recipe": "solid/lzma2-9/g1-r0/frame-32MiB",
+          "sha256": "95dae8c7a16574430fb76b533e2a1ceb4740e8e50d301dc737c97ce441f2c52f",
+          "bytes": 23811082
+        }
+      ]
+    },
+    "text": {
+      "commands": 60,
+      "consolidated": [
+        {
+          "cls": "text",
+          "recipe": "solid/zstd-9/g1-r0/frame-32MiB",
+          "sha256": "c333f3cce1cf7b3efdfb8f0dffb0c99860e7dc9ebec3445ad031ff28db6607c5",
+          "bytes": 17065581
+        },
+        {
+          "cls": "text",
+          "recipe": "solid/zstd-3/g1-r0/frame-32MiB",
+          "sha256": "d1f3675899cecaf477142c89fc52bc36bafed9c2186432e06dfd30f21379dfc9",
+          "bytes": 19811624
+        },
+        {
+          "cls": "text",
+          "recipe": "solid/lzma2-9/g1-r0/frame-32MiB",
+          "sha256": "c33f3cbef86cb064890236cf0966bd48b3336cb030503f8dad92b5d4507a8b37",
+          "bytes": 14320641
+        }
+      ]
+    }
+  },
+  "tool_sha256": "6d7ba2026c8f75cfb911d245a650e1ea44dd3678b857cf2a58cdaf3d2c30d9e0",
+  "elapsed_s": 2325.280350093002
+}

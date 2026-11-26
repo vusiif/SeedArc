@@ -1,0 +1,12 @@
+-- The CXX compiler identification is Clang 20.1.2
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/clang++-20 - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Configuring done (2.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/sc/long-tasks/20261126T091432Z-b420d5f3/work/asan

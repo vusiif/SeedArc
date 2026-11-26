@@ -1,0 +1,30 @@
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:52:21: error: no member named 'unexpected' in namespace 'std'
+   52 |         return std::unexpected(Error{ErrorCode::unsupported_feature,
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:56:21: error: no member named 'unexpected' in namespace 'std'
+   56 |         return std::unexpected(Error{ErrorCode::malformed_archive, "invalid seed length"});
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:59:21: error: no member named 'unexpected' in namespace 'std'
+   59 |         return std::unexpected(
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:63:21: error: no member named 'unexpected' in namespace 'std'
+   63 |         return std::unexpected(
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:67:21: error: no member named 'unexpected' in namespace 'std'
+   67 |         return std::unexpected(Error{ErrorCode::malformed_archive, "zero archive chunk size"});
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:73:21: error: no member named 'unexpected' in namespace 'std'
+   73 |         return std::unexpected(
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:80:21: error: no member named 'unexpected' in namespace 'std'
+   80 |         return std::unexpected(
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:85:21: error: no member named 'unexpected' in namespace 'std'
+   85 |         return std::unexpected(
+      |                ~~~~~^
+/home/sc/long-tasks/20261126T090816Z-07621354/work/source/core/archive.cpp:89:21: error: no member named 'unexpected' in namespace 'std'
+   89 |         return std::unexpected(
+      |                ~~~~~^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+ninja: build stopped: subcommand failed.

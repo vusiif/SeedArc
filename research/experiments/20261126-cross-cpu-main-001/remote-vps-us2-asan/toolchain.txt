@@ -1,0 +1,3 @@
+Ubuntu clang version 20.1.2 (0ubuntu1~24.04.3)
+Ubuntu LLVM version 20.1.2
+cmake version 3.28.3
