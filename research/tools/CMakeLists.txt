@@ -83,6 +83,11 @@ if(BUILD_TESTING)
         "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/bounded-extract-check-$<CONFIG>"
         -P "${CMAKE_CURRENT_SOURCE_DIR}/check_bounded_extract.cmake")
     set_tests_properties(research.bounded_extract PROPERTIES TIMEOUT 600)
+    add_test(NAME research.solid_recipe COMMAND "${CMAKE_COMMAND}"
+        "-DTOOL=$<TARGET_FILE:seedarc_append4_study>"
+        "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/solid-recipe-check-$<CONFIG>"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_solid_recipe.cmake")
+    set_tests_properties(research.solid_recipe PROPERTIES TIMEOUT 900)
 endif()
 
 # DEV-016: production path-profile check for corpus builders (portable).

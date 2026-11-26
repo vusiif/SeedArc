@@ -73,7 +73,12 @@ constexpr std::string_view usage =
     "  append4_study access-profile ARCHIVE INPUT_DIR UNIFORM_SAMPLE_COUNT\n"
     "  append4_study payload-fault-profile ARCHIVE INPUT_DIR\n"
     "  append4_study extract ARCHIVE PATH OUT_DIR BASENAME   (indexed read; revision-5 solid)\n"
-    "  append4_study extract-profile ARCHIVE INPUT_DIR UNIFORM_SAMPLE_COUNT EMPTY_OUT_DIR\n";
+    "  append4_study extract-profile ARCHIVE INPUT_DIR UNIFORM_SAMPLE_COUNT EMPTY_OUT_DIR\n"
+    "  append4_study recipe-pack seed|explicit RECIPE INPUT_DIR OUT   (ADR-0006, mapping rev 3)\n"
+    "  append4_study recipe-append OLD NEW_DIR OUT [RECIPE]   (no RECIPE: keep the last one)\n"
+    "  append4_study describe ARCHIVE\n"
+    "      RECIPE: solid/zstd-9/g<k>-r<rule>/frame-<whole|16MiB|32MiB|64MiB|128MiB|256MiB>"
+    " or 0x Seed\n";
 using Tag = std::array<char, 8>;
 constexpr Tag magic{'S', 'A', 'D', 'X', 'R', '0', '0', '4'};
 constexpr Tag footer_magic{'S', 'A', 'D', 'X', 'E', 'N', 'D', '4'};
@@ -179,6 +184,7 @@ struct Gen {
     bool has_seed = false;
     std::uint16_t mapping_revision = seed_revision;
     Plan plan;
+    std::optional<RecipeFields> recipe; // solid-recipe-r1 (mapping revision 3) only
     Grouping grouping;
     std::vector<GenGroup> groups;
     std::vector<std::byte> body; // the GEN record body as written
@@ -278,7 +284,19 @@ std::vector<std::byte> gen_body(const Gen &g) {
     put(b, g.record_offset, 8);
     put(b, g.index, 4);
     put(b, g.first_file, 4);
-    if (g.mapping_revision == solid_seed_revision) {
+    if (g.mapping_revision == solid_recipe_revision && g.recipe) {
+        const SolidRecipe r{g.plan, *g.recipe};
+        put(b, g.has_seed ? solid_recipe_revision : 0, 2);
+        if (g.has_seed) {
+            put(b, 4, 2);
+            put(b, encode_recipe_seed(r), 4);
+        } else {
+            const auto words = encode_recipe_explicit(r);
+            put(b, 8, 2);
+            put(b, words[0], 4);
+            put(b, words[1], 4);
+        }
+    } else if (g.mapping_revision == solid_seed_revision) {
         put(b, g.has_seed ? solid_seed_revision : 0, 2);
         put(b, 4, 2);
         put(b, g.has_seed ? encode_solid_seed(g.plan) : encode_solid_explicit(g.plan), 4);
@@ -313,7 +331,27 @@ std::expected<Gen, Error> parse_gen_body(std::span<const std::byte> body, const 
     g.record_offset = *self;
     g.index = static_cast<std::uint32_t>(*index);
     g.first_file = static_cast<std::uint32_t>(*first);
-    if (h.revision == 5) {
+    const bool recipe_seed = h.revision == 5 && h.seed() && *rev == solid_recipe_revision;
+    const bool recipe_explicit = h.revision == 5 && !h.seed() && *rev == 0 && *len == 8;
+    if (recipe_seed || recipe_explicit) {
+        std::optional<SolidRecipe> recipe;
+        if (recipe_seed) {
+            const auto value = *len == 4 ? r.get(4) : std::nullopt;
+            recipe = value ? decode_recipe_seed(static_cast<std::uint32_t>(*value)) : std::nullopt;
+        } else {
+            const auto word0 = r.get(4), word1 = r.get(4);
+            recipe = word1 ? decode_recipe_explicit(static_cast<std::uint32_t>(*word0),
+                                                    static_cast<std::uint32_t>(*word1))
+                           : std::nullopt;
+        }
+        if (!recipe) {
+            return std::unexpected(bad("bad solid recipe record"));
+        }
+        g.has_seed = h.seed();
+        g.mapping_revision = solid_recipe_revision;
+        g.plan = recipe->plan;
+        g.recipe = recipe->fields;
+    } else if (h.revision == 5) {
         const auto value = r.get(4);
         const auto plan =
             value ? (h.seed() ? decode_solid_seed(static_cast<std::uint32_t>(*value))
@@ -765,6 +803,64 @@ std::expected<FooterInfo, Error> parse_footer(std::span<const std::byte> footer,
     return FooterInfo{*toff, *tsize, static_cast<std::uint32_t>(*tcrc)};
 }
 
+// ADR-0006 §2.4: a recipe generation's frames must be exactly what the writer's greedy rule
+// gives for its recipe (per group, files in generation order, flush before a file that does not
+// fit; an all-empty frame holds one zero byte). Otherwise the label could disagree with the data.
+std::expected<void, Error> check_recipe_frames(const Model &m, const Gen &g) {
+    const auto limit = recipe_frame_limit(*g.recipe);
+    std::vector<std::size_t> own;
+    for (std::size_t i = 0; i < m.frames.size(); ++i) {
+        if (m.frames[i].gen == g.index) {
+            own.push_back(i);
+        }
+    }
+    const auto mismatch = [] {
+        return std::unexpected(bad("solid frames do not follow the generation's recipe"));
+    };
+    std::size_t next = 0;
+    for (std::size_t grp = 0; grp < g.groups.size(); ++grp) {
+        std::uint64_t joined = 0;
+        bool any = false;
+        const auto flush = [&] {
+            if (!any) {
+                return true;
+            }
+            if (next >= own.size()) {
+                return false;
+            }
+            const auto &f = m.frames[own[next]];
+            if (f.group != grp || f.raw != std::max<std::uint64_t>(joined, 1)) {
+                return false;
+            }
+            ++next;
+            joined = 0;
+            any = false;
+            return true;
+        };
+        for (std::uint32_t i = g.first_file; i < g.files_after; ++i) {
+            const auto &e = m.entries[i];
+            if (e.group != grp) {
+                continue;
+            }
+            if (e.size > limit || (e.size > limit - joined && !flush())) {
+                return mismatch();
+            }
+            if (next >= own.size() || e.frame != own[next] || e.frame_offset != joined) {
+                return mismatch();
+            }
+            any = true;
+            joined += e.size;
+        }
+        if (!flush()) {
+            return mismatch();
+        }
+    }
+    if (next != own.size()) {
+        return mismatch();
+    }
+    return {};
+}
+
 // A GEN record fetched from wherever the container lives (offsets absolute).
 struct GenRecord {
     std::vector<std::byte> body;
@@ -920,6 +1016,13 @@ std::expected<Model, Error> parse_index(const Header &header, std::uint32_t head
             e.group = m.frames[e.frame].group;
             if (h.revision == 5 && e.group != group_of(m.gens[e.gen], e.path, e.size)) {
                 return std::unexpected(bad("solid strategy and frame group disagree"));
+            }
+        }
+        for (const auto &g : m.gens) {
+            if (g.recipe) {
+                if (auto ok = check_recipe_frames(m, g); !ok) {
+                    return std::unexpected(ok.error());
+                }
             }
         }
     }
@@ -1643,9 +1746,13 @@ struct Packed {
 std::expected<Packed, Error> pack_bytes(const std::string &mode, const Plan &plan,
                                         const std::vector<InputFile> &files,
                                         std::optional<std::uint32_t> wanted, std::uint32_t cpb,
-                                        std::uint64_t frame_limit = research::max_solid_bytes) {
+                                        std::uint64_t frame_limit = research::max_solid_bytes,
+                                        const std::optional<RecipeFields> &recipe = std::nullopt) {
     std::vector<std::uint8_t> groups;
     const auto base = header_for(mode, red_off, cpb);
+    if (recipe && (base.revision != 5 || frame_limit != recipe_frame_limit(*recipe))) {
+        return std::unexpected(bad("a recipe needs a solid strategy and its own frame limit"));
+    }
     if (base.revision == 5) {
         if (!valid_solid_plan(plan) || (wanted && *wanted != red_off)) {
             return std::unexpected(
@@ -1656,6 +1763,10 @@ std::expected<Packed, Error> pack_bytes(const std::string &mode, const Plan &pla
     auto p = fresh_pending(base, plan, files, groups);
     if (!p) {
         return std::unexpected(p.error());
+    }
+    if (recipe) {
+        p->gen.mapping_revision = solid_recipe_revision;
+        p->gen.recipe = recipe;
     }
     if (auto r = encode_pending(*p, base, files, groups, dict_views(*p, {}), frame_limit); !r) {
         return std::unexpected(r.error());
@@ -1719,16 +1830,26 @@ std::uint8_t nearest_group(const Model &m, const Gen &ref, std::string_view path
 std::expected<std::vector<std::byte>, Error>
 append_bytes(std::span<const std::byte> old, const std::vector<InputFile> &added,
              const std::string &how, const std::optional<Plan> &plan,
-             std::uint64_t frame_limit = research::max_solid_bytes) {
+             std::uint64_t frame_limit = research::max_solid_bytes,
+             const std::optional<RecipeFields> &recipe = std::nullopt) {
     auto parsed = parse(old);
     if (!parsed) {
         return std::unexpected(parsed.error());
     }
     Model m = std::move(*parsed);
     const auto &h = m.header;
-    if (frame_limit == 0 || frame_limit > research::max_solid_bytes ||
-        std::ranges::any_of(m.frames,
-                            [frame_limit](const Frame &f) { return f.raw > frame_limit; })) {
+    // With a recipe every generation has its own frame limit, so old frames are not bound by
+    // the new one; without, the old bounded-append rule (old frames within the limit) holds.
+    const bool recipe_append = recipe || (!plan && m.gens.back().recipe);
+    if (recipe_append) {
+        const auto fields = recipe ? *recipe : *m.gens.back().recipe;
+        if (h.revision != 5 || how != "segment" || frame_limit != recipe_frame_limit(fields) ||
+            (recipe && !plan)) {
+            return std::unexpected(bad("recipe append needs a solid segment and its frame limit"));
+        }
+    } else if (frame_limit == 0 || frame_limit > research::max_solid_bytes ||
+               std::ranges::any_of(m.frames,
+                                   [frame_limit](const Frame &f) { return f.raw > frame_limit; })) {
         return std::unexpected(bad("old archive exceeds the requested solid frame limit"));
     }
     if (h.revision == 5 && plan && !valid_solid_plan(*plan)) {
@@ -1799,6 +1920,10 @@ append_bytes(std::span<const std::byte> old, const std::vector<InputFile> &added
             return std::unexpected(fresh.error());
         }
         p = std::move(*fresh);
+        if (recipe) {
+            p.gen.mapping_revision = solid_recipe_revision;
+            p.gen.recipe = recipe;
+        }
     } else {
         // Variant A: keep the previous generation's Seed, key table and dictionaries.
         p.gen = last;
@@ -2780,10 +2905,12 @@ std::string frame_stats_json(const Model &m) {
 // ---- commands -----------------------------------------------------------------------------------
 int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path &input,
              const fs::path &out_path, std::optional<std::uint32_t> wanted, std::uint32_t cpb,
-             std::uint64_t frame_limit = research::max_solid_bytes) {
+             std::uint64_t frame_limit = research::max_solid_bytes,
+             const std::optional<SolidRecipe> &recipe = std::nullopt) {
     const bool strong = mode == "seed-solid" || mode == "explicit-solid";
     const auto bits = hex32(plan_hex);
-    const auto plan = mode == "explicit-solid" && plan_hex.find(':') != std::string_view::npos
+    const auto plan = recipe ? std::optional{recipe->plan}
+                      : mode == "explicit-solid" && plan_hex.find(':') != std::string_view::npos
                           ? parse_solid_explicit(plan_hex)
                       : strong ? (bits ? decode_solid_seed(*bits) : std::nullopt)
                                : plan_arg(plan_hex);
@@ -2797,7 +2924,8 @@ int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path 
         return fail(files.error());
     }
     const auto rw = wall_ms(), rc = cpu_ms();
-    auto packed = pack_bytes(mode, *plan, *files, wanted, cpb, frame_limit);
+    auto packed = pack_bytes(mode, *plan, *files, wanted, cpb, frame_limit,
+                             recipe ? std::optional{recipe->fields} : std::nullopt);
     if (!packed) {
         return fail(packed.error());
     }
@@ -2824,7 +2952,11 @@ int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path 
               << rule_names[plan->rule] << "\",\"k\":" << static_cast<int>(plan->k)
               << ",\"input_bytes\":" << input_bytes_of(*files) << ","
               << parts_json(*m, packed->bytes) << "," << frame_stats_json(*m)
-              << ",\"frame_limit_bytes\":" << frame_limit << ",\"redundancy_chosen_by\":\""
+              << ",\"frame_limit_bytes\":" << frame_limit << ",\"recipe\":"
+              << (recipe ? json_string(recipe_text(*recipe)) : std::string{"null"})
+              << ",\"recipe_seed\":"
+              << (recipe ? std::to_string(encode_recipe_seed(*recipe)) : std::string{"null"})
+              << ",\"redundancy_chosen_by\":\""
               << (packed->recommended ? "recommendation" : "user")
               << "\",\"recommendation_rule\":\"rec-r0 (provisional)\",\"candidate_bytes\":{"
               << candidates << "},\"pack_wall_ms\":" << pack_wall << ",\"pack_cpu_ms\":" << pack_cpu
@@ -2835,7 +2967,8 @@ int cmd_pack(const std::string &mode, std::string_view plan_hex, const fs::path 
 
 int cmd_append(const fs::path &old_path, const fs::path &new_dir, const fs::path &out_path,
                const std::string &how, const std::optional<Plan> &plan,
-               std::uint64_t frame_limit = research::max_solid_bytes, bool require_strong = false) {
+               std::uint64_t frame_limit = research::max_solid_bytes, bool require_strong = false,
+               const std::optional<RecipeFields> &recipe = std::nullopt) {
     const auto w = wall_ms(), c = cpu_ms();
     auto old = read_file(old_path);
     if (!old) {
@@ -2853,7 +2986,7 @@ int cmd_append(const fs::path &old_path, const fs::path &new_dir, const fs::path
         return fail(added.error());
     }
     const auto aw = wall_ms(), ac = cpu_ms();
-    auto bytes = append_bytes(*old, *added, how, plan, frame_limit);
+    auto bytes = append_bytes(*old, *added, how, plan, frame_limit, recipe);
     if (!bytes) {
         return fail(bytes.error());
     }
@@ -2878,7 +3011,10 @@ int cmd_append(const fs::path &old_path, const fs::path &new_dir, const fs::path
               << ",\"old_container_bytes\":" << old->size()
               << ",\"old_is_prefix\":" << (prefix ? "true" : "false") << ","
               << parts_json(*m, *bytes) << "," << frame_stats_json(*m)
-              << ",\"frame_limit_bytes\":" << frame_limit
+              << ",\"frame_limit_bytes\":" << frame_limit << ",\"new_generation_recipe\":"
+              << (m->gens.back().recipe
+                      ? json_string(recipe_text({m->gens.back().plan, *m->gens.back().recipe}))
+                      : std::string{"null"})
               << ",\"old_archive_bytes_read\":" << old->size()
               << ",\"old_archive_bytes_copied\":" << (prefix ? old->size() : 0)
               << ",\"old_plaintext_bytes_recompressed\":"
@@ -3617,6 +3753,7 @@ std::optional<std::uint32_t> redundancy_arg(std::string_view s, bool &ok) {
 }
 #include "bounded_solid.hpp"
 #include "bounded_extract.hpp"
+#include "recipe_commands.hpp"
 
 // Command-line arguments as UTF-8. On Windows argv is in the ANSI code page, which cannot carry
 // every path (archive-internal paths such as 源/文件.txt included), so the wide command line is
@@ -3689,6 +3826,16 @@ int main(int argc, char *argv[]) {
     }
     if (a.size() == 4 && a[1] == "payload-fault-profile") {
         return cmd_payload_fault_profile(native(a[2]), native(a[3]));
+    }
+    if (a.size() == 6 && a[1] == "recipe-pack") {
+        return cmd_recipe_pack(a[2], a[3], native(a[4]), native(a[5]));
+    }
+    if ((a.size() == 5 || a.size() == 6) && a[1] == "recipe-append") {
+        return cmd_recipe_append(native(a[2]), native(a[3]), native(a[4]),
+                                 a.size() == 6 ? std::optional{a[5]} : std::nullopt);
+    }
+    if (a.size() == 3 && a[1] == "describe") {
+        return cmd_describe(native(a[2]));
     }
     if (a.size() == 6 && a[1] == "extract") {
         return cmd_extract(native(a[2]), a[3], native(a[4]), a[5]);
