@@ -95,6 +95,12 @@ constexpr std::size_t header_bytes = 32;
 constexpr std::size_t footer_bytes = 24;
 constexpr std::size_t record_overhead = 16;
 constexpr std::size_t max_record_body = std::size_t{1} << 24;
+// Largest raw solid frame a reader accepts. Only the fuzz build lowers it (append4_fuzz.cpp), so
+// a mutated size field cannot make every run allocate a gigabyte.
+#ifndef SEEDARC_APPEND4_MAX_FRAME_RAW
+#define SEEDARC_APPEND4_MAX_FRAME_RAW research::max_solid_bytes
+#endif
+constexpr std::uint64_t max_frame_raw = SEEDARC_APPEND4_MAX_FRAME_RAW;
 constexpr std::uint32_t max_generations = 1024;
 enum : std::uint32_t { flag_seed = 1, flag_solid = 2 };
 enum : std::uint32_t { red_off = 0, red_checkpoint = 1, red_file = 2 };
@@ -668,7 +674,7 @@ std::expected<Scan, Error> scan(std::span<const std::byte> bytes, const Header &
         } else if (r->type == rec_frame && h.solid() && h.redundancy != red_off) {
             const auto grp = b.get(1), raw = b.get(8), stored = b.get(8), nfiles = b.get(4);
             if (!nfiles || *grp >= g.groups.size() || *raw == 0 ||
-                *raw > research::max_solid_bytes || *stored == 0 || *nfiles > max_files) {
+                *raw > max_frame_raw || *stored == 0 || *nfiles > max_files) {
                 continue;
             }
             std::vector<std::pair<std::uint64_t, Entry>> es;
@@ -1006,7 +1012,7 @@ std::expected<Model, Error> parse_index(const Header &header, std::uint32_t head
                 *off < m.data_start[*fgen] ||
                 *off > region_end(static_cast<std::uint32_t>(*fgen)) ||
                 region_end(static_cast<std::uint32_t>(*fgen)) - *off < *stored || *stored == 0 ||
-                *raw == 0 || *raw > research::max_solid_bytes) {
+                *raw == 0 || *raw > max_frame_raw) {
                 return std::unexpected(bad("bad frame"));
             }
             m.frames.push_back({*off, *stored, *raw, static_cast<std::uint32_t>(*fgen),
@@ -3808,7 +3814,13 @@ std::optional<std::vector<std::string>> utf8_arguments([[maybe_unused]] int argc
 
 } // namespace
 
+// append4_fuzz.cpp includes this file for its parsers and has its own entry point; the command
+// dispatcher is still compiled there under another name, so every command stays referenced.
+#ifdef SEEDARC_APPEND4_NO_MAIN
+int append4_study_main(int argc, char *argv[]) {
+#else
 int main(int argc, char *argv[]) {
+#endif
     const auto owned = utf8_arguments(argc, argv);
     if (!owned) {
         std::cerr << "command line is not valid Unicode\n";

@@ -95,6 +95,31 @@ if(BUILD_TESTING)
     set_tests_properties(research.drift_probe PROPERTIES TIMEOUT 600)
 endif()
 
+# DEV-032: fuzz target for the research container reader. Ordinary builds replay the committed
+# corpus as a test; SEEDARC_BUILD_FUZZERS with Clang on Linux builds the libFuzzer executable.
+if(BUILD_TESTING AND NOT SEEDARC_BUILD_FUZZERS)
+    add_executable(seedarc_fuzz_replay_append4 append4_fuzz.cpp "${PROJECT_SOURCE_DIR}/fuzz/replay_main.cpp")
+    target_link_libraries(seedarc_fuzz_replay_append4 PRIVATE seedarc_codec_dictionary SeedArc::core)
+    target_include_directories(seedarc_fuzz_replay_append4 PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
+    if(WIN32)
+        target_link_libraries(seedarc_fuzz_replay_append4 PRIVATE psapi shell32)
+    endif()
+    seedarc_target_defaults(seedarc_fuzz_replay_append4)
+    add_test(NAME research.append4_fuzz_replay
+        COMMAND seedarc_fuzz_replay_append4 "${CMAKE_CURRENT_SOURCE_DIR}/fuzz-corpus/append4")
+    set_tests_properties(research.append4_fuzz_replay PROPERTIES TIMEOUT 120)
+endif()
+if(SEEDARC_BUILD_FUZZERS AND NOT MSVC)
+    set(seedarc_append4_fuzz_flags -fsanitize=fuzzer,address,undefined -fno-sanitize-recover=undefined
+        -fno-omit-frame-pointer)
+    add_executable(seedarc_fuzz_append4 append4_fuzz.cpp)
+    target_link_libraries(seedarc_fuzz_append4 PRIVATE seedarc_codec_dictionary SeedArc::core)
+    target_include_directories(seedarc_fuzz_append4 PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
+    seedarc_target_defaults(seedarc_fuzz_append4)
+    target_compile_options(seedarc_fuzz_append4 PRIVATE ${seedarc_append4_fuzz_flags})
+    target_link_options(seedarc_fuzz_append4 PRIVATE ${seedarc_append4_fuzz_flags})
+endif()
+
 # DEV-016: production path-profile check for corpus builders (portable).
 add_executable(seedarc_path_check path_check.cpp)
 target_link_libraries(seedarc_path_check PRIVATE SeedArc::core)
