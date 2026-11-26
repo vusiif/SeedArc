@@ -68,6 +68,20 @@ compress_solid(std::span<const std::byte> input, std::uint32_t level);
 [[nodiscard]] std::expected<std::size_t, Error>
 decompress_solid_prefix(std::span<const std::byte> prefix, std::span<std::byte> output);
 
+// append-drift probe (research/ideas/append-drift-r0.md): one zstd frame over `input` that may
+// refer to `reference`, either a trained dictionary (raw_prefix false) or raw content that comes
+// before the input (raw_prefix true; decoding then needs exactly those bytes). Window
+// min(27, ceil(log2(reference + input))), content size recorded, no checksum. Not used by any
+// archive format; measurement only.
+// `long_distance` enables zstd long-distance matching (encoder only; decoding is unchanged).
+[[nodiscard]] std::expected<std::vector<std::byte>, Error>
+compress_solid_referenced(std::span<const std::byte> input, std::uint32_t level,
+                          std::span<const std::byte> reference, bool raw_prefix,
+                          bool long_distance = false);
+[[nodiscard]] std::expected<void, Error>
+decompress_solid_referenced(std::span<const std::byte> frame, std::span<const std::byte> reference,
+                            bool raw_prefix, std::span<std::byte> output);
+
 // Solid frames by recipe codec (ADR-0006): solid_zstd = the functions above (levels 1-19);
 // solid_lzma2 = one raw LZMA2 stream (liblzma preset 0-9, dictionary capped at the input size,
 // end marker required). Decoding needs no recorded parameters: the LZMA2 dictionary is sized

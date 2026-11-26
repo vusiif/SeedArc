@@ -390,6 +390,82 @@ std::expected<std::size_t, Error> decompress_solid_prefix_codec(std::uint32_t co
     return output.size() - stream.avail_out;
 }
 
+std::expected<std::vector<std::byte>, Error>
+compress_solid_referenced(std::span<const std::byte> input, std::uint32_t level,
+                          std::span<const std::byte> reference, bool raw_prefix,
+                          bool long_distance) {
+    if (input.empty() || input.size() > max_solid_bytes || reference.size() > max_solid_bytes ||
+        !valid_block_codec(zstd_id, level) || (!raw_prefix && reference.size() > max_dictionary_bytes)) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid referenced solid input"});
+    }
+    const std::unique_ptr<ZSTD_CCtx, CCtxDeleter> context{ZSTD_createCCtx()};
+    if (!context) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "cannot create zstd context"});
+    }
+    const auto window = std::min<int>(static_cast<int>(max_solid_window_log),
+                                      window_log_for(input.size() + reference.size()));
+    if (!zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_compressionLevel,
+                                        static_cast<int>(level))) ||
+        !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_windowLog, window)) ||
+        !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_checksumFlag, 0)) ||
+        !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_contentSizeFlag, 1)) ||
+        !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_nbWorkers, 0)) ||
+        !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_enableLongDistanceMatching,
+                                        long_distance ? 1 : 0))) {
+        return std::unexpected(Error{ErrorCode::io_error, "cannot configure zstd encoder"});
+    }
+    if (!reference.empty()) {
+        const auto attached = raw_prefix
+                                  ? ZSTD_CCtx_refPrefix(context.get(), reference.data(), reference.size())
+                                  : ZSTD_CCtx_loadDictionary(context.get(), reference.data(), reference.size());
+        if (!zstd_ok(attached)) {
+            return std::unexpected(Error{ErrorCode::io_error, "cannot attach zstd reference"});
+        }
+    }
+    std::vector<std::byte> out(ZSTD_compressBound(input.size()));
+    const auto result =
+        ZSTD_compress2(context.get(), out.data(), out.size(), input.data(), input.size());
+    if (!zstd_ok(result)) {
+        return std::unexpected(Error{ErrorCode::io_error, std::string{"zstd compression failed: "} +
+                                                              ZSTD_getErrorName(result)});
+    }
+    out.resize(result);
+    return out;
+}
+
+std::expected<void, Error> decompress_solid_referenced(std::span<const std::byte> frame,
+                                                       std::span<const std::byte> reference,
+                                                       bool raw_prefix,
+                                                       std::span<std::byte> output) {
+    if (frame.empty() || output.empty() || output.size() > max_solid_bytes) {
+        return std::unexpected(corrupt("empty or oversized solid frame"));
+    }
+    const auto content = ZSTD_getFrameContentSize(frame.data(), frame.size());
+    if (content == ZSTD_CONTENTSIZE_UNKNOWN || content == ZSTD_CONTENTSIZE_ERROR ||
+        content != output.size()) {
+        return std::unexpected(corrupt("solid frame content size mismatch"));
+    }
+    const std::unique_ptr<ZSTD_DCtx, DCtxDeleter> context{ZSTD_createDCtx()};
+    if (!context || !zstd_ok(ZSTD_DCtx_setParameter(context.get(), ZSTD_d_windowLogMax,
+                                                    static_cast<int>(max_solid_window_log)))) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "cannot create zstd decoder"});
+    }
+    if (!reference.empty()) {
+        const auto attached = raw_prefix
+                                  ? ZSTD_DCtx_refPrefix(context.get(), reference.data(), reference.size())
+                                  : ZSTD_DCtx_loadDictionary(context.get(), reference.data(), reference.size());
+        if (!zstd_ok(attached)) {
+            return std::unexpected(Error{ErrorCode::io_error, "cannot attach zstd reference"});
+        }
+    }
+    const auto result =
+        ZSTD_decompressDCtx(context.get(), output.data(), output.size(), frame.data(), frame.size());
+    if (!zstd_ok(result) || result != output.size()) {
+        return std::unexpected(corrupt(zstd_ok(result) ? "output size mismatch" : ZSTD_getErrorName(result)));
+    }
+    return {};
+}
+
 struct DictionaryDecoder::Impl {
     std::unique_ptr<ZSTD_DDict, DDictDeleter> dictionary;
     std::unique_ptr<ZSTD_DCtx, DCtxDeleter> context;

@@ -77,6 +77,7 @@ constexpr std::string_view usage =
     "  append4_study recipe-pack seed|explicit RECIPE INPUT_DIR OUT   (ADR-0006, mapping rev 3)\n"
     "  append4_study recipe-append OLD NEW_DIR OUT [RECIPE]   (no RECIPE: keep the last one)\n"
     "  append4_study describe ARCHIVE\n"
+    "  append4_study drift-probe OLD_DIR NEW_DIR ZSTD_LEVEL   (append-drift references; no format)\n"
     "      RECIPE: solid/zstd-9/g<k>-r<rule>/frame-<whole|16MiB|32MiB|64MiB|128MiB|256MiB>"
     " or 0x Seed\n";
 using Tag = std::array<char, 8>;
@@ -3767,6 +3768,7 @@ std::optional<std::uint32_t> redundancy_arg(std::string_view s, bool &ok) {
 #include "bounded_solid.hpp"
 #include "bounded_extract.hpp"
 #include "recipe_commands.hpp"
+#include "drift_probe.hpp"
 
 // Command-line arguments as UTF-8. On Windows argv is in the ANSI code page, which cannot carry
 // every path (archive-internal paths such as 源/文件.txt included), so the wide command line is
@@ -3846,6 +3848,13 @@ int main(int argc, char *argv[]) {
     if ((a.size() == 5 || a.size() == 6) && a[1] == "recipe-append") {
         return cmd_recipe_append(native(a[2]), native(a[3]), native(a[4]),
                                  a.size() == 6 ? std::optional{a[5]} : std::nullopt);
+    }
+    if (a.size() == 5 && a[1] == "drift-probe") {
+        const auto zstd_level = number(a[4]);
+        if (!zstd_level || *zstd_level < 1 || *zstd_level > 19) {
+            return 2;
+        }
+        return cmd_drift_probe(native(a[2]), native(a[3]), static_cast<std::uint32_t>(*zstd_level));
     }
     if (a.size() == 3 && a[1] == "describe") {
         return cmd_describe(native(a[2]));

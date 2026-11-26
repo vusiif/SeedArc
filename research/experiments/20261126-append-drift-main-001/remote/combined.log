@@ -1,0 +1,12 @@
+{"step": "release-configure", "argv": ["cmake", "-S", "/home/sc/long-tasks/20261126T054303Z-a0c79396/work/source", "-B", "/home/sc/long-tasks/20261126T054303Z-a0c79396/work/release", "-DCMAKE_BUILD_TYPE=Release", "-G", "Ninja", "-DCMAKE_CXX_COMPILER=/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/g++-14", "-DCMAKE_PREFIX_PATH=/home/sc/long-tasks/20261123T123105Z-d5596074/work/build/vcpkg_installed/x64-linux", "-DSEEDARC_BUILD_RESEARCH_TOOLS=ON", "-DBUILD_TESTING=ON"]}
+{"step": "release-build", "argv": ["cmake", "--build", "/home/sc/long-tasks/20261126T054303Z-a0c79396/work/release", "--parallel", "4"]}
+{"step": "release-ctest", "argv": ["ctest", "--test-dir", "/home/sc/long-tasks/20261126T054303Z-a0c79396/work/release", "--output-on-failure", "--parallel", "1"]}
+{"step": "bounded-cross", "argv": ["cmake", "-DTOOL=/home/sc/long-tasks/20261126T054303Z-a0c79396/work/release/research/tools/seedarc_append4_study", "-DWORK=/home/sc/long-tasks/20261126T054303Z-a0c79396/work/bounded-cross", "-DREPORT=/home/sc/long-tasks/20261126T054303Z-a0c79396/results/linux-cross-hashes.json", "-P", "/home/sc/long-tasks/20261126T054303Z-a0c79396/work/source/research/tools/check_bounded_solid.cmake"]}
+{"index": 0, "label": "source-first-batch-zstd3", "returncode": 0, "process_wall_ms": 17188.35550401127}
+{"index": 1, "label": "source-first-batch-zstd9", "returncode": 0, "process_wall_ms": 39728.20486899582}
+{"index": 2, "label": "source-last-batch-zstd3", "returncode": 0, "process_wall_ms": 17933.04459899082}
+{"index": 3, "label": "source-last-batch-zstd9", "returncode": 0, "process_wall_ms": 43308.16179901012}
+{"index": 4, "label": "text-first-batch-zstd3", "returncode": 0, "process_wall_ms": 3604.526072012959}
+{"index": 5, "label": "text-first-batch-zstd9", "returncode": 0, "process_wall_ms": 9033.310942992102}
+{"index": 6, "label": "text-last-batch-zstd3", "returncode": 0, "process_wall_ms": 4696.925381984329}
+{"index": 7, "label": "text-last-batch-zstd9", "returncode": 0, "process_wall_ms": 17310.470074997284}
