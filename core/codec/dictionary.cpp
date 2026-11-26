@@ -282,15 +282,17 @@ bool valid_solid_codec(std::uint32_t codec, std::uint32_t level) noexcept {
 }
 
 std::expected<std::vector<std::byte>, Error>
-compress_solid_codec(std::uint32_t codec, std::uint32_t level, std::span<const std::byte> input) {
-    if (!valid_solid_codec(codec, level) || input.empty() || input.size() > max_solid_bytes) {
+compress_solid_codec(std::uint32_t codec, std::uint32_t level, std::span<const std::byte> input,
+                     bool extreme) {
+    if (!valid_solid_codec(codec, level) || (extreme && codec != solid_lzma2) || input.empty() ||
+        input.size() > max_solid_bytes) {
         return std::unexpected(Error{ErrorCode::invalid_argument, "invalid solid codec or input"});
     }
     if (codec == solid_zstd) {
         return compress_solid(input, level);
     }
     lzma_options_lzma options{};
-    if (lzma_lzma_preset(&options, level) != 0) {
+    if (lzma_lzma_preset(&options, level | (extreme ? LZMA_PRESET_EXTREME : 0U)) != 0) {
         return std::unexpected(Error{ErrorCode::invalid_argument, "invalid LZMA2 preset"});
     }
     options.dict_size = (std::min)(options.dict_size, lzma2_solid_dictionary(input.size()));
@@ -536,6 +538,122 @@ std::expected<void, Error> DictionaryDecoder::decode(std::span<const std::byte> 
     }
     if (result != output.size()) {
         return std::unexpected(corrupt("zstd output size mismatch"));
+    }
+    return {};
+}
+
+bool valid_solid_variant(const SolidVariant &v) noexcept {
+    if (v.codec == solid_zstd) {
+        return v.level >= 1 && v.level <= 22 && v.workers <= 64 && !v.extreme && !v.bcj_x86;
+    }
+    return v.codec == solid_lzma2 && valid_block_codec(lzma2_id, v.level) && !v.long_distance &&
+           v.workers == 0;
+}
+
+namespace {
+// Raw filter chain of an LZMA2 variant: optional x86 BCJ, then LZMA2.
+struct Lzma2Chain {
+    lzma_options_lzma options{};
+    std::array<lzma_filter, 3> filters{};
+    void build(bool bcj_x86) {
+        std::size_t i = 0;
+        if (bcj_x86) {
+            filters[i++] = {LZMA_FILTER_X86, nullptr};
+        }
+        filters[i++] = {LZMA_FILTER_LZMA2, &options};
+        filters[i] = {LZMA_VLI_UNKNOWN, nullptr};
+    }
+};
+} // namespace
+
+std::expected<std::vector<std::byte>, Error>
+compress_solid_variant(const SolidVariant &v, std::span<const std::byte> input) {
+    if (!valid_solid_variant(v) || input.empty() || input.size() > max_solid_bytes) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid solid variant or input"});
+    }
+    if (v.codec == solid_zstd) {
+        const std::unique_ptr<ZSTD_CCtx, CCtxDeleter> context{ZSTD_createCCtx()};
+        if (!context) {
+            return std::unexpected(Error{ErrorCode::resource_limit, "cannot create zstd context"});
+        }
+        const auto window =
+            std::min<int>(static_cast<int>(max_solid_window_log), window_log_for(input.size()));
+        if (!zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_compressionLevel,
+                                            static_cast<int>(v.level))) ||
+            !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_windowLog, window)) ||
+            !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_checksumFlag, 0)) ||
+            !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_contentSizeFlag, 1)) ||
+            // 1 = ZSTD_ps_enable; 0 = ZSTD_ps_auto, NOT "off": the library then enables LDM by
+            // itself for strategy >= btopt (level 16+) with windowLog >= 27.
+            !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_enableLongDistanceMatching,
+                                            v.long_distance ? 1 : 0))) {
+            return std::unexpected(Error{ErrorCode::io_error, "cannot configure zstd encoder"});
+        }
+        if (!zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_nbWorkers,
+                                            static_cast<int>(v.workers)))) {
+            return std::unexpected(
+                Error{ErrorCode::unsupported_feature, "this zstd build has no multithreading"});
+        }
+        std::vector<std::byte> out(ZSTD_compressBound(input.size()));
+        const auto result =
+            ZSTD_compress2(context.get(), out.data(), out.size(), input.data(), input.size());
+        if (!zstd_ok(result)) {
+            return std::unexpected(Error{ErrorCode::io_error, std::string{"zstd compression failed: "} +
+                                                                  ZSTD_getErrorName(result)});
+        }
+        out.resize(result);
+        return out;
+    }
+    Lzma2Chain chain;
+    if (lzma_lzma_preset(&chain.options, v.level | (v.extreme ? LZMA_PRESET_EXTREME : 0U)) != 0) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid LZMA2 preset"});
+    }
+    chain.options.dict_size = (std::min)(chain.options.dict_size, lzma2_solid_dictionary(input.size()));
+    chain.build(v.bcj_x86);
+    std::vector<std::byte> out(lzma_block_buffer_bound(input.size()));
+    std::size_t written = 0;
+    const auto result = lzma_raw_buffer_encode(
+        chain.filters.data(), nullptr, reinterpret_cast<const std::uint8_t *>(input.data()),
+        input.size(), reinterpret_cast<std::uint8_t *>(out.data()), &written, out.size());
+    if (result == LZMA_MEM_ERROR || result == LZMA_MEMLIMIT_ERROR) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "LZMA2 encoder out of memory"});
+    }
+    if (result != LZMA_OK) {
+        return std::unexpected(Error{ErrorCode::io_error, "LZMA2 variant compression failed: code " +
+                                                              std::to_string(static_cast<int>(result))});
+    }
+    out.resize(written);
+    return out;
+}
+
+std::expected<void, Error> decompress_solid_variant(const SolidVariant &v,
+                                                    std::span<const std::byte> frame,
+                                                    std::span<std::byte> output) {
+    if (!valid_solid_variant(v)) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid solid variant"});
+    }
+    if (v.codec == solid_zstd || !v.bcj_x86) {
+        return decompress_solid_codec(v.codec, frame, output); // encoder-only options
+    }
+    if (frame.empty() || output.empty() || output.size() > max_solid_bytes) {
+        return std::unexpected(corrupt("empty or oversized solid frame"));
+    }
+    Lzma2Chain chain;
+    chain.options.dict_size = lzma2_solid_dictionary(output.size());
+    chain.build(true);
+    const auto memory = lzma_raw_decoder_memusage(chain.filters.data());
+    if (memory == UINT64_MAX || memory > std::uint64_t{chain.options.dict_size} + (2U << 20)) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "LZMA2 frame needs too much memory"});
+    }
+    std::size_t consumed = 0, produced = 0;
+    const auto result = lzma_raw_buffer_decode(
+        chain.filters.data(), nullptr, reinterpret_cast<const std::uint8_t *>(frame.data()), &consumed,
+        frame.size(), reinterpret_cast<std::uint8_t *>(output.data()), &produced, output.size());
+    if (result == LZMA_MEM_ERROR || result == LZMA_MEMLIMIT_ERROR) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "LZMA2 frame needs too much memory"});
+    }
+    if (result != LZMA_OK || consumed != frame.size() || produced != output.size()) {
+        return std::unexpected(corrupt("LZMA2+BCJ frame is invalid, truncated or has trailing bytes"));
     }
     return {};
 }

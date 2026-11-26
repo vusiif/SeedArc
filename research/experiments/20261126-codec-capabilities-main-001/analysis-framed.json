@@ -1,0 +1,128 @@
+{
+ "source": {
+  "overhead_bytes": 752615,
+  "real_archive_bytes": {
+   "lzma2-6": 24150148,
+   "lzma2-9": 23811082
+  },
+  "variants": {
+   "lzma2-6": {
+    "frame_bytes": 23397533,
+    "archive_bytes": 24150148,
+    "frames": 9,
+    "encode_s": 117.4,
+    "decode_s": 1.22,
+    "peak_mib": 705,
+    "vs_lzma2_9_pct": 1.42
+   },
+   "lzma2-6e": {
+    "frame_bytes": 22720963,
+    "archive_bytes": 23473578,
+    "frames": 9,
+    "encode_s": 200.5,
+    "decode_s": 1.18,
+    "peak_mib": 704,
+    "vs_lzma2_9_pct": -1.42
+   },
+   "lzma2-9": {
+    "frame_bytes": 23058467,
+    "archive_bytes": 23811082,
+    "frames": 9,
+    "encode_s": 128.2,
+    "decode_s": 1.29,
+    "peak_mib": 975,
+    "vs_lzma2_9_pct": 0.0
+   },
+   "lzma2-9e": {
+    "frame_bytes": 22411246,
+    "archive_bytes": 23163861,
+    "frames": 9,
+    "encode_s": 217.0,
+    "decode_s": 1.19,
+    "peak_mib": 975,
+    "vs_lzma2_9_pct": -2.72
+   },
+   "zstd-19": {
+    "frame_bytes": 23882676,
+    "archive_bytes": 24635291,
+    "frames": 9,
+    "encode_s": 178.9,
+    "decode_s": 0.25,
+    "peak_mib": 705,
+    "vs_lzma2_9_pct": 3.46
+   },
+   "zstd-19-ldm": {
+    "frame_bytes": 23818112,
+    "archive_bytes": 24570727,
+    "frames": 9,
+    "encode_s": 200.7,
+    "decode_s": 0.25,
+    "peak_mib": 721,
+    "vs_lzma2_9_pct": 3.19
+   }
+  }
+ },
+ "text": {
+  "overhead_bytes": 2484,
+  "real_archive_bytes": {
+   "lzma2-6": 14594899,
+   "lzma2-9": 14320641
+  },
+  "variants": {
+   "lzma2-6": {
+    "frame_bytes": 14592415,
+    "archive_bytes": 14594899,
+    "frames": 3,
+    "encode_s": 69.5,
+    "decode_s": 0.72,
+    "peak_mib": 312,
+    "vs_lzma2_9_pct": 1.92
+   },
+   "lzma2-6e": {
+    "frame_bytes": 14320328,
+    "archive_bytes": 14322812,
+    "frames": 3,
+    "encode_s": 89.1,
+    "decode_s": 0.76,
+    "peak_mib": 312,
+    "vs_lzma2_9_pct": 0.02
+   },
+   "lzma2-9": {
+    "frame_bytes": 14318157,
+    "archive_bytes": 14320641,
+    "frames": 3,
+    "encode_s": 76.3,
+    "decode_s": 0.74,
+    "peak_mib": 554,
+    "vs_lzma2_9_pct": 0.0
+   },
+   "lzma2-9e": {
+    "frame_bytes": 14020889,
+    "archive_bytes": 14023373,
+    "frames": 3,
+    "encode_s": 109.1,
+    "decode_s": 0.83,
+    "peak_mib": 554,
+    "vs_lzma2_9_pct": -2.08
+   },
+   "zstd-19": {
+    "frame_bytes": 14615752,
+    "archive_bytes": 14618236,
+    "frames": 3,
+    "encode_s": 82.7,
+    "decode_s": 0.13,
+    "peak_mib": 327,
+    "vs_lzma2_9_pct": 2.08
+   },
+   "zstd-19-ldm": {
+    "frame_bytes": 14593502,
+    "archive_bytes": 14595986,
+    "frames": 3,
+    "encode_s": 91.4,
+    "decode_s": 0.18,
+    "peak_mib": 343,
+    "vs_lzma2_9_pct": 1.92
+   }
+  }
+ }
+}

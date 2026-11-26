@@ -91,8 +91,11 @@ int cmd_describe(const fs::path &archive) {
             recipe = json_string(recipe_text(r));
             seed = json_string(hex32_text(encode_recipe_seed(r)));
             text = recipe_text(r);
-            check = "frame boundaries verified against the recipe; level declared, not verified "
-                    "from data";
+            check = g.recipe->extreme
+                        ? "frame boundaries verified against the recipe; level and extreme declared, "
+                          "not verified from data"
+                        : "frame boundaries verified against the recipe; level declared, not verified "
+                          "from data";
         } else {
             text = "solid/zstd-9/g" + std::to_string(g.plan.k) + "-r" +
                    std::to_string(g.plan.rule) + " (frame limit not recorded)";

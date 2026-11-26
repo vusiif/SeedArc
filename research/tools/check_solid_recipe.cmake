@@ -65,7 +65,7 @@ if(NOT text_hash STREQUAL hex_hash)
 endif()
 # Other codecs and levels: round trip, readable label, and indexed extraction through the
 # codec's own prefix decoder (the 16 MiB step splits the 21 MiB input into two frames).
-foreach(codec zstd-1 zstd-19 lzma2-0 lzma2-6 lzma2-9)
+foreach(codec zstd-1 zstd-19 lzma2-0 lzma2-6 lzma2-9 lzma2-6e)
     set(recipe "solid/${codec}/g1-r0/frame-16MiB")
     run(0 packed recipe-pack seed "${recipe}" "${big}" "${root}/big-${codec}.sadx")
     string(JSON frames GET "${packed}" frame_count)
@@ -98,6 +98,80 @@ execute_process(COMMAND "${TOOL}" payload-compare "${root}/big-zstd-19.sadx" "${
 if(differ EQUAL 0)
     message(FATAL_ERROR "Zstd and LZMA2 payloads compared equal")
 endif()
+# LZMA2 extreme (ADR-0007): Seed bit 15 / explicit second-word bit 16; both representations give
+# the same payload, the hex Seed names the same recipe, describe marks extreme as declared, and
+# append and consolidation keep it.
+set(extreme "solid/lzma2-9e/g2-r1/frame-16MiB")
+foreach(rep seed explicit)
+    run(0 packed recipe-pack ${rep} "${extreme}" "${first}" "${root}/x-${rep}.sadx")
+    run(0 ignored verify "${root}/x-${rep}.sadx" "${first}")
+    run(0 described describe "${root}/x-${rep}.sadx")
+    string(JSON label GET "${described}" generations 0 recipe)
+    string(JSON check GET "${described}" generations 0 check)
+    if(NOT label STREQUAL extreme OR NOT check MATCHES "level and extreme declared")
+        message(FATAL_ERROR "extreme recipe described wrongly: ${described}")
+    endif()
+endforeach()
+run(0 ignored payload-compare "${root}/x-seed.sadx" "${root}/x-explicit.sadx")
+run(0 packed recipe-pack seed "${extreme}" "${first}" "${root}/x-text.sadx")
+string(JSON x_seed GET "${packed}" recipe_seed)
+math(EXPR x_bit "(${x_seed} >> 15) & 1")
+math(EXPR x_hex "${x_seed}" OUTPUT_FORMAT HEXADECIMAL)
+if(NOT x_bit EQUAL 1)
+    message(FATAL_ERROR "extreme Seed ${x_hex} does not set bit 15")
+endif()
+run(0 ignored recipe-pack seed "${x_hex}" "${first}" "${root}/x-hex.sadx")
+file(SHA256 "${root}/x-text.sadx" x_text_hash)
+file(SHA256 "${root}/x-hex.sadx" x_hex_hash)
+if(NOT x_text_hash STREQUAL x_hex_hash)
+    message(FATAL_ERROR "extreme Seed value and text form disagree")
+endif()
+run(0 appended recipe-append "${root}/x-seed.sadx" "${added}" "${root}/x-next.sadx")
+string(JSON kept GET "${appended}" new_generation_recipe)
+if(NOT kept STREQUAL extreme)
+    message(FATAL_ERROR "recipe-append dropped the extreme flag: ${kept}")
+endif()
+run(0 ignored verify "${root}/x-next.sadx" "${all}")
+run(0 ignored extract "${root}/x-next.sadx" "exact" "${root}" "x-exact.out")
+file(SHA256 "${all}/exact" want)
+file(SHA256 "${root}/x-exact.out" got)
+if(NOT want STREQUAL got)
+    message(FATAL_ERROR "extract from an extreme archive failed")
+endif()
+run(0 ignored consolidate "${root}/x-next.sadx" "${root}/x-one.sadx")
+run(0 ignored recipe-pack seed "${extreme}" "${all}" "${root}/x-fresh.sadx")
+file(SHA256 "${root}/x-one.sadx" x_one_hash)
+file(SHA256 "${root}/x-fresh.sadx" x_fresh_hash)
+if(NOT x_one_hash STREQUAL x_fresh_hash)
+    message(FATAL_ERROR "consolidating an extreme archive differs from recipe-pack")
+endif()
+# Records no writer produces: Zstd with extreme (Seed bit 15, explicit bit 16), or a reserved
+# bit set (Seed bit 16, explicit bit 17). Every reader refuses the record, and extract writes nothing.
+run(0 zseed recipe-pack seed "solid/zstd-9/g2-r1/frame-16MiB" "${first}" "${root}/z-seed.sadx")
+run(0 ignored recipe-pack explicit "solid/zstd-9/g2-r1/frame-16MiB" "${first}" "${root}/z-explicit.sadx")
+string(JSON z_seed GET "${zseed}" recipe_seed)
+math(EXPR z_extreme "${z_seed} | 32768")
+math(EXPR x_reserved "${x_seed} | 65536")
+math(EXPR z_word "1 | 65536")      # frame code 1 (16 MiB), codec 0, extreme
+math(EXPR x_word "1 | 256 | 131072") # frame code 1, codec 1, bit 17
+foreach(case "z-seed;${z_extreme}" "x-seed;${x_reserved}" "z-explicit;${z_word}" "x-explicit;${x_word}")
+    list(GET case 0 source)
+    list(GET case 1 value)
+    execute_process(COMMAND "${Python3_EXECUTABLE}" -I "${CMAKE_CURRENT_LIST_DIR}/recipe_fixture.py" retag
+        "${root}/${source}.sadx" "${root}/bad-${source}.sadx" "${value}" RESULT_VARIABLE code)
+    if(NOT code EQUAL 0)
+        message(FATAL_ERROR "retag helper failed for ${source}")
+    endif()
+    foreach(args "verify;${root}/bad-${source}.sadx;${first}" "describe;${root}/bad-${source}.sadx")
+        execute_process(COMMAND "${TOOL}" ${args} RESULT_VARIABLE code OUTPUT_QUIET ERROR_VARIABLE err)
+        if(NOT code EQUAL 1 OR NOT err MATCHES "bad solid recipe record")
+            message(FATAL_ERROR "${args}: exit${code}, ${err}")
+        endif()
+    endforeach()
+    run(1 ignored extract "${root}/bad-${source}.sadx" "a" "${root}" "bad-${source}.out")
+    no_output("${root}/bad-${source}.out")
+endforeach()
+
 # A whole-frame recipe encodes the same frames as the revision-2 writer.
 run(0 ignored bounded-pack seed 1073741824 "${first}" "${root}/legacy.sadx")
 run(0 ignored payload-compare "${root}/legacy.sadx" "${root}/g1-r0-whole-seed.sadx")
@@ -213,13 +287,17 @@ if(NOT keep_hash STREQUAL keep_after)
 endif()
 
 # 4. Refusals publish nothing.
-# Zstd 0 / 20, LZMA2 10, leading zero, unknown codec, frame 48 MiB, k 9; Seeds: bit 15, frame
-# code 7, codec 2, LZMA2 level 10.
+# Zstd 0 / 20, LZMA2 10, leading zero, unknown codec, frame 48 MiB, k 9; extreme spellings
+# (Zstd, upper case, dash, doubled, without a preset, leading zero, LZMA2 10); Seeds: Zstd 0 with
+# extreme, Zstd 9 with extreme, bit 16, frame code 7, codec 2, LZMA2 level 10.
 foreach(bad "solid/zstd-0/g1-r0/frame-32MiB" "solid/zstd-20/g1-r0/frame-32MiB"
         "solid/lzma2-10/g1-r0/frame-32MiB" "solid/zstd-09/g1-r0/frame-32MiB"
         "solid/brotli-5/g1-r0/frame-32MiB" "solid/zstd-9/g1-r0/frame-48MiB"
-        "solid/zstd-9/g9-r0/frame-32MiB" "solid/zstd-9/g1-r0/frame-32MiB/" "0x8000" "0x24e0"
-        "0x2620" "0x2920")
+        "solid/zstd-9/g9-r0/frame-32MiB" "solid/zstd-9/g1-r0/frame-32MiB/"
+        "solid/zstd-9e/g1-r0/frame-32MiB" "solid/lzma2-9E/g1-r0/frame-32MiB"
+        "solid/lzma2-9-e/g1-r0/frame-32MiB" "solid/lzma2-9ee/g1-r0/frame-32MiB"
+        "solid/lzma2-e/g1-r0/frame-32MiB" "solid/lzma2-09e/g1-r0/frame-32MiB"
+        "solid/lzma2-10e/g1-r0/frame-32MiB" "0x8000" "0xa400" "0x12500" "0x24e0" "0x2620" "0x2920")
     run(2 ignored recipe-pack seed "${bad}" "${first}" "${root}/bad.sadx")
 endforeach()
 run(2 ignored recipe-pack other "solid/zstd-9/g1-r0/frame-32MiB" "${first}" "${root}/bad.sadx")

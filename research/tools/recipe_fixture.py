@@ -2,7 +2,8 @@
 """Fixtures for check_solid_recipe.cmake (ADR-0006).
 
   big DIR                 three 7 MiB files (21 MiB > the 16 MiB recipe step), deterministic bytes
-  retag IN OUT VALUE      copy IN to OUT with generation 0's revision-3 Seed value replaced by VALUE,
+  retag IN OUT VALUE      copy IN to OUT with generation 0's revision-3 Seed value (or, for an
+                          explicit record, the descriptor's second word) replaced by VALUE,
                           fixing the GEN record CRC, its trailer copy and the trailer CRC, so only
                           the recipe-vs-frames check can reject the result
 """
@@ -48,10 +49,14 @@ def retag(src, dst, value):
     body_at = gen_at + 12
     old_body = bytes(data[body_at:body_at + body_len])
     rev, length = struct.unpack_from('<HH', old_body, 16)
-    if rev != 3 or length != 4:
-        raise SystemExit('generation 0 is not a revision-3 Seed record')
+    if (rev, length) == (3, 4):
+        at = 20  # the Seed value
+    elif (rev, length) == (0, 8):
+        at = 24  # explicit descriptor: second word (frame code, codec, extreme)
+    else:
+        raise SystemExit('generation 0 is not a revision-3 recipe record')
     body = bytearray(old_body)
-    struct.pack_into('<I', body, 20, value)
+    struct.pack_into('<I', body, at, value)
     data[body_at:body_at + body_len] = body
     struct.pack_into('<I', data, body_at + body_len, crc32c(body))
     toff, tsize = struct.unpack_from('<QI', data, len(data) - 24)

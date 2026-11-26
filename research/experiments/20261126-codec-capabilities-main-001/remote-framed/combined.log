@@ -1,0 +1,20 @@
+{"step": "release-configure", "argv": ["cmake", "-S", "/home/sc/long-tasks/20261126T142050Z-a05e18e1/work/source", "-B", "/home/sc/long-tasks/20261126T142050Z-a05e18e1/work/release", "-DCMAKE_BUILD_TYPE=Release", "-G", "Ninja", "-DCMAKE_CXX_COMPILER=/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/g++-14", "-DCMAKE_PREFIX_PATH=/home/sc/long-tasks/20261123T123105Z-d5596074/work/build/vcpkg_installed/x64-linux", "-DSEEDARC_BUILD_RESEARCH_TOOLS=ON", "-DBUILD_TESTING=ON"]}
+{"step": "release-build", "argv": ["cmake", "--build", "/home/sc/long-tasks/20261126T142050Z-a05e18e1/work/release", "--parallel", "4"]}
+{"step": "release-ctest", "argv": ["ctest", "--test-dir", "/home/sc/long-tasks/20261126T142050Z-a05e18e1/work/release", "--output-on-failure", "--parallel", "1"]}
+{"step": "bounded-cross", "argv": ["cmake", "-DTOOL=/home/sc/long-tasks/20261126T142050Z-a05e18e1/work/release/research/tools/seedarc_append4_study", "-DWORK=/home/sc/long-tasks/20261126T142050Z-a05e18e1/work/bounded-cross", "-DREPORT=/home/sc/long-tasks/20261126T142050Z-a05e18e1/results/linux-cross-hashes.json", "-P", "/home/sc/long-tasks/20261126T142050Z-a05e18e1/work/source/research/tools/check_bounded_solid.cmake"]}
+{"index": 0, "label": "source-framed-lzma2-6", "returncode": 0, "process_wall_ms": 120667.49410299235}
+{"index": 1, "label": "source-framed-lzma2-6e", "returncode": 0, "process_wall_ms": 203912.3237039894}
+{"index": 2, "label": "source-framed-lzma2-9", "returncode": 0, "process_wall_ms": 131622.4411999865}
+{"index": 3, "label": "source-framed-lzma2-9e", "returncode": 0, "process_wall_ms": 220292.08630498033}
+{"index": 4, "label": "source-framed-zstd-19", "returncode": 0, "process_wall_ms": 181151.47759599495}
+{"index": 5, "label": "source-framed-zstd-19-ldm", "returncode": 0, "process_wall_ms": 203135.41246202658}
+{"index": 6, "label": "source-pack-lzma2-6", "returncode": 0, "process_wall_ms": 124039.62661797414}
+{"index": 7, "label": "source-pack-lzma2-9", "returncode": 0, "process_wall_ms": 139999.5589570026}
+{"index": 8, "label": "text-framed-lzma2-6", "returncode": 0, "process_wall_ms": 70686.59443699289}
+{"index": 9, "label": "text-framed-lzma2-6e", "returncode": 0, "process_wall_ms": 90323.8893559901}
+{"index": 10, "label": "text-framed-lzma2-9", "returncode": 0, "process_wall_ms": 77562.86198398448}
+{"index": 11, "label": "text-framed-lzma2-9e", "returncode": 0, "process_wall_ms": 110392.5461639883}
+{"index": 12, "label": "text-framed-zstd-19", "returncode": 0, "process_wall_ms": 83324.38966701739}
+{"index": 13, "label": "text-framed-zstd-19-ldm", "returncode": 0, "process_wall_ms": 92063.16993699875}
+{"index": 14, "label": "text-pack-lzma2-6", "returncode": 0, "process_wall_ms": 67848.42326398939}
+{"index": 15, "label": "text-pack-lzma2-9", "returncode": 0, "process_wall_ms": 78695.72532598977}

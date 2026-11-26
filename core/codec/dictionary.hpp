@@ -73,7 +73,8 @@ decompress_solid_prefix(std::span<const std::byte> prefix, std::span<std::byte> 
 // before the input (raw_prefix true; decoding then needs exactly those bytes). Window
 // min(27, ceil(log2(reference + input))), content size recorded, no checksum. Not used by any
 // archive format; measurement only.
-// `long_distance` enables zstd long-distance matching (encoder only; decoding is unchanged).
+// `long_distance` forces zstd long-distance matching on (encoder only; decoding is unchanged);
+// false leaves zstd's default, which enables it by itself for level 16+ with a 2^27 window.
 [[nodiscard]] std::expected<std::vector<std::byte>, Error>
 compress_solid_referenced(std::span<const std::byte> input, std::uint32_t level,
                           std::span<const std::byte> reference, bool raw_prefix,
@@ -89,8 +90,11 @@ decompress_solid_referenced(std::span<const std::byte> frame, std::span<const st
 inline constexpr std::uint32_t solid_zstd = 0;
 inline constexpr std::uint32_t solid_lzma2 = 1;
 [[nodiscard]] bool valid_solid_codec(std::uint32_t codec, std::uint32_t level) noexcept;
+// `extreme` (LZMA2 only, ADR-0007) adds LZMA_PRESET_EXTREME: an encoder-only search option, the
+// frame is the same raw LZMA2 stream and decodes with decompress_solid_codec unchanged.
 [[nodiscard]] std::expected<std::vector<std::byte>, Error>
-compress_solid_codec(std::uint32_t codec, std::uint32_t level, std::span<const std::byte> input);
+compress_solid_codec(std::uint32_t codec, std::uint32_t level, std::span<const std::byte> input,
+                     bool extreme = false);
 [[nodiscard]] std::expected<void, Error>
 decompress_solid_codec(std::uint32_t codec, std::span<const std::byte> frame,
                        std::span<std::byte> output);
@@ -99,6 +103,29 @@ decompress_solid_codec(std::uint32_t codec, std::span<const std::byte> frame,
 [[nodiscard]] std::expected<std::size_t, Error>
 decompress_solid_prefix_codec(std::uint32_t codec, std::span<const std::byte> prefix,
                               std::span<std::byte> output);
+
+// codec-capability probe (research/ideas/codec-capabilities-r0.md): solid frames with encoder
+// options the recipes do not use yet. Measurement only; no archive format records them.
+//   zstd:  level 1-22, `long_distance` forces LDM on (false leaves zstd's own default, which
+//          turns LDM on for level 16+ once the window reaches 2^27), `workers` = nbWorkers
+//          (0 = single-threaded API);
+//          window min(27, ceil(log2(size))) as for every solid frame, content size recorded.
+//   lzma2: preset 0-9, `extreme` (LZMA_PRESET_EXTREME), `bcj_x86` (x86 BCJ before LZMA2).
+// Decoding needs the same `codec` and `bcj_x86`; the other options change only the encoder.
+struct SolidVariant {
+    std::uint32_t codec = solid_zstd;
+    std::uint32_t level = 9;
+    bool long_distance = false;
+    std::uint32_t workers = 0;
+    bool extreme = false;
+    bool bcj_x86 = false;
+};
+[[nodiscard]] bool valid_solid_variant(const SolidVariant &variant) noexcept;
+[[nodiscard]] std::expected<std::vector<std::byte>, Error>
+compress_solid_variant(const SolidVariant &variant, std::span<const std::byte> input);
+[[nodiscard]] std::expected<void, Error>
+decompress_solid_variant(const SolidVariant &variant, std::span<const std::byte> frame,
+                         std::span<std::byte> output);
 
 // Decodes exactly one frame made with the same dictionary into exactly output.size() bytes.
 // Rejects a missing / different dictionary ID, trailing input, a wrong content size and a

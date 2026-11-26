@@ -2,6 +2,8 @@
 
 状态：**用户已确认（2026-11-25）；研究工具中已实现并通过 MSVC 47/47、Linux GCC 48/48、Clang ASan+UBSan 相关 6/6，均 0 警告；未经独立审计，未进入正式格式**。日期：2026-11-25。起草：主Agent（Claude）。决定人：用户，§6 三项均选推荐方案（原话"按照推荐来吧"）。格式仍为 experimental、未冻结；本 ADR 只授权在研究工具中实现映射修订 3，不改正式归档格式。
 
+> 修订记录：§2.1 允许集与 §2.3 位布局已由 [ADR-0007](0007-recipe-lzma2-extreme.md)（2026-11-26）修订，加入 LZMA2 extreme（Seed bit 15），映射修订仍为 3；下文保留原决定原文。
+
 输入：
 - 用户 2026-11-25 对 Seed 的定位（[user-vision §4](../user-vision.md#4-seed-应承担什么作用)）：Seed 是表示工具，让人知道自己在用什么压缩，并固定这种压缩方式；它是重要特征，不是全部。
 - 现有实现：[solid_plan.hpp](../../research/tools/solid_plan.hpp)（solid-plan-r1，映射修订 2）、[有界固实](../../research/ideas/bounded-solid-r0.md)、DEV-021–024 实验。

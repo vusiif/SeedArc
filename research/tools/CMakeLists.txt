@@ -93,6 +93,11 @@ if(BUILD_TESTING)
         "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/drift-probe-check-$<CONFIG>"
         -P "${CMAKE_CURRENT_SOURCE_DIR}/check_drift_probe.cmake")
     set_tests_properties(research.drift_probe PROPERTIES TIMEOUT 600)
+    add_test(NAME research.codec_probe COMMAND "${CMAKE_COMMAND}"
+        "-DTOOL=$<TARGET_FILE:seedarc_append4_study>"
+        "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/codec-probe-check-$<CONFIG>"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/check_codec_probe.cmake")
+    set_tests_properties(research.codec_probe PROPERTIES TIMEOUT 600)
 endif()
 
 # DEV-032: fuzz target for the research container reader. Ordinary builds replay the committed

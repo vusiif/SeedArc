@@ -1,0 +1,44 @@
+{"step": "release-configure", "argv": ["cmake", "-S", "/home/sc/long-tasks/20261126T122803Z-2b7b1942/work/source", "-B", "/home/sc/long-tasks/20261126T122803Z-2b7b1942/work/release", "-DCMAKE_BUILD_TYPE=Release", "-G", "Ninja", "-DCMAKE_CXX_COMPILER=/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/g++-14", "-DCMAKE_PREFIX_PATH=/home/sc/long-tasks/20261123T123105Z-d5596074/work/build/vcpkg_installed/x64-linux", "-DSEEDARC_BUILD_RESEARCH_TOOLS=ON", "-DBUILD_TESTING=ON"]}
+{"step": "release-build", "argv": ["cmake", "--build", "/home/sc/long-tasks/20261126T122803Z-2b7b1942/work/release", "--parallel", "4"]}
+{"step": "release-ctest", "argv": ["ctest", "--test-dir", "/home/sc/long-tasks/20261126T122803Z-2b7b1942/work/release", "--output-on-failure", "--parallel", "1"]}
+{"step": "bounded-cross", "argv": ["cmake", "-DTOOL=/home/sc/long-tasks/20261126T122803Z-2b7b1942/work/release/research/tools/seedarc_append4_study", "-DWORK=/home/sc/long-tasks/20261126T122803Z-2b7b1942/work/bounded-cross", "-DREPORT=/home/sc/long-tasks/20261126T122803Z-2b7b1942/results/linux-cross-hashes.json", "-P", "/home/sc/long-tasks/20261126T122803Z-2b7b1942/work/source/research/tools/check_bounded_solid.cmake"]}
+{"index": 0, "label": "source-codec-probe-zstd-9", "returncode": 0, "process_wall_ms": 7495.597438013647}
+{"index": 1, "label": "source-codec-probe-zstd-19", "returncode": 0, "process_wall_ms": 202792.62458102312}
+{"index": 2, "label": "source-codec-probe-zstd-19-ldm", "returncode": 0, "process_wall_ms": 214175.8630819968}
+{"index": 3, "label": "source-codec-probe-zstd-22", "returncode": 0, "process_wall_ms": 270692.37852300284}
+{"index": 4, "label": "source-codec-probe-zstd-22-ldm", "returncode": 0, "process_wall_ms": 273021.1531200039}
+{"index": 5, "label": "source-codec-probe-lzma2-9", "returncode": 0, "process_wall_ms": 148868.0754310044}
+{"index": 6, "label": "source-codec-probe-lzma2-9e", "returncode": 0, "process_wall_ms": 246724.3490370165}
+{"index": 7, "label": "source-codec-probe-classes-zstd-9", "returncode": 0, "process_wall_ms": 7547.641429002397}
+{"index": 8, "label": "source-codec-probe-classes-zstd-19", "returncode": 0, "process_wall_ms": 201796.87526199268}
+{"index": 9, "label": "source-codec-probe-classes-zstd-19-ldm", "returncode": 0, "process_wall_ms": 201373.67239399464}
+{"index": 10, "label": "source-codec-probe-classes-zstd-22", "returncode": 0, "process_wall_ms": 254956.09622998745}
+{"index": 11, "label": "source-codec-probe-classes-zstd-22-ldm", "returncode": 0, "process_wall_ms": 267502.3796319729}
+{"index": 12, "label": "source-codec-probe-classes-lzma2-9", "returncode": 0, "process_wall_ms": 153700.51580198924}
+{"index": 13, "label": "source-codec-probe-classes-lzma2-9e", "returncode": 0, "process_wall_ms": 236064.42074698862}
+{"index": 0, "label": "source-multi-zstd-9", "returncode": 0, "process_wall_ms": 7725.460596993798}
+{"index": 1, "label": "source-multi-zstd-9-mt1", "returncode": 0, "process_wall_ms": 8150.901766988682}
+{"index": 2, "label": "source-multi-zstd-9-mt2", "returncode": 0, "process_wall_ms": 8176.257337006973}
+{"index": 3, "label": "source-multi-zstd-9-mt4", "returncode": 0, "process_wall_ms": 7773.952752992045}
+{"index": 4, "label": "source-multi-zstd-19", "returncode": 0, "process_wall_ms": 196875.81653500092}
+{"index": 5, "label": "source-multi-zstd-19-mt4", "returncode": 0, "process_wall_ms": 67909.07974398579}
+{"index": 14, "label": "text-codec-probe-zstd-9", "returncode": 0, "process_wall_ms": 3690.229221014306}
+{"index": 15, "label": "text-codec-probe-zstd-19", "returncode": 0, "process_wall_ms": 93125.86030099192}
+{"index": 16, "label": "text-codec-probe-zstd-19-ldm", "returncode": 0, "process_wall_ms": 95037.33862598892}
+{"index": 17, "label": "text-codec-probe-zstd-22", "returncode": 0, "process_wall_ms": 128783.44560199184}
+{"index": 18, "label": "text-codec-probe-zstd-22-ldm", "returncode": 0, "process_wall_ms": 131526.4982910012}
+{"index": 19, "label": "text-codec-probe-lzma2-9", "returncode": 0, "process_wall_ms": 89720.16858399729}
+{"index": 20, "label": "text-codec-probe-lzma2-9e", "returncode": 0, "process_wall_ms": 114446.1146480171}
+{"index": 21, "label": "text-codec-probe-classes-zstd-9", "returncode": 0, "process_wall_ms": 3288.6891329835635}
+{"index": 22, "label": "text-codec-probe-classes-zstd-19", "returncode": 0, "process_wall_ms": 93512.75763101876}
+{"index": 23, "label": "text-codec-probe-classes-zstd-19-ldm", "returncode": 0, "process_wall_ms": 93135.06896200124}
+{"index": 24, "label": "text-codec-probe-classes-zstd-22", "returncode": 0, "process_wall_ms": 135245.47848300426}
+{"index": 25, "label": "text-codec-probe-classes-zstd-22-ldm", "returncode": 0, "process_wall_ms": 133559.50805501197}
+{"index": 26, "label": "text-codec-probe-classes-lzma2-9", "returncode": 0, "process_wall_ms": 88014.91722898209}
+{"index": 27, "label": "text-codec-probe-classes-lzma2-9e", "returncode": 0, "process_wall_ms": 104750.64910101355}
+{"index": 6, "label": "text-multi-zstd-9", "returncode": 0, "process_wall_ms": 3465.240232006181}
+{"index": 7, "label": "text-multi-zstd-9-mt1", "returncode": 0, "process_wall_ms": 3475.537382008042}
+{"index": 8, "label": "text-multi-zstd-9-mt2", "returncode": 0, "process_wall_ms": 3962.026354012778}
+{"index": 9, "label": "text-multi-zstd-9-mt4", "returncode": 0, "process_wall_ms": 3780.631289992016}
+{"index": 10, "label": "text-multi-zstd-19", "returncode": 0, "process_wall_ms": 103118.35541998153}
+{"index": 11, "label": "text-multi-zstd-19-mt4", "returncode": 0, "process_wall_ms": 87421.31965400768}

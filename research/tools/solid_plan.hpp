@@ -62,6 +62,8 @@ inline std::optional<Plan> parse_solid_explicit(std::string_view text) {
 // limit step, the codec and its level. Allowed: Zstd (codec 0) levels 1-19 and LZMA2 (codec 1)
 // presets 0-9 (ADR-0006 §2.1, widened 2026-11-25 for the codec curve); codec 2-3 and other
 // levels stay reserved and rejected. Widening only turned invalid values into valid ones.
+// ADR-0007 (2026-11-26) widened it again the same way: an `extreme` flag for LZMA2 presets
+// (LZMA_PRESET_EXTREME), formerly-zero bit 15; still revision 3, no existing value changed.
 inline constexpr std::uint16_t solid_recipe_revision = 3;
 inline constexpr std::array<std::uint64_t, 6> recipe_frame_limits{
     std::uint64_t{1} << 30, 16ULL << 20, 32ULL << 20, 64ULL << 20, 128ULL << 20, 256ULL << 20};
@@ -69,6 +71,7 @@ struct RecipeFields {
     std::uint8_t frame_code = 0; // index into recipe_frame_limits; 0 = whole (1 GiB bound)
     std::uint8_t codec = 0;      // 0 = Zstd
     std::uint8_t level = 9;
+    bool extreme = false;        // LZMA2 only; encoder search option, decoding is unchanged
     bool operator==(const RecipeFields &) const = default;
 };
 struct SolidRecipe {
@@ -77,19 +80,21 @@ struct SolidRecipe {
 };
 inline bool valid_recipe(const SolidRecipe &r) {
     return valid_solid_plan(r.plan) && r.fields.frame_code < recipe_frame_limits.size() &&
-           research::valid_solid_codec(r.fields.codec, r.fields.level);
+           research::valid_solid_codec(r.fields.codec, r.fields.level) &&
+           (!r.fields.extreme || r.fields.codec == research::solid_lzma2);
 }
 inline constexpr std::array<std::string_view, 2> recipe_codec_names{"zstd", "lzma2"};
 inline std::uint64_t recipe_frame_limit(const RecipeFields &f) {
     return recipe_frame_limits[f.frame_code];
 }
-// bits 0-4 as revision 2 | 5-7 frame code | 8-9 codec | 10-14 level | 15-31 zero
+// bits 0-4 as revision 2 | 5-7 frame code | 8-9 codec | 10-14 level | 15 extreme | 16-31 zero
 inline std::uint32_t encode_recipe_seed(const SolidRecipe &r) {
     return encode_solid_seed(r.plan) | (std::uint32_t{r.fields.frame_code} << 5) |
-           (std::uint32_t{r.fields.codec} << 8) | (std::uint32_t{r.fields.level} << 10);
+           (std::uint32_t{r.fields.codec} << 8) | (std::uint32_t{r.fields.level} << 10) |
+           (r.fields.extreme ? 1U << 15 : 0U);
 }
 inline std::optional<SolidRecipe> decode_recipe_seed(std::uint32_t value) {
-    if ((value >> 15) != 0) {
+    if ((value >> 16) != 0) {
         return std::nullopt;
     }
     const auto plan = decode_solid_seed(value & 31);
@@ -98,35 +103,38 @@ inline std::optional<SolidRecipe> decode_recipe_seed(std::uint32_t value) {
     }
     const SolidRecipe r{*plan, {static_cast<std::uint8_t>((value >> 5) & 7),
                                 static_cast<std::uint8_t>((value >> 8) & 3),
-                                static_cast<std::uint8_t>((value >> 10) & 31)}};
+                                static_cast<std::uint8_t>((value >> 10) & 31),
+                                ((value >> 15) & 1) != 0}};
     return valid_recipe(r) ? std::optional{r} : std::nullopt;
 }
-// Concrete descriptor (two words): layout ID 2, rule, k, level | frame code, codec.
+// Concrete descriptor (two words): layout ID 2, rule, k, level | frame code, codec, extreme (bit 16).
 inline std::array<std::uint32_t, 2> encode_recipe_explicit(const SolidRecipe &r) {
     return {2U | (std::uint32_t{r.plan.rule} << 8) | (std::uint32_t{r.plan.k} << 16) |
                 (std::uint32_t{r.fields.level} << 24),
-            std::uint32_t{r.fields.frame_code} | (std::uint32_t{r.fields.codec} << 8)};
+            std::uint32_t{r.fields.frame_code} | (std::uint32_t{r.fields.codec} << 8) |
+                (r.fields.extreme ? 1U << 16 : 0U)};
 }
 inline std::optional<SolidRecipe> decode_recipe_explicit(std::uint32_t first,
                                                          std::uint32_t second) {
-    if ((first & 255) != 2 || (second >> 16) != 0) {
+    if ((first & 255) != 2 || (second >> 17) != 0) {
         return std::nullopt;
     }
     SolidRecipe r;
     r.plan.rule = static_cast<std::uint8_t>(first >> 8);
     r.plan.k = static_cast<std::uint8_t>(first >> 16);
     r.fields = {static_cast<std::uint8_t>(second & 255), static_cast<std::uint8_t>(second >> 8),
-                static_cast<std::uint8_t>(first >> 24)};
+                static_cast<std::uint8_t>(first >> 24), ((second >> 16) & 1) != 0};
     return valid_recipe(r) ? std::optional{r} : std::nullopt;
 }
-// Canonical readable form, e.g. solid/zstd-9/g1-r0/frame-32MiB or solid/lzma2-6/g1-r0/frame-whole.
+// Canonical readable form, e.g. solid/zstd-9/g1-r0/frame-32MiB, solid/lzma2-6/g1-r0/frame-whole
+// or solid/lzma2-9e/g1-r0/frame-32MiB (extreme).
 inline std::string recipe_text(const SolidRecipe &r) {
     const auto frame = r.fields.frame_code == 0
                            ? std::string{"whole"}
                            : std::to_string(recipe_frame_limit(r.fields) >> 20) + "MiB";
     return "solid/" + std::string{recipe_codec_names[r.fields.codec]} + "-" +
-           std::to_string(r.fields.level) + "/g" + std::to_string(r.plan.k) + "-r" +
-           std::to_string(r.plan.rule) + "/frame-" + frame;
+           std::to_string(r.fields.level) + (r.fields.extreme ? "e" : "") + "/g" +
+           std::to_string(r.plan.k) + "-r" + std::to_string(r.plan.rule) + "/frame-" + frame;
 }
 // Accepts the canonical text form or a revision-3 Seed value in hex ("0x..."). Text is parsed
 // field by field and must print back exactly (no leading zeros, spaces or other spellings).
@@ -166,7 +174,12 @@ inline std::optional<SolidRecipe> parse_recipe(std::string_view text) {
         return std::nullopt;
     }
     r.fields.codec = static_cast<std::uint8_t>(codec - recipe_codec_names.begin());
-    const auto level_field = field_number(take("", '/'));
+    auto level_text = take("", '/');
+    if (level_text && level_text->ends_with('e')) {
+        r.fields.extreme = true; // only "<digits>e"; valid_recipe rejects it for Zstd
+        level_text->remove_suffix(1);
+    }
+    const auto level_field = field_number(level_text);
     const auto k = field_number(take("g", '-'));
     const auto rule = field_number(take("r", '/'));
     const auto frame = take("frame-", '\0');
