@@ -85,17 +85,26 @@ int cmd_describe(const fs::path &archive) {
                 largest = std::max(largest, f.raw);
             }
         }
+        // ADR-0008 aliases: entries that repeat an earlier entry's frame and offset (size > 0).
+        std::uint64_t alias_files = 0, alias_bytes = 0;
+        std::set<std::pair<std::uint32_t, std::uint64_t>> seen;
+        for (std::uint32_t i = g.first_file; i < g.files_after; ++i) {
+            const auto &e = m->entries[i];
+            if (e.size > 0 && !seen.emplace(e.frame, e.frame_offset).second) {
+                ++alias_files;
+                alias_bytes += e.size;
+            }
+        }
         std::string recipe = "null", seed = "null", text, check;
         if (g.recipe) {
             const SolidRecipe r{g.plan, *g.recipe};
             recipe = json_string(recipe_text(r));
             seed = json_string(hex32_text(encode_recipe_seed(r)));
             text = recipe_text(r);
-            check = g.recipe->extreme
-                        ? "frame boundaries verified against the recipe; level and extreme declared, "
-                          "not verified from data"
-                        : "frame boundaries verified against the recipe; level declared, not verified "
-                          "from data";
+            check = std::string{"frame boundaries verified against the recipe"} +
+                    (g.recipe->dedup ? "; aliases verified against earlier entries" : "") + "; level" +
+                    (g.recipe->extreme ? " and extreme" : "") +
+                    (g.recipe->dedup ? " and dedup completeness" : "") + " declared, not verified from data";
         } else {
             text = "solid/zstd-9/g" + std::to_string(g.plan.k) + "-r" +
                    std::to_string(g.plan.rule) + " (frame limit not recorded)";
@@ -108,6 +117,8 @@ int cmd_describe(const fs::path &archive) {
                 ",\"recipe\":" + recipe + ",\"recipe_seed\":" + seed +
                 ",\"summary\":" + json_string(text) + ",\"frames\":" + std::to_string(frames) +
                 ",\"max_frame_raw_bytes\":" + std::to_string(largest) +
+                ",\"alias_files\":" + std::to_string(alias_files) +
+                ",\"alias_bytes\":" + std::to_string(alias_bytes) +
                 ",\"check\":" + json_string(check) + "}";
     }
     // Facts only: how much of the plaintext arrived after generation 0. The size cost of that

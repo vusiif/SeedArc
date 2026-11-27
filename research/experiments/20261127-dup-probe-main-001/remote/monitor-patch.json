@@ -1,0 +1,7 @@
+{
+  "task_id": "20261127T070138Z-b73743dd",
+  "original_sha256": "4118a90c0806293ba1232a678a6864aee6e401cd06f3d475b1aff9272a650892",
+  "patched_sha256": "d88dc2fc7b14a320afedd03382a1cc2862d2a57f2b7cb02fefef4f2285639a23",
+  "disk_limit_bytes": 2147483648,
+  "scope": "task runner copy only; installed skill unchanged"
+}

@@ -6,6 +6,11 @@
                           explicit record, the descriptor's second word) replaced by VALUE,
                           fixing the GEN record CRC, its trailer copy and the trailer CRC, so only
                           the recipe-vs-frames check can reject the result
+  dedup DIR BIG           ADR-0008 tree from BIG's a b c: p/{a,a2,b,c,d,e0,e1} and q/a, where
+                          a2, d and q/a copy a and e0, e1 are empty
+  realias IN OUT PATH FRAME OFFSET
+                          copy IN to OUT with PATH's trailer entry pointing at (FRAME, OFFSET),
+                          size and CRC kept, fixing the trailer CRC (red_off archives only)
 """
 from pathlib import Path
 import struct
@@ -40,6 +45,38 @@ def big(root):
         (root / name).write_bytes(bytes(block[:7 * 1024 * 1024]))
 
 
+def dedup(root, src):
+    root, src = Path(root), Path(src)
+    for d in ('p', 'q'):
+        (root / d).mkdir(parents=True, exist_ok=False)
+    a = (src / 'a').read_bytes()
+    for name, data in [('a', a), ('a2', a), ('b', (src / 'b').read_bytes()), ('c', (src / 'c').read_bytes()),
+                       ('d', a), ('e0', b''), ('e1', b'')]:
+        (root / 'p' / name).write_bytes(data)
+    (root / 'q' / 'a').write_bytes(a)
+
+
+def realias(src, dst, path, frame, offset):
+    data = bytearray(Path(src).read_bytes())
+    toff, tsize = struct.unpack_from('<QI', data, len(data) - 24)
+    trailer = bytearray(data[toff:toff + tsize])
+    # Entry: path text (2-byte length, bytes), size (8), frame (4), offset (8), CRC (4). Find the path followed by a size
+    # that fits, then rewrite frame and offset.
+    key = struct.pack('<H', len(path.encode())) + path.encode()  # put_text: 2-byte length, bytes
+    hits = []
+    at = trailer.find(key)
+    while at >= 0:
+        hits.append(at + len(key))
+        at = trailer.find(key, at + 1)
+    hits = [h for h in hits if h + 24 <= len(trailer)]
+    if len(hits) != 1:
+        raise SystemExit('entry not unique')
+    struct.pack_into('<IQ', trailer, hits[0] + 8, frame, offset)
+    data[toff:toff + tsize] = trailer
+    struct.pack_into('<I', data, len(data) - 12, crc32c(trailer))
+    Path(dst).write_bytes(bytes(data))
+
+
 def retag(src, dst, value):
     data = bytearray(Path(src).read_bytes())
     gen_at = 32  # generation 0's record directly follows the 32-byte header
@@ -72,6 +109,10 @@ def retag(src, dst, value):
 if __name__ == '__main__':
     if sys.argv[1] == 'big':
         big(sys.argv[2])
+    elif sys.argv[1] == 'dedup':
+        dedup(sys.argv[2], sys.argv[3])
+    elif sys.argv[1] == 'realias':
+        realias(sys.argv[2], sys.argv[3], sys.argv[4], int(sys.argv[5]), int(sys.argv[6]))
     elif sys.argv[1] == 'retag':
         retag(sys.argv[2], sys.argv[3], int(sys.argv[4], 0))
     else:

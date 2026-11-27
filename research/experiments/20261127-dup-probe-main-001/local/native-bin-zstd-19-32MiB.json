@@ -1,0 +1,32 @@
+{
+ "schema": "seedarc.dup-probe.r0",
+ "variant": "zstd-19",
+ "frame_limit_bytes": 33554432,
+ "files": 63,
+ "input_bytes": 67072886,
+ "duplicates": {
+  "files": 17,
+  "bytes": 26074961,
+  "cross_frame_files": 6,
+  "cross_frame_bytes": 5889250,
+  "distinct_contents_with_copies": 9
+ },
+ "baseline": {
+  "files": 63,
+  "raw_bytes": 67072886,
+  "frames": 3,
+  "compressed_bytes": 6968306,
+  "frame_crc32c": 1634848444,
+  "encode_wall_ms": 11501.8036
+ },
+ "dedup": {
+  "files": 46,
+  "raw_bytes": 40997925,
+  "frames": 2,
+  "compressed_bytes": 5320016,
+  "frame_crc32c": 977266752,
+  "encode_wall_ms": 10531.6909
+ },
+ "peak_memory_bytes": 229392384,
+ "peak_memory_metric": "PeakWorkingSetSize"
+}

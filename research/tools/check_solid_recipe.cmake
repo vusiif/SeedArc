@@ -34,6 +34,14 @@ function(no_output path)
     endif()
 endfunction()
 
+function(same_file left right what)
+    file(SHA256 "${left}" l)
+    file(SHA256 "${right}" r)
+    if(NOT l STREQUAL r)
+        message(FATAL_ERROR "${what}: files differ")
+    endif()
+endfunction()
+
 # 1. Every frame step, both representations, two groupings: round trip and readable label.
 foreach(frame whole 16MiB 32MiB 64MiB 128MiB 256MiB)
     foreach(group g1-r0 g2-r1)
@@ -146,14 +154,14 @@ if(NOT x_one_hash STREQUAL x_fresh_hash)
     message(FATAL_ERROR "consolidating an extreme archive differs from recipe-pack")
 endif()
 # Records no writer produces: Zstd with extreme (Seed bit 15, explicit bit 16), or a reserved
-# bit set (Seed bit 16, explicit bit 17). Every reader refuses the record, and extract writes nothing.
+# bit set (Seed bit 17, explicit bit 18; Seed bit 16 / explicit bit 17 are dedup since ADR-0008). Every reader refuses the record, and extract writes nothing.
 run(0 zseed recipe-pack seed "solid/zstd-9/g2-r1/frame-16MiB" "${first}" "${root}/z-seed.sadx")
 run(0 ignored recipe-pack explicit "solid/zstd-9/g2-r1/frame-16MiB" "${first}" "${root}/z-explicit.sadx")
 string(JSON z_seed GET "${zseed}" recipe_seed)
 math(EXPR z_extreme "${z_seed} | 32768")
-math(EXPR x_reserved "${x_seed} | 65536")
+math(EXPR x_reserved "${x_seed} | 131072")
 math(EXPR z_word "1 | 65536")      # frame code 1 (16 MiB), codec 0, extreme
-math(EXPR x_word "1 | 256 | 131072") # frame code 1, codec 1, bit 17
+math(EXPR x_word "1 | 256 | 262144") # frame code 1, codec 1, bit 18
 foreach(case "z-seed;${z_extreme}" "x-seed;${x_reserved}" "z-explicit;${z_word}" "x-explicit;${x_word}")
     list(GET case 0 source)
     list(GET case 1 value)
@@ -170,6 +178,137 @@ foreach(case "z-seed;${z_extreme}" "x-seed;${x_reserved}" "z-explicit;${z_word}"
     endforeach()
     run(1 ignored extract "${root}/bad-${source}.sadx" "a" "${root}" "bad-${source}.out")
     no_output("${root}/bad-${source}.out")
+endforeach()
+
+# Whole-file dedup (ADR-0008). Tree p/{a,a2,b,c,d,e0,e1} q/a: a2, d and q/a copy a (7 MiB),
+# e0 / e1 are empty. g1-r0 at 16 MiB keeps the greedy boundaries with every size counted:
+# [a (a2)] [b c] [(d) e0 e1 (q/a)], so 3 aliases (21 MiB) and frame bytes equal to dup-probe's
+# dedup_same_cut. Under g2-r0, q/ is its own group and q/a stays a real copy.
+execute_process(COMMAND "${Python3_EXECUTABLE}" -I "${CMAKE_CURRENT_LIST_DIR}/recipe_fixture.py" dedup
+    "${root}/dup" "${big}" RESULT_VARIABLE code)
+if(NOT code EQUAL 0)
+    message(FATAL_ERROR "dedup fixture failed")
+endif()
+set(dedup "solid/zstd-9/g1-r0/frame-16MiB/dedup")
+foreach(rep seed explicit)
+    run(0 packed recipe-pack ${rep} "${dedup}" "${root}/dup" "${root}/d-${rep}.sadx")
+    run(0 ignored verify "${root}/d-${rep}.sadx" "${root}/dup")
+    run(0 described describe "${root}/d-${rep}.sadx")
+    foreach(check "recipe;${dedup}" "alias_files;3" "alias_bytes;22020096" "frames;3")
+        list(GET check 0 field)
+        list(GET check 1 want)
+        string(JSON got GET "${described}" generations 0 ${field})
+        if(NOT got STREQUAL want)
+            message(FATAL_ERROR "dedup ${rep} ${field}: ${got}, expected ${want}\n${described}")
+        endif()
+    endforeach()
+    string(JSON check GET "${described}" generations 0 check)
+    if(NOT check MATCHES "aliases verified against earlier entries" OR NOT check MATCHES "dedup completeness declared")
+        message(FATAL_ERROR "dedup check text: ${check}")
+    endif()
+endforeach()
+run(0 ignored payload-compare "${root}/d-seed.sadx" "${root}/d-explicit.sadx")
+run(0 packed recipe-pack seed "${dedup}" "${root}/dup" "${root}/d-text.sadx")
+string(JSON d_seed GET "${packed}" recipe_seed)
+string(JSON d_data GET "${packed}" parts data)
+math(EXPR d_bit "(${d_seed} >> 16) & 1")
+math(EXPR d_hex "${d_seed}" OUTPUT_FORMAT HEXADECIMAL)
+if(NOT d_bit EQUAL 1)
+    message(FATAL_ERROR "dedup Seed ${d_hex} does not set bit 16")
+endif()
+run(0 ignored recipe-pack seed "${d_hex}" "${root}/dup" "${root}/d-hex.sadx")
+same_file("${root}/d-text.sadx" "${root}/d-hex.sadx" "dedup Seed value and text form")
+run(0 probe dup-probe "${root}/dup" zstd-9 16MiB)
+string(JSON same_cut GET "${probe}" dedup_same_cut compressed_bytes)
+if(NOT d_data EQUAL same_cut)
+    message(FATAL_ERROR "dedup frame bytes ${d_data}, dup-probe dedup_same_cut ${same_cut}")
+endif()
+run(0 plain recipe-pack seed "solid/zstd-9/g1-r0/frame-16MiB" "${root}/dup" "${root}/d-plain.sadx")
+string(JSON plain_data GET "${plain}" parts data)
+run(0 described describe "${root}/d-plain.sadx")
+string(JSON plain_aliases GET "${described}" generations 0 alias_files)
+if(NOT plain_aliases EQUAL 0 OR NOT d_data LESS plain_data)
+    message(FATAL_ERROR "dedup did not shrink the frames (${d_data} vs ${plain_data}) or plain has aliases")
+endif()
+foreach(case "solid/zstd-9/g2-r0/frame-16MiB/dedup;2" "solid/lzma2-6e/g1-r0/frame-whole/dedup;3")
+    list(GET case 0 recipe)
+    list(GET case 1 want)
+    string(MAKE_C_IDENTIFIER "${recipe}" tag)
+    run(0 ignored recipe-pack seed "${recipe}" "${root}/dup" "${root}/d-${tag}.sadx")
+    run(0 ignored verify "${root}/d-${tag}.sadx" "${root}/dup")
+    run(0 described describe "${root}/d-${tag}.sadx")
+    string(JSON got GET "${described}" generations 0 alias_files)
+    if(NOT got EQUAL want)
+        message(FATAL_ERROR "${recipe}: ${got} aliases, expected ${want}")
+    endif()
+endforeach()
+foreach(name p/d q/a p/a2 p/e1)
+    string(MAKE_C_IDENTIFIER "${name}" tag)
+    run(0 ignored extract "${root}/d-seed.sadx" "${name}" "${root}" "d-${tag}.out")
+    file(SHA256 "${root}/dup/${name}" want)
+    file(SHA256 "${root}/d-${tag}.out" got)
+    if(NOT want STREQUAL got)
+        message(FATAL_ERROR "extract of dedup entry ${name} failed")
+    endif()
+endforeach()
+run(0 ignored --jobs 3 recipe-pack seed "${dedup}" "${root}/dup" "${root}/d-j3.sadx")
+same_file("${root}/d-seed.sadx" "${root}/d-j3.sadx" "dedup --jobs 3")
+# Append keeps dedup within the new generation only (r/a copies a; generation 0 is not searched);
+# consolidation re-detects across the whole tree and equals recipe-pack of it.
+file(MAKE_DIRECTORY "${root}/dup-add/r" "${root}/dup-all")
+file(COPY_FILE "${root}/dup/p/a" "${root}/dup-add/r/a")
+file(COPY "${root}/dup/p" "${root}/dup/q" "${root}/dup-add/r" DESTINATION "${root}/dup-all")
+run(0 appended recipe-append "${root}/d-seed.sadx" "${root}/dup-add" "${root}/d-next.sadx")
+string(JSON kept GET "${appended}" new_generation_recipe)
+run(0 described describe "${root}/d-next.sadx")
+string(JSON gen1_aliases GET "${described}" generations 1 alias_files)
+if(NOT kept STREQUAL dedup OR NOT gen1_aliases EQUAL 0)
+    message(FATAL_ERROR "recipe-append with dedup: ${kept}, ${gen1_aliases} aliases in generation 1")
+endif()
+run(0 ignored verify "${root}/d-next.sadx" "${root}/dup-all")
+run(0 ignored consolidate "${root}/d-next.sadx" "${root}/d-one.sadx")
+run(0 ignored recipe-pack seed "${dedup}" "${root}/dup-all" "${root}/d-fresh.sadx")
+same_file("${root}/d-one.sadx" "${root}/d-fresh.sadx" "consolidating a dedup archive")
+run(0 described describe "${root}/d-one.sadx")
+string(JSON one_aliases GET "${described}" generations 0 alias_files)
+if(NOT one_aliases EQUAL 4)
+    message(FATAL_ERROR "consolidated dedup archive has ${one_aliases} aliases, expected 4")
+endif()
+# Aliases no writer produces are refused: without the dedup bit, pointing at another file's bytes
+# or at a later file, across groups and across generations. Extract writes nothing.
+math(EXPR d_plain_seed "${d_seed} & 65535")
+execute_process(COMMAND "${Python3_EXECUTABLE}" -I "${CMAKE_CURRENT_LIST_DIR}/recipe_fixture.py" retag
+    "${root}/d-seed.sadx" "${root}/bad-d-nodedup.sadx" "${d_plain_seed}" RESULT_VARIABLE code)
+if(NOT code EQUAL 0)
+    message(FATAL_ERROR "retag helper failed for dedup")
+endif()
+foreach(case "d-seed;p/d;1;0;wrong" "d-seed;p/a2;1;7340032;later"
+        "d-solid_zstd_9_g2_r0_frame_16MiB_dedup;q/a;0;0;group" "d-next;r/a;0;0;generation")
+    list(GET case 0 source)
+    list(GET case 1 path)
+    list(GET case 2 frame)
+    list(GET case 3 offset)
+    list(GET case 4 name)
+    execute_process(COMMAND "${Python3_EXECUTABLE}" -I "${CMAKE_CURRENT_LIST_DIR}/recipe_fixture.py" realias
+        "${root}/${source}.sadx" "${root}/bad-d-${name}.sadx" "${path}" ${frame} ${offset} RESULT_VARIABLE code)
+    if(NOT code EQUAL 0)
+        message(FATAL_ERROR "realias helper failed for ${name}")
+    endif()
+endforeach()
+foreach(case "nodedup|do not follow the generation's recipe" "wrong|do not follow the generation's recipe"
+        "later|do not follow the generation's recipe" "group|solid strategy and frame group disagree"
+        "generation|solid entry outside its frame")
+    string(REPLACE "|" ";" case "${case}")
+    list(GET case 0 name)
+    list(GET case 1 message)
+    foreach(args "verify;${root}/bad-d-${name}.sadx;${root}/dup" "describe;${root}/bad-d-${name}.sadx")
+        execute_process(COMMAND "${TOOL}" ${args} RESULT_VARIABLE code OUTPUT_QUIET ERROR_VARIABLE err)
+        if(NOT code EQUAL 1 OR NOT err MATCHES "${message}")
+            message(FATAL_ERROR "dedup refusal ${name}, ${args}: exit${code}, ${err}")
+        endif()
+    endforeach()
+    run(1 ignored extract "${root}/bad-d-${name}.sadx" "p/a" "${root}" "bad-d-${name}.out")
+    no_output("${root}/bad-d-${name}.out")
 endforeach()
 
 # Parallel frame encoding (DEV-035): --jobs changes speed and memory, never the bytes. Checked
@@ -324,7 +463,8 @@ endif()
 # 4. Refusals publish nothing.
 # Zstd 0 / 20, LZMA2 10, leading zero, unknown codec, frame 48 MiB, k 9; extreme spellings
 # (Zstd, upper case, dash, doubled, without a preset, leading zero, LZMA2 10); Seeds: Zstd 0 with
-# extreme, Zstd 9 with extreme, bit 16, frame code 7, codec 2, LZMA2 level 10.
+# extreme, Zstd 9 with extreme, bit 17, frame code 7, codec 2, LZMA2 level 10; dedup spellings
+# (doubled, upper case, trailing slash, wrong place, dash).
 foreach(bad "solid/zstd-0/g1-r0/frame-32MiB" "solid/zstd-20/g1-r0/frame-32MiB"
         "solid/lzma2-10/g1-r0/frame-32MiB" "solid/zstd-09/g1-r0/frame-32MiB"
         "solid/brotli-5/g1-r0/frame-32MiB" "solid/zstd-9/g1-r0/frame-48MiB"
@@ -332,7 +472,9 @@ foreach(bad "solid/zstd-0/g1-r0/frame-32MiB" "solid/zstd-20/g1-r0/frame-32MiB"
         "solid/zstd-9e/g1-r0/frame-32MiB" "solid/lzma2-9E/g1-r0/frame-32MiB"
         "solid/lzma2-9-e/g1-r0/frame-32MiB" "solid/lzma2-9ee/g1-r0/frame-32MiB"
         "solid/lzma2-e/g1-r0/frame-32MiB" "solid/lzma2-09e/g1-r0/frame-32MiB"
-        "solid/lzma2-10e/g1-r0/frame-32MiB" "0x8000" "0xa400" "0x12500" "0x24e0" "0x2620" "0x2920")
+        "solid/lzma2-10e/g1-r0/frame-32MiB" "solid/zstd-9/g1-r0/frame-32MiB/dedup/dedup"
+        "solid/zstd-9/g1-r0/frame-32MiB/Dedup" "solid/zstd-9/g1-r0/frame-32MiB/dedup/"
+        "solid/zstd-9/g1-r0/dedup/frame-32MiB" "solid/zstd-9/g1-r0/frame-32MiB-dedup" "0x8000" "0xa400" "0x22500" "0x24e0" "0x2620" "0x2920")
     run(2 ignored recipe-pack seed "${bad}" "${first}" "${root}/bad.sadx")
 endforeach()
 run(2 ignored recipe-pack other "solid/zstd-9/g1-r0/frame-32MiB" "${first}" "${root}/bad.sadx")

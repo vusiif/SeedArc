@@ -1,0 +1,32 @@
+{
+ "schema": "seedarc.dup-probe.r0",
+ "variant": "lzma2-9e",
+ "frame_limit_bytes": 33554432,
+ "files": 63,
+ "input_bytes": 67072886,
+ "duplicates": {
+  "files": 17,
+  "bytes": 26074961,
+  "cross_frame_files": 6,
+  "cross_frame_bytes": 5889250,
+  "distinct_contents_with_copies": 9
+ },
+ "baseline": {
+  "files": 63,
+  "raw_bytes": 67072886,
+  "frames": 3,
+  "compressed_bytes": 6314970,
+  "frame_crc32c": 1565467935,
+  "encode_wall_ms": 19021.2866
+ },
+ "dedup": {
+  "files": 46,
+  "raw_bytes": 40997925,
+  "frames": 2,
+  "compressed_bytes": 4839055,
+  "frame_crc32c": 2241787625,
+  "encode_wall_ms": 13190.4188
+ },
+ "peak_memory_bytes": 510193664,
+ "peak_memory_metric": "PeakWorkingSetSize"
+}

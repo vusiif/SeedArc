@@ -1,0 +1,150 @@
+{
+  "dataset": "dup-local-dev-r1",
+  "task": "DEV-036",
+  "scope": "local-only dev; not a holdout",
+  "rules": "DEV-036: dup-local-dev-r1, a local-only dev dataset that keeps natural duplicates.\n\nThe DEV-023 trees keep one path per content (append-linux-large-dev-r2), so they cannot show how\ncommon whole-file duplicates are. This dataset takes three local, open-source / package trees\nthat no holdout or test set was built from (user choice 2026-11-27):\n\n  cargo   ~/.cargo/registry/src/<index>/<crate>-<version>/...   group: crate name (all versions)\n  rustup  ~/.rustup/toolchains/<toolchain>/...                  group: first 3 path components\n                                                                 inside the toolchain, shared by\n                                                                 all toolchains\n  npm     %APPDATA%/npm/node_modules/<package>/...              group: package (@scope/name)\n\nRules (fixed before any compression run):\n  * regular files only (no symlinks / junctions), 1 B to 32 MiB, not an already-compressed\n    format (COMPRESSED suffixes);\n  * content whose SHA256 appears in any holdout or test manifest (append-r1 holdout, g5-holdout-r1,\n    b2r5-corpus-r1/r2 test) is dropped;\n  * per pool: groups ordered by sha256(\"dup-local-dev-r1:<group>\"), whole groups taken while the\n    pool stays <= 256 MiB; a group that does not fit is skipped;\n  * every path passes seedarc_path_check (ADR-0005), a casefold() collision filter and the\n    production manifest check (--manifest) for the whole dataset.\nPopulation statistics (before selection) are recorded too: duplicate files / bytes per pool.\n\n  python -I research/scripts/dup_local_corpus.py --path-check <seedarc_path_check>\n  python -I research/scripts/dup_local_corpus.py --check\nContent is copied to the ignored research/local/dup-local-dev-r1/files/ and never uploaded;\nonly relative paths, sizes, SHA256 and groups are committed.\n",
+  "pool_cap": 268435456,
+  "file_max": 33554432,
+  "compressed_suffixes": [
+    ".7z",
+    ".br",
+    ".bz2",
+    ".crate",
+    ".gif",
+    ".gz",
+    ".jar",
+    ".jpeg",
+    ".jpg",
+    ".lz4",
+    ".lzma",
+    ".png",
+    ".tbz2",
+    ".tgz",
+    ".txz",
+    ".webp",
+    ".whl",
+    ".woff",
+    ".woff2",
+    ".xz",
+    ".zip",
+    ".zst"
+  ],
+  "sources": {
+    "cargo": "~/.cargo/registry/src",
+    "rustup": "~/.rustup/toolchains",
+    "npm": "~/AppData/Roaming/npm/node_modules"
+  },
+  "skipped": {
+    "cargo: compressed format": 277,
+    "cargo: size": 375,
+    "npm: size": 6,
+    "rustup: compressed format": 288,
+    "rustup: size": 16
+  },
+  "holdout_manifests": [
+    "research/datasets/append-r1/holdout-linux-src.tsv",
+    "research/datasets/append-r1/holdout-native-bin.tsv",
+    "research/datasets/append-r1/holdout-silesia.tsv",
+    "research/datasets/append-r1/holdout-wiki-text.tsv",
+    "research/datasets/g5-holdout-r1/local-config-cmake-pkg.tsv",
+    "research/datasets/g5-holdout-r1/local-many-small-docs.tsv",
+    "research/datasets/g5-holdout-r1/local-source-python.tsv",
+    "research/datasets/g5-holdout-r1/public-config-cmake-pkg.tsv",
+    "research/datasets/g5-holdout-r1/public-many-small-docs.tsv",
+    "research/datasets/g5-holdout-r1/public-source-python.tsv",
+    "research/datasets/b2r5-corpus-r1/test-audio-pcm.tsv",
+    "research/datasets/b2r5-corpus-r1/test-binary-native.tsv",
+    "research/datasets/b2r5-corpus-r1/test-compressed-packages.tsv",
+    "research/datasets/b2r5-corpus-r1/test-config-cmake.tsv",
+    "research/datasets/b2r5-corpus-r1/test-duplicate-licenses.tsv",
+    "research/datasets/b2r5-corpus-r1/test-image-jpeg.tsv",
+    "research/datasets/b2r5-corpus-r1/test-logs-windows.tsv",
+    "research/datasets/b2r5-corpus-r1/test-many-small-terminfo.tsv",
+    "research/datasets/b2r5-corpus-r1/test-source-headers.tsv",
+    "research/datasets/b2r5-corpus-r1/test-structured-inf.tsv",
+    "research/datasets/b2r5-corpus-r2/test-config-cmake-pkg.tsv",
+    "research/datasets/b2r5-corpus-r2/test-many-small-docs.tsv",
+    "research/datasets/b2r5-corpus-r2/test-source-python.tsv"
+  ],
+  "population": {
+    "cargo": {
+      "files": 71727,
+      "bytes": 1655373102,
+      "duplicate_files": 18538,
+      "duplicate_bytes": 185702494,
+      "distinct_contents": 53189
+    },
+    "rustup": {
+      "files": 69758,
+      "bytes": 1404917606,
+      "duplicate_files": 859,
+      "duplicate_bytes": 44280373,
+      "distinct_contents": 68899
+    },
+    "npm": {
+      "files": 1087,
+      "bytes": 18964168,
+      "duplicate_files": 173,
+      "duplicate_bytes": 1911138,
+      "distinct_contents": 914
+    }
+  },
+  "pools": {
+    "cargo": {
+      "groups_available": 840,
+      "groups_taken": 214,
+      "groups_skipped": 626,
+      "files": 14888,
+      "bytes": 268434309,
+      "duplicate_files": 3025,
+      "duplicate_bytes": 35292088,
+      "distinct_contents": 11863,
+      "manifest_sha256": "17e4fee022b4d8a715b8cd4be18bcd221fb504c9178276d55e45b7e62719d417"
+    },
+    "rustup": {
+      "groups_available": 17,
+      "groups_taken": 12,
+      "groups_skipped": 5,
+      "files": 283,
+      "bytes": 257342222,
+      "duplicate_files": 16,
+      "duplicate_bytes": 16084665,
+      "distinct_contents": 267,
+      "manifest_sha256": "62a98feffe4d73abda7114c0912139f91a8f8b9e379fbd1bbf3d726145d1c8ea"
+    },
+    "npm": {
+      "groups_available": 5,
+      "groups_taken": 5,
+      "groups_skipped": 0,
+      "files": 1087,
+      "bytes": 18964168,
+      "duplicate_files": 173,
+      "duplicate_bytes": 1911138,
+      "distinct_contents": 914,
+      "manifest_sha256": "f4f16e51ad6597d74f5056c5d886d8c0770f4ed820289397ac09c50bd53254dc"
+    }
+  },
+  "holdout_dropped": {
+    "cargo": 7,
+    "rustup": 0,
+    "npm": 0
+  },
+  "path_rejected": {
+    "cargo": 221,
+    "rustup": 0,
+    "npm": 0
+  },
+  "casefold_dropped": {
+    "cargo": [],
+    "rustup": [],
+    "npm": []
+  },
+  "manifest_check": "ok\t18984",
+  "all": {
+    "files": 16258,
+    "bytes": 544740699,
+    "duplicate_files": 3218,
+    "duplicate_bytes": 53300916,
+    "distinct_contents": 13040
+  }
+}

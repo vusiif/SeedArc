@@ -34,10 +34,12 @@
 #ifdef _WIN32
 #include <shellapi.h>
 #endif
+#include <array>
 #include <atomic>
 #include <cstring>
 #include <fstream>
 #include <functional>
+#include <limits>
 #include <iostream>
 #include <ranges>
 #include <thread>
@@ -85,6 +87,8 @@ constexpr std::string_view usage =
     "  append4_study drift-probe OLD_DIR NEW_DIR ZSTD_LEVEL   (append-drift references; no format)\n"
     "  append4_study codec-probe[-classes] DIR VARIANTS   (e.g. zstd-19-ldm,lzma2-9e-bcj; no format)\n"
     "  append4_study codec-probe-framed DIR VARIANTS <16MiB|32MiB|64MiB|128MiB|256MiB>\n"
+    "  append4_study dup-probe DIR VARIANT <whole|16MiB|...|256MiB>   (whole-file duplicates; no format)\n"
+    "  append4_study cut-probe DIR VARIANT <16MiB|...|256MiB>   (frame cut rules; no format)\n"
     "      RECIPE: solid/zstd-9/g<k>-r<rule>/frame-<whole|16MiB|32MiB|64MiB|128MiB|256MiB>"
     " or 0x Seed\n";
 using Tag = std::array<char, 8>;
@@ -832,10 +836,15 @@ std::expected<void, Error> check_recipe_frames(const Model &m, const Gen &g) {
     const auto mismatch = [] {
         return std::unexpected(bad("solid frames do not follow the generation's recipe"));
     };
+    // ADR-0008 dedup: every file counts towards the frame budget; only non-alias files add frame
+    // bytes and must be laid out in order. An alias is any entry not at the next in-order position;
+    // it must repeat (frame, offset, size, CRC) of an earlier non-alias, non-empty entry of the
+    // same generation and group. Without dedup no alias is allowed.
     std::size_t next = 0;
     for (std::size_t grp = 0; grp < g.groups.size(); ++grp) {
-        std::uint64_t joined = 0;
+        std::uint64_t joined = 0, budget = 0;
         bool any = false;
+        std::map<std::pair<std::uint32_t, std::uint64_t>, const Entry *> placed;
         const auto flush = [&] {
             if (!any) {
                 return true;
@@ -849,6 +858,7 @@ std::expected<void, Error> check_recipe_frames(const Model &m, const Gen &g) {
             }
             ++next;
             joined = 0;
+            budget = 0;
             any = false;
             return true;
         };
@@ -857,14 +867,26 @@ std::expected<void, Error> check_recipe_frames(const Model &m, const Gen &g) {
             if (e.group != grp) {
                 continue;
             }
-            if (e.size > limit || (e.size > limit - joined && !flush())) {
+            if (e.size > limit || (e.size > limit - budget && !flush())) {
                 return mismatch();
             }
-            if (next >= own.size() || e.frame != own[next] || e.frame_offset != joined) {
+            if (next >= own.size()) {
                 return mismatch();
             }
             any = true;
-            joined += e.size;
+            budget += e.size;
+            if (e.frame == own[next] && e.frame_offset == joined) {
+                if (e.size > 0) {
+                    placed.emplace(std::pair{e.frame, e.frame_offset}, &e);
+                }
+                joined += e.size;
+                continue;
+            }
+            const auto first = placed.find({e.frame, e.frame_offset});
+            if (!g.recipe->dedup || e.size == 0 || first == placed.end() || first->second->size != e.size ||
+                first->second->file_crc != e.file_crc) {
+                return mismatch();
+            }
         }
         if (!flush()) {
             return mismatch();
@@ -1509,29 +1531,49 @@ std::expected<void, Error> encode_pending(Pending &p, const Header &h,
         std::vector<std::size_t> members; // file indices, in frame order
         std::uint64_t raw = 0;
     };
+    //    ADR-0008 dedup recipes: a non-empty file equal to an earlier file of the same group (same
+    //    size and CRC32C, then compared byte for byte) becomes an alias of its first copy. It still
+    //    counts towards the frame budget, so boundaries stay where they would be without dedup.
     std::vector<FrameInput> plan;
     const auto base = p.frames.size();
+    const bool dedup = p.gen.recipe && p.gen.recipe->dedup;
     for (std::size_t g = 0; g < p.gen.groups.size(); ++g) {
         bool open = false;
+        std::uint64_t budget = 0;
+        std::map<std::pair<std::uint64_t, std::uint32_t>, std::vector<std::size_t>> firsts;
         for (std::size_t i = 0; i < files.size(); ++i) {
             if (groups[i] != g) {
                 continue;
             }
-            if (files[i].data.size() > frame_limit) {
+            const auto size = files[i].data.size();
+            if (size > frame_limit) {
                 return std::unexpected(Error{ErrorCode::resource_limit,
                                              "file exceeds the requested solid frame limit"});
             }
-            if (!open || files[i].data.size() > frame_limit - plan.back().raw) {
+            if (!open || size > frame_limit - budget) {
                 plan.push_back({static_cast<std::uint8_t>(g), {}, 0});
                 open = true;
+                budget = 0;
             }
+            budget += size;
             auto &frame = plan.back();
             auto &e = p.entries[i];
+            e.file_crc = seedarc::experimental::crc32c(files[i].data);
+            if (dedup && size > 0) {
+                auto &bucket = firsts[{size, e.file_crc}];
+                const auto same = std::ranges::find_if(
+                    bucket, [&](std::size_t j) { return files[j].data == files[i].data; });
+                if (same != bucket.end()) {
+                    e.frame = p.entries[*same].frame;
+                    e.frame_offset = p.entries[*same].frame_offset;
+                    continue;
+                }
+                bucket.push_back(i);
+            }
             e.frame = static_cast<std::uint32_t>(base + plan.size() - 1);
             e.frame_offset = frame.raw;
-            e.file_crc = seedarc::experimental::crc32c(files[i].data);
             frame.members.push_back(i);
-            frame.raw += files[i].data.size();
+            frame.raw += size;
         }
     }
     // 2. Compression: every frame is independent, so frames may be encoded by `encode_jobs`
@@ -3830,6 +3872,8 @@ std::optional<std::uint32_t> redundancy_arg(std::string_view s, bool &ok) {
 #include "recipe_commands.hpp"
 #include "drift_probe.hpp"
 #include "codec_probe.hpp"
+#include "dup_probe.hpp"
+#include "cut_probe.hpp"
 
 // Command-line arguments as UTF-8. On Windows argv is in the ANSI code page, which cannot carry
 // every path (archive-internal paths such as 源/文件.txt included), so the wide command line is
@@ -3954,6 +3998,12 @@ int main(int argc, char *argv[]) {
         }
         std::cerr << "unknown frame limit: " << a[4] << "\n";
         return 2;
+    }
+    if (a.size() == 5 && a[1] == "dup-probe") {
+        return cmd_dup_probe(native(a[2]), a[3], a[4]);
+    }
+    if (a.size() == 5 && a[1] == "cut-probe") {
+        return cmd_cut_probe(native(a[2]), a[3], a[4]);
     }
     if (a.size() == 3 && a[1] == "describe") {
         return cmd_describe(native(a[2]));

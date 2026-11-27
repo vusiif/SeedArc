@@ -1,0 +1,9 @@
+
+seedarc_append4_study --jobs 8 cut-probe research/local/append-r1/files/dev zstd-19 32MiB -> exit 0, 63 s
+seedarc_append4_study --jobs 8 cut-probe research/local/dup-local-dev-r1/files/cargo zstd-19 32MiB -> exit 0, 112 s
+seedarc_append4_study --jobs 8 cut-probe research/local/dup-local-dev-r1/files/rustup zstd-19 32MiB -> exit 0, 55 s
+seedarc_append4_study --jobs 8 cut-probe research/local/dup-local-dev-r1/files zstd-19 32MiB -> exit 0, 167 s
+seedarc_append4_study --jobs 8 cut-probe research/local/append-r1/files/dev lzma2-9e 32MiB -> exit 0, 85 s
+seedarc_append4_study --jobs 8 cut-probe research/local/dup-local-dev-r1/files/cargo lzma2-9e 32MiB -> exit 0, 158 s
+seedarc_append4_study --jobs 8 cut-probe research/local/dup-local-dev-r1/files/rustup lzma2-9e 32MiB -> exit 0, 85 s
+seedarc_append4_study --jobs 8 cut-probe research/local/dup-local-dev-r1/files lzma2-9e 32MiB -> exit 0, 312 s

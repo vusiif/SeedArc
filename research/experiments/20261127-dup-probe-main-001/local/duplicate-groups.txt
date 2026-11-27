@@ -1,0 +1,11 @@
+# append-r1 dev: exact duplicate groups (size, copies, sha256, paths); independent Python check
+3297488 5 f4120ffea38b73ef native-bin/ucrt64-bin/cc.exe native-bin/ucrt64-bin/gcc.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-cc.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-gcc-16.2.0.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-gcc.exe
+3300560 4 58efe82fa3ce3500 native-bin/ucrt64-bin/c++.exe native-bin/ucrt64-bin/g++.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-c++.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-g++.exe
+2095160 2 7a34bc8e1517bab3 native-bin/ucrt64-lib/libmsvcrt.a native-bin/ucrt64-lib/libucrt.a
+162816 3 47e62ca10cae9ad8 native-bin/ucrt64-bin/x86_64-w64-mingw32-captoinfo.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-infotocap.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-tic.exe
+85485 4 1482af8cc988bb37 native-bin/ucrt64-bin/pkg-config.exe native-bin/ucrt64-bin/pkgconf.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-pkg-config.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-pkgconf.exe
+81922 2 68c6e360451b4cfe native-bin/ucrt64-bin/tclsh.exe native-bin/ucrt64-bin/tclsh86.exe
+74720 2 736c720ffa894f8d native-bin/ucrt64-bin/gcc-ar.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-gcc-ar.exe
+74720 2 77d32bacbe08cf8a native-bin/ucrt64-bin/gcc-nm.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-gcc-nm.exe
+74720 2 e4b9df814b73ca1f native-bin/ucrt64-bin/gcc-ranlib.exe native-bin/ucrt64-bin/x86_64-w64-mingw32-gcc-ranlib.exe
+95 3 4fbca2017dcf8fdd linux-src/linux/tools/build/feature/test-fortify-source.c linux-src/linux/tools/build/feature/test-hello.c linux-src/linux/tools/build/feature/test-stackprotector-all.c
