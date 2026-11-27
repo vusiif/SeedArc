@@ -172,6 +172,41 @@ foreach(case "z-seed;${z_extreme}" "x-seed;${x_reserved}" "z-explicit;${z_word}"
     no_output("${root}/bad-${source}.out")
 endforeach()
 
+# Parallel frame encoding (DEV-035): --jobs changes speed and memory, never the bytes. Checked
+# on multi-frame (16 MiB step over 21 MiB) and multi-group archives, for pack, append and
+# consolidate; bad worker counts are refused and write nothing.
+function(same_bytes left right what)
+    file(SHA256 "${left}" l)
+    file(SHA256 "${right}" r)
+    if(NOT l STREQUAL r)
+        message(FATAL_ERROR "--jobs changed the bytes: ${what}")
+    endif()
+endfunction()
+foreach(case "solid/zstd-9/g1-r0/frame-16MiB;${big}" "solid/lzma2-6e/g1-r0/frame-16MiB;${big}"
+        "solid/lzma2-9e/g2-r1/frame-whole;${first}" "solid/zstd-3/g2-r1/frame-16MiB;${first}")
+    list(GET case 0 recipe)
+    list(GET case 1 tree)
+    string(MAKE_C_IDENTIFIER "${recipe}" tag)
+    foreach(jobs 1 2 5)
+        run(0 ignored --jobs ${jobs} recipe-pack seed "${recipe}" "${tree}" "${root}/j${jobs}-${tag}.sadx")
+    endforeach()
+    run(0 ignored recipe-pack seed "${recipe}" "${tree}" "${root}/j-${tag}.sadx")
+    foreach(jobs 1 2 5)
+        same_bytes("${root}/j-${tag}.sadx" "${root}/j${jobs}-${tag}.sadx" "${recipe} --jobs ${jobs}")
+    endforeach()
+endforeach()
+run(0 ignored recipe-append "${root}/x-seed.sadx" "${added}" "${root}/j-append-1.sadx")
+run(0 ignored --jobs 4 recipe-append "${root}/x-seed.sadx" "${added}" "${root}/j-append-4.sadx")
+same_bytes("${root}/j-append-1.sadx" "${root}/j-append-4.sadx" "recipe-append")
+run(0 ignored consolidate "${root}/j-append-1.sadx" "${root}/j-one-1.sadx" "solid/zstd-9/g2-r1/frame-16MiB")
+run(0 ignored --jobs 3 consolidate "${root}/j-append-1.sadx" "${root}/j-one-3.sadx" "solid/zstd-9/g2-r1/frame-16MiB")
+same_bytes("${root}/j-one-1.sadx" "${root}/j-one-3.sadx" "consolidate")
+foreach(bad 0 17 04 x "")
+    run(2 ignored --jobs "${bad}" recipe-pack seed "solid/zstd-9/g1-r0/frame-16MiB" "${first}" "${root}/bad.sadx")
+endforeach()
+run(2 ignored --jobs)
+no_output("${root}/bad.sadx")
+
 # A whole-frame recipe encodes the same frames as the revision-2 writer.
 run(0 ignored bounded-pack seed 1073741824 "${first}" "${root}/legacy.sadx")
 run(0 ignored payload-compare "${root}/legacy.sadx" "${root}/g1-r0-whole-seed.sadx")

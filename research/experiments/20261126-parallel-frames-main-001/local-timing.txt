@@ -1,0 +1,8 @@
+solid/lzma2-9e/g1-r0/frame-32MiB jobs=1 s=119.9 frames=8 bytes=37503831 peakMiB=820 sha=F4403DEAD87E9359
+solid/lzma2-9e/g1-r0/frame-32MiB jobs=2 s=65.2 frames=8 bytes=37503831 peakMiB=1134 sha=F4403DEAD87E9359
+solid/lzma2-9e/g1-r0/frame-32MiB jobs=4 s=42.2 frames=8 bytes=37503831 peakMiB=1631 sha=F4403DEAD87E9359
+solid/lzma2-9e/g1-r0/frame-32MiB jobs=8 s=27.8 frames=8 bytes=37503831 peakMiB=2624 sha=F4403DEAD87E9359
+solid/zstd-19/g1-r0/frame-32MiB jobs=1 s=71.2 frames=8 bytes=39803077 peakMiB=580 sha=58B44146A81158A4
+solid/zstd-19/g1-r0/frame-32MiB jobs=2 s=45.0 frames=8 bytes=39803077 peakMiB=692 sha=58B44146A81158A4
+solid/zstd-19/g1-r0/frame-32MiB jobs=4 s=39.1 frames=8 bytes=39803077 peakMiB=913 sha=58B44146A81158A4
+solid/zstd-19/g1-r0/frame-32MiB jobs=8 s=27.2 frames=8 bytes=39803077 peakMiB=1348 sha=58B44146A81158A4

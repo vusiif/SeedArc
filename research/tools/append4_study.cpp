@@ -34,11 +34,13 @@
 #ifdef _WIN32
 #include <shellapi.h>
 #endif
+#include <atomic>
 #include <cstring>
 #include <fstream>
 #include <functional>
 #include <iostream>
 #include <ranges>
+#include <thread>
 #include <tuple>
 
 namespace {
@@ -47,6 +49,7 @@ using namespace seedarc::research_tools::append;
 
 constexpr std::string_view usage =
     "Research-only append study (container v4); not the SeedArc archive format.\n"
+    "  append4_study --jobs N COMMAND ...   (1-16 solid frame encoder workers; same bytes)\n"
     "  append4_study pack seed|explicit|solid PLAN_HEX INPUT_DIR OUT [auto|off|checkpoint|file]"
     " [CHECKPOINT_BYTES]\n"
     "  append4_study append OLD NEW_DIR OUT [segment|regroup] [--plan PLAN_HEX]\n"
@@ -1459,6 +1462,11 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
 }
 
 // ---- encoding and layout ------------------------------------------------------------------------
+// Solid frame encoder workers (`--jobs N`, 1-16; default 1). Archive bytes are the same for every
+// value; peak memory grows with it (each worker holds one joined frame plus its encoder state).
+constexpr std::uint64_t max_encode_jobs = 16;
+std::size_t encode_jobs = 1;
+
 // One generation, encoded but not yet laid out.
 struct Pending {
     Gen gen; // grouping, plan, groups (inherited triples; new ones get their offset at layout)
@@ -1494,30 +1502,17 @@ std::expected<void, Error> encode_pending(Pending &p, const Header &h,
         }
         return {};
     }
+    // 1. Layout, serial: which files go into which frame (cut as before: path order within a
+    //    group, close a frame when the next file does not fit). Offsets and CRCs are final here.
+    struct FrameInput {
+        std::uint8_t group = 0;
+        std::vector<std::size_t> members; // file indices, in frame order
+        std::uint64_t raw = 0;
+    };
+    std::vector<FrameInput> plan;
+    const auto base = p.frames.size();
     for (std::size_t g = 0; g < p.gen.groups.size(); ++g) {
-        std::vector<std::byte> joined;
-        bool any = false;
-        const auto flush = [&]() -> std::expected<void, Error> {
-            if (!any) {
-                return {};
-            }
-            if (joined.empty()) {
-                joined.push_back(std::byte{0}); // retain a frame for all-empty files
-            }
-            // Recipe generations use their own codec and level; revision 2 keeps Zstd 9.
-            auto frame = p.gen.recipe
-                             ? research::compress_solid_codec(p.gen.recipe->codec, p.gen.recipe->level,
-                                                              joined, p.gen.recipe->extreme)
-                             : research::compress_solid(joined, level);
-            if (!frame) {
-                return std::unexpected(frame.error());
-            }
-            p.frames.push_back({0, frame->size(), joined.size(), 0, static_cast<std::uint8_t>(g)});
-            p.payloads.push_back(std::move(*frame));
-            joined.clear();
-            any = false;
-            return {};
-        };
+        bool open = false;
         for (std::size_t i = 0; i < files.size(); ++i) {
             if (groups[i] != g) {
                 continue;
@@ -1526,21 +1521,75 @@ std::expected<void, Error> encode_pending(Pending &p, const Header &h,
                 return std::unexpected(Error{ErrorCode::resource_limit,
                                              "file exceeds the requested solid frame limit"});
             }
-            if (files[i].data.size() > frame_limit - joined.size()) {
-                if (auto r = flush(); !r) {
-                    return r;
-                }
+            if (!open || files[i].data.size() > frame_limit - plan.back().raw) {
+                plan.push_back({static_cast<std::uint8_t>(g), {}, 0});
+                open = true;
             }
-            any = true;
+            auto &frame = plan.back();
             auto &e = p.entries[i];
-            e.frame = static_cast<std::uint32_t>(p.frames.size());
-            e.frame_offset = joined.size();
+            e.frame = static_cast<std::uint32_t>(base + plan.size() - 1);
+            e.frame_offset = frame.raw;
             e.file_crc = seedarc::experimental::crc32c(files[i].data);
-            joined.insert(joined.end(), files[i].data.begin(), files[i].data.end());
+            frame.members.push_back(i);
+            frame.raw += files[i].data.size();
         }
-        if (auto r = flush(); !r) {
-            return r;
+    }
+    // 2. Compression: every frame is independent, so frames may be encoded by `encode_jobs`
+    //    workers. Each result lands in its own slot and is appended in frame order below, so the
+    //    archive bytes do not depend on the worker count; the first failing frame's error wins.
+    std::vector<std::expected<std::vector<std::byte>, Error>> encoded(
+        plan.size(), std::unexpected(Error{ErrorCode::io_error, "frame not encoded"}));
+    const auto encode_one = [&](std::size_t f) {
+        try {
+            std::vector<std::byte> joined;
+            joined.reserve(static_cast<std::size_t>(std::max<std::uint64_t>(plan[f].raw, 1)));
+            for (const auto i : plan[f].members) {
+                joined.insert(joined.end(), files[i].data.begin(), files[i].data.end());
+            }
+            if (joined.empty()) {
+                joined.push_back(std::byte{0}); // retain a frame for all-empty files
+            }
+            // Recipe generations use their own codec and level; revision 2 keeps Zstd 9.
+            encoded[f] = p.gen.recipe ? research::compress_solid_codec(p.gen.recipe->codec,
+                                                                       p.gen.recipe->level, joined,
+                                                                       p.gen.recipe->extreme)
+                                      : research::compress_solid(joined, level);
+        } catch (const std::bad_alloc &) {
+            encoded[f] = std::unexpected(Error{ErrorCode::resource_limit, "out of memory encoding a frame"});
         }
+    };
+    const auto workers = std::min<std::size_t>(encode_jobs, plan.size());
+    if (workers <= 1) {
+        for (std::size_t f = 0; f < plan.size(); ++f) {
+            encode_one(f);
+            if (!encoded[f]) {
+                break; // serial: stop at the first failure, as before
+            }
+        }
+    } else {
+        std::atomic<std::size_t> next{0};
+        std::atomic<bool> failed{false};
+        std::vector<std::jthread> pool;
+        pool.reserve(workers);
+        for (std::size_t w = 0; w < workers; ++w) {
+            pool.emplace_back([&] {
+                for (auto f = next.fetch_add(1); f < plan.size() && !failed.load(); f = next.fetch_add(1)) {
+                    encode_one(f);
+                    if (!encoded[f]) {
+                        failed.store(true);
+                    }
+                }
+            });
+        }
+        pool.clear(); // joins
+    }
+    for (std::size_t f = 0; f < plan.size(); ++f) {
+        if (!encoded[f]) {
+            return std::unexpected(encoded[f].error());
+        }
+        const auto raw = std::max<std::uint64_t>(plan[f].raw, 1);
+        p.frames.push_back({0, encoded[f]->size(), raw, 0, plan[f].group});
+        p.payloads.push_back(std::move(*encoded[f]));
     }
     return {};
 }
@@ -3830,7 +3879,17 @@ int main(int argc, char *argv[]) {
         std::cerr << "command line is not valid Unicode\n";
         return 2;
     }
-    const std::vector<std::string_view> a(owned->begin(), owned->end());
+    std::vector<std::string_view> a(owned->begin(), owned->end());
+    // Leading option for every writing command; it changes speed and memory, never the bytes.
+    if (a.size() >= 3 && a[1] == "--jobs") {
+        const auto jobs = number(a[2]);
+        if (!jobs || *jobs < 1 || *jobs > max_encode_jobs || std::to_string(*jobs) != a[2]) {
+            std::cerr << usage;
+            return 2;
+        }
+        encode_jobs = static_cast<std::size_t>(*jobs);
+        a.erase(a.begin() + 1, a.begin() + 3);
+    }
     if (a.size() == 6 && a[1] == "bounded-pack") {
         const auto cap = number(a[3]);
         if (!cap || *cap == 0 || *cap > research::max_solid_bytes ||

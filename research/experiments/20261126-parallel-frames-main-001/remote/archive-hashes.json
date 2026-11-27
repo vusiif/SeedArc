@@ -1,0 +1,8 @@
+{
+  "source solid/lzma2-9e/g1-r0/frame-32MiB": "b4d97e23beaf3f459485ed272bd3e4507ced505f0fabd10617129fc97cb801c1",
+  "source solid/lzma2-6e/g1-r0/frame-32MiB": "0298eb90e8476761814f8661d682a43a4cb872935b19989aa1737a4303e820fb",
+  "source solid/zstd-19/g1-r0/frame-32MiB": "7ead469b47d4a2fa30ba42e0a34340a995ccfabe435a2ed10f322fd3dae31791",
+  "text solid/lzma2-9e/g1-r0/frame-32MiB": "2eace6c5ee5551a7518cbe17f0939d37fd0be1e24cc95310cb02eabde9fab61f",
+  "text solid/lzma2-6e/g1-r0/frame-32MiB": "229bbaa6107061115c954e0decfc08af51719ceecff8c1366342ce298f815b07",
+  "text solid/zstd-19/g1-r0/frame-32MiB": "0eeec771554d50afce8fead8785126152321d7879f6d529d7ccbf4b82b21d8a7"
+}
