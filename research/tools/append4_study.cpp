@@ -52,6 +52,8 @@ using namespace seedarc::research_tools::append;
 constexpr std::string_view usage =
     "Research-only append study (container v4); not the SeedArc archive format.\n"
     "  append4_study --jobs N COMMAND ...   (1-16 solid frame encoder workers; same bytes)\n"
+    "  append4_study --jobs auto [--memory-budget BYTES] COMMAND ...   (ADR-0009: workers from\n"
+    "      half the physical memory, or BYTES; the choice is reported on stderr)\n"
     "  append4_study pack seed|explicit|solid PLAN_HEX INPUT_DIR OUT [auto|off|checkpoint|file]"
     " [CHECKPOINT_BYTES]\n"
     "  append4_study append OLD NEW_DIR OUT [segment|regroup] [--plan PLAN_HEX]\n"
@@ -82,6 +84,7 @@ constexpr std::string_view usage =
     "  append4_study recipe-pack seed|explicit RECIPE INPUT_DIR OUT   (ADR-0006, mapping rev 3)\n"
     "  append4_study recipe-append OLD NEW_DIR OUT [RECIPE]   (no RECIPE: keep the last one)\n"
     "  append4_study describe ARCHIVE\n"
+    "  append4_study memory-estimate RECIPE   (per-worker encode memory from the codec library)\n"
     "  append4_study consolidate-check ARCHIVE [RECIPE]   (measure a one-generation rebuild)\n"
     "  append4_study consolidate ARCHIVE OUT [RECIPE]   (write it; default: last recipe)\n"
     "  append4_study drift-probe OLD_DIR NEW_DIR ZSTD_LEVEL   (append-drift references; no format)\n"
@@ -1489,6 +1492,32 @@ std::expected<Recovery, Error> recover(std::span<const std::byte> bytes,
 constexpr std::uint64_t max_encode_jobs = 16;
 std::size_t encode_jobs = 1;
 
+// `--jobs auto` (ADR-0009, DEV-039): per generation,
+//   jobs = clamp(floor((budget - resident - reserve) / per_worker), 1, min(16, cores, frames))
+// budget: half the physical memory (or `--memory-budget BYTES`); resident: this process now
+// (the input it already holds); reserve: the generation's raw bytes, a bound for the encoded
+// frames held until layout; per_worker: the largest frame plus solid_encoder_memory for it.
+// The estimate is never below the measured per-worker growth (DEV-039: 1.16-1.59x). When even
+// one worker does not fit, one is used and the report says so; the recipe is never lowered.
+bool auto_encode_jobs = false;
+std::optional<std::uint64_t> memory_budget_override;
+struct JobChoice {
+    std::size_t jobs = 1;
+    std::string_view limited_by;
+};
+JobChoice choose_jobs(std::uint64_t available, std::uint64_t per_worker, std::uint64_t cores, std::uint64_t frames) {
+    const auto cap = std::max<std::uint64_t>(1, std::min({max_encode_jobs, std::max<std::uint64_t>(cores, 1), frames}));
+    const auto by_memory = per_worker == 0 ? cap : available / per_worker;
+    if (by_memory == 0) {
+        return {1, "memory_over_budget"};
+    }
+    if (by_memory < cap) {
+        return {static_cast<std::size_t>(by_memory), "memory"};
+    }
+    const std::string_view reason = cap == frames ? "frames" : cap == max_encode_jobs ? "cap" : "cores";
+    return {static_cast<std::size_t>(cap), reason};
+}
+
 // One generation, encoded but not yet laid out.
 struct Pending {
     Gen gen; // grouping, plan, groups (inherited triples; new ones get their offset at layout)
@@ -1594,13 +1623,42 @@ std::expected<void, Error> encode_pending(Pending &p, const Header &h,
             // Recipe generations use their own codec and level; revision 2 keeps Zstd 9.
             encoded[f] = p.gen.recipe ? research::compress_solid_codec(p.gen.recipe->codec,
                                                                        p.gen.recipe->level, joined,
-                                                                       p.gen.recipe->extreme)
+                                                                       p.gen.recipe->extreme,
+                                                                       recipe_dict_size(*p.gen.recipe))
                                       : research::compress_solid(joined, level);
         } catch (const std::bad_alloc &) {
             encoded[f] = std::unexpected(Error{ErrorCode::resource_limit, "out of memory encoding a frame"});
         }
     };
-    const auto workers = std::min<std::size_t>(encode_jobs, plan.size());
+    auto jobs = encode_jobs;
+    if (auto_encode_jobs && !plan.empty()) {
+        std::uint64_t largest = 1, reserve = 0;
+        for (const auto &f : plan) {
+            largest = std::max(largest, f.raw);
+            reserve += f.raw;
+        }
+        const auto codec = p.gen.recipe ? p.gen.recipe->codec : research::solid_zstd;
+        const auto codec_level = p.gen.recipe ? p.gen.recipe->level : level;
+        const auto encoder = research::solid_encoder_memory(codec, codec_level, largest,
+                                                            p.gen.recipe && p.gen.recipe->extreme,
+                                                            p.gen.recipe ? recipe_dict_size(*p.gen.recipe) : 0);
+        const auto physical = physical_memory_bytes();
+        const auto resident = resident_bytes();
+        if (!encoder || (!memory_budget_override && !physical) || !resident) {
+            return std::unexpected(Error{ErrorCode::resource_limit, "--jobs auto cannot read the memory budget"});
+        }
+        const auto budget = memory_budget_override ? *memory_budget_override : *physical / 2;
+        const auto used = *resident + reserve;
+        const auto available = budget > used ? budget - used : 0;
+        const auto per_worker = largest + *encoder;
+        const auto choice = choose_jobs(available, per_worker, std::thread::hardware_concurrency(), plan.size());
+        jobs = choice.jobs;
+        std::cerr << "{\"jobs_auto\":{\"chosen\":" << choice.jobs << ",\"limited_by\":\"" << choice.limited_by
+                  << "\",\"budget_bytes\":" << budget << ",\"resident_bytes\":" << *resident
+                  << ",\"reserve_bytes\":" << reserve << ",\"per_worker_bytes\":" << per_worker
+                  << ",\"frames\":" << plan.size() << "}}\n";
+    }
+    const auto workers = std::min<std::size_t>(jobs, plan.size());
     if (workers <= 1) {
         for (std::size_t f = 0; f < plan.size(); ++f) {
             encode_one(f);
@@ -3927,12 +3985,25 @@ int main(int argc, char *argv[]) {
     // Leading option for every writing command; it changes speed and memory, never the bytes.
     if (a.size() >= 3 && a[1] == "--jobs") {
         const auto jobs = number(a[2]);
-        if (!jobs || *jobs < 1 || *jobs > max_encode_jobs || std::to_string(*jobs) != a[2]) {
+        if (a[2] == "auto") {
+            auto_encode_jobs = true;
+        } else if (!jobs || *jobs < 1 || *jobs > max_encode_jobs || std::to_string(*jobs) != a[2]) {
             std::cerr << usage;
             return 2;
+        } else {
+            encode_jobs = static_cast<std::size_t>(*jobs);
         }
-        encode_jobs = static_cast<std::size_t>(*jobs);
         a.erase(a.begin() + 1, a.begin() + 3);
+        // Only with auto: an explicit budget in bytes instead of half the physical memory.
+        if (auto_encode_jobs && a.size() >= 3 && a[1] == "--memory-budget") {
+            const auto budget = number(a[2]);
+            if (!budget || *budget == 0 || std::to_string(*budget) != a[2]) {
+                std::cerr << usage;
+                return 2;
+            }
+            memory_budget_override = *budget;
+            a.erase(a.begin() + 1, a.begin() + 3);
+        }
     }
     if (a.size() == 6 && a[1] == "bounded-pack") {
         const auto cap = number(a[3]);
@@ -4007,6 +4078,9 @@ int main(int argc, char *argv[]) {
     }
     if (a.size() == 3 && a[1] == "describe") {
         return cmd_describe(native(a[2]));
+    }
+    if (a.size() == 3 && a[1] == "memory-estimate") {
+        return cmd_memory_estimate(a[2]);
     }
     if (a.size() == 6 && a[1] == "extract") {
         return cmd_extract(native(a[2]), a[3], native(a[4]), a[5]);

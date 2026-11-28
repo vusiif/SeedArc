@@ -1,0 +1,13 @@
+{
+  "task_id": "20261128T023022Z-fa316d20",
+  "created_at": "2026-11-28T02:30:29.446064+00:00",
+  "script_sha256": "bccccead823cf3af02e65335561bbd84b18270b5c3fb01fe2f1ea169549fb914",
+  "mode": "exclusive",
+  "cpu_quota": "infinity",
+  "memory_max": "infinity",
+  "swap_max": "infinity",
+  "tasks_max": "infinity",
+  "runtime_seconds": 43200,
+  "log_limit_bytes": 67108864,
+  "disk_limit_bytes": 2147483648
+}

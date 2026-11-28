@@ -1,0 +1,17 @@
+{
+ "seedarc_tool_sha256": "e6bc339ff7b8077381a413906e22e1a4f8dc32021619ac4e72f42e030137e5e4",
+ "sevenzip": "7-Zip 23.01 (x64) : Copyright (c) 1999-2023 Igor Pavlov : 2023-06-20",
+ "tool_paths": {
+  "sevenzip": "/home/sc/long-tasks/20261128T023022Z-fa316d20/work/7zip-deb/root/usr/lib/7zip/7z",
+  "xz": "/home/sc/long-tasks/20261128T023022Z-fa316d20/work/bin/xz",
+  "zstd": "/home/sc/long-tasks/20261128T023022Z-fa316d20/work/bin/zstd"
+ },
+ "pin": [
+  "taskset",
+  "-c",
+  "0"
+ ],
+ "xz": "xz (XZ Utils) 5.8.4; liblzma 5.8.4",
+ "zstd": "*** Zstandard CLI (64-bit) v1.5.7, by Yann Collet ***",
+ "python": "3.12.3"
+}

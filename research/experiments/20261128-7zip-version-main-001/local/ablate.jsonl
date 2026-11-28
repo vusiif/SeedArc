@@ -1,0 +1,10 @@
+{"tree": "rustup", "cell": "win26.03 -mx9", "archive_bytes": 46553189, "wall_s": 72.7, "methods": {"LZMA2:28 LZMA:20 BCJ2": 1, "": 40, "LZMA2:28": 266, "BCJ2 LZMA2:28 LZMA:20:lc0:lp2 LZMA:20:lc0:lp2": 17}, "blocks": 2}
+{"tree": "rustup", "cell": "win26.03 -mx9 -mf=off", "archive_bytes": 44371005, "wall_s": 68.7, "methods": {"LZMA2:28": 284, "": 40}, "blocks": 1}
+{"tree": "rustup", "cell": "win26.03 -mx9 -mqs=on", "archive_bytes": 46439446, "wall_s": 63.2, "methods": {"LZMA2:28 LZMA:20 BCJ2": 1, "": 40, "LZMA2:28": 266, "BCJ2 LZMA2:28 LZMA:20:lc0:lp2 LZMA:20:lc0:lp2": 17}, "blocks": 2}
+{"tree": "rustup", "cell": "win26.03 -mx9 -mqs=off", "archive_bytes": 46553189, "wall_s": 63.6, "methods": {"LZMA2:28 LZMA:20 BCJ2": 1, "": 40, "LZMA2:28": 266, "BCJ2 LZMA2:28 LZMA:20:lc0:lp2 LZMA:20:lc0:lp2": 17}, "blocks": 2}
+{"tree": "rustup", "cell": "wsl26.00 -mx9", "archive_bytes": 46553195, "wall_s": 84.3, "methods": {"LZMA2:28 LZMA:20 BCJ2": 1, "": 40, "LZMA2:28": 266, "BCJ2 LZMA2:28 LZMA:20:lc0:lp2 LZMA:20:lc0:lp2": 17}, "blocks": 2}
+{"tree": "cargo", "cell": "win26.03 -mx9", "archive_bytes": 18931714, "wall_s": 70.1, "methods": {"LZMA2:28": 14889, "": 2442}, "blocks": 1}
+{"tree": "cargo", "cell": "win26.03 -mx9 -mf=off", "archive_bytes": 18931714, "wall_s": 62.7, "methods": {"LZMA2:28": 14889, "": 2442}, "blocks": 1}
+{"tree": "cargo", "cell": "win26.03 -mx9 -mqs=on", "archive_bytes": 19132166, "wall_s": 61.4, "methods": {"LZMA2:28": 14889, "": 2442}, "blocks": 1}
+{"tree": "cargo", "cell": "win26.03 -mx9 -mqs=off", "archive_bytes": 18931714, "wall_s": 75.3, "methods": {"LZMA2:28": 14889, "": 2442}, "blocks": 1}
+{"tree": "cargo", "cell": "wsl26.00 -mx9", "archive_bytes": 18918543, "wall_s": 151.6, "methods": {"LZMA2:28": 14889, "": 2442}, "blocks": 1}

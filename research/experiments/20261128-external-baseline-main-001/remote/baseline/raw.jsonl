@@ -1,0 +1,200 @@
+{"tree": "append-r1-dev", "cell": "tar", "files": 3743, "input_bytes": 241788546, "archive_bytes": 244684800, "wall_s": 0.728, "picks": ["linux-src/linux/drivers/acpi/acpica/utids.c", "linux-src/linux/drivers/comedi/drivers/Makefile", "linux-src/linux/sound/drivers/vx/vx_pcm.c"]}
+{"tree": "append-r1-dev", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "threads": 1, "archive_bytes": 39803077, "pack_wall_s": 159.249, "wall_s": 162.08, "peak_bytes": 607002624}
+{"tree": "append-r1-dev", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "full decode", "wall_s": 2.822, "peak_bytes": 354197504}
+{"tree": "append-r1-dev", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 10%", "ok": true, "wall_s": 0.031, "peak_bytes": 22958080}
+{"tree": "append-r1-dev", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 50%", "ok": true, "wall_s": 0.087, "peak_bytes": 64593920}
+{"tree": "append-r1-dev", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 90%", "ok": true, "wall_s": 0.069, "peak_bytes": 40869888}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "threads": 1, "archive_bytes": 37503831, "pack_wall_s": 191.506, "wall_s": 195.736, "peak_bytes": 859283456}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "full decode", "wall_s": 4.432, "peak_bytes": 385191936}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 10%", "ok": true, "wall_s": 0.056, "peak_bytes": 23089152}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 50%", "ok": true, "wall_s": 0.179, "peak_bytes": 64069632}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 90%", "ok": true, "wall_s": 0.137, "peak_bytes": 40345600}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "threads": 1, "archive_bytes": 36101964, "pack_wall_s": 183.454, "wall_s": 187.582, "peak_bytes": 887570432}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "full decode", "wall_s": 4.242, "peak_bytes": 408035328}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 10%", "ok": true, "wall_s": 0.059, "peak_bytes": 23089152}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 50%", "ok": true, "wall_s": 0.19, "peak_bytes": 64077824}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 90%", "ok": true, "wall_s": 0.143, "peak_bytes": 40214528}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "threads": 1, "archive_bytes": 35612206, "pack_wall_s": 201.021, "wall_s": 205.478, "peak_bytes": 1383989248}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "full decode", "wall_s": 4.417, "peak_bytes": 713740288}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 10%", "ok": true, "wall_s": 0.086, "peak_bytes": 49389568}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 50%", "ok": true, "wall_s": 0.216, "peak_bytes": 95657984}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 90%", "ok": true, "wall_s": 0.379, "peak_bytes": 137338880}
+{"tree": "append-r1-dev", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "threads": "auto", "archive_bytes": 36101964, "pack_wall_s": 61.461, "jobs_auto": {"chosen": 4, "limited_by": "cores", "budget_bytes": 3106502656, "resident_bytes": 247193600, "reserve_bytes": 215713395, "per_worker_bytes": 454126611, "frames": 8}, "wall_s": 65.771, "peak_bytes": 1652514816}
+{"tree": "append-r1-dev", "cell": "tar | xz -9e -T1", "threads": 1, "archive_bytes": 35445856, "compress_wall_s": 214.717, "wall_s": 215.445, "peak_bytes": 707919872}
+{"tree": "append-r1-dev", "cell": "tar | xz -9e -T1", "op": "full decode", "wall_s": 1.702, "peak_bytes": 69337088}
+{"tree": "append-r1-dev", "cell": "tar | xz -9e -T1", "op": "extract 10%", "ok": true, "wall_s": 0.042, "peak_bytes": 23089152}
+{"tree": "append-r1-dev", "cell": "tar | xz -9e -T1", "op": "extract 50%", "ok": true, "wall_s": 0.179, "peak_bytes": 31326208}
+{"tree": "append-r1-dev", "cell": "tar | xz -9e -T1", "op": "extract 90%", "ok": true, "wall_s": 0.341, "peak_bytes": 53346304}
+{"tree": "append-r1-dev", "cell": "tar | xz -9e -T0", "threads": "all", "archive_bytes": 35677284, "compress_wall_s": 203.995, "wall_s": 204.723, "peak_bytes": 945029120}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 -T1", "threads": 1, "archive_bytes": 38472228, "compress_wall_s": 184.836, "wall_s": 185.564, "peak_bytes": 232652800}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 -T1", "op": "full decode", "wall_s": 0.341, "peak_bytes": 23089152}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 -T1", "op": "extract 10%", "ok": true, "wall_s": 0.023, "peak_bytes": 23089152}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 -T1", "op": "extract 50%", "ok": true, "wall_s": 0.094, "peak_bytes": 23089152}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 -T1", "op": "extract 90%", "ok": true, "wall_s": 0.166, "peak_bytes": 23089152}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 --long=27 -T1", "threads": 1, "archive_bytes": 37764004, "compress_wall_s": 192.307, "wall_s": 193.035, "peak_bytes": 418250752}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 --long=27 -T1", "op": "full decode", "wall_s": 0.46, "peak_bytes": 139460608}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 10%", "ok": true, "wall_s": 0.023, "peak_bytes": 23089152}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 50%", "ok": true, "wall_s": 0.104, "peak_bytes": 35127296}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 90%", "ok": true, "wall_s": 0.192, "peak_bytes": 57147392}
+{"tree": "append-r1-dev", "cell": "tar | zstd -19 -T0", "threads": "all", "archive_bytes": 38472228, "compress_wall_s": 64.149, "wall_s": 64.877, "peak_bytes": 606208000}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -mmt1", "threads": 1, "archive_bytes": 36080089, "wall_s": 166.222, "peak_bytes": 714735616}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -mmt1", "op": "full decode", "wall_s": 2.784, "peak_bytes": 246255616}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -mmt1", "op": "extract 10%", "ok": true, "wall_s": 0.068, "peak_bytes": 23089152}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -mmt1", "op": "extract 50%", "ok": true, "wall_s": 0.24, "peak_bytes": 37466112}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -mmt1", "op": "extract 90%", "ok": true, "wall_s": 0.495, "peak_bytes": 61452288}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -ms=32m -mmt1", "threads": 1, "archive_bytes": 37773150, "wall_s": 146.501, "peak_bytes": 379191296}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -ms=32m -mmt1", "op": "full decode", "wall_s": 2.686, "peak_bytes": 50290688}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 10%", "ok": true, "wall_s": 0.071, "peak_bytes": 23089152}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 50%", "ok": true, "wall_s": 0.253, "peak_bytes": 37335040}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 90%", "ok": true, "wall_s": 0.18, "peak_bytes": 24227840}
+{"tree": "append-r1-dev", "cell": "7z -mx9 (default threads)", "threads": "all", "archive_bytes": 36083725, "wall_s": 115.933, "peak_bytes": 722337792}
+{"tree": "cargo", "cell": "tar", "files": 14888, "input_bytes": 268434309, "archive_bytes": 280647680, "wall_s": 1.91, "picks": ["aws-lc-sys-0.47.0/aws-lc/third_party/s2n-bignum/s2n-bignum-imported/arm/generic/bignum_lt.S", "hyper-rustls-0.27.7/Cargo.toml", "wit-parser-0.244.0/tests/ui/disambiguate-diamond/shared1.wit"]}
+{"tree": "cargo", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "threads": 1, "archive_bytes": 24086211, "pack_wall_s": 120.948, "wall_s": 124.983, "peak_bytes": 696373248}
+{"tree": "cargo", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "full decode", "wall_s": 3.976, "peak_bytes": 368820224}
+{"tree": "cargo", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 10%", "ok": true, "wall_s": 0.081, "peak_bytes": 32661504}
+{"tree": "cargo", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 50%", "ok": true, "wall_s": 0.095, "peak_bytes": 36130816}
+{"tree": "cargo", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 90%", "ok": true, "wall_s": 0.12, "peak_bytes": 62214144}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "threads": 1, "archive_bytes": 23171178, "pack_wall_s": 161.301, "wall_s": 166.211, "peak_bytes": 978460672}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "full decode", "wall_s": 4.854, "peak_bytes": 433790976}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 10%", "ok": true, "wall_s": 0.087, "peak_bytes": 32661504}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 50%", "ok": true, "wall_s": 0.121, "peak_bytes": 35737600}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 90%", "ok": true, "wall_s": 0.182, "peak_bytes": 61693952}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "threads": 1, "archive_bytes": 21852175, "pack_wall_s": 139.895, "wall_s": 144.506, "peak_bytes": 863825920}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "full decode", "wall_s": 4.634, "peak_bytes": 392736768}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 10%", "ok": true, "wall_s": 0.084, "peak_bytes": 32661504}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 50%", "ok": true, "wall_s": 0.113, "peak_bytes": 32661504}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 90%", "ok": true, "wall_s": 0.177, "peak_bytes": 57626624}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "threads": 1, "archive_bytes": 20168897, "pack_wall_s": 154.8, "wall_s": 159.645, "peak_bytes": 1449713664}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "full decode", "wall_s": 4.822, "peak_bytes": 763822080}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 10%", "ok": true, "wall_s": 0.31, "peak_bytes": 108224512}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 50%", "ok": true, "wall_s": 0.709, "peak_bytes": 285958144}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 90%", "ok": true, "wall_s": 1.296, "peak_bytes": 481517568}
+{"tree": "cargo", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "threads": "auto", "archive_bytes": 21852175, "pack_wall_s": 42.916, "jobs_auto": {"chosen": 4, "limited_by": "cores", "budget_bytes": 3106502656, "resident_bytes": 277815296, "reserve_bytes": 233142221, "per_worker_bytes": 453478574, "frames": 9}, "wall_s": 47.601, "peak_bytes": 1754361856}
+{"tree": "cargo", "cell": "tar | xz -9e -T1", "threads": 1, "archive_bytes": 19539944, "compress_wall_s": 197.76, "wall_s": 199.67, "peak_bytes": 707919872}
+{"tree": "cargo", "cell": "tar | xz -9e -T1", "op": "full decode", "wall_s": 1.074, "peak_bytes": 69337088}
+{"tree": "cargo", "cell": "tar | xz -9e -T1", "op": "extract 10%", "ok": true, "wall_s": 0.263, "peak_bytes": 42991616}
+{"tree": "cargo", "cell": "tar | xz -9e -T1", "op": "extract 50%", "ok": true, "wall_s": 0.744, "peak_bytes": 69337088}
+{"tree": "cargo", "cell": "tar | xz -9e -T1", "op": "extract 90%", "ok": true, "wall_s": 1.344, "peak_bytes": 69337088}
+{"tree": "cargo", "cell": "tar | xz -9e -T0", "threads": "all", "archive_bytes": 19659356, "compress_wall_s": 173.631, "wall_s": 175.541, "peak_bytes": 928907264}
+{"tree": "cargo", "cell": "tar | zstd -19 -T1", "threads": 1, "archive_bytes": 23578520, "compress_wall_s": 139.552, "wall_s": 141.462, "peak_bytes": 228327424}
+{"tree": "cargo", "cell": "tar | zstd -19 -T1", "op": "full decode", "wall_s": 0.274, "peak_bytes": 32661504}
+{"tree": "cargo", "cell": "tar | zstd -19 -T1", "op": "extract 10%", "ok": true, "wall_s": 0.125, "peak_bytes": 32661504}
+{"tree": "cargo", "cell": "tar | zstd -19 -T1", "op": "extract 50%", "ok": true, "wall_s": 0.519, "peak_bytes": 32661504}
+{"tree": "cargo", "cell": "tar | zstd -19 -T1", "op": "extract 90%", "ok": true, "wall_s": 0.799, "peak_bytes": 32661504}
+{"tree": "cargo", "cell": "tar | zstd -19 --long=27 -T1", "threads": 1, "archive_bytes": 19685642, "compress_wall_s": 134.481, "wall_s": 136.391, "peak_bytes": 446431232}
+{"tree": "cargo", "cell": "tar | zstd -19 --long=27 -T1", "op": "full decode", "wall_s": 0.373, "peak_bytes": 139329536}
+{"tree": "cargo", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 10%", "ok": true, "wall_s": 0.129, "peak_bytes": 46923776}
+{"tree": "cargo", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 50%", "ok": true, "wall_s": 0.533, "peak_bytes": 139460608}
+{"tree": "cargo", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 90%", "ok": true, "wall_s": 0.987, "peak_bytes": 139329536}
+{"tree": "cargo", "cell": "tar | zstd -19 -T0", "threads": "all", "archive_bytes": 23578520, "compress_wall_s": 41.658, "wall_s": 43.568, "peak_bytes": 598081536}
+{"tree": "cargo", "cell": "7z -mx9 -mmt1", "threads": 1, "archive_bytes": 19789676, "wall_s": 134.428, "peak_bytes": 727277568}
+{"tree": "cargo", "cell": "7z -mx9 -mmt1", "op": "full decode", "wall_s": 1.768, "peak_bytes": 296738816}
+{"tree": "cargo", "cell": "7z -mx9 -mmt1", "op": "extract 10%", "ok": true, "wall_s": 0.384, "peak_bytes": 52031488}
+{"tree": "cargo", "cell": "7z -mx9 -mmt1", "op": "extract 50%", "ok": true, "wall_s": 0.913, "peak_bytes": 163442688}
+{"tree": "cargo", "cell": "7z -mx9 -mmt1", "op": "extract 90%", "ok": true, "wall_s": 2.126, "peak_bytes": 285995008}
+{"tree": "cargo", "cell": "7z -mx9 -ms=32m -mmt1", "threads": 1, "archive_bytes": 22632829, "wall_s": 117.783, "peak_bytes": 391208960}
+{"tree": "cargo", "cell": "7z -mx9 -ms=32m -mmt1", "op": "full decode", "wall_s": 1.752, "peak_bytes": 46743552}
+{"tree": "cargo", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 10%", "ok": true, "wall_s": 0.076, "peak_bytes": 32661504}
+{"tree": "cargo", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 50%", "ok": true, "wall_s": 0.125, "peak_bytes": 32661504}
+{"tree": "cargo", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 90%", "ok": true, "wall_s": 0.209, "peak_bytes": 35258368}
+{"tree": "cargo", "cell": "7z -mx9 (default threads)", "threads": "all", "archive_bytes": 19788738, "wall_s": 91.773, "peak_bytes": 734359552}
+{"tree": "rustup", "cell": "tar", "files": 283, "input_bytes": 257342222, "archive_bytes": 257628160, "wall_s": 0.421, "picks": ["1.85.0-x86_64-pc-windows-msvc/lib/rustlib/x86_64-pc-windows-msvc/lib/libgetopts-7d4f0a4a207e2a07.rlib", "stable-x86_64-pc-windows-msvc/lib/rustlib/x86_64-apple-darwin/lib/libobject-9546a4f99ccd903d.rlib", "stable-x86_64-pc-windows-msvc/share/man/man1/cargo-init.1"]}
+{"tree": "rustup", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "threads": 1, "archive_bytes": 57730667, "pack_wall_s": 108.285, "wall_s": 111.179, "peak_bytes": 677982208}
+{"tree": "rustup", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "full decode", "wall_s": 2.925, "peak_bytes": 384094208}
+{"tree": "rustup", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 10%", "ok": true, "wall_s": 0.123, "peak_bytes": 62652416}
+{"tree": "rustup", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 50%", "ok": true, "wall_s": 0.068, "peak_bytes": 38010880}
+{"tree": "rustup", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 90%", "ok": true, "wall_s": 0.02, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "threads": 1, "archive_bytes": 51240508, "pack_wall_s": 136.351, "wall_s": 141.116, "peak_bytes": 895602688}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "full decode", "wall_s": 4.818, "peak_bytes": 409186304}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 10%", "ok": true, "wall_s": 0.313, "peak_bytes": 61472768}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 50%", "ok": true, "wall_s": 0.185, "peak_bytes": 36306944}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 90%", "ok": true, "wall_s": 0.033, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "threads": 1, "archive_bytes": 51181600, "pack_wall_s": 130.695, "wall_s": 135.512, "peak_bytes": 893239296}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "full decode", "wall_s": 4.824, "peak_bytes": 405737472}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 10%", "ok": true, "wall_s": 0.308, "peak_bytes": 59375616}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 50%", "ok": true, "wall_s": 0.184, "peak_bytes": 36306944}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 90%", "ok": true, "wall_s": 0.042, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "threads": 1, "archive_bytes": 48727168, "pack_wall_s": 168.563, "wall_s": 173.54, "peak_bytes": 1449394176}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "full decode", "wall_s": 4.888, "peak_bytes": 792330240}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 10%", "ok": true, "wall_s": 0.357, "peak_bytes": 101056512}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 50%", "ok": true, "wall_s": 1.205, "peak_bytes": 264896512}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 90%", "ok": true, "wall_s": 2.608, "peak_bytes": 534118400}
+{"tree": "rustup", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "threads": "auto", "archive_bytes": 51181600, "pack_wall_s": 38.216, "jobs_auto": {"chosen": 4, "limited_by": "cores", "budget_bytes": 3106502656, "resident_bytes": 261140480, "reserve_bytes": 241257557, "per_worker_bytes": 448377670, "frames": 9}, "wall_s": 43.046, "peak_bytes": 1877999616}
+{"tree": "rustup", "cell": "tar | xz -9e -T1", "threads": 1, "archive_bytes": 48782200, "compress_wall_s": 169.144, "wall_s": 169.565, "peak_bytes": 707919872}
+{"tree": "rustup", "cell": "tar | xz -9e -T1", "op": "full decode", "wall_s": 2.285, "peak_bytes": 69337088}
+{"tree": "rustup", "cell": "tar | xz -9e -T1", "op": "extract 10%", "ok": true, "wall_s": 0.3, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "tar | xz -9e -T1", "op": "extract 50%", "ok": true, "wall_s": 1.135, "peak_bytes": 69337088}
+{"tree": "rustup", "cell": "tar | xz -9e -T1", "op": "extract 90%", "ok": true, "wall_s": 2.456, "peak_bytes": 69337088}
+{"tree": "rustup", "cell": "tar | xz -9e -T0", "threads": "all", "archive_bytes": 49363112, "compress_wall_s": 165.7, "wall_s": 166.121, "peak_bytes": 958791680}
+{"tree": "rustup", "cell": "tar | zstd -19 -T1", "threads": 1, "archive_bytes": 60482898, "compress_wall_s": 122.68, "wall_s": 123.101, "peak_bytes": 232914944}
+{"tree": "rustup", "cell": "tar | zstd -19 -T1", "op": "full decode", "wall_s": 0.435, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "tar | zstd -19 -T1", "op": "extract 10%", "ok": true, "wall_s": 0.073, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "tar | zstd -19 -T1", "op": "extract 50%", "ok": true, "wall_s": 0.275, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "tar | zstd -19 -T1", "op": "extract 90%", "ok": true, "wall_s": 0.64, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "tar | zstd -19 --long=27 -T1", "threads": 1, "archive_bytes": 53274352, "compress_wall_s": 136.755, "wall_s": 137.176, "peak_bytes": 432144384}
+{"tree": "rustup", "cell": "tar | zstd -19 --long=27 -T1", "op": "full decode", "wall_s": 0.578, "peak_bytes": 139460608}
+{"tree": "rustup", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 10%", "ok": true, "wall_s": 0.091, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 50%", "ok": true, "wall_s": 0.381, "peak_bytes": 112721920}
+{"tree": "rustup", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 90%", "ok": true, "wall_s": 0.8, "peak_bytes": 139591680}
+{"tree": "rustup", "cell": "tar | zstd -19 -T0", "threads": "all", "archive_bytes": 60482898, "compress_wall_s": 36.415, "wall_s": 36.836, "peak_bytes": 619184128}
+{"tree": "rustup", "cell": "7z -mx9 -mmt1", "threads": 1, "archive_bytes": 50486046, "wall_s": 141.53, "peak_bytes": 711720960}
+{"tree": "rustup", "cell": "7z -mx9 -mmt1", "op": "full decode", "wall_s": 3.616, "peak_bytes": 269484032}
+{"tree": "rustup", "cell": "7z -mx9 -mmt1", "op": "extract 10%", "ok": true, "wall_s": 0.206, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "7z -mx9 -mmt1", "op": "extract 50%", "ok": true, "wall_s": 1.318, "peak_bytes": 110755840}
+{"tree": "rustup", "cell": "7z -mx9 -mmt1", "op": "extract 90%", "ok": true, "wall_s": 3.004, "peak_bytes": 269090816}
+{"tree": "rustup", "cell": "7z -mx9 -ms=32m -mmt1", "threads": 1, "archive_bytes": 52404607, "wall_s": 107.627, "peak_bytes": 375259136}
+{"tree": "rustup", "cell": "7z -mx9 -ms=32m -mmt1", "op": "full decode", "wall_s": 3.585, "peak_bytes": 48443392}
+{"tree": "rustup", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 10%", "ok": true, "wall_s": 0.209, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 50%", "ok": true, "wall_s": 0.534, "peak_bytes": 45219840}
+{"tree": "rustup", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 90%", "ok": true, "wall_s": 0.125, "peak_bytes": 32661504}
+{"tree": "rustup", "cell": "7z -mx9 (default threads)", "threads": "all", "archive_bytes": 50499989, "wall_s": 73.457, "peak_bytes": 719192064}
+{"tree": "all", "cell": "tar", "files": 16258, "input_bytes": 544740699, "archive_bytes": 558520320, "wall_s": 2.745, "picks": ["cargo/aws-lc-sys-0.47.0/aws-lc/third_party/s2n-bignum/s2n-bignum-imported/arm/p384/p384_montjmixadd.S", "cargo/libm-0.2.16/src/math/lgamma_r.rs", "cargo/zerocopy-derive-0.8.63/tests/ui/struct.msrv.stderr"]}
+{"tree": "all", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "threads": 1, "archive_bytes": 83689536, "pack_wall_s": 240.918, "wall_s": 248.166, "peak_bytes": 1324855296}
+{"tree": "all", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "full decode", "wall_s": 6.96, "peak_bytes": 705544192}
+{"tree": "all", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 10%", "ok": true, "wall_s": 0.08, "peak_bytes": 34254848}
+{"tree": "all", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 50%", "ok": true, "wall_s": 0.13, "peak_bytes": 66457600}
+{"tree": "all", "cell": "seedarc solid/zstd-19/g1-r0/frame-32MiB", "op": "extract 90%", "ok": true, "wall_s": 0.14, "peak_bytes": 77332480}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "threads": 1, "archive_bytes": 76235571, "pack_wall_s": 305.398, "wall_s": 315.25, "peak_bytes": 1478393856}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "full decode", "wall_s": 9.874, "peak_bytes": 763838464}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 10%", "ok": true, "wall_s": 0.103, "peak_bytes": 34254848}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 50%", "ok": true, "wall_s": 0.261, "peak_bytes": 66064384}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB", "op": "extract 90%", "ok": true, "wall_s": 0.216, "peak_bytes": 76812288}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "threads": 1, "archive_bytes": 74854271, "pack_wall_s": 276.709, "wall_s": 286.261, "peak_bytes": 1439764480}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "full decode", "wall_s": 9.629, "peak_bytes": 728481792}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 10%", "ok": true, "wall_s": 0.101, "peak_bytes": 34254848}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 50%", "ok": true, "wall_s": 0.204, "peak_bytes": 50200576}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "op": "extract 90%", "ok": true, "wall_s": 0.219, "peak_bytes": 66981888}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "threads": 1, "archive_bytes": 70687543, "pack_wall_s": 337.777, "wall_s": 347.714, "peak_bytes": 2243219456}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "full decode", "wall_s": 10.038, "peak_bytes": 1608024064}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 10%", "ok": true, "wall_s": 0.37, "peak_bytes": 164495360}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 50%", "ok": true, "wall_s": 1.0, "peak_bytes": 414060544}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-whole/dedup", "op": "extract 90%", "ok": true, "wall_s": 1.326, "peak_bytes": 541331456}
+{"tree": "all", "cell": "seedarc solid/lzma2-9e/g1-r0/frame-32MiB/dedup", "threads": "auto", "archive_bytes": 74854271, "pack_wall_s": 80.715, "jobs_auto": {"chosen": 4, "limited_by": "cores", "budget_bytes": 3106502656, "resident_bytes": 555352064, "reserve_bytes": 491439783, "per_worker_bytes": 453478574, "frames": 18}, "wall_s": 90.336, "peak_bytes": 2321235968}
+{"tree": "all", "cell": "tar | xz -9e -T1", "threads": 1, "archive_bytes": 69937464, "compress_wall_s": 377.234, "wall_s": 379.979, "peak_bytes": 707919872}
+{"tree": "all", "cell": "tar | xz -9e -T1", "op": "full decode", "wall_s": 3.303, "peak_bytes": 69337088}
+{"tree": "all", "cell": "tar | xz -9e -T1", "op": "extract 10%", "ok": true, "wall_s": 0.27, "peak_bytes": 45744128}
+{"tree": "all", "cell": "tar | xz -9e -T1", "op": "extract 50%", "ok": true, "wall_s": 1.049, "peak_bytes": 69337088}
+{"tree": "all", "cell": "tar | xz -9e -T1", "op": "extract 90%", "ok": true, "wall_s": 1.295, "peak_bytes": 69337088}
+{"tree": "all", "cell": "tar | xz -9e -T0", "threads": "all", "archive_bytes": 70290924, "compress_wall_s": 360.64, "wall_s": 363.385, "peak_bytes": 965345280}
+{"tree": "all", "cell": "tar | zstd -19 -T1", "threads": 1, "archive_bytes": 85762990, "compress_wall_s": 265.009, "wall_s": 267.754, "peak_bytes": 232652800}
+{"tree": "all", "cell": "tar | zstd -19 -T1", "op": "full decode", "wall_s": 0.739, "peak_bytes": 34254848}
+{"tree": "all", "cell": "tar | zstd -19 -T1", "op": "extract 10%", "ok": true, "wall_s": 0.13, "peak_bytes": 34254848}
+{"tree": "all", "cell": "tar | zstd -19 -T1", "op": "extract 50%", "ok": true, "wall_s": 0.558, "peak_bytes": 34254848}
+{"tree": "all", "cell": "tar | zstd -19 -T1", "op": "extract 90%", "ok": true, "wall_s": 0.832, "peak_bytes": 34254848}
+{"tree": "all", "cell": "tar | zstd -19 --long=27 -T1", "threads": 1, "archive_bytes": 74747276, "compress_wall_s": 284.977, "wall_s": 287.722, "peak_bytes": 513409024}
+{"tree": "all", "cell": "tar | zstd -19 --long=27 -T1", "op": "full decode", "wall_s": 0.855, "peak_bytes": 139329536}
+{"tree": "all", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 10%", "ok": true, "wall_s": 0.16, "peak_bytes": 49676288}
+{"tree": "all", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 50%", "ok": true, "wall_s": 0.593, "peak_bytes": 139460608}
+{"tree": "all", "cell": "tar | zstd -19 --long=27 -T1", "op": "extract 90%", "ok": true, "wall_s": 0.855, "peak_bytes": 139329536}
+{"tree": "all", "cell": "tar | zstd -19 -T0", "threads": "all", "archive_bytes": 85762990, "compress_wall_s": 78.967, "wall_s": 81.712, "peak_bytes": 622592000}
+{"tree": "all", "cell": "7z -mx9 -mmt1", "threads": 1, "archive_bytes": 71903675, "wall_s": 298.172, "peak_bytes": 729276416}
+{"tree": "all", "cell": "7z -mx9 -mmt1", "op": "full decode", "wall_s": 5.176, "peak_bytes": 96927744}
+{"tree": "all", "cell": "7z -mx9 -mmt1", "op": "extract 10%", "ok": true, "wall_s": 0.361, "peak_bytes": 54988800}
+{"tree": "all", "cell": "7z -mx9 -mmt1", "op": "extract 50%", "ok": true, "wall_s": 1.257, "peak_bytes": 215285760}
+{"tree": "all", "cell": "7z -mx9 -mmt1", "op": "extract 90%", "ok": true, "wall_s": 1.706, "peak_bytes": 293801984}
+{"tree": "all", "cell": "7z -mx9 -ms=32m -mmt1", "threads": 1, "archive_bytes": 76312628, "wall_s": 243.174, "peak_bytes": 393338880}
+{"tree": "all", "cell": "7z -mx9 -ms=32m -mmt1", "op": "full decode", "wall_s": 5.608, "peak_bytes": 84447232}
+{"tree": "all", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 10%", "ok": true, "wall_s": 0.107, "peak_bytes": 34254848}
+{"tree": "all", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 50%", "ok": true, "wall_s": 0.352, "peak_bytes": 38338560}
+{"tree": "all", "cell": "7z -mx9 -ms=32m -mmt1", "op": "extract 90%", "ok": true, "wall_s": 0.251, "peak_bytes": 42930176}
+{"tree": "all", "cell": "7z -mx9 (default threads)", "threads": "all", "archive_bytes": 71923020, "wall_s": 105.87, "peak_bytes": 1815334912}

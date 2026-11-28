@@ -1,0 +1,9 @@
+{"step": "xz-configure", "argv": ["cmake", "-S", "/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/liblzma/src/v5.8.4-19a8d00df7.clean", "-B", "/home/sc/long-tasks/20261128T022718Z-493d65fb/work/xz-build", "-G", "Ninja", "-DCMAKE_C_COMPILER=/home/sc/long-tasks/20261123T123105Z-d5596074/work/toolchain/usr/bin/gcc-14", "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS=OFF", "-DBUILD_TOOLS=ON", "-DXZ_TOOL_XZ=ON", "-DXZ_NLS=OFF", "-DXZ_DOXYGEN=OFF"]}
+{"step": "xz-build", "argv": ["cmake", "--build", "/home/sc/long-tasks/20261128T022718Z-493d65fb/work/xz-build", "--target", "xz", "--parallel", "4"]}
+{"step": "apt-download-7zip", "argv": ["apt-get", "download", "7zip"]}
+Traceback (most recent call last):
+  File "/home/sc/long-tasks/20261128T022718Z-493d65fb/work/external_baseline_task.py", line 144, in <module>
+    run(['apt-get', 'download', '7zip'], 'apt-download-7zip', cwd=pkg)
+  File "/home/sc/long-tasks/20261128T022718Z-493d65fb/work/external_baseline_task.py", line 63, in run
+    raise RuntimeError(label + ' failed; preserve evidence')
+RuntimeError: apt-download-7zip failed; preserve evidence

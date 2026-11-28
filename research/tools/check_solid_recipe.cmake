@@ -153,16 +153,21 @@ file(SHA256 "${root}/x-fresh.sadx" x_fresh_hash)
 if(NOT x_one_hash STREQUAL x_fresh_hash)
     message(FATAL_ERROR "consolidating an extreme archive differs from recipe-pack")
 endif()
-# Records no writer produces: Zstd with extreme (Seed bit 15, explicit bit 16), or a reserved
-# bit set (Seed bit 17, explicit bit 18; Seed bit 16 / explicit bit 17 are dedup since ADR-0008). Every reader refuses the record, and extract writes nothing.
+# Records no writer produces: Zstd with extreme (Seed bit 15, explicit bit 16), Zstd with a
+# dictionary code (Seed bits 17-19, explicit bits 18-20; ADR-0011), or a reserved bit set (Seed
+# bit 20, explicit bit 21; Seed bit 16 / explicit bit 17 are dedup since ADR-0008). Every reader
+# refuses the record, and extract writes nothing.
 run(0 zseed recipe-pack seed "solid/zstd-9/g2-r1/frame-16MiB" "${first}" "${root}/z-seed.sadx")
 run(0 ignored recipe-pack explicit "solid/zstd-9/g2-r1/frame-16MiB" "${first}" "${root}/z-explicit.sadx")
 string(JSON z_seed GET "${zseed}" recipe_seed)
 math(EXPR z_extreme "${z_seed} | 32768")
-math(EXPR x_reserved "${x_seed} | 131072")
+math(EXPR z_dict "${z_seed} | 131072")
+math(EXPR x_reserved "${x_seed} | 1048576")
 math(EXPR z_word "1 | 65536")      # frame code 1 (16 MiB), codec 0, extreme
-math(EXPR x_word "1 | 256 | 262144") # frame code 1, codec 1, bit 18
-foreach(case "z-seed;${z_extreme}" "x-seed;${x_reserved}" "z-explicit;${z_word}" "x-explicit;${x_word}")
+math(EXPR z_dict_word "1 | 262144") # frame code 1, codec 0, dict code 1
+math(EXPR x_word "1 | 256 | 2097152") # frame code 1, codec 1, bit 21
+foreach(case "z-seed;${z_extreme}" "z-seed;${z_dict}" "x-seed;${x_reserved}" "z-explicit;${z_word}"
+        "z-explicit;${z_dict_word}" "x-explicit;${x_word}")
     list(GET case 0 source)
     list(GET case 1 value)
     execute_process(COMMAND "${Python3_EXECUTABLE}" -I "${CMAKE_CURRENT_LIST_DIR}/recipe_fixture.py" retag
@@ -311,6 +316,73 @@ foreach(case "nodedup|do not follow the generation's recipe" "wrong|do not follo
     no_output("${root}/bad-d-${name}.out")
 endforeach()
 
+# LZMA2 dictionary (ADR-0011): Seed bits 17-19 / explicit second-word bits 18-20, encoder side
+# only. In the `far` tree r2 copies r0 4 MiB back: preset 0's 256 KiB dictionary cannot reach
+# it, a 128 MiB one can, so the archive shrinks by about r2's 2 MiB. Both representations give
+# the same payload, the hex Seed names the same recipe, describe marks the dictionary as
+# declared, and append and consolidation keep it.
+execute_process(COMMAND "${Python3_EXECUTABLE}" -I "${CMAKE_CURRENT_LIST_DIR}/recipe_fixture.py" far
+    "${root}/far" RESULT_VARIABLE code)
+if(NOT code EQUAL 0)
+    message(FATAL_ERROR "far fixture failed")
+endif()
+set(dict "solid/lzma2-0-dict128MiB/g1-r0/frame-whole")
+foreach(rep seed explicit)
+    run(0 packed recipe-pack ${rep} "${dict}" "${root}/far" "${root}/w-${rep}.sadx")
+    run(0 ignored verify "${root}/w-${rep}.sadx" "${root}/far")
+    run(0 described describe "${root}/w-${rep}.sadx")
+    string(JSON label GET "${described}" generations 0 recipe)
+    string(JSON check GET "${described}" generations 0 check)
+    if(NOT label STREQUAL dict OR NOT check MATCHES "level and dictionary declared")
+        message(FATAL_ERROR "dictionary recipe described wrongly: ${described}")
+    endif()
+endforeach()
+run(0 ignored payload-compare "${root}/w-seed.sadx" "${root}/w-explicit.sadx")
+run(0 packed recipe-pack seed "${dict}" "${root}/far" "${root}/w-text.sadx")
+string(JSON w_seed GET "${packed}" recipe_seed)
+math(EXPR w_code "(${w_seed} >> 17) & 7")
+math(EXPR w_hex "${w_seed}" OUTPUT_FORMAT HEXADECIMAL)
+if(NOT w_code EQUAL 1)
+    message(FATAL_ERROR "dictionary Seed ${w_hex} does not carry code 1 in bits 17-19")
+endif()
+run(0 ignored recipe-pack seed "${w_hex}" "${root}/far" "${root}/w-hex.sadx")
+same_file("${root}/w-text.sadx" "${root}/w-hex.sadx" "dictionary Seed value and text form")
+run(0 ignored recipe-pack seed "solid/lzma2-0/g1-r0/frame-whole" "${root}/far" "${root}/w-plain.sadx")
+file(SIZE "${root}/w-seed.sadx" w_size)
+file(SIZE "${root}/w-plain.sadx" w_plain_size)
+math(EXPR w_saved "${w_plain_size} - ${w_size}")
+if(w_saved LESS 1572864)
+    message(FATAL_ERROR "128 MiB dictionary saved ${w_saved} bytes (${w_size} vs ${w_plain_size}), expected about 2 MiB")
+endif()
+# Append keeps the dictionary; consolidation equals recipe-pack of the whole tree.
+file(MAKE_DIRECTORY "${root}/far-add" "${root}/far-all")
+file(COPY_FILE "${root}/far/r1" "${root}/far-add/s")
+file(COPY "${root}/far/r0" "${root}/far/r1" "${root}/far/r2" DESTINATION "${root}/far-all")
+file(COPY_FILE "${root}/far/r1" "${root}/far-all/s")
+run(0 appended recipe-append "${root}/w-seed.sadx" "${root}/far-add" "${root}/w-next.sadx")
+string(JSON kept GET "${appended}" new_generation_recipe)
+if(NOT kept STREQUAL dict)
+    message(FATAL_ERROR "recipe-append dropped the dictionary: ${kept}")
+endif()
+run(0 ignored verify "${root}/w-next.sadx" "${root}/far-all")
+run(0 ignored extract "${root}/w-next.sadx" "r2" "${root}" "w-r2.out")
+file(SHA256 "${root}/far/r2" want)
+file(SHA256 "${root}/w-r2.out" got)
+if(NOT want STREQUAL got)
+    message(FATAL_ERROR "extract from a dictionary archive failed")
+endif()
+run(0 ignored consolidate "${root}/w-next.sadx" "${root}/w-one.sadx")
+run(0 ignored recipe-pack seed "${dict}" "${root}/far-all" "${root}/w-fresh.sadx")
+same_file("${root}/w-one.sadx" "${root}/w-fresh.sadx" "consolidating a dictionary archive")
+# memory-estimate follows the dictionary (larger match finder).
+run(0 small_est memory-estimate "solid/lzma2-9e/g1-r0/frame-whole")
+run(0 big_est memory-estimate "solid/lzma2-9e-dict256MiB/g1-r0/frame-whole")
+string(JSON small_bytes GET "${small_est}" encoder_and_output_bytes)
+string(JSON big_bytes GET "${big_est}" encoder_and_output_bytes)
+if(NOT big_bytes GREATER small_bytes)
+    message(FATAL_ERROR "memory-estimate ignores the dictionary: ${small_bytes} vs ${big_bytes}")
+endif()
+
 # Parallel frame encoding (DEV-035): --jobs changes speed and memory, never the bytes. Checked
 # on multi-frame (16 MiB step over 21 MiB) and multi-group archives, for pack, append and
 # consolidate; bad worker counts are refused and write nothing.
@@ -326,11 +398,11 @@ foreach(case "solid/zstd-9/g1-r0/frame-16MiB;${big}" "solid/lzma2-6e/g1-r0/frame
     list(GET case 0 recipe)
     list(GET case 1 tree)
     string(MAKE_C_IDENTIFIER "${recipe}" tag)
-    foreach(jobs 1 2 5)
+    foreach(jobs 1 2 5 auto)
         run(0 ignored --jobs ${jobs} recipe-pack seed "${recipe}" "${tree}" "${root}/j${jobs}-${tag}.sadx")
     endforeach()
     run(0 ignored recipe-pack seed "${recipe}" "${tree}" "${root}/j-${tag}.sadx")
-    foreach(jobs 1 2 5)
+    foreach(jobs 1 2 5 auto)
         same_bytes("${root}/j-${tag}.sadx" "${root}/j${jobs}-${tag}.sadx" "${recipe} --jobs ${jobs}")
     endforeach()
 endforeach()
@@ -340,6 +412,34 @@ same_bytes("${root}/j-append-1.sadx" "${root}/j-append-4.sadx" "recipe-append")
 run(0 ignored consolidate "${root}/j-append-1.sadx" "${root}/j-one-1.sadx" "solid/zstd-9/g2-r1/frame-16MiB")
 run(0 ignored --jobs 3 consolidate "${root}/j-append-1.sadx" "${root}/j-one-3.sadx" "solid/zstd-9/g2-r1/frame-16MiB")
 same_bytes("${root}/j-one-1.sadx" "${root}/j-one-3.sadx" "consolidate")
+# --jobs auto (ADR-0009): the choice goes to stderr and never changes the bytes. A 1-byte budget
+# cannot hold one worker: 1 is used and reported; a huge one (999999999999, the 12-digit
+# maximum) is limited by the 2 frames (or cores).
+function(auto_choice budget out_jobs out_reason)
+    execute_process(COMMAND "${TOOL}" --jobs auto --memory-budget ${budget} recipe-pack seed
+        "solid/lzma2-6e/g1-r0/frame-16MiB" "${big}" "${root}/auto-${budget}.sadx"
+        RESULT_VARIABLE code OUTPUT_QUIET ERROR_VARIABLE err)
+    if(NOT code EQUAL 0 OR err MATCHES "AddressSanitizer|runtime error:|LeakSanitizer")
+        message(FATAL_ERROR "--jobs auto --memory-budget ${budget}: exit${code}, ${err}")
+    endif()
+    string(REGEX MATCH "{\"jobs_auto\".*}}" report "${err}")
+    string(JSON jobs GET "${report}" jobs_auto chosen)
+    string(JSON reason GET "${report}" jobs_auto limited_by)
+    set(${out_jobs} ${jobs} PARENT_SCOPE)
+    set(${out_reason} ${reason} PARENT_SCOPE)
+endfunction()
+auto_choice(1 tiny_jobs tiny_reason)
+auto_choice(999999999999 huge_jobs huge_reason)
+if(NOT tiny_jobs EQUAL 1 OR NOT tiny_reason STREQUAL "memory_over_budget" OR huge_jobs GREATER 2
+        OR huge_jobs LESS 1 OR NOT huge_reason MATCHES "^(frames|cores)$")
+    message(FATAL_ERROR "--jobs auto choices: ${tiny_jobs} ${tiny_reason} / ${huge_jobs} ${huge_reason}")
+endif()
+same_bytes("${root}/auto-1.sadx" "${root}/auto-999999999999.sadx" "--jobs auto budgets")
+same_bytes("${root}/auto-1.sadx" "${root}/j-solid_lzma2_6e_g1_r0_frame_16MiB.sadx" "--jobs auto vs default")
+foreach(bad "--jobs;Auto" "--jobs;auto;--memory-budget;0" "--jobs;auto;--memory-budget;01"
+        "--jobs;auto;--memory-budget;x" "--jobs;2;--memory-budget;5")
+    run(2 ignored ${bad} recipe-pack seed "solid/zstd-9/g1-r0/frame-16MiB" "${first}" "${root}/bad.sadx")
+endforeach()
 foreach(bad 0 17 04 x "")
     run(2 ignored --jobs "${bad}" recipe-pack seed "solid/zstd-9/g1-r0/frame-16MiB" "${first}" "${root}/bad.sadx")
 endforeach()
@@ -463,8 +563,10 @@ endif()
 # 4. Refusals publish nothing.
 # Zstd 0 / 20, LZMA2 10, leading zero, unknown codec, frame 48 MiB, k 9; extreme spellings
 # (Zstd, upper case, dash, doubled, without a preset, leading zero, LZMA2 10); Seeds: Zstd 0 with
-# extreme, Zstd 9 with extreme, bit 17, frame code 7, codec 2, LZMA2 level 10; dedup spellings
-# (doubled, upper case, trailing slash, wrong place, dash).
+# extreme, Zstd 9 with extreme, bit 20, frame code 7, codec 2, LZMA2 level 10; dedup spellings
+# (doubled, upper case, trailing slash, wrong place, dash); dictionary spellings and Seeds
+# (Zstd with a dictionary, an unlisted size, lower case, leading zero, empty, extreme after the
+# dictionary, other unit, bare code; Seed dict code 5 and Zstd 9 with code 1).
 foreach(bad "solid/zstd-0/g1-r0/frame-32MiB" "solid/zstd-20/g1-r0/frame-32MiB"
         "solid/lzma2-10/g1-r0/frame-32MiB" "solid/zstd-09/g1-r0/frame-32MiB"
         "solid/brotli-5/g1-r0/frame-32MiB" "solid/zstd-9/g1-r0/frame-48MiB"
@@ -474,7 +576,11 @@ foreach(bad "solid/zstd-0/g1-r0/frame-32MiB" "solid/zstd-20/g1-r0/frame-32MiB"
         "solid/lzma2-e/g1-r0/frame-32MiB" "solid/lzma2-09e/g1-r0/frame-32MiB"
         "solid/lzma2-10e/g1-r0/frame-32MiB" "solid/zstd-9/g1-r0/frame-32MiB/dedup/dedup"
         "solid/zstd-9/g1-r0/frame-32MiB/Dedup" "solid/zstd-9/g1-r0/frame-32MiB/dedup/"
-        "solid/zstd-9/g1-r0/dedup/frame-32MiB" "solid/zstd-9/g1-r0/frame-32MiB-dedup" "0x8000" "0xa400" "0x22500" "0x24e0" "0x2620" "0x2920")
+        "solid/zstd-9/g1-r0/dedup/frame-32MiB" "solid/zstd-9/g1-r0/frame-32MiB-dedup" "0x8000" "0xa400" "0x102500" "0x24e0" "0x2620" "0x2920"
+        "solid/zstd-9-dict128MiB/g1-r0/frame-32MiB" "solid/lzma2-9-dict64MiB/g1-r0/frame-32MiB"
+        "solid/lzma2-9-dict128mib/g1-r0/frame-32MiB" "solid/lzma2-9-dict0128MiB/g1-r0/frame-32MiB"
+        "solid/lzma2-9-dict/g1-r0/frame-32MiB" "solid/lzma2-9-dict128MiBe/g1-r0/frame-32MiB"
+        "solid/lzma2-9-dict1GiB/g1-r0/frame-32MiB" "solid/lzma2-9-dict1/g1-r0/frame-32MiB" "0xa2500" "0x22400")
     run(2 ignored recipe-pack seed "${bad}" "${first}" "${root}/bad.sadx")
 endforeach()
 run(2 ignored recipe-pack other "solid/zstd-9/g1-r0/frame-32MiB" "${first}" "${root}/bad.sadx")

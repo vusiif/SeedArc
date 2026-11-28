@@ -92,12 +92,24 @@ inline constexpr std::uint32_t solid_lzma2 = 1;
 [[nodiscard]] bool valid_solid_codec(std::uint32_t codec, std::uint32_t level) noexcept;
 // `extreme` (LZMA2 only, ADR-0007) adds LZMA_PRESET_EXTREME: an encoder-only search option, the
 // frame is the same raw LZMA2 stream and decodes with decompress_solid_codec unchanged.
+// `dict_size` (LZMA2 only, ADR-0011): 0 keeps the preset's dictionary; otherwise the encoder
+// uses that dictionary (LZMA_DICT_SIZE_MIN..max_solid_bytes), still capped at the input size.
+// Also encoder-only: the decoder's dictionary is the output size, which covers every distance.
+[[nodiscard]] bool valid_solid_dictionary(std::uint32_t codec, std::uint32_t dict_size) noexcept;
 [[nodiscard]] std::expected<std::vector<std::byte>, Error>
 compress_solid_codec(std::uint32_t codec, std::uint32_t level, std::span<const std::byte> input,
-                     bool extreme = false);
+                     bool extreme = false, std::uint32_t dict_size = 0);
 [[nodiscard]] std::expected<void, Error>
 decompress_solid_codec(std::uint32_t codec, std::span<const std::byte> frame,
                        std::span<std::byte> output);
+// DEV-039: bytes one compress_solid_codec call over `input_size` bytes allocates besides the
+// input itself: the library's own encoder-state estimate for exactly the parameters that call
+// uses (zstd ZSTD_estimateCCtxSize_usingCCtxParams with the same window and long-distance
+// setting; liblzma lzma_raw_encoder_memusage with the same capped dictionary) plus the output
+// buffer, which is zero-filled and so resident. For worker-count budgets; not a hard limit.
+[[nodiscard]] std::expected<std::uint64_t, Error>
+solid_encoder_memory(std::uint32_t codec, std::uint32_t level, std::uint64_t input_size,
+                     bool extreme = false, std::uint32_t dict_size = 0);
 // As decompress_solid_prefix: stops when `output` is full, the stream ends or no progress is
 // possible; returns the leading bytes produced, which callers must verify themselves.
 [[nodiscard]] std::expected<std::size_t, Error>

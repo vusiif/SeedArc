@@ -28,6 +28,7 @@
 #include <psapi.h>
 #else
 #include <sys/resource.h>
+#include <unistd.h>
 #endif
 
 namespace seedarc::research_tools {
@@ -81,6 +82,40 @@ inline std::string peak_memory_json() {
     }
 #endif
     return "\"peak_memory_bytes\":null,\"peak_memory_metric\":null";
+}
+// DEV-039 / ADR-0009: installed physical memory and the current resident set, for the
+// `--jobs auto` worker budget. nullopt when the platform cannot tell.
+inline std::optional<std::uint64_t> physical_memory_bytes() {
+#ifdef _WIN32
+    MEMORYSTATUSEX s{};
+    s.dwLength = sizeof(s);
+    if (GlobalMemoryStatusEx(&s)) {
+        return s.ullTotalPhys;
+    }
+#else
+    const auto pages = sysconf(_SC_PHYS_PAGES), page = sysconf(_SC_PAGESIZE);
+    if (pages > 0 && page > 0) {
+        return static_cast<std::uint64_t>(pages) * static_cast<std::uint64_t>(page);
+    }
+#endif
+    return std::nullopt;
+}
+inline std::optional<std::uint64_t> resident_bytes() {
+#ifdef _WIN32
+    PROCESS_MEMORY_COUNTERS m{};
+    m.cb = sizeof(m);
+    if (GetProcessMemoryInfo(GetCurrentProcess(), &m, sizeof(m))) {
+        return m.WorkingSetSize;
+    }
+#else
+    std::ifstream statm("/proc/self/statm");
+    std::uint64_t size = 0, resident = 0;
+    const auto page = sysconf(_SC_PAGESIZE);
+    if (statm >> size >> resident && page > 0) {
+        return resident * static_cast<std::uint64_t>(page);
+    }
+#endif
+    return std::nullopt;
 }
 inline std::string json_string(std::string_view value) {
     std::string out = "\"";

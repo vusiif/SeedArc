@@ -28,6 +28,26 @@ int cmd_recipe_pack(std::string_view representation, std::string_view recipe_arg
                     red_off, 0, recipe_frame_limit(recipe->fields), recipe);
 }
 
+// DEV-039: per-worker memory estimate for a recipe, from the codec library's own estimate for a
+// full frame (the frame limit; 1 GiB for whole): joined frame + encoder state + output buffer.
+int cmd_memory_estimate(std::string_view recipe_arg) {
+    const auto recipe = parse_recipe(recipe_arg);
+    if (!recipe) {
+        std::cerr << "not a solid-recipe-r1 recipe (text form or 0x Seed)\n";
+        return 2;
+    }
+    const auto frame = std::min<std::uint64_t>(recipe_frame_limit(recipe->fields), research::max_solid_bytes);
+    const auto encoder = research::solid_encoder_memory(recipe->fields.codec, recipe->fields.level, frame,
+                                                        recipe->fields.extreme, recipe_dict_size(recipe->fields));
+    if (!encoder) {
+        return fail(encoder.error());
+    }
+    std::cout << "{\"schema\":\"seedarc.memory-estimate.r0\",\"recipe\":" << json_string(recipe_text(*recipe))
+              << ",\"frame_bytes\":" << frame << ",\"encoder_and_output_bytes\":" << *encoder
+              << ",\"per_worker_bytes\":" << frame + *encoder << "}\n";
+    return std::cout ? 0 : 1;
+}
+
 // Without RECIPE the new generation keeps the last generation's recipe (queue variant A); with
 // it, the new generation gets its own grouping and recipe (variant B). Old data is untouched.
 int cmd_recipe_append(const fs::path &old_path, const fs::path &new_dir, const fs::path &out,
@@ -104,6 +124,7 @@ int cmd_describe(const fs::path &archive) {
             check = std::string{"frame boundaries verified against the recipe"} +
                     (g.recipe->dedup ? "; aliases verified against earlier entries" : "") + "; level" +
                     (g.recipe->extreme ? " and extreme" : "") +
+                    (g.recipe->dict_code != 0 ? " and dictionary" : "") +
                     (g.recipe->dedup ? " and dedup completeness" : "") + " declared, not verified from data";
         } else {
             text = "solid/zstd-9/g" + std::to_string(g.plan.k) + "-r" +

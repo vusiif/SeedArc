@@ -1,0 +1,68 @@
+{"tree": "append-r1-dev", "cell": "input", "files": 3743, "input_bytes": 241788546, "picks": ["linux-src/linux/drivers/acpi/acpica/utids.c", "linux-src/linux/drivers/comedi/drivers/Makefile", "linux-src/linux/sound/drivers/vx/vx_pcm.c"]}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s -mt1", "threads": 1, "archive_bytes": 40373773, "wall_s": 46.378, "peak_bytes": 598147072}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s -mt1", "op": "full decode", "wall_s": 0.548, "peak_bytes": 56111104}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 10%", "ok": true, "wall_s": 0.343, "peak_bytes": 53915648}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 50%", "ok": true, "wall_s": 0.39, "peak_bytes": 55525376}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 90%", "ok": true, "wall_s": 0.348, "peak_bytes": 53907456}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s -md1g -mt1", "threads": 1, "archive_bytes": 40203635, "wall_s": 47.886, "peak_bytes": 2493943808}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "full decode", "wall_s": 0.608, "peak_bytes": 264425472}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 10%", "ok": true, "wall_s": 0.34, "peak_bytes": 116686848}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 50%", "ok": true, "wall_s": 0.405, "peak_bytes": 155492352}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 90%", "ok": true, "wall_s": 0.349, "peak_bytes": 117559296}
+{"tree": "append-r1-dev", "cell": "rar -ma5 -m5 -s (default threads)", "threads": "all", "archive_bytes": 40430030, "wall_s": 7.246, "peak_bytes": 624046080}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -mmt1 (local reference)", "threads": 1, "archive_bytes": 36065458, "wall_s": 94.561, "peak_bytes": 2139443200}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -mmt1 (local reference)", "op": "full decode", "wall_s": 1.126, "peak_bytes": 247164928}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 10%", "ok": true, "wall_s": 0.046, "peak_bytes": 12832768}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 50%", "ok": true, "wall_s": 0.121, "peak_bytes": 40009728}
+{"tree": "append-r1-dev", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 90%", "ok": true, "wall_s": 0.204, "peak_bytes": 62640128}
+{"tree": "cargo", "cell": "input", "files": 14888, "input_bytes": 268434309, "picks": ["aws-lc-sys-0.47.0/aws-lc/third_party/s2n-bignum/s2n-bignum-imported/arm/generic/bignum_lt.S", "hyper-rustls-0.27.7/Cargo.toml", "wit-parser-0.244.0/tests/ui/disambiguate-diamond/shared1.wit"]}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s -mt1", "threads": 1, "archive_bytes": 23058128, "wall_s": 35.436, "peak_bytes": 600858624}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s -mt1", "op": "full decode", "wall_s": 0.567, "peak_bytes": 56135680}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 10%", "ok": true, "wall_s": 0.513, "peak_bytes": 55963648}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 50%", "ok": true, "wall_s": 0.553, "peak_bytes": 55947264}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 90%", "ok": true, "wall_s": 0.554, "peak_bytes": 55988224}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s -md1g -mt1", "threads": 1, "archive_bytes": 22501935, "wall_s": 37.599, "peak_bytes": 2496495616}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "full decode", "wall_s": 0.609, "peak_bytes": 290975744}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 10%", "ok": true, "wall_s": 0.524, "peak_bytes": 254783488}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 50%", "ok": true, "wall_s": 0.574, "peak_bytes": 289775616}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 90%", "ok": true, "wall_s": 0.577, "peak_bytes": 290476032}
+{"tree": "cargo", "cell": "rar -ma5 -m5 -s (default threads)", "threads": "all", "archive_bytes": 23246903, "wall_s": 9.691, "peak_bytes": 621350912}
+{"tree": "cargo", "cell": "7z -mx9 -mmt1 (local reference)", "threads": 1, "archive_bytes": 18931714, "wall_s": 76.906, "peak_bytes": 2705068032}
+{"tree": "cargo", "cell": "7z -mx9 -mmt1 (local reference)", "op": "full decode", "wall_s": 0.654, "peak_bytes": 296701952}
+{"tree": "cargo", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 10%", "ok": true, "wall_s": 0.151, "peak_bytes": 52756480}
+{"tree": "cargo", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 50%", "ok": true, "wall_s": 0.35, "peak_bytes": 163680256}
+{"tree": "cargo", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 90%", "ok": true, "wall_s": 0.664, "peak_bytes": 286060544}
+{"tree": "rustup", "cell": "input", "files": 283, "input_bytes": 257342222, "picks": ["1.85.0-x86_64-pc-windows-msvc/lib/rustlib/x86_64-pc-windows-msvc/lib/libgetopts-7d4f0a4a207e2a07.rlib", "stable-x86_64-pc-windows-msvc/lib/rustlib/x86_64-apple-darwin/lib/libobject-9546a4f99ccd903d.rlib", "stable-x86_64-pc-windows-msvc/share/man/man1/cargo-init.1"]}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s -mt1", "threads": 1, "archive_bytes": 53821288, "wall_s": 40.381, "peak_bytes": 597282816}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s -mt1", "op": "full decode", "wall_s": 0.59, "peak_bytes": 56115200}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 10%", "ok": true, "wall_s": 0.25, "peak_bytes": 55951360}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 50%", "ok": true, "wall_s": 0.265, "peak_bytes": 55943168}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 90%", "ok": true, "wall_s": 0.144, "peak_bytes": 55656448}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s -md1g -mt1", "threads": 1, "archive_bytes": 50280541, "wall_s": 41.71, "peak_bytes": 2493243392}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "full decode", "wall_s": 0.611, "peak_bytes": 279973888}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 10%", "ok": true, "wall_s": 0.256, "peak_bytes": 143237120}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 50%", "ok": true, "wall_s": 0.271, "peak_bytes": 147173376}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 90%", "ok": true, "wall_s": 0.146, "peak_bytes": 59793408}
+{"tree": "rustup", "cell": "rar -ma5 -m5 -s (default threads)", "threads": "all", "archive_bytes": 53837152, "wall_s": 5.311, "peak_bytes": 622931968}
+{"tree": "rustup", "cell": "7z -mx9 -mmt1 (local reference)", "threads": 1, "archive_bytes": 46553189, "wall_s": 77.777, "peak_bytes": 2263658496}
+{"tree": "rustup", "cell": "7z -mx9 -mmt1 (local reference)", "op": "full decode", "wall_s": 1.453, "peak_bytes": 266473472}
+{"tree": "rustup", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 10%", "ok": true, "wall_s": 0.103, "peak_bytes": 24682496}
+{"tree": "rustup", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 50%", "ok": true, "wall_s": 0.591, "peak_bytes": 111833088}
+{"tree": "rustup", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 90%", "ok": true, "wall_s": 1.222, "peak_bytes": 266223616}
+{"tree": "all", "cell": "input", "files": 16258, "input_bytes": 544740699, "picks": ["cargo/aws-lc-sys-0.47.0/aws-lc/third_party/s2n-bignum/s2n-bignum-imported/arm/p384/p384_montjmixadd.S", "cargo/libm-0.2.16/src/math/lgamma_r.rs", "cargo/zerocopy-derive-0.8.63/tests/ui/struct.msrv.stderr"]}
+{"tree": "all", "cell": "rar -ma5 -m5 -s -mt1", "threads": 1, "archive_bytes": 79366464, "wall_s": 106.071, "peak_bytes": 601772032}
+{"tree": "all", "cell": "rar -ma5 -m5 -s -mt1", "op": "full decode", "wall_s": 1.175, "peak_bytes": 56291328}
+{"tree": "all", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 10%", "ok": true, "wall_s": 1.074, "peak_bytes": 56315904}
+{"tree": "all", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 50%", "ok": true, "wall_s": 0.923, "peak_bytes": 56131584}
+{"tree": "all", "cell": "rar -ma5 -m5 -s -mt1", "op": "extract 90%", "ok": true, "wall_s": 1.063, "peak_bytes": 56127488}
+{"tree": "all", "cell": "rar -ma5 -m5 -s -md1g -mt1", "threads": 1, "archive_bytes": 74773550, "wall_s": 100.731, "peak_bytes": 7312887808}
+{"tree": "all", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "full decode", "wall_s": 1.183, "peak_bytes": 567476224}
+{"tree": "all", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 10%", "ok": true, "wall_s": 1.141, "peak_bytes": 537899008}
+{"tree": "all", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 50%", "ok": true, "wall_s": 0.883, "peak_bytes": 431976448}
+{"tree": "all", "cell": "rar -ma5 -m5 -s -md1g -mt1", "op": "extract 90%", "ok": true, "wall_s": 1.055, "peak_bytes": 557789184}
+{"tree": "all", "cell": "rar -ma5 -m5 -s (default threads)", "threads": "all", "archive_bytes": 79581152, "wall_s": 20.184, "peak_bytes": 627961856}
+{"tree": "all", "cell": "7z -mx9 -mmt1 (local reference)", "threads": 1, "archive_bytes": 67016273, "wall_s": 225.533, "peak_bytes": 2839715840}
+{"tree": "all", "cell": "7z -mx9 -mmt1 (local reference)", "op": "full decode", "wall_s": 2.076, "peak_bytes": 279461888}
+{"tree": "all", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 10%", "ok": true, "wall_s": 0.176, "peak_bytes": 55619584}
+{"tree": "all", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 50%", "ok": true, "wall_s": 0.531, "peak_bytes": 215269376}
+{"tree": "all", "cell": "7z -mx9 -mmt1 (local reference)", "op": "extract 90%", "ok": true, "wall_s": 0.654, "peak_bytes": 293752832}

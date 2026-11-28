@@ -1,0 +1,8 @@
+{
+  "started_at": "2026-11-28T02:27:37.146101+00:00",
+  "ended_at": "2026-11-28T02:27:51.202763+00:00",
+  "exit_code": 1,
+  "logs_bytes_seen": 1130,
+  "logs_bytes_retained": 1130,
+  "logs_truncated": false
+}

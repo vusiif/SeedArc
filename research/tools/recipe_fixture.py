@@ -11,6 +11,9 @@
   realias IN OUT PATH FRAME OFFSET
                           copy IN to OUT with PATH's trailer entry pointing at (FRAME, OFFSET),
                           size and CRC kept, fixing the trailer CRC (red_off archives only)
+  far DIR                 ADR-0011 tree: r0 and r1 are 2 MiB of seeded pseudo-random bytes and r2
+                          copies r0, so r2's only match lies 4 MiB back: beyond LZMA2 preset 0's
+                          256 KiB dictionary, within a 128 MiB one
 """
 from pathlib import Path
 import struct
@@ -106,6 +109,17 @@ def retag(src, dst, value):
     Path(dst).write_bytes(bytes(data))
 
 
+def far(root):
+    import random
+    root = Path(root)
+    root.mkdir(exist_ok=False)
+    rng = random.Random(20261128)  # Mersenne Twister: the same bytes on every Python 3.9+
+    r0 = rng.randbytes(2 * 1024 * 1024)
+    (root / 'r0').write_bytes(r0)
+    (root / 'r1').write_bytes(rng.randbytes(2 * 1024 * 1024))
+    (root / 'r2').write_bytes(r0)
+
+
 if __name__ == '__main__':
     if sys.argv[1] == 'big':
         big(sys.argv[2])
@@ -113,6 +127,8 @@ if __name__ == '__main__':
         dedup(sys.argv[2], sys.argv[3])
     elif sys.argv[1] == 'realias':
         realias(sys.argv[2], sys.argv[3], sys.argv[4], int(sys.argv[5]), int(sys.argv[6]))
+    elif sys.argv[1] == 'far':
+        far(sys.argv[2])
     elif sys.argv[1] == 'retag':
         retag(sys.argv[2], sys.argv[3], int(sys.argv[4], 0))
     else:

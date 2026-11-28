@@ -5,6 +5,7 @@
 
 #include <lzma.h>
 #include <zdict.h>
+#define ZSTD_STATIC_LINKING_ONLY // ZSTD_estimateCCtxSize_usingCCtxParams (solid_encoder_memory)
 #include <zstd.h>
 #include <zstd_errors.h>
 
@@ -281,23 +282,43 @@ bool valid_solid_codec(std::uint32_t codec, std::uint32_t level) noexcept {
            (codec == solid_lzma2 && valid_block_codec(lzma2_id, level));
 }
 
+bool valid_solid_dictionary(std::uint32_t codec, std::uint32_t dict_size) noexcept {
+    return dict_size == 0 || (codec == solid_lzma2 && dict_size >= LZMA_DICT_SIZE_MIN &&
+                              dict_size <= max_solid_bytes);
+}
+
+namespace {
+// The LZMA2 encoder options compress_solid_codec uses for `size` input bytes.
+std::expected<lzma_options_lzma, Error> lzma2_encoder_options(std::uint32_t level, bool extreme,
+                                                              std::uint32_t dict_size, std::size_t size) {
+    lzma_options_lzma options{};
+    if (lzma_lzma_preset(&options, level | (extreme ? LZMA_PRESET_EXTREME : 0U)) != 0) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid LZMA2 preset"});
+    }
+    if (dict_size != 0) {
+        options.dict_size = dict_size;
+    }
+    options.dict_size = (std::min)(options.dict_size, lzma2_solid_dictionary(size));
+    return options;
+}
+} // namespace
+
 std::expected<std::vector<std::byte>, Error>
 compress_solid_codec(std::uint32_t codec, std::uint32_t level, std::span<const std::byte> input,
-                     bool extreme) {
-    if (!valid_solid_codec(codec, level) || (extreme && codec != solid_lzma2) || input.empty() ||
-        input.size() > max_solid_bytes) {
+                     bool extreme, std::uint32_t dict_size) {
+    if (!valid_solid_codec(codec, level) || (extreme && codec != solid_lzma2) ||
+        !valid_solid_dictionary(codec, dict_size) || input.empty() || input.size() > max_solid_bytes) {
         return std::unexpected(Error{ErrorCode::invalid_argument, "invalid solid codec or input"});
     }
     if (codec == solid_zstd) {
         return compress_solid(input, level);
     }
-    lzma_options_lzma options{};
-    if (lzma_lzma_preset(&options, level | (extreme ? LZMA_PRESET_EXTREME : 0U)) != 0) {
-        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid LZMA2 preset"});
+    auto options = lzma2_encoder_options(level, extreme, dict_size, input.size());
+    if (!options) {
+        return std::unexpected(options.error());
     }
-    options.dict_size = (std::min)(options.dict_size, lzma2_solid_dictionary(input.size()));
     const std::array<lzma_filter, 2> filters{
-        {{LZMA_FILTER_LZMA2, &options}, {LZMA_VLI_UNKNOWN, nullptr}}};
+        {{LZMA_FILTER_LZMA2, &*options}, {LZMA_VLI_UNKNOWN, nullptr}}};
     std::vector<std::byte> out(lzma_block_buffer_bound(input.size()));
     std::size_t written = 0;
     const auto result = lzma_raw_buffer_encode(
@@ -312,6 +333,53 @@ compress_solid_codec(std::uint32_t codec, std::uint32_t level, std::span<const s
     }
     out.resize(written);
     return out;
+}
+
+std::expected<std::uint64_t, Error> solid_encoder_memory(std::uint32_t codec, std::uint32_t level,
+                                                         std::uint64_t input_size, bool extreme,
+                                                         std::uint32_t dict_size) {
+    if (!valid_solid_codec(codec, level) || (extreme && codec != solid_lzma2) ||
+        !valid_solid_dictionary(codec, dict_size) || input_size == 0 || input_size > max_solid_bytes) {
+        return std::unexpected(Error{ErrorCode::invalid_argument, "invalid solid codec or input"});
+    }
+    const auto size = static_cast<std::size_t>(input_size);
+    if (codec == solid_zstd) {
+        // ZSTD_estimateCCtxSize_usingCCtxParams cannot be used: it does not resolve zstd's
+        // automatic long-distance matching (on for btopt+ with a 2^27 window), and with LDM set
+        // explicitly it divides by its unadjusted LDM parameters (zstd 1.5.7: integer divide by
+        // zero). Instead a context with compress_solid's exact parameters is initialised for
+        // `size` bytes with stable buffers, as ZSTD_compress2 runs, and its size is read back.
+        const std::unique_ptr<ZSTD_CCtx, CCtxDeleter> context{ZSTD_createCCtx()};
+        if (!context) {
+            return std::unexpected(Error{ErrorCode::resource_limit, "cannot create zstd context"});
+        }
+        const auto window = std::min<int>(static_cast<int>(max_solid_window_log), window_log_for(input_size));
+        std::array<std::byte, 64> sink{};
+        ZSTD_outBuffer out{sink.data(), sink.size(), 0};
+        ZSTD_inBuffer in{sink.data(), 0, 0};
+        if (!zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_compressionLevel, static_cast<int>(level))) ||
+            !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_windowLog, window)) ||
+            !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_checksumFlag, 0)) ||
+            !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_contentSizeFlag, 1)) ||
+            !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_nbWorkers, 0)) ||
+            !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_stableInBuffer, 1)) ||
+            !zstd_ok(ZSTD_CCtx_setParameter(context.get(), ZSTD_c_stableOutBuffer, 1)) ||
+            !zstd_ok(ZSTD_CCtx_setPledgedSrcSize(context.get(), input_size)) ||
+            !zstd_ok(ZSTD_compressStream2(context.get(), &out, &in, ZSTD_e_flush))) { // forces init
+            return std::unexpected(Error{ErrorCode::io_error, "cannot size the zstd encoder"});
+        }
+        return std::uint64_t{ZSTD_sizeof_CCtx(context.get())} + ZSTD_compressBound(size);
+    }
+    auto options = lzma2_encoder_options(level, extreme, dict_size, size);
+    if (!options) {
+        return std::unexpected(options.error());
+    }
+    const std::array<lzma_filter, 2> filters{{{LZMA_FILTER_LZMA2, &*options}, {LZMA_VLI_UNKNOWN, nullptr}}};
+    const auto state = lzma_raw_encoder_memusage(filters.data());
+    if (state == UINT64_MAX) {
+        return std::unexpected(Error{ErrorCode::io_error, "LZMA2 memory estimate failed"});
+    }
+    return state + lzma_block_buffer_bound(size);
 }
 
 std::expected<void, Error> decompress_solid_codec(std::uint32_t codec,

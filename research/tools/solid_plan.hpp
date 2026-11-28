@@ -68,7 +68,13 @@ inline std::optional<Plan> parse_solid_explicit(std::string_view text) {
 // group, a non-empty file whose bytes equal an earlier file's becomes an alias of that file (same
 // frame, offset, size and CRC) and adds no frame bytes; frame boundaries stay where greedy puts
 // them with every file's size counted (ADR-0008 §2.4 A).
+// ADR-0011 (2026-11-28) a fourth time: an LZMA2 `dict` code, formerly-zero bits 17-19. Code 0
+// keeps the preset's dictionary; 1-4 select 128 / 256 / 512 / 1024 MiB (encoder side only, still
+// capped at the frame's size; the decoder already sizes its dictionary from the frame); 5-7 stay
+// reserved.
 inline constexpr std::uint16_t solid_recipe_revision = 3;
+inline constexpr std::array<std::uint32_t, 5> recipe_dict_sizes{0, 128U << 20, 256U << 20, 512U << 20,
+                                                                1024U << 20};
 inline constexpr std::array<std::uint64_t, 6> recipe_frame_limits{
     std::uint64_t{1} << 30, 16ULL << 20, 32ULL << 20, 64ULL << 20, 128ULL << 20, 256ULL << 20};
 struct RecipeFields {
@@ -77,6 +83,7 @@ struct RecipeFields {
     std::uint8_t level = 9;
     bool extreme = false;        // LZMA2 only; encoder search option, decoding is unchanged
     bool dedup = false;          // whole-file duplicates are aliases (ADR-0008)
+    std::uint8_t dict_code = 0;  // LZMA2 only, index into recipe_dict_sizes (ADR-0011)
     bool operator==(const RecipeFields &) const = default;
 };
 struct SolidRecipe {
@@ -86,21 +93,28 @@ struct SolidRecipe {
 inline bool valid_recipe(const SolidRecipe &r) {
     return valid_solid_plan(r.plan) && r.fields.frame_code < recipe_frame_limits.size() &&
            research::valid_solid_codec(r.fields.codec, r.fields.level) &&
-           (!r.fields.extreme || r.fields.codec == research::solid_lzma2);
+           (!r.fields.extreme || r.fields.codec == research::solid_lzma2) &&
+           r.fields.dict_code < recipe_dict_sizes.size() &&
+           (r.fields.dict_code == 0 || r.fields.codec == research::solid_lzma2);
+}
+// 0 = the preset's own dictionary.
+inline std::uint32_t recipe_dict_size(const RecipeFields &f) {
+    return recipe_dict_sizes[f.dict_code];
 }
 inline constexpr std::array<std::string_view, 2> recipe_codec_names{"zstd", "lzma2"};
 inline std::uint64_t recipe_frame_limit(const RecipeFields &f) {
     return recipe_frame_limits[f.frame_code];
 }
 // bits 0-4 as revision 2 | 5-7 frame code | 8-9 codec | 10-14 level | 15 extreme | 16 dedup |
-// 17-31 zero
+// 17-19 dict code | 20-31 zero
 inline std::uint32_t encode_recipe_seed(const SolidRecipe &r) {
     return encode_solid_seed(r.plan) | (std::uint32_t{r.fields.frame_code} << 5) |
            (std::uint32_t{r.fields.codec} << 8) | (std::uint32_t{r.fields.level} << 10) |
-           (r.fields.extreme ? 1U << 15 : 0U) | (r.fields.dedup ? 1U << 16 : 0U);
+           (r.fields.extreme ? 1U << 15 : 0U) | (r.fields.dedup ? 1U << 16 : 0U) |
+           (std::uint32_t{r.fields.dict_code} << 17);
 }
 inline std::optional<SolidRecipe> decode_recipe_seed(std::uint32_t value) {
-    if ((value >> 17) != 0) {
+    if ((value >> 20) != 0) {
         return std::nullopt;
     }
     const auto plan = decode_solid_seed(value & 31);
@@ -110,20 +124,22 @@ inline std::optional<SolidRecipe> decode_recipe_seed(std::uint32_t value) {
     const SolidRecipe r{*plan, {static_cast<std::uint8_t>((value >> 5) & 7),
                                 static_cast<std::uint8_t>((value >> 8) & 3),
                                 static_cast<std::uint8_t>((value >> 10) & 31),
-                                ((value >> 15) & 1) != 0, ((value >> 16) & 1) != 0}};
+                                ((value >> 15) & 1) != 0, ((value >> 16) & 1) != 0,
+                                static_cast<std::uint8_t>((value >> 17) & 7)}};
     return valid_recipe(r) ? std::optional{r} : std::nullopt;
 }
 // Concrete descriptor (two words): layout ID 2, rule, k, level | frame code, codec, extreme (bit
-// 16), dedup (bit 17).
+// 16), dedup (bit 17), dict code (bits 18-20).
 inline std::array<std::uint32_t, 2> encode_recipe_explicit(const SolidRecipe &r) {
     return {2U | (std::uint32_t{r.plan.rule} << 8) | (std::uint32_t{r.plan.k} << 16) |
                 (std::uint32_t{r.fields.level} << 24),
             std::uint32_t{r.fields.frame_code} | (std::uint32_t{r.fields.codec} << 8) |
-                (r.fields.extreme ? 1U << 16 : 0U) | (r.fields.dedup ? 1U << 17 : 0U)};
+                (r.fields.extreme ? 1U << 16 : 0U) | (r.fields.dedup ? 1U << 17 : 0U) |
+                (std::uint32_t{r.fields.dict_code} << 18)};
 }
 inline std::optional<SolidRecipe> decode_recipe_explicit(std::uint32_t first,
                                                          std::uint32_t second) {
-    if ((first & 255) != 2 || (second >> 18) != 0) {
+    if ((first & 255) != 2 || (second >> 21) != 0) {
         return std::nullopt;
     }
     SolidRecipe r;
@@ -131,17 +147,20 @@ inline std::optional<SolidRecipe> decode_recipe_explicit(std::uint32_t first,
     r.plan.k = static_cast<std::uint8_t>(first >> 16);
     r.fields = {static_cast<std::uint8_t>(second & 255), static_cast<std::uint8_t>(second >> 8),
                 static_cast<std::uint8_t>(first >> 24), ((second >> 16) & 1) != 0,
-                ((second >> 17) & 1) != 0};
+                ((second >> 17) & 1) != 0, static_cast<std::uint8_t>((second >> 18) & 7)};
     return valid_recipe(r) ? std::optional{r} : std::nullopt;
 }
 // Canonical readable form, e.g. solid/zstd-9/g1-r0/frame-32MiB, solid/lzma2-6/g1-r0/frame-whole
-// or solid/lzma2-9e/g1-r0/frame-32MiB (extreme); a trailing /dedup marks ADR-0008 dedup.
+// or solid/lzma2-9e/g1-r0/frame-32MiB (extreme); a trailing /dedup marks ADR-0008 dedup and
+// -dict<N>MiB after the level an ADR-0011 dictionary (solid/lzma2-9e-dict256MiB/g1-r0/frame-whole).
 inline std::string recipe_text(const SolidRecipe &r) {
     const auto frame = r.fields.frame_code == 0
                            ? std::string{"whole"}
                            : std::to_string(recipe_frame_limit(r.fields) >> 20) + "MiB";
     return "solid/" + std::string{recipe_codec_names[r.fields.codec]} + "-" +
-           std::to_string(r.fields.level) + (r.fields.extreme ? "e" : "") + "/g" +
+           std::to_string(r.fields.level) + (r.fields.extreme ? "e" : "") +
+           (r.fields.dict_code != 0 ? "-dict" + std::to_string(recipe_dict_size(r.fields) >> 20) + "MiB" : "") +
+           "/g" +
            std::to_string(r.plan.k) + "-r" + std::to_string(r.plan.rule) + "/frame-" + frame +
            (r.fields.dedup ? "/dedup" : "");
 }
@@ -188,6 +207,19 @@ inline std::optional<SolidRecipe> parse_recipe(std::string_view text) {
     }
     r.fields.codec = static_cast<std::uint8_t>(codec - recipe_codec_names.begin());
     auto level_text = take("", '/');
+    if (const auto dict = level_text ? level_text->find("-dict") : std::string_view::npos;
+        dict != std::string_view::npos) {
+        // Any spelling other than a listed size is rejected here or by the canonical check below.
+        const auto size = level_text->substr(dict + 5);
+        const auto it = std::ranges::find_if(recipe_dict_sizes, [&](std::uint32_t v) {
+            return v != 0 && std::to_string(v >> 20) + "MiB" == size;
+        });
+        if (it == recipe_dict_sizes.end()) {
+            return std::nullopt;
+        }
+        r.fields.dict_code = static_cast<std::uint8_t>(it - recipe_dict_sizes.begin());
+        level_text = level_text->substr(0, dict);
+    }
     if (level_text && level_text->ends_with('e')) {
         r.fields.extreme = true; // only "<digits>e"; valid_recipe rejects it for Zstd
         level_text->remove_suffix(1);
