@@ -1,134 +1,259 @@
 # SeedArc 交接快照
 
-更新：2026-11-24，America/Los_Angeles。供下一位 Agent 接续开发使用。
+更新：2026-11-28。供下一位 Agent 在新对话中接续开发。
 
-**当前进度唯一入口仍是 [STATUS.md](STATUS.md)。本文件是交接快照，不另建任务台账；后续任务领取、结果和阻塞继续更新 STATUS。**
+**当前进度的唯一入口仍是 [STATUS.md](STATUS.md)。**本文件只是交接快照，不另建任务台账；领取任务、记录结果和阻塞，仍然更新 STATUS。上一版快照（2026-11-24）在 Git 历史里。
+
+## 0. 一句话现状
+
+- 研究工具 `seedarc_append4_study` 的固实配方已经包含以下几项，五棵 dev 树上的**完整归档体积都比 7-Zip 26.03 和 tar|xz -9e 小**：
+  - 去重（ADR-0008）；
+  - LZMA2 字典字段（ADR-0011）；
+  - zstd 压缩的 trailer（ADR-0010）。
+- 速度属于中等，资源（内存）偏高。
+- 用户的标准是"体积、速度、资源三项中两项强"，所以下一步做速度实验，计划在第 7 节。
+- **DEV-044（压缩 trailer）已完成并通过全部验证，但还没有提交**，见第 3 节。
 
 ## 1. 接手先读
 
-1. [AGENTS.md](AGENTS.md)、[STATUS.md](STATUS.md)、`git status --short`。
-2. 用户最新方向：先读[用户思想汇总](docs/user-vision.md)，再读[速度 / 体积 / 恢复性联合目标](research/ideas/speed-resilience-r1.md)。
-3. 当前实现：[有界固实帧说明](research/ideas/bounded-solid-r0.md)。
-4. 最新证据：[DEV-022记录](research/experiments/20261124-bounded-repeat-main-001/record.md)、[复测表](research/experiments/20261124-bounded-repeat-main-001/preview.md)。
-5. 按任务读取相关代码 / 详细规范；研究开始前读 [research/README.md](research/README.md)。
+1. [AGENTS.md](AGENTS.md)、[STATUS.md](STATUS.md)（最新的几条在顶部"当前基线"），以及 `git status --short`。
+2. 用户方向：
+   - [用户思想汇总](docs/user-vision.md)；
+   - [速度 / 体积 / 恢复联合目标](research/ideas/speed-resilience-r1.md)；
+   - 本文件第 2 节，汇总了最近几天聊天里的决定。
+3. 种子的新设计（只是想法稿，没有实现）：
+   - [codec-tree-r0](research/ideas/seed-codec-tree-r0.md)；
+   - [policy-layers-r0](research/ideas/seed-policy-layers-r0.md)。
+4. 最近的 ADR：
+   - [0009 并行内存预算](docs/decisions/0009-solid-encode-worker-budget.md)；
+   - [0010 压缩 trailer](docs/decisions/0010-compressed-trailer.md)；
+   - [0011 LZMA2 字典](docs/decisions/0011-recipe-lzma2-dictionary.md)。
+5. 最近的实验记录，按时间顺序：
+   - [DEV-039 并行内存](research/experiments/20261127-parallel-memory-main-001/record.md)
+   - [DEV-040 外部基线](research/experiments/20261128-external-baseline-main-001/record.md)
+   - [DEV-040b RAR](research/experiments/20261128-external-rar-main-001/record.md)
+   - [DEV-041 trailer 测量](research/experiments/20261128-trailer-probe-main-001/record.md)
+   - [DEV-042 7-Zip 版本差](research/experiments/20261128-7zip-version-main-001/record.md)
+   - [DEV-043 LZMA2 字典](research/experiments/20261128-lzma2-dict-main-001/record.md)
+   - [DEV-044 压缩 trailer](research/experiments/20261128-zstd-trailer-main-001/record.md)
+6. 做研究之前读 [research/README.md](research/README.md)，按里面的约定归档：run-id 目录、`record.md`、`commands.md`、原始 jsonl。
+7. `docs/users_idea/` 里两份原稿的 git blob 哈希，最近一次复核仍是 `0cd267f5…` 和 `0c909c91…`，没有变化。关键设计之前，和交接的时候都要再核对；原稿不许改。
 
-廉价模型执行下一轮时另读[DEV-023测试任务书](docs/test-execution-plan.md)，其中给出可复制的启动指令、预登记矩阵与停止条件；领取与实际结果仍写入STATUS，不把本计划当作已执行证据。DEV-023已于2026-11-25执行完成（[记录](research/experiments/20261125-bounded-expand-main-001/record.md)，执行者报告通过，待主模型审计）。
+## 2. 用户已明确的决定和方向（2026-11-27 至 11-28，按主题）
 
-`docs/users_idea/` 原稿两份哈希最近复核未变，已读快照在 STATUS。**最新聊天决定及测试后形成的 Markdown 优先于早期构想**，不能只通读原稿后忽略新方向。关键设计或交接前继续核对新增 / 变化文件，不擅改原稿。
+**工作方式**
+- 只在用户要求时才提交或推送。`docs/debug.log`、`.sandbox-test/`、`.in-tasks/` 永远不提交。
+- 提交的内容里不能出现服务器 IP 和本机用户路径。
+- 本阶段**暂不做 CLion 检查**。CLion 的 MCP 也连不上。
+- 印度服务器（in-long-task skill）是默认的远端：
+  - 使用独占模式；
+  - 保留 2 GiB 磁盘监控补丁：先应用 `task-monitor-patch.py`，再执行 `git checkout --` 恢复 codec-capabilities 下的 `monitor-patch.json`；
+  - 留出集数据只评估一次；
+  - 不得修改 `g5_study.cpp`。
+- **全局超时规则**（已写进全局 CLAUDE.md 和 `~/.claude/skills/soft-timeout`）：
+  - 墙钟超时只是估计：到软超时只提醒，到硬超时才停止。硬超时默认取 max(3 × 软超时, 软超时 + 30 min)。
+  - 被截停时要报成"被硬超时截停"，不能报成失败。
+  - 安全阀不放宽：fuzz 单条输入的超时、内存和磁盘上限、远端任务预算。
+  - 注意：CTest 的 `--timeout` 盖不过测试自己的 TIMEOUT 属性。
 
-## 2. 用户已经明确的方向
+**评价标准**
+- 体积、速度、资源三项里，**有两项强就够了**。
+- "较优"由用户的偏好决定：要快，包可以大一点；要小，时间可以长一点。
+- 策略种子的验收线是**不输给同一偏好档的强默认**。比的是完整归档的字节数；时间要如实记录，但不设门槛。
+- 偏好档的具体划分和各档的强默认，等速度数据出来再定。
 
-- 目标是**少量甚至零牺牲，换取明显优势**：接近固实压缩率时提高速度、损坏隔离、恢复或单文件提取能力；或在相同总压缩时间内，得到比其他方案更小的完整归档。
-- 用户应能选择优先速度、体积、提取、追加等取舍；不要替所有人固定一种权重或只用对手的单项极值作判据。
-- 核心场景并列：首次压缩 / 全量解压、补加新文件、单文件提取、损坏 / 缺卷恢复。追加不是提取的替代项。
-- 成熟 codec 和有效固实策略打底，Seed 描述、选择和复用具体计划。不要为了证明 Seed 有效而人为制造复杂空间，或反复在小空间抠几 KB。
-- 规划 / 搜索、训练、索引、校验、冗余、整理、旧包读写都须计入对应成本；不能把定期全量重压挪到别处而称追加免费。
-- 用户已明确：**当前阶段暂不考虑 CLion 建议性检查**，不再要求其切到前台；工程安全、真实构建和往返检查仍保留。
+**种子设计**（想法稿，没有实现；改变 Seed 表示属于 C 级）
+- 种子定长，但内部各段的长度不固定：先是公共前缀，再是前缀码标签（`0` Zstd、`10` LZMA2、`110` Store、`111` 保留），然后是算法专用的参数段。
+- 每一代各有一个小种子，存完整配方。
+- 大种子由工具从整个包算出来，追加以后会跟着变。
+  - 定长的大种子只能用来认出和检验一个包，没法复现它，原因是抽屉原理。
+  - 要完整复现，用变长的历史种子：全局段 + 小种子链 + 经过熵编码的每个文件的代号。它的前提是追加只增不改，这一点还没核对。
+- 文本形式：配方部分保持可读；代号部分用 Base64url，末尾带校验位；太长时改存成 `.seed` 文件。
+- 三层分工：
+  - 定长的**策略种子**记录压缩思想，比如 128 位，由分类器和每一类的配方槽组成；
+  - **计划**写进包里；
+  - 不定长的 **`.seed` 文件**记录每个文件的强哈希和帧布局，供没有旧包时做增量重压。增量重压还要解决帧边界连锁移动的问题，属于 C 级。
+- **彩蛋种子**：带自然语言字面意思的字符串，完全独立于策略种子系统。
+  - 它可以是官方建议，也可以是好玩的压法，都必须向用户说清楚，比如提供 `egg --list`。
+  - 建议类彩蛋直接展开成一个官方策略种子，用户已同意复用这套机制。
+  - 六条约束用户已经全部接受：用注册表、不做哈希、加 `egg/` 前缀、解码不依赖彩蛋、行为确定且资源有界、"最优"只在自己的空间里成立、先做完主体再做彩蛋。
+  - 彩蛋叫什么名字，由用户来定。
 
-## 3. 当前状态与工作区
+**外部对比**
+- DEV-040 允许上传全部 dev 树、做大流量传输、按需安装工具。这个授权**只适用于那一次实验**。
+- 外部对比的目的是吸收别人的长处：差距要拆到具体来源，不能只报谁赢谁输。
+- RAR 只能在本机用用户的许可证测；结果能否公开，要等用户看过许可条款。
 
-- 分支：`main`；接手核对时 HEAD 为 `479eab9a524ff0cf82ef55f36dc19ea4d06f77fc`。
-- DEV-022 四轮轮换复测已完成；研究选项已列出，未设置通用默认。
-- 交接起草时有多阶段研究、源码、清单和证据尚未提交；随后用户已授权整理提交并推送到 `main`。实际提交与远端同步状态以 Git 历史和实时检查为准；临时测试目录与调试日志不纳入提交。
-- 交接文档阶段只新增本文件并在 STATUS 链接；后续提交整理不修改 C++ 或重跑性能实验。
-- 前轮任务据收尾记录已退出、取回、核验并清理自己的 work/tmp；此后未再启动测试。远端其他任务的最新状态需接手时 `preflight` 核实，不能把记录当实时监控。
+## 3. 仓库与工作区状态
 
-## 4. 已实现的最小能力
+- 分支 `main`，HEAD 是 `cab6a68`（DEV-039 到 DEV-043），已经推送到 origin。
+- **还没提交的是 DEV-044 和超时调整**：
+  - research/tools/ 下的 append4_study.cpp、recipe_commands.hpp、bounded_extract.hpp、append4_fuzz.cpp、check_solid_recipe.cmake、check_solid_search.cmake、CMakeLists.txt（solid_recipe 测试的 TIMEOUT 从 900 改为 2400，注释写了原因）；
+  - 两个 fuzz 样本 `r5-trailer-zstd-{seed,explicit-append}.sadx`；
+  - docs/decisions/0010 改为"已接受"，并加了实现记录；
+  - research/experiments/20261128-zstd-trailer-main-001/；
+  - STATUS.md；
+  - 本文件。
+- 这些改动的验证都做过了：MSVC 50/50、WSL GCC 51/51、ASan+UBSan 22/22、fuzz 1 201 s 无崩溃样本。**提交和推送都要等用户开口。**
+- 永远不提交的有 `.in-tasks/`（印度任务回执）、`.sandbox-test/`、`docs/debug.log`。
 
-核心研究代码：
+## 4. 已实现的能力（研究工具，不是正式格式）
 
-| 文件 | 职责 |
-| --- | --- |
-| [append4_study.cpp](research/tools/append4_study.cpp) | 私有归档研究工具、编码 / 追加、已有解析与验证；新增帧上限选项 |
-| [bounded_solid.hpp](research/tools/bounded_solid.hpp) | 单文件读取 / 解码计量、索引完好载荷损坏诊断 |
-| [solid_plan.hpp](research/tools/solid_plan.hpp) | solid-plan-r1 / Seed映射revision2与具体计划边界 |
-| [check_bounded_solid.cmake](research/tools/check_bounded_solid.cmake)、[bounded_fixture.py](research/tools/bounded_fixture.py) | 边界 / 兼容 / 往返测试与跨平台一致的UTF-8/LF输入 |
-| [bounded_solid_dev.py](research/scripts/bounded_solid_dev.py) | DEV-021各档独立追加历史、全量重建 / 提取 / 故障诊断 |
-| [bounded_repeat_dev.py](research/scripts/bounded_repeat_dev.py) | DEV-022固定父包、平衡位置与交替操作顺序 |
-| [bounded_repeat_report.py](research/scripts/bounded_repeat_report.py)、[bounded_repeat_preview.py](research/scripts/bounded_repeat_preview.py) | 独立审计、成对统计与表格生成 |
+### 4.1 配方：映射修订 3，ADR-0006 之后又扩充了四次，已有值的含义都没变
 
-研究工具入口（**不是正式产品 CLI / GUI**）：
+| 位（Seed 形式） | 字段 | 说明 |
+| --- | --- | --- |
+| 0–4 | 分组 rule（2 位）和 k−1（3 位） | k 取 1–8 |
+| 5–7 | 帧档 | 0 表示整体（上限 1 GiB），其余是 16、32、64、128、256 MiB |
+| 8–9 | 算法 | 0 Zstd（级别 1–19），1 LZMA2（预设 0–9） |
+| 10–14 | 级别 | |
+| 15 | extreme（ADR-0007） | 只用于 LZMA2 |
+| 16 | dedup（ADR-0008） | 同一代、同一组内，内容完全相同的文件做成别名 |
+| 17–19 | dict 码（ADR-0011） | 只用于 LZMA2：0 表示预设，1–4 依次是 128、256、512、1024 MiB，5–7 保留；只影响编码，解码不变 |
+| 20–31 | 保留 | 必须为 0 |
 
-```text
-seedarc_append4_study bounded-pack seed|explicit FRAME_LIMIT_BYTES INPUT_DIR OUT
-seedarc_append4_study bounded-append FRAME_LIMIT_BYTES OLD NEW_DIR OUT
-seedarc_append4_study access-profile ARCHIVE INPUT_DIR UNIFORM_SAMPLE_COUNT
-seedarc_append4_study payload-fault-profile ARCHIVE INPUT_DIR
-```
+- **显式形式**：第二个字的 bit 16 是 extreme，17 是 dedup，18–20 是 dict，21 及以上保留。
+- **文本形式**：`solid/<codec>-<lvl>[e][-dict<N>MiB]/g<k>-r<rule>/frame-<whole|NMiB>[/dedup]`，必须是规范拼写。
+- 目前最好的配方：`solid/lzma2-9e-dict256MiB/g1-r0/frame-whole/dedup`。
 
-帧上限字节值：32MiB=`33554432`、64MiB=`67108864`、128MiB=`134217728`；整段对照使用既有1GiB资源上限`1073741824`。当前固定单组、Zstd-9、无字典、off冗余。
+### 4.2 容器：修订 5
 
-实现边界必须保留：
+- **头部标志**：bit 0 是 seed，bit 1 是 solid，bit 2 是 zstd trailer（ADR-0010，只有修订 5 能用）。其他位都会被拒绝。
+- **trailer 的存储形式**：raw，或者 `原始长度(8) | 一个 zstd-19 帧`。
+  - 原始长度的上限是 256 MiB（fuzz 构建里是 16 MiB），先检查长度再分配内存。
+  - zstd 帧必须恰好一个、内容大小和原始长度相等、不带字典、窗口不超过 2^27、帧后面不能有多余字节。
+- **形式的规则**：
+  - 新包默认用 zstd trailer；
+  - 追加时沿用原包的形式；
+  - 合并时默认沿用原包的形式，`--trailer` 可以改。
 
-- 只在文件之间分段，一个文件完整位于一个帧中；单文件超所选帧上限明确拒绝。
-- 新路径追加保留旧包完整前缀，不重压旧原文，但仍完整读取、复制和写出旧压缩包。
-- 旧帧也必须满足所选上限；从已有大帧切到小帧需要显式重建，不能无成本切档。
-- 现有v4/v5序列化和旧解码保持；多个帧由已有帧表自描述。帧上限是**Seed之外的显式写入配置**，不能把revision2旧Seed静默解释为包含此参数。
-- 仍整树 / 整归档载入内存，提取仍整包读取，尚非完整流式或选择性磁盘I/O。
-- 同路径修改、删除、重命名不等于新文件追加，当前不得冒充支持；v5 `partial` / `split`仍拒绝。
-
-## 5. 最新结果与验证范围
-
-DEV-022：同一mixed dev，236,937,106B / 7,993文件；整段 / 32 / 64 / 128MiB四配置四轮，各占一次第1/2/3/4位置，完整重建 / 末批追加先后交替。父包固定为各自第3代，**没有把重复追加的产物再当父包**。
-
-| 配置 | 比整段完整体积 | 四轮同轮读取/解码加速范围 | 重建调用中位 |
-| --- | ---: | ---: | ---: |
-| 整段参考 | 0 | 1× | 12.021s |
-| 32MiB | +0.470% | 2.90–3.33× | 11.906s |
-| 64MiB | +0.050% | 2.07–2.33× | 12.052s |
-| 128MiB | +0.042% | 1.38–1.56× | 11.939s |
-
-32MiB末批新增18,391,665B，追加中位3.410s，同档完整重建11.906s；最终第4代包比重建大4.699%，仍读取 / 复制40,051,879B旧压缩包。父包准备成本单列，不能称免费生命周期。末批小于所有帧上限，不外推为任意大批次同样加速。
-
-证据与限制：
-
-- DEV-021：Windows Release45/45、Linux Release46/46、相关ASan+UBSan4/4；40包往返、20对Seed / 显式载荷一致。
-- DEV-022：Linux Release46/46、13份固定小包SHA跨平台一致，120命令 / 44包独立verify / 32个access-profile通过，全部归档SHA与DEV-021一致。主Agent另审计输入 / 源码 / bundle哈希、轮换顺序和统计。大包验证后由运行器回收，**没有在本机重新解压全部大包**。
-- DEV-022没有C++改动、ELF也相同，ASan沿用DEV-021同源4/4，**没有重跑**。显式表示和故障诊断同样沿用同包证据，不是新增覆盖。
-- 这些是同dev / 热缓存观测；读取诊断含整包读取、解析、目标帧解码、CRC和字节校验，**未写出目标文件**。不宣称冷磁盘、统计显著性、跨语料保证或压缩吞吐大突破。
-- 损坏诊断只覆盖索引 / 头部完好、载荷三个位置翻转bit；不含索引损坏、缺卷或通用恢复。收益来自布局，不是Seed独立优势。
-
-[研究选项表](research/configs/bounded-solid-options-r0.json)保留整段参考、64MiB低额外体积、32MiB偏读取和128MiB手动取舍；没有自动择优、正式用户界面或通用默认。
-
-## 6. 下一步建议
-
-依次推进，开始时在 STATUS 领取任务并预登记方法：
-
-1. **扩数据覆盖**：增加输入类型 / 规模与批次形态，继续隔离dev / holdout；先验证32/64MiB候选的优势是否稳定，不只重复同一已观察数据。
-2. **测真实提取与I/O分解**：加入目标文件落盘，分开包读取、索引解析、帧解码、校验 / 写出；随后评估只读取索引和目标帧。不能为跳读而关闭必要的边界 / 校验。
-3. **处理追加旧包复制成本**：测不同旧包 / 新批次大小、多轮索引增长和整理成本，再设计有界I/O或增量写入。已有数据不能无提示覆盖。
-4. **多codec / 等级的可比曲线**：建立成熟强基线，在相同实际时间预算下比较完整体积；搜索 / 调参双方都收费，不拿事后Oracle当免费在线策略。
-5. 据实测推进用户偏好接口与Seed计划选择 / 复用。分段配置、恢复能力和新Seed语义须明确版本化；未冻结内容可演进，已有支持包不能静默失去解码能力。
-
-不要回到“花约87秒只比11.6秒少5KB”的体积搜索主线；那是[DEV-020机制基线](research/experiments/20261124-solid-version-main-001/record.md)，按用户最新目标不主推。
-
-## 7. 远端与复现注意事项
-
-- 使用已安装的 `in-long-task` skill，其文档维护连接 / 凭据方式；不在交接复制私钥内容。默认印度，不自动切香港。
-- 用户已允许需要时使用exclusive开放计算资源；**2GiB任务磁盘、时间和日志限制仍保留**。持有任务ID，断连后先查原任务，不重复提交。
-- 最新完成任务：`20261124T102611Z-2912f5b3`（DEV-022）；前轮`20261124T092901Z-14334bcf`（DEV-021）。两轮均已fetch / SHA核验后clean自己的work/tmp，结果 / 日志和本机bundle保留。
-- 最新bundle：`research/local/india-append/artifacts/20261124T102611Z-2912f5b3.tar.gz`，SHA256=`fcb599ea22e54f5ae23b9911df3924a05f322def934a42367654941dd710297e`，回执同目录。
-- 固定工具链 / 依赖仍借用`/home/sc/long-tasks/20261123T123105Z-d5596074/work`；公开Linux源数据仍借用`/home/sc/long-tasks/20261124T051435Z-cef36683/work/data`。这些旧任务有unknown / 中断历史，**不得擅自clean、删除或伪造result.json**。先看本轮bootstrap中的路径 / 哈希断言。
-- 固定版本：GCC14.2、Zstd1.5.7、liblzma5.8.4。SSH非交互PATH可能没有CMake；用已确认的任务内工具链路径与环境，不安装全局工具或换低标准。
-- skill监控器曾有删除竞态。已有`append_monitor_guard.py`和实验内`task-monitor-patch.py`只修**新准备、尚未启动**的任务副本，检查原SHA和2GiB限制；不改已安装skill，也不直接套到运行任务。
-- 跨平台小夹具曾因CMake原生CRLF不一致；现用`bounded_fixture.py`的二进制写入，13份包已一致。**打包源码必须包含该新增辅助文件**，不能只从旧source.zip替换既有成员后遗漏它。
-
-常用本机构建 / 检查（是否需重跑按实际改动决定）：
-
-```text
-cmake --build build/dictstudy-check --config Release --target seedarc_append4_study --parallel 2
-ctest --test-dir build/dictstudy-check -C Release --output-on-failure --parallel 1
-```
-
-独立复算最新结果：
+### 4.3 研究工具常用命令
 
 ```text
-python -B research/scripts/bounded_repeat_report.py research/experiments/20261124-bounded-repeat-main-001/remote/repeat research/datasets/solid-mixed-version-dev-r1/v0.tsv research/experiments/20261124-bounded-solid-main-001/remote/bounded/archives.json <analysis.json>
-python -B research/scripts/bounded_repeat_preview.py <analysis.json> <preview.md>
+seedarc_append4_study [--jobs N|auto [--memory-budget B]] [--trailer raw|zstd] COMMAND ...
+  recipe-pack seed|explicit RECIPE DIR OUT      recipe-append OLD NEW_DIR OUT [RECIPE]
+  consolidate[-check] ARCHIVE [OUT] [RECIPE]    describe ARCHIVE   verify ARCHIVE DIR
+  extract ARCHIVE PATH OUT_DIR NAME（只读索引）  memory-estimate RECIPE
+  trailer-recode ARCHIVE OUT raw|zstd（单代）   trailer-fault ARCHIVE OUT CASE（测试用）
+  codec-probe / dup-probe / cut-probe（只测量，不改格式）
 ```
 
-## 8. 保留事项
+- `--jobs auto` 的规则（ADR-0009）：
+  - `jobs = clamp(⌊(预算 − 常驻 − 本代原始字节) / (最大帧 + solid_encoder_memory)⌋, 1, min(16, 核数, 帧数))`；
+  - 预算是物理内存的 50%；
+  - 选择结果以 `{"jobs_auto":…}` 输出到 stderr。
+- **已知限制**：
+  - 研究工具会把整棵树、整个包一次读进内存；
+  - 整体帧只有一帧，所以不能并行；
+  - 同一路径的修改、删除、重命名都不支持。
 
-本轮新建临时目录已按任务清理；仓库仍有此前的`.sandbox-test/`残留和`docs/debug.log`，不能顺手删除。GNU Windows旧工具曾有非ASCII canonical路径异常，未解决，不能把MSVC / Linux结果写成所有工具链通过；详见STATUS历史记录。
+### 4.4 研究脚本（research/scripts/）
 
-本交接仅做文档整理与链接 / 差异核对，没有新构建、测试、远端查询或提交。今后以STATUS和对应实验记录的真实证据更新当前状态。
+- `external_baseline.py`、`_task.py`、`_package.py`：外部基线对比，用在印度。
+- `external_rar.py`：本机测 RAR。
+- `trailer_probe.py`：测量 trailer。
+- 每次实验用到的仓库外临时脚本，内容都抄在对应实验目录的 `commands.md` 里。
+
+## 5. 关键结果（dev 数据，未碰留出集）
+
+**完整归档字节数**：第一列是 SeedArc 的最终配方（256 MiB 字典、整体帧、去重、zstd trailer）。
+
+| 树 | SeedArc | 7-Zip 26.03 -mx9 | tar\|xz -9e | 7-Zip 23.01 | RAR 7.23 -m5 -s -md1g |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| append-r1 dev | 35 378 301 | 36 065 458 | 35 445 856 | 36 080 089 | 40 203 635 |
+| cargo | 18 549 109 | 18 931 714 | 19 539 944 | 19 789 676 | 22 501 935 |
+| rustup | 44 287 436 | 46 553 189 | 48 782 200 | 50 486 046 | 50 280 541 |
+| 全部 | 64 378 752 | 67 016 273 | 69 937 464 | 71 903 675 | 74 773 550 |
+| npm | 1 653 715 | — | 1 659 804 | 1 661 721 | — |
+
+**差距来源**（DEV-040、042、043、044）
+- trailer 原来不压缩，每个文件占 71–109 B；zstd 压缩后约为原来的 1/4–1/5。
+- 7-Zip 26 比 23 小，**全部来自 `-mx9` 默认字典从 64 MiB 改成 256 MiB**。同一 liblzma 下，xz 用 256 MiB 字典的结果和我们只差几百字节。
+- BCJ2 过滤器在 rustup 上反而让结果大 4.7%；按类型排序也没有收益。
+- `zstd --long` 在 cargo 上小 16.5%，所以 Zstd 槽的窗口和 LDM 值得测。
+- 去重是我们独有的收益。
+
+**速度**（印度，4 vCPU，单线程固定在 CPU 0，用的是 64 MiB 字典时代的配方）
+- 最小体积的配置是单线程，"全部"树上 SeedArc 348 s，xz 380 s，7z 298 s。
+- 多线程时 SeedArc 的 `--jobs auto` 最快（90 s，7z 106 s），但只有 32 MiB 帧能并行，体积要大约 6%。
+- 本机加上 256 MiB 字典后，单线程大约是 7-Zip 26 的 0.9–1.8 倍。
+
+**资源**
+- 打包的峰值内存：64 MiB 字典时 1.3–2.1 GB，256 MiB 字典时 2.8–4.2 GB。对比：xz -9e 是 0.7 GB，7z 26 是 2.0–2.7 GB。
+- 解码的内存不受字典大小影响。
+
+**单文件提取**：32 MiB 帧取一个文件 0.04–0.22 s，和 7z 的小块模式同档；整体帧和 xz 差不多。
+
+**限制**：
+- 每个格子只跑了一次；只用了 dev 数据；字典大小是在这几棵树上选的。
+- 外部工具没有调到极限，比如 7z 的 `-md=1g`、zstd 的 `--ultra -22 --long=31`。
+- RAR 能不能公开，还没确认。
+
+## 6. 构建、测试与环境
+
+- **本机 MSVC**，研究工具开启的构建目录是 `build/dictstudy-check`（VS 2026 生成器，Release 配置）：
+  ```text
+  cmake --build build/dictstudy-check --config Release --parallel
+  ctest --test-dir build/dictstudy-check -C Release -j 4        （50 项；solid_recipe 约 6–7 min）
+  ```
+  注意：`build/msvc-vs2026-release` **没有打开研究工具**，不要用它。
+- **WSL 构建**（GCC 14 Release 和 Clang ASan+UBSan）：在 WSL 原生克隆 `~/SeedArc-append` 里进行，通过 git 同步。
+  1. 用临时的 `GIT_INDEX_FILE` 做 `read-tree HEAD`，再 `add -A -- core research tests fuzz cli docs STATUS.md CMakeLists.txt ':!research/local' ':!docs/debug.log'`；
+  2. `commit-tree`，把结果写到 `refs/wip/drift`；
+  3. 在 WSL 里 `git fetch` 这个 ref，然后 `checkout --detach`；
+  4. 依次构建 `build/ap-gcc-linux-release` 和 `build/ap-clang-linux-asan-ubsan`；跑 GCC 的全部 CTest，以及 ASan 下与研究相关的 22 项；
+  5. 跑完删掉这个 ref，本机和 WSL 两边都要删。
+
+  libFuzzer 构建目录是 `build/ap-fuzz`，目标是 `seedarc_fuzz_append4`，常用参数 `-max_total_time=1200 -rss_limit_mb=800 -malloc_limit_mb=600 -max_len=16384 -timeout=30`。
+
+  上一个会话的脚本放在会话临时目录里，可能已经被清掉。按上面的步骤自己重写即可。
+- **跨工具链核对**：固定的小包，GCC 和 MSVC 打出来的 SHA 必须相同。三个例子：两个 dict fuzz 样本 `59120c7b…` / `daf28be6…`，`far` 树的 `364a994a…`。
+- **印度**：用 `in-long-task` skill 的 `in_task.py`（preflight / prepare / start / status / fetch / clean）。
+  - 输入目录上限 16 MiB，大数据要另外用 scp 传，两端都要核对 SHA。
+  - 固定的工具链和 vcpkg（GCC 14.2、zstd 1.5.7、liblzma 5.8.4）借用 `/home/sc/long-tasks/20261123T123105Z-d5596074/work`。**这个目录不能清理。**
+  - DEV-040 的三个任务都已经 fetch 并 clean。
+  - 服务器上还留着 `/home/sc/seedarc-data/dev040`（131 MB 的 dev 树打包，SHA `145b30a6…`）。**删不删由用户决定。**
+- **本机 dev 树**都在 `research/local/` 下，这个目录不入库：
+  - `append-r1/files/dev`；
+  - `dup-local-dev-r1/files/{cargo,rustup,npm}`。
+
+  它们和 DEV-040 的上传清单逐个文件对得上：20 001 个文件，清单 SHA `a9dbb0a5…`。
+- 工具版本：本机 Python 3.15.2，自带 `compression.zstd`；印度是 Python 3.12，**没有** `compression.zstd`。所以测试夹具不能依赖 Python 做 zstd 压缩。
+
+## 7. 下一步计划（建议顺序）
+
+1. **问用户是否提交 / 推送 DEV-044**，相关改动见第 3 节。
+2. **速度实验**：这是主线的下一项，我已经向用户提出，**用户还没点头**，开始前要先确认。
+   - 在印度测。帧大小取 64 / 128 / 256 MiB 和整体，字典取 128 / 256 MiB，都开 `--jobs auto`。
+   - 对照组用 7z 的默认线程数和 xz -T0。
+   - 纯解码时间单独测，现在的 verify 里还带着和源树的比对。
+   - 要看的是：体积损失多少，换来多少提速。参照点：7z 多线程只比单线程大 0.03%。
+3. **定偏好档**：根据第 2 步的数据，定下快档和小档各自的强默认与预算，写一份 ADR。属于 C 级。
+4. **流式读入**（体积加资源）：输入改成流式，配有界的帧缓冲，把内存降到大约"字典 + 一两帧"。
+5. **留出集一次性评估**：先写好方案，再只跑一次。
+6. 种子的新表示：codec-tree / policy-layers / 彩蛋这几项，等偏好档定了以后再写 ADR，其中种子长度 W 用 32 还是 128 位要先定。
+7. 其他待定事项：
+   - Zstd 槽的 windowLog / LDM 字段；
+   - 128 MiB 和 512 MiB 两档字典还没在 dev 树上测；
+   - 跨代去重；
+   - consolidate 的触发阈值；
+   - 研究配方正式接入 CLI；
+   - CLion 的阶段检查，等 IDE 可用时再做。
+
+## 8. 坑与经验
+
+- **Bash heredoc**：内容里只要有某些字符组合，带引号的 heredoc 也会被搞坏，比如出现 `unexpected EOF`、反斜杠丢失。改动大的 Python 补丁，先用 Write 写成临时文件再执行。
+- **Git Bash 调 `wsl.exe` 传路径**时，要加 `MSYS_NO_PATHCONV=1`，否则 `/mnt/c/...` 会被改写。
+- **用 Python 的 `importlib` 加载仓库里的脚本，会生成 `research/scripts/__pycache__`**。运行时加 `-B`；做快照或提交之前，先确认没有 `__pycache__`。
+- **subprocess 用相对路径找不到 exe**（WinError 2），要传绝对路径。
+- **7z 会把以 `@` 开头的参数当成列表文件**，所以要用 UTF-8 列表文件加 `-spd -scsUTF-8`。RAR 的列表文件要用 Windows 分隔符和 `-scfl`。
+- **recipe_fixture.py 的 retag / realias 会直接改 raw trailer**，所以给它们的源包必须用 `--trailer raw` 打包。
+- **测试里比较 Seed 和显式两种表示的大小时，要用 raw trailer**：两种表示的 GEN 记录内容不同，zstd 压缩后大小可能差一两个字节。
+- **Sanitizer 构建比 Release 慢 2–4 倍**，而且和 fuzz 同时跑会更慢。solid_recipe 单独跑大约 800 s，TIMEOUT 已设为 2400 s。
+- **`ZSTD_estimateCCtxSize_usingCCtxParams` 在 zstd 1.5.7 开启 LDM 时会除零。**所以 `solid_encoder_memory` 改成真正建一个 CCtx，再读 `ZSTD_sizeof_CCtx`。
+- 印度 apt 下载 7zip 时会选中 ESM 版本，导致 401。用 `apt-cache madison` 选非 ESM 的版本。
+- 印度的 vcpkg xz 要加 `-DBUILD_TOOLS=ON` 才有 xz 命令行工具。
+
+## 9. 本次交接时的核对
+
+本文件写于 DEV-044 验证完成之后。我只修改了本文件和 STATUS 顶部的链接，没有新的构建、测试或远端操作，也没有提交。

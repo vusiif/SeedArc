@@ -152,7 +152,11 @@ int cmd_describe(const fs::path &archive) {
     const double share =
         raw_total == 0 ? 0.0 : static_cast<double>(raw_appended) / static_cast<double>(raw_total);
     std::cout << "{\"schema\":\"seedarc.solid-describe.r1\",\"archive_bytes\":" << bytes->size()
-              << ",\"files\":" << m->entries.size() << ",\"generations\":[" << gens
+              << ",\"files\":" << m->entries.size()
+              << ",\"trailer\":{\"form\":" << (m->header.zstd_trailer() ? "\"zstd\"" : "\"raw\"")
+              << ",\"stored_bytes\":" << bytes->size() - footer_bytes - m->trailer_offset
+              << ",\"raw_bytes\":" << m->trailer_raw_bytes << "}"
+              << ",\"generations\":[" << gens
               << "],\"consolidation\":{\"generation_count\":" << m->gens.size()
               << ",\"raw_bytes\":" << raw_total << ",\"appended_raw_bytes\":" << raw_appended
               << ",\"appended_raw_share\":" << share << ",\"hint\":"
@@ -214,8 +218,14 @@ int cmd_consolidate(const fs::path &archive, const std::optional<fs::path> &out,
     decoded->clear();
     const auto decode_wall = wall_ms() - dw;
     const auto pw = wall_ms();
+    // ADR-0010: the rebuild keeps the source's trailer form unless --trailer chose one.
+    const auto chosen = trailer_zstd_override;
+    if (!chosen) {
+        trailer_zstd_override = m->header.zstd_trailer();
+    }
     auto packed = pack_bytes(last.has_seed ? "seed-solid" : "explicit-solid", recipe->plan, files,
                              red_off, 0, recipe_frame_limit(recipe->fields), recipe->fields);
+    trailer_zstd_override = chosen;
     if (!packed) {
         return fail(packed.error());
     }
@@ -247,4 +257,126 @@ int cmd_consolidate(const fs::path &archive, const std::optional<fs::path> &out,
               << ",\"call_wall_ms\":" << wall_ms() - w << ",\"call_cpu_ms\":" << cpu_ms() - c
               << ",\"byte_exact\":true," << peak_memory_json() << "}\n";
     return std::cout ? 0 : 1;
+}
+
+// ---- ADR-0010 trailer form ----------------------------------------------------------------------
+// The container with its header flag set to `zstd` and the trailer rewritten in that form; every
+// record before the trailer is kept byte for byte. One generation only: older generations'
+// superseded trailers keep the form they were written in, so a multi-generation archive changes
+// form only through consolidate --trailer.
+std::expected<std::vector<std::byte>, Error> with_trailer_form(std::span<const std::byte> bytes,
+                                                               Model m, bool zstd) {
+    if (m.header.revision != 5 || !m.header.solid() || m.gens.size() != 1) {
+        return std::unexpected(bad("trailer-recode covers one-generation revision-5 solid archives"));
+    }
+    if (m.header.zstd_trailer() == zstd) {
+        return std::unexpected(bad("the archive already has that trailer form"));
+    }
+    m.header.flags = zstd ? (m.header.flags | flag_zstd_trailer) : (m.header.flags & ~flag_zstd_trailer);
+    std::vector<std::byte> out(bytes.begin(), bytes.begin() + static_cast<std::ptrdiff_t>(m.trailer_offset));
+    const auto head = header_of(m.header);
+    std::ranges::copy(head, out.begin());
+    if (auto r = finish_container(out, m); !r) {
+        return std::unexpected(r.error());
+    }
+    return out;
+}
+
+int cmd_trailer_recode(const fs::path &archive, const fs::path &out, bool zstd) {
+    auto bytes = read_file(archive);
+    if (!bytes) {
+        return fail(bytes.error());
+    }
+    auto m = parse(*bytes);
+    if (!m) {
+        return fail(m.error());
+    }
+    if (fs::exists(out)) {
+        return fail(Error{ErrorCode::output_conflict, "output exists"});
+    }
+    auto recoded = with_trailer_form(*bytes, *m, zstd);
+    if (!recoded) {
+        return fail(recoded.error());
+    }
+    // The result must parse to the same index (entries, frames, generation records).
+    auto again = parse(*recoded);
+    if (!again || again->entries != m->entries || again->frames != m->frames ||
+        again->gens.size() != m->gens.size() || again->gens[0].body != m->gens[0].body) {
+        return fail(bad("recoded trailer does not reproduce the index"));
+    }
+    if (auto r = write_new(out, *recoded); !r) {
+        return fail(r.error());
+    }
+    std::cout << "{\"schema\":\"seedarc.trailer-recode.r0\",\"form\":" << (zstd ? "\"zstd\"" : "\"raw\"")
+              << ",\"archive_bytes_before\":" << bytes->size() << ",\"archive_bytes_after\":"
+              << recoded->size() << ",\"trailer_raw_bytes\":" << again->trailer_raw_bytes << "}\n";
+    return std::cout ? 0 : 1;
+}
+
+// Test helper (check_solid_recipe.cmake): rewrites the last trailer of a zstd-trailer archive into
+// a stored form no writer produces, with a correct footer CRC, so only the ADR-0010 checks behind
+// the CRC can refuse it. Cases: raw length over the bound / one short / zero / missing, two
+// frames, a trailing byte, raw bytes under the zstd flag, zstd bytes under a cleared flag, and
+// header flag bit 3.
+int cmd_trailer_fault(const fs::path &archive, const fs::path &out, std::string_view fault) {
+    auto bytes = read_file(archive);
+    if (!bytes) {
+        return fail(bytes.error());
+    }
+    auto m = parse(*bytes);
+    if (!m) {
+        return fail(m.error());
+    }
+    if (!m->header.zstd_trailer() || fs::exists(out)) {
+        return fail(bad("trailer-fault needs a zstd-trailer archive and a new output"));
+    }
+    Header h = m->header;
+    if (fault == "flag-bit3") {
+        h.flags |= 8;
+    } else if (fault == "zstd-under-raw-flag") {
+        h.flags &= ~flag_zstd_trailer;
+    }
+    Model n = *m;
+    n.header = h;
+    const auto raw = trailer_bytes(n); // header CRC of the header actually written
+    auto frame = research::compress_solid(raw, trailer_zstd_level);
+    if (!frame) {
+        return fail(frame.error());
+    }
+    std::vector<std::byte> stored;
+    const auto length = [&](std::uint64_t v) { put(stored, v, 8); };
+    const auto add = [&](std::span<const std::byte> s) { stored.insert(stored.end(), s.begin(), s.end()); };
+    if (fault == "raw-length-over") {
+        length(max_trailer_raw + 1), add(*frame);
+    } else if (fault == "raw-length-short") {
+        length(raw.size() - 1), add(*frame);
+    } else if (fault == "raw-length-zero") {
+        length(0), add(*frame);
+    } else if (fault == "raw-length-missing") {
+        add(*frame);
+    } else if (fault == "two-frames") {
+        length(raw.size()), add(*frame), add(*frame);
+    } else if (fault == "trailing-byte") {
+        length(raw.size()), add(*frame), stored.push_back(std::byte{0});
+    } else if (fault == "raw-under-zstd-flag") {
+        add(raw);
+    } else if (fault == "zstd-under-raw-flag" || fault == "flag-bit3") {
+        length(raw.size()), add(*frame);
+    } else {
+        std::cerr << "unknown trailer fault: " << fault << "\n";
+        return 2;
+    }
+    std::vector<std::byte> result(bytes->begin(), bytes->begin() + static_cast<std::ptrdiff_t>(m->trailer_offset));
+    const auto head = header_of(h);
+    std::ranges::copy(head, result.begin());
+    result.insert(result.end(), stored.begin(), stored.end());
+    put(result, m->trailer_offset, 8);
+    put(result, stored.size(), 4);
+    put(result, seedarc::experimental::crc32c(stored), 4);
+    const auto f = as_bytes(footer_magic);
+    result.insert(result.end(), f.begin(), f.end());
+    if (auto r = write_new(out, result); !r) {
+        return fail(r.error());
+    }
+    return 0;
 }

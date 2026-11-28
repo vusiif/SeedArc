@@ -30,7 +30,9 @@ foreach(multiple 1 4 29)
     math(EXPR budget "${bytes}*${multiple}")
     foreach(mode seed explicit)
         set(out "${root}/${mode}-${multiple}.sadx")
-        run(0 result solid-search ${mode} default "${input}" "${out}" ${budget} 3 enumerate)
+        # Raw trailers (ADR-0010): the Seed and explicit GEN records differ in content, not in
+        # size, so only the uncompressed form scores both representations identically.
+        run(0 result --trailer raw solid-search ${mode} default "${input}" "${out}" ${budget} 3 enumerate)
         run(0 ignored verify "${out}" "${input}")
         string(JSON spent GET "${result}" budget_spent_bytes)
         string(JSON count GET "${result}" evaluations)

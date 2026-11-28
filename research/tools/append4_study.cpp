@@ -54,6 +54,10 @@ constexpr std::string_view usage =
     "  append4_study --jobs N COMMAND ...   (1-16 solid frame encoder workers; same bytes)\n"
     "  append4_study --jobs auto [--memory-budget BYTES] COMMAND ...   (ADR-0009: workers from\n"
     "      half the physical memory, or BYTES; the choice is reported on stderr)\n"
+    "  append4_study [--jobs ...] --trailer raw|zstd COMMAND ...   (ADR-0010: trailer form of a new\n"
+    "      revision-5 archive, default zstd; append keeps the archive's form)\n"
+    "  append4_study trailer-recode ARCHIVE OUT raw|zstd   (one-generation archive, same records)\n"
+    "  append4_study trailer-fault ARCHIVE OUT CASE   (test helper: damaged zstd trailers)\n"
     "  append4_study pack seed|explicit|solid PLAN_HEX INPUT_DIR OUT [auto|off|checkpoint|file]"
     " [CHECKPOINT_BYTES]\n"
     "  append4_study append OLD NEW_DIR OUT [segment|regroup] [--plan PLAN_HEX]\n"
@@ -114,7 +118,14 @@ constexpr std::size_t max_record_body = std::size_t{1} << 24;
 #endif
 constexpr std::uint64_t max_frame_raw = SEEDARC_APPEND4_MAX_FRAME_RAW;
 constexpr std::uint32_t max_generations = 1024;
-enum : std::uint32_t { flag_seed = 1, flag_solid = 2 };
+// ADR-0010: revision 5 may store the trailer as `raw length (8) | one zstd frame`. The raw
+// length is checked against this bound before anything is allocated (the fuzz build lowers it).
+#ifndef SEEDARC_APPEND4_MAX_TRAILER_RAW
+#define SEEDARC_APPEND4_MAX_TRAILER_RAW (std::uint64_t{256} << 20)
+#endif
+constexpr std::uint64_t max_trailer_raw = SEEDARC_APPEND4_MAX_TRAILER_RAW;
+constexpr std::uint32_t trailer_zstd_level = 19;
+enum : std::uint32_t { flag_seed = 1, flag_solid = 2, flag_zstd_trailer = 4 };
 enum : std::uint32_t { red_off = 0, red_checkpoint = 1, red_file = 2 };
 constexpr std::array<const char *, 3> redundancy_names{"off", "checkpoint", "file"};
 constexpr std::uint32_t min_checkpoint_bytes = 4096;
@@ -158,6 +169,7 @@ struct Header {
     std::uint32_t revision = version;
     bool seed() const { return (flags & flag_seed) != 0; }
     bool solid() const { return (flags & flag_solid) != 0; }
+    bool zstd_trailer() const { return (flags & flag_zstd_trailer) != 0; }
     bool explicit_groups() const { return !seed() && !solid(); }
 };
 std::vector<std::byte> header_of(const Header &h) {
@@ -180,7 +192,7 @@ std::expected<Header, Error> parse_header(std::span<const std::byte> bytes) {
                cpb = r.get(4);
     const bool strong = ver && *ver == 5;
     if (!cpb || (*ver != version && !strong) || *ck != chunk || *lv != level ||
-        (*flags & ~3ULL) != 0 || (!strong && *flags == (flag_seed | flag_solid)) ||
+        (*flags & ~(strong ? 7ULL : 3ULL)) != 0 || (!strong && *flags == (flag_seed | flag_solid)) ||
         (strong && ((*flags & flag_solid) == 0 || *red != red_off)) || *red > red_file ||
         (*red == red_checkpoint) != (*cpb != 0) ||
         (*cpb != 0 && (*cpb < min_checkpoint_bytes || *cpb > max_checkpoint_bytes))) {
@@ -234,6 +246,7 @@ struct Model {
     std::vector<Entry> entries;
     std::vector<Frame> frames;
     std::uint64_t trailer_offset = 0;
+    std::uint64_t trailer_raw_bytes = 0;          // the trailer before ADR-0010 compression
     std::array<std::uint64_t, 4> record_bytes{}; // per record type (from the cross-check scan)
 };
 
@@ -792,15 +805,82 @@ std::vector<std::byte> trailer_bytes(const Model &m) {
     }
     return t;
 }
-void finish_container(std::vector<std::byte> &out, Model &m) {
+// ADR-0010 stored form of a trailer: `raw length (8) | one zstd-19 frame` (content size
+// recorded, no checksum, no dictionary); the footer CRC covers these stored bytes.
+std::expected<std::vector<std::byte>, Error> zstd_trailer_encode(std::span<const std::byte> raw) {
+    if (raw.empty() || raw.size() > max_trailer_raw) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "trailer too large to compress"});
+    }
+    auto frame = research::compress_solid(raw, trailer_zstd_level);
+    if (!frame) {
+        return std::unexpected(frame.error());
+    }
+    std::vector<std::byte> stored;
+    stored.reserve(8 + frame->size());
+    put(stored, raw.size(), 8);
+    stored.insert(stored.end(), frame->begin(), frame->end());
+    return stored;
+}
+// The reverse: the raw length must be within max_trailer_raw before the buffer is allocated,
+// and the rest must be exactly one zstd frame of exactly that content size (no dictionary,
+// bounded window, nothing after it; research::decompress_solid checks all of these).
+std::expected<std::vector<std::byte>, Error> zstd_trailer_decode(std::span<const std::byte> stored) {
+    Reader r{stored, 0};
+    const auto raw = r.get(8);
+    if (!raw || *raw == 0 || stored.size() == 8) {
+        return std::unexpected(bad("bad compressed trailer"));
+    }
+    if (*raw > max_trailer_raw) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "trailer too large"});
+    }
+    std::vector<std::byte> out(static_cast<std::size_t>(*raw));
+    if (auto d = research::decompress_solid(stored.subspan(8), out); !d) {
+        return std::unexpected(Error{ErrorCode::integrity_error,
+                                     "research container v4: bad compressed trailer: " + d.error().message});
+    }
+    return out;
+}
+// The trailer as parse_index reads it: the stored bytes themselves, or their decoded form.
+struct TrailerView {
+    std::vector<std::byte> decoded;
+    std::span<const std::byte> bytes;
+};
+std::expected<TrailerView, Error> trailer_view(const Header &h, std::span<const std::byte> stored) {
+    TrailerView v;
+    if (!h.zstd_trailer()) {
+        v.bytes = stored;
+        return v;
+    }
+    auto d = zstd_trailer_decode(stored);
+    if (!d) {
+        return std::unexpected(d.error());
+    }
+    v.decoded = std::move(*d);
+    v.bytes = v.decoded;
+    return v;
+}
+// Appends the trailer (stored as the header says) and the footer.
+std::expected<void, Error> finish_container(std::vector<std::byte> &out, Model &m) {
     m.trailer_offset = out.size();
-    const auto t = trailer_bytes(m);
+    auto t = trailer_bytes(m);
+    m.trailer_raw_bytes = t.size();
+    if (m.header.zstd_trailer()) {
+        auto stored = zstd_trailer_encode(t);
+        if (!stored) {
+            return std::unexpected(stored.error());
+        }
+        t = std::move(*stored);
+    }
+    if (t.size() > std::numeric_limits<std::uint32_t>::max()) {
+        return std::unexpected(Error{ErrorCode::resource_limit, "trailer too large"});
+    }
     out.insert(out.end(), t.begin(), t.end());
     put(out, m.trailer_offset, 8);
     put(out, t.size(), 4);
     put(out, seedarc::experimental::crc32c(t), 4);
     const auto f = as_bytes(footer_magic);
     out.insert(out.end(), f.begin(), f.end());
+    return {};
 }
 
 // The footer's view of the trailer.
@@ -1099,6 +1179,10 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
     if (seedarc::experimental::crc32c(trailer) != footer->trailer_crc) {
         return std::unexpected(bad("trailer checksum mismatch"));
     }
+    const auto view = trailer_view(*header, trailer);
+    if (!view) {
+        return std::unexpected(view.error());
+    }
     const auto body_bytes = bytes.first(static_cast<std::size_t>(footer->trailer_offset));
     const GenFetch fetch = [&](std::uint64_t off) -> std::optional<GenRecord> {
         const auto rec = read_record(body_bytes, static_cast<std::size_t>(off));
@@ -1108,11 +1192,12 @@ std::expected<Model, Error> parse(std::span<const std::byte> bytes) {
         return GenRecord{{rec->body.begin(), rec->body.end()}, rec->end};
     };
     auto parsed = parse_index(*header, seedarc::experimental::crc32c(bytes.first(header_bytes)),
-                              trailer, footer->trailer_offset, fetch, body_bytes);
+                              view->bytes, footer->trailer_offset, fetch, body_bytes);
     if (!parsed) {
         return std::unexpected(parsed.error());
     }
     auto &m = *parsed;
+    m.trailer_raw_bytes = view->bytes.size();
     const auto &h = m.header;
     // Cross-check: the records must describe exactly what the trailer says.
     auto s = scan(body_bytes, h, false);
@@ -1892,9 +1977,15 @@ std::expected<std::vector<std::byte>, Error> lay_out_fresh(const Header &h, Pend
     if (auto r = layout(out, m, std::move(p)); !r) {
         return std::unexpected(r.error());
     }
-    finish_container(out, m);
+    if (auto r = finish_container(out, m); !r) {
+        return std::unexpected(r.error());
+    }
     return out;
 }
+
+// ADR-0010: new revision-5 archives store a zstd trailer unless `--trailer raw` says otherwise;
+// append keeps the archive's form, consolidate keeps it unless `--trailer` is given.
+std::optional<bool> trailer_zstd_override;
 
 Header header_for(const std::string &mode, std::uint32_t redundancy, std::uint32_t cpb) {
     Header h;
@@ -1906,6 +1997,9 @@ Header header_for(const std::string &mode, std::uint32_t redundancy, std::uint32
                                          : 0U;
     h.redundancy = redundancy;
     h.checkpoint_bytes = redundancy == red_checkpoint ? cpb : 0;
+    if (h.revision == 5 && trailer_zstd_override.value_or(true)) {
+        h.flags |= flag_zstd_trailer;
+    }
     return h;
 }
 
@@ -2012,6 +2106,9 @@ append_bytes(std::span<const std::byte> old, const std::vector<InputFile> &added
     }
     Model m = std::move(*parsed);
     const auto &h = m.header;
+    if (trailer_zstd_override && *trailer_zstd_override != h.zstd_trailer()) {
+        return std::unexpected(bad("append keeps the archive's trailer form (ADR-0010)"));
+    }
     // With a recipe every generation has its own frame limit, so old frames are not bound by
     // the new one; without, the old bounded-append rule (old frames within the limit) holds.
     const bool recipe_append = recipe || (!plan && m.gens.back().recipe);
@@ -2114,7 +2211,9 @@ append_bytes(std::span<const std::byte> old, const std::vector<InputFile> &added
     if (auto r = layout(out, m, std::move(p)); !r) {
         return std::unexpected(r.error());
     }
-    finish_container(out, m);
+    if (auto r = finish_container(out, m); !r) {
+        return std::unexpected(r.error());
+    }
     return out;
 }
 
@@ -4004,6 +4103,21 @@ int main(int argc, char *argv[]) {
             memory_budget_override = *budget;
             a.erase(a.begin() + 1, a.begin() + 3);
         }
+    }
+    // ADR-0010: the trailer form of a newly written revision-5 archive (default zstd).
+    if (a.size() >= 3 && a[1] == "--trailer") {
+        if (a[2] != "raw" && a[2] != "zstd") {
+            std::cerr << usage;
+            return 2;
+        }
+        trailer_zstd_override = a[2] == "zstd";
+        a.erase(a.begin() + 1, a.begin() + 3);
+    }
+    if (a.size() == 5 && a[1] == "trailer-recode" && (a[4] == "raw" || a[4] == "zstd")) {
+        return cmd_trailer_recode(native(a[2]), native(a[3]), a[4] == "zstd");
+    }
+    if (a.size() == 5 && a[1] == "trailer-fault") {
+        return cmd_trailer_fault(native(a[2]), native(a[3]), a[4]);
     }
     if (a.size() == 6 && a[1] == "bounded-pack") {
         const auto cap = number(a[3]);

@@ -10,6 +10,9 @@
 #ifndef SEEDARC_APPEND4_MAX_FRAME_RAW
 #define SEEDARC_APPEND4_MAX_FRAME_RAW (std::uint64_t{64} << 20)
 #endif
+#ifndef SEEDARC_APPEND4_MAX_TRAILER_RAW
+#define SEEDARC_APPEND4_MAX_TRAILER_RAW (std::uint64_t{16} << 20)
+#endif
 #include "append4_study.cpp"
 
 namespace {
@@ -63,7 +66,10 @@ void repair(std::span<std::byte> b) {
         return;
     }
     const auto trailer = b.subspan(static_cast<std::size_t>(offset), static_cast<std::size_t>(size));
-    if (trailer.size() >= 4) {
+    // A zstd trailer (ADR-0010, header flag bit 2) holds the header CRC inside its compressed
+    // bytes; only the footer CRC is repaired then.
+    const bool zstd = (le32(b, 20) & flag_zstd_trailer) != 0;
+    if (!zstd && trailer.size() >= 4) {
         store32(trailer, 0, seedarc::experimental::crc32c(std::span<const std::byte>{b}.first(header_bytes)));
     }
     store32(b, footer + 12, seedarc::experimental::crc32c(trailer));

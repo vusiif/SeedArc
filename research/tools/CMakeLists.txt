@@ -88,7 +88,9 @@ if(BUILD_TESTING)
         "-DTOOL=$<TARGET_FILE:seedarc_append4_study>"
         "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/solid-recipe-check-$<CONFIG>"
         -P "${CMAKE_CURRENT_SOURCE_DIR}/check_solid_recipe.cmake")
-    set_tests_properties(research.solid_recipe PROPERTIES TIMEOUT 900)
+    # Release builds take 6-8 min; the ADR-0010 / ADR-0011 sections pushed the ASan + UBSan
+    # build past 900 s (2026-11-28), so the bound leaves room for sanitizer builds.
+    set_tests_properties(research.solid_recipe PROPERTIES TIMEOUT 2400)
     add_test(NAME research.drift_probe COMMAND "${CMAKE_COMMAND}"
         "-DTOOL=$<TARGET_FILE:seedarc_append4_study>"
         "-DWORK=${CMAKE_CURRENT_BINARY_DIR}/drift-probe-check-$<CONFIG>"

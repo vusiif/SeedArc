@@ -93,7 +93,11 @@ std::expected<Model, Error> parse_indexed(ArchiveReader &in, IndexTiming *timing
     if (seedarc::experimental::crc32c(*trailer) != footer->trailer_crc) {
         return std::unexpected(bad("trailer checksum mismatch"));
     }
-    reading = wall_ms() - read_start; // header, footer, trailer and its CRC
+    const auto view = trailer_view(*header, *trailer); // ADR-0010 (bounded raw length)
+    if (!view) {
+        return std::unexpected(view.error());
+    }
+    reading = wall_ms() - read_start; // header, footer, trailer, its CRC and decoding
     const auto limit = footer->trailer_offset;
     const GenFetch fetch = [&](std::uint64_t off) -> std::optional<GenRecord> {
         if (off > limit || limit - off < record_overhead) {
@@ -121,8 +125,11 @@ std::expected<Model, Error> parse_indexed(ArchiveReader &in, IndexTiming *timing
         return GenRecord{{rec->body.begin(), rec->body.end()}, off + rec->end};
     };
     double manifest = 0;
-    auto model = parse_index(*header, seedarc::experimental::crc32c(*head), *trailer, limit, fetch,
+    auto model = parse_index(*header, seedarc::experimental::crc32c(*head), view->bytes, limit, fetch,
                              {}, &manifest);
+    if (model) {
+        model->trailer_raw_bytes = view->bytes.size();
+    }
     if (timing != nullptr) {
         *timing = {reading, manifest};
     }
