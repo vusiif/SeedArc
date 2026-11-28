@@ -1,0 +1,94 @@
+[1/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/common/debug.c.o
+[2/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/common/error_private.c.o
+[3/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/common/threading.c.o
+[4/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/common/pool.c.o
+[5/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/common/entropy_common.c.o
+[6/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/common/zstd_common.c.o
+[7/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/common/xxhash.c.o
+[8/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/hist.c.o
+[9/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/common/fse_decompress.c.o
+[10/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/fse_compress.c.o
+[11/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstd_compress_literals.c.o
+[12/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstd_compress_superblock.c.o
+[13/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstd_compress_sequences.c.o
+[14/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/huf_compress.c.o
+[15/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstd_compress.c.o
+[16/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstd_ldm.c.o
+[17/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstd_fast.c.o
+[18/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstd_preSplit.c.o
+[19/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstd_double_fast.c.o
+[20/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstdmt_compress.c.o
+[21/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/decompress/zstd_ddict.c.o
+[22/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/decompress/zstd_decompress.c.o
+[23/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstd_opt.c.o
+[24/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/dictBuilder/cover.c.o
+[25/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/decompress/huf_decompress.c.o
+[26/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/dictBuilder/fastcover.c.o
+[27/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/dictBuilder/zdict.c.o
+[28/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/decompress/zstd_decompress_block.c.o
+[29/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/dictBuilder/divsufsort.c.o
+[30/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c.o
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c: In function ‘ZSTD_decompressSequences’:
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1850:35: warning: ‘dumpsLength’ may be used uninitialized [-Wmaybe-uninitialized]
+ 1850 |         seqState.dumpsEnd = dumps + dumpsLength;
+      |                             ~~~~~~^~~~~~~~~~~~~
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1826:23: note: ‘dumpsLength’ was declared here
+ 1826 |     size_t errorCode, dumpsLength;
+      |                       ^~~~~~~~~~~
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1850:35: warning: ‘dumps’ may be used uninitialized [-Wmaybe-uninitialized]
+ 1850 |         seqState.dumpsEnd = dumps + dumpsLength;
+      |                             ~~~~~~^~~~~~~~~~~~~
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1830:17: note: ‘dumps’ was declared here
+ 1830 |     const BYTE* dumps;
+      |                 ^~~~~
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1858:83: warning: ‘nbSeq’ may be used uninitialized [-Wmaybe-uninitialized]
+ 1858 |         for ( ; (FSE_reloadDStream(&(seqState.DStream)) <= FSE_DStream_completed) && (nbSeq>0) ; )
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1829:9: note: ‘nbSeq’ was declared here
+ 1829 |     int nbSeq;
+      |         ^~~~~
+In function ‘ZSTDv01_decodeLiteralsBlock’,
+    inlined from ‘ZSTD_decompressBlock’ at /home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1899:17:
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1505:20: warning: ‘litbp.origSize’ may be used uninitialized [-Wmaybe-uninitialized]
+ 1505 |             size_t rleSize = litbp.origSize;
+      |                    ^~~~~~~
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c: In function ‘ZSTD_decompressBlock’:
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1489:23: note: ‘litbp.origSize’ was declared here
+ 1489 |     blockProperties_t litbp;
+      |                       ^~~~~
+In function ‘ZSTDv01_decodeLiteralsBlock’,
+    inlined from ‘ZSTD_decompressBlock’ at /home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1899:17:
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1496:5: warning: ‘*(unsigned int *)((char *)&litbp + offsetof(blockProperties_t, blockType))’ may be used uninitialized [-Wmaybe-uninitialized]
+ 1496 |     switch(litbp.blockType)
+      |     ^~~~~~
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c: In function ‘ZSTD_decompressBlock’:
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1489:23: note: ‘*(unsigned int *)((char *)&litbp + offsetof(blockProperties_t, blockType))’ was declared here
+ 1489 |     blockProperties_t litbp;
+      |                       ^~~~~
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c: In function ‘ZSTDv01_decompressDCtx’:
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1936:9: warning: ‘*(unsigned int *)((char *)&blockProperties + offsetof(blockProperties_t, blockType))’ may be used uninitialized [-Wmaybe-uninitialized]
+ 1936 |         switch(blockProperties.blockType)
+      |         ^~~~~~
+/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v01.c:1918:23: note: ‘*(unsigned int *)((char *)&blockProperties + offsetof(blockProperties_t, blockType))’ was declared here
+ 1918 |     blockProperties_t blockProperties;
+      |                       ^~~~~~~~~~~~~~~
+[31/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v02.c.o
+[32/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v03.c.o
+[33/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v04.c.o
+[34/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v06.c.o
+[35/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v05.c.o
+[36/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/benchfn.c.o
+[37/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/datagen.c.o
+[38/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/dibio.c.o
+[39/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/legacy/zstd_v07.c.o
+[40/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/benchzstd.c.o
+[41/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/lorem.c.o
+[42/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/timefn.c.o
+[43/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/fileio_asyncio.c.o
+[44/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/util.c.o
+[45/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/zstdcli_trace.c.o
+[46/50] Building C object lib/CMakeFiles/libzstd_static.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/lib/compress/zstd_lazy.c.o
+[47/50] Linking C static library lib/libzstd.a
+[48/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/fileio.c.o
+[49/50] Building C object programs/CMakeFiles/zstd.dir/home/sc/long-tasks/20261123T123105Z-d5596074/work/vcpkg/buildtrees/zstd/src/v1.5.7-bb6cae2b2e.clean/programs/zstdcli.c.o
+[50/50] Linking C executable programs/zstd

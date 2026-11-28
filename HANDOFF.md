@@ -257,3 +257,11 @@ seedarc_append4_study [--jobs N|auto [--memory-budget B]] [--trailer raw|zstd] C
 ## 9. 本次交接时的核对
 
 本文件写于 DEV-044 验证完成之后。我只修改了本文件和 STATUS 顶部的链接，没有新的构建、测试或远端操作，也没有提交。
+
+## 10. 后续更新（2026-11-28 晚，DEV-045）
+
+- 第 3 节已过时：DEV-044 已提交为 `0acaa4b` 并已推送到 origin/main。DEV-045 的改动（三个 speed_matrix 脚本、实验目录、STATUS、本文件）未提交。
+- 第 7 节第 2 步（速度实验）**已完成**，见 STATUS 顶部 DEV-045 与[记录](research/experiments/20261128-speed-matrix-main-001/record.md)。印度任务 `20261128T085321Z-1cc99cf0` 已 fetch 并 clean，服务器上无运行任务；`/home/sc/seedarc-data/dev040` 仍保留（删不删由用户决定）。
+- DEV-044 的默认 zstd trailer 改变了 `check_bounded_solid.cmake` 的固定包哈希；以后的印度任务用 DEV-045 的 `remote/results/inputs/cross-reference.json`（同一 commit 的 MSVC 结果，GCC 已核对一致）作参考。
+- 源码包超过 16 MiB 上限，改用 `git archive HEAD -- .clang-format .clang-tidy .gitattributes CMakeLists.txt CMakePresets.json LICENSE cli core fuzz tests third_party vcpkg-configuration.json vcpkg.json research/tools research/scripts`（约 1.7 MB），构建和全量 CTest 都够用。
+- 新的待办：(a) 定偏好档（第 7 节第 3 步，等用户）；(b) 研究工具解码比同库 xz 慢 2–3×，值得先剖析；(c) 流式读入能直接让 128 MiB 帧在 50% 预算下多开线程。

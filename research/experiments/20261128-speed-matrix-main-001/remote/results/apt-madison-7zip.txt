@@ -1,0 +1,2 @@
+      7zip | 23.01+dfsg-11ubuntu0.1~esm1 | https://esm.ubuntu.com/apps/ubuntu noble-apps-security/main amd64 Packages
+      7zip | 23.01+dfsg-11 | https://ap-south-1.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 Packages

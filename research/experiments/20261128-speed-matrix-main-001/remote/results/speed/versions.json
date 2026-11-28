@@ -1,0 +1,14 @@
+{
+ "seedarc_tool_sha256": "a5b4f32b918428693d42de73e6f0f568764d0e71458943eaf873c7640f52deb9",
+ "mem_total_bytes": 6213005312,
+ "budget75_bytes": 4659753984,
+ "sevenzip": "7-Zip 23.01 (x64) : Copyright (c) 1999-2023 Igor Pavlov : 2023-06-20",
+ "xz": "xz (XZ Utils) 5.8.4; liblzma 5.8.4",
+ "pin": [
+  "taskset",
+  "-c",
+  "0"
+ ],
+ "python": "3.12.3",
+ "cpu_count": 4
+}

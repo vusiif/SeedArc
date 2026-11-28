@@ -1,0 +1,19 @@
+{
+  "task_id": "20261128T085321Z-1cc99cf0",
+  "phase": "running",
+  "mode": "exclusive",
+  "unit": {
+    "Result": "success",
+    "ExecMainStatus": "0",
+    "CPUQuotaPerSecUSec": "infinity",
+    "MemoryMax": "infinity",
+    "MemorySwapMax": "infinity",
+    "TasksMax": "infinity",
+    "User": "sc",
+    "NoNewPrivileges": "yes",
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "result": null
+}
